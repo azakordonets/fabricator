@@ -5,8 +5,8 @@ package fabricator
  */
 object Fabricator {
 
-  def firstName() : String =  "Andrew"
+  def firstName() =  "Andrew"
 
-  def lastName(): String = "Zakordonets"
+  def lastName() = "Zakordonets"
 
 }

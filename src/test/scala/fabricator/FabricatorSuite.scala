@@ -9,15 +9,18 @@ import Fabricator._
   * Created by Andrew Zakordonets on 16/05/14.
  */
 @RunWith(classOf[JUnitRunner])
-class FabricatorTest extends FunSuite{
+class FabricatorSuite extends FunSuite{
 
+  test("test"){
+    assert(true)
+  }
 
   test("Check first name"){
-    assert(firstName() === "Andrew")
+    assert(firstName().equals("Andrew"))
   }
 
   test("Check last name"){
-    assert(lastName() === "Zakordonets")
+    assert(lastName().equals("Zakordonets"))
   }
 
 }
