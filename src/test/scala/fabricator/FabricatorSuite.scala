@@ -3,8 +3,6 @@ package fabricator
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.FunSuite
-import Fabricator._
-
 /**
   * Created by Andrew Zakordonets on 16/05/14.
  */
@@ -16,11 +14,17 @@ class FabricatorSuite extends FunSuite{
   }
 
   test("Check first name"){
-    assert(firstName().equals("Andrew"))
+    val fabr = new Fabricator()
+    assert(fabr.firstName().equals("Andrew"))
   }
 
   test("Check last name"){
-    assert(lastName().equals("Zakordonets"))
+    val fabr = new Fabricator()
+    assert(fabr.lastName().equals("Zakordonets"))
   }
+
+//  test("Check file read"){
+//    readFile()
+//  }
 
 }
