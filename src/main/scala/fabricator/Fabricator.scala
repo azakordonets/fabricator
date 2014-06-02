@@ -5,40 +5,53 @@ import play.api.libs.json._
 import scala.util.Random
 
 
-class Fabricator(lang: String) {
+class Fabricator(lang: String, val alpha: Alphanumeric, val contact: Contact) {
 
   val valuesJson = Json.parse(Source.fromFile("src/main/resources/"+lang+".json").mkString)
-  val rand = new Random(System.currentTimeMillis());
+  val rand = new Random()
 
   def this() = {
-    this("en")
+    this("en", new Alphanumeric, new Contact)
   }
 
-  private def getValueFromArray(key: String): String = {
-    val array = (valuesJson \ key).asOpt[JsArray]
-    val random_index = rand.nextInt(array.get.value.size);
-    array.get(random_index).toString()
+  protected def getValueFromArray(key: String): String = {
+    val array = (valuesJson \\ key)(0).asOpt[Array[String]].get
+    val random_index = rand.nextInt(array.length);
+    array(random_index)
   }
 
-  def firstName() =  {
-    getValueFromArray("first_name")
+  def firstName(): String = {
+    contact.fName()
   }
 
-  def string() = {
-    Json.stringify(valuesJson)
+  def lastName(): String = {
+    contact.lName()
   }
 
-  def lastName() = {
-    getValueFromArray("last_name")
+  def name(): String = {
+    contact.fName() ++ " " ++ contact.lName()
+  }
+
+  def email(): String = {
+    contact.eMail()
+  }
+
+  def numerify(string: String): String = {
+    alpha.intoNumbers(string)
+  }
+
+  def letterify(string:String): String = {
+    alpha.intoLetters(string)
+  }
+
+  def botify(string: String): String = {
+    letterify(numerify(string))
   }
 
 
 
-  def readFile() = {
 
-    val result = Json.parse(Source.fromFile("src/main/resources/en.json").mkString)
-    println(result);
 
-  }
+
 
 }

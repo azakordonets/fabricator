@@ -9,22 +9,26 @@ import org.scalatest.FunSuite
 @RunWith(classOf[JUnitRunner])
 class FabricatorSuite extends FunSuite{
 
-  test("test"){
-    assert(true)
-  }
+  val fabr = new Fabricator()
 
   test("Check first name"){
-    val fabr = new Fabricator()
-    assert(fabr.firstName().equals("Andrew"))
+    assert(fabr.firstName().nonEmpty)
   }
 
   test("Check last name"){
-    val fabr = new Fabricator()
-    assert(fabr.lastName().equals("Zakordonets"))
+    assert(fabr.lastName().toString.nonEmpty)
   }
 
-//  test("Check file read"){
-//    readFile()
-//  }
+  test("Check e-mail"){
+    assert(fabr.email().nonEmpty)
+  }
+
+  test("Testing numerify "){
+    assert(fabr.numerify("###ABC").matches("\\d{3}\\w{3}"))
+  }
+
+  test("Testing letterify "){
+    assert(fabr.letterify("123???").matches("\\d{3}\\w{3}"))
+  }
 
 }
