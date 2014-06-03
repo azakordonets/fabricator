@@ -9,7 +9,7 @@ import org.scalatest.FunSuite
 @RunWith(classOf[JUnitRunner])
 class FabricatorSuite extends FunSuite{
 
-  val fabr = new Fabricator()
+  val fabr = new Fabricator
 
   test("Check first name"){
     assert(fabr.firstName().nonEmpty)

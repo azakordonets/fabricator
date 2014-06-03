@@ -5,14 +5,14 @@ import play.api.libs.json._
 import scala.util.Random
 
 
-class Fabricator(lang: String, val alpha: Alphanumeric, val contact: Contact) {
+class Fabricator(lang: String = "en") {
 
-  val valuesJson = Json.parse(Source.fromFile("src/main/resources/"+lang+".json").mkString)
-  val rand = new Random()
+  protected lazy val alpha = new Alphanumeric
+  protected lazy val contact = new Contact
+  protected val valuesJson = Json.parse(Source.fromFile("src/main/resources/"+lang+".json").mkString)
+  protected val rand = new Random()
 
-  def this() = {
-    this("en", new Alphanumeric, new Contact)
-  }
+
 
   protected def getValueFromArray(key: String): String = {
     val array = (valuesJson \\ key)(0).asOpt[Array[String]].get
@@ -47,11 +47,5 @@ class Fabricator(lang: String, val alpha: Alphanumeric, val contact: Contact) {
   def botify(string: String): String = {
     letterify(numerify(string))
   }
-
-
-
-
-
-
 
 }
