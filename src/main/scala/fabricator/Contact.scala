@@ -3,7 +3,7 @@ package fabricator
 /**
  * Created by Andrew Zakordonets on 02/06/14.
  */
-class Contact extends Fabricator{
+protected class Contact extends Fabricator{
 
   def fName():String =  {
     getValueFromArray("first_name")

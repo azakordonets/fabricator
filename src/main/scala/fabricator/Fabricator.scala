@@ -9,6 +9,7 @@ class Fabricator(lang: String = "en") {
 
   protected lazy val alpha = new Alphanumeric
   protected lazy val contact = new Contact
+  protected lazy val dateEntity = new Date
   protected val valuesJson = Json.parse(Source.fromFile("src/main/resources/"+lang+".json").mkString)
   protected val rand = new Random()
 
@@ -47,5 +48,7 @@ class Fabricator(lang: String = "en") {
   def botify(string: String): String = {
     letterify(numerify(string))
   }
+
+  def date(): Date = {dateEntity}
 
 }

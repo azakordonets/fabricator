@@ -3,7 +3,7 @@ package fabricator
 /**
  * Created by Andrew Zakordonets on 02/06/14.
  */
-class Alphanumeric extends Fabricator{
+protected class Alphanumeric extends Fabricator{
 
   def number(){
     number(0, 100)
