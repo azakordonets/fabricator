@@ -5,21 +5,14 @@ import play.api.libs.json._
 import scala.util.Random
 
 
-class Fabricator(lang: String = "en") {
+class Fabricator(lang: String = "en") extends Utility(lang){
 
   protected lazy val alpha = new Alphanumeric
   protected lazy val contact = new Contact
   protected lazy val dateEntity = new Date
-  protected val valuesJson = Json.parse(Source.fromFile("src/main/resources/"+lang+".json").mkString)
-  protected val rand = new Random()
+  protected lazy val word = new Words
 
 
-
-  protected def getValueFromArray(key: String): String = {
-    val array = (valuesJson \\ key)(0).asOpt[Array[String]].get
-    val random_index = rand.nextInt(array.length);
-    array(random_index)
-  }
 
   def firstName(): String = {
     contact.fName()
@@ -49,6 +42,44 @@ class Fabricator(lang: String = "en") {
     letterify(numerify(string))
   }
 
-  def date(): Date = {dateEntity}
+  def number(): Any = {
+    alpha.getNumber()
+  }
+
+  def number(max: Any):Any = {
+    alpha.getNumber(max)
+  }
+
+  def number(min:Any, max: Any): Any = {
+    alpha.getAnyNumber(min, max)
+  }
+
+  def date(): String = {
+    dateEntity.getDate()
+  }
+
+  def date(format: String): String = {
+    dateEntity.getDate(format)
+  }
+
+  def date(day:Int, month:Int, year:Int, hour:Int, minute:Int, format: String) = {
+    dateEntity.getDetailedDate(day, month, year, hour, minute, format)
+  }
+
+  def words(count: Int) = {
+    word.getWords(count)
+  }
+
+  def sentence(): String = {
+    word.getSentence(10)
+  }
+
+  def sentence(words: Int): String = {
+    word.getSentence(words)
+  }
+
+  def text(length: Int = 60): String = {
+    word.getText(length)
+  }
 
 }

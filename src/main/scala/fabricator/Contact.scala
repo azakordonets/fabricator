@@ -17,4 +17,36 @@ protected class Contact extends Fabricator{
     fName() + "_" + lName() +  alpha.intoNumbers("###") + "@" + getValueFromArray("free_email")
   }
 
+  def phoneNumber() = {
+    alpha.intoNumbers(getValueFromArray("phone_formats"))
+  }
+
+  def streetName() = {
+    getValueFromArray("street_suffix")
+  }
+
+  def houseNumber() = {
+    alpha.numerify(getValueFromArray("house_number"))
+  }
+
+  def appartmentNumber() = {
+    alpha.numerify(getValueFromArray("app_number"))
+  }
+
+  def postcode() = {
+    alpha.botify(getValueFromArray("postcode"))
+  }
+
+  def state() = {
+    getValueFromArray("state")
+  }
+
+  def stateShortCode() = {
+    getValueFromArray("state_abbr")
+  }
+
+  def company() = {
+    getValueFromArray("company_suffix")
+  }
+
 }
