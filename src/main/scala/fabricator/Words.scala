@@ -1,7 +1,5 @@
 package fabricator
 
-import play.api.libs.json.JsValue
-
 /**
  * Created by Andrew Zakordonets on 05/06/14.
  */
@@ -9,11 +7,11 @@ protected class Words extends Fabricator{
 
   protected val wordsList = getListFromJson("words")
 
-  def getWord(): String = {
+  def word(): String = {
     getValueFromArray("word")
   }
 
-  def getWords(quantity: Int = 10): Array[String] = {
+  def words(quantity: Int = 10): Array[String] = {
     val resultArray = new Array[String](quantity)
     for ( count <- quantity-1 to 0 by -1 ) {
       for (wordsUnit <- wordsList) {
@@ -23,11 +21,15 @@ protected class Words extends Fabricator{
     resultArray
   }
 
-  def getSentence(words: Int = 10): String  = {
-    getWords(words).mkString(" ")
+  def sentence(wordQuantity: Int = 10): String  = {
+    words(wordQuantity).mkString(" ") + ". "
   }
 
-  def getText(charsLength: Int):String = {
+  def paragraph(): String = {
+      paragraph(100)
+  }
+
+  def paragraph(charsLength: Int):String = {
     val wordsSequence = sentence(charsLength)
     var builder = new StringBuilder
     var counter = 0

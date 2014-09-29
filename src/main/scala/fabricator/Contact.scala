@@ -5,20 +5,25 @@ package fabricator
  */
 protected class Contact extends Fabricator{
 
-  def fName():String =  {
+  def firstName():String =  {
     getValueFromArray("first_name")
   }
 
-  def lName():String = {
+  def lastName():String = {
     getValueFromArray("last_name")
   }
 
+  def fullName(prefix:Boolean = false ):String = {
+    if (prefix)  prefix + " "+ firstName() + " " + lastName()
+    else firstName() + " " + lastName()
+  }
+
   def eMail():String = {
-    fName() + "_" + lName() +  alpha.intoNumbers("###") + "@" + getValueFromArray("free_email")
+    firstName() + "_" + lastName() +  alphaFaker.numerify("###") + "@" + getValueFromArray("free_email")
   }
 
   def phoneNumber() = {
-    alpha.intoNumbers(getValueFromArray("phone_formats"))
+    alphaFaker.numerify(getValueFromArray("phone_formats"))
   }
 
   def streetName() = {
@@ -26,15 +31,15 @@ protected class Contact extends Fabricator{
   }
 
   def houseNumber() = {
-    alpha.numerify(getValueFromArray("house_number"))
+    alphaFaker.numerify(getValueFromArray("house_number"))
   }
 
   def appartmentNumber() = {
-    alpha.numerify(getValueFromArray("app_number"))
+    alphaFaker.numerify(getValueFromArray("app_number"))
   }
 
   def postcode() = {
-    alpha.botify(getValueFromArray("postcode"))
+    alphaFaker.botify(getValueFromArray("postcode"))
   }
 
   def state() = {

@@ -12,23 +12,29 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
 
   val fabr = new Fabricator
   val util = new Utility("en")
+  val alpha = fabr.alphaNumeric()
+  val contact = fabr.contact()
+  val calendar = fabr.calendar()
+  var wordsFaker = fabr.words()
   
   @Test
   def testFirstName() = {
-    logger.info("Checking first name value "+fabr.firstName())
-    assert(fabr.firstName().nonEmpty)
+    val name = contact.firstName()
+    logger.info("Checking first name value "+name)
+    assert(name.nonEmpty)
   }
 
   @Test
   def testLastName() = {
-    logger.info("Checking last name value "+fabr.lastName())
-    assert(fabr.lastName().toString.nonEmpty)
+    val name = contact.lastName()
+    logger.info("Checking last name value "+name)
+    assert(name.nonEmpty)
   }
 
   @Test
   def testEmail() = {
-    logger.info("Checking email "+fabr.email())
-    assert(fabr.email().nonEmpty)
+    logger.info("Checking email "+contact.eMail())
+    assert(contact.eMail().nonEmpty)
   }
 
   @DataProvider(name = "numerifyDP")
@@ -44,8 +50,9 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
 
   @Test(dataProvider = "numerifyDP")
   def testNumerify(value: String, matchPattern: String) = {
-    logger.info("Checking numerify "+fabr.numerify(value))
-    assert(fabr.numerify(value).matches(matchPattern))
+    val result = alpha.numerify(value)
+    logger.info("Checking numerify "+result)
+    assert(result.matches(matchPattern))
   }
 
   @DataProvider(name = "letterifyDP")
@@ -61,14 +68,15 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
   
   @Test(dataProvider = "letterifyDP")
   def testLetterify(value: String, matchPatter: String) = {
-    logger.info("Checking letterify "+fabr.letterify(value))
-    assert(fabr.letterify(value).matches(matchPatter))
+    val result = alpha.letterify(value)
+    logger.info("Checking letterify "+result)
+    assert(result.matches(matchPatter))
   }
 
 
   @Test
   def testDefaultNumbers() {
-    val number = fabr.number()
+    val number = alpha.number()
     logger.info("Checking default number function. Should return random number below 1000 : ")
     assert( 0 to 1000 contains number)
   }
@@ -85,10 +93,15 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
 
   @Test(dataProvider = "numbersCustomTypes")
   def testCustomNumberType(value: Any, numberType: Any) {
-    val number = fabr.number(value)
+    val result: AnyRef
+    result match  {
+      case value: Int =>  alpha.number(value)
+      case value: Double => alpha.double(value)
+      case value: Float => alpha.float(value)
+    }
     logger.info("Checking custom number with "+numberType+" type function. Should return with specific type and below specified value : ")
-    expectResult(number.getClass)(numberType)
-    assert(util.less(number, value))
+    expectResult(result.getClass)(numberType)
+    assert(util.less(result, value))
   }
 
   @DataProvider(name = "numbersRandomRange")
@@ -101,17 +114,22 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
 
   @Test(dataProvider = "numbersRandomRange")
   def testNumbersRandomRange(min: Any, max: Any) = {
-    val number = fabr.number(min, max)
+    val actualNumber = null
+     actualNumber match {
+      case (min:Int, max:Int) => alpha.number(min, max)
+      case (min:Double, max:Double) => alpha.double(min, max)
+      case (min:Float, max:Float) => alpha.float(min, max)
+    }
     logger.info("Checking custom number with  type function. Should return with specific type and below specified value : ")
-    expectResult(number.getClass)(min.getClass)
-    assert(util.less(number, max))
-    assert(util.less(min, number))
+    expectResult(actualNumber.getClass)(min.getClass)
+    assert(util.less(actualNumber, max))
+    assert(util.less(min, actualNumber))
   }
 
   @Test
   def testDefaultDateGetter() = {
-    logger.info("Checking default date value "+fabr.date())
-    expectResult(fabr.date())(DateTime.now.toString("dd-mm-yyyy"))
+    logger.info("Checking default date value "+calendar.date())
+    expectResult(calendar.date())(DateTime.now.toString("dd-mm-yyyy"))
   }
 
   @DataProvider(name = "dateFormats")
@@ -136,8 +154,8 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
 
   @Test(dataProvider = "dateFormats")
   def testDateGetterWithDifferentFormats(format: String) = {
-    logger.info("Checking date value with "+format+" format :"+fabr.date(format))
-    expectResult(fabr.date(format))(DateTime.now.toString(format))
+    logger.info("Checking date value with "+format+" format :"+calendar.date(format))
+    expectResult(calendar.date(format))(DateTime.now.toString(format))
   }
 
   @DataProvider(name = "datesVariations")
@@ -164,12 +182,12 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
     )
   }
 
-  @Test(dataProvider = "datesVariations")
-  def testDatesVariations(day:String, month:String, year:String, hour:String, minute:String, format:String, expectedResult: String) {
-    val date = fabr.date(day.toInt, month.toInt, year.toInt, hour.toInt, minute.toInt, format)
-    logger.info("Checking date value with "+format+" format :"+date)
-    expectResult(date)(expectedResult)
-  }
+//  @Test(dataProvider = "datesVariations")
+//  def testDatesVariations(day:String, month:String, year:String, hour:String, minute:String, format:String, expectedResult: String) {
+//    val date = calendar.date(day.toInt, month.toInt, year.toInt, hour.toInt, minute.toInt, format)
+//    logger.info("Checking date value with "+format+" format :"+date)
+//    expectResult(date)(expectedResult)
+//  }
 
   @DataProvider(name = "datesNegativeVariations")
   def datesNegativeVariations() = {
@@ -185,13 +203,13 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
     )
   }
 
-  @Test(dataProvider = "datesNegativeVariations")
-  def datesNegativeVariationsTest(day:String, month:String, year:String, hour:String, minute:String, format:String, expectedResult: String) {
-    intercept[Exception]{
-        val date = fabr.date(day.toInt, month.toInt, year.toInt, hour.toInt, minute.toInt, format)
-        logger.info("Checking date value with "+format+" format :"+date)
-    }
-  }
+//  @Test(dataProvider = "datesNegativeVariations")
+//  def datesNegativeVariationsTest(day:String, month:String, year:String, hour:String, minute:String, format:String, expectedResult: String) {
+//    intercept[Exception]{
+//        val date = calendar.date(day.toInt, month.toInt, year.toInt, hour.toInt, minute.toInt, format)
+//        logger.info("Checking date value with "+format+" format :"+date)
+//    }
+//  }
 
   @DataProvider(name = "wordsCountDP")
   def wordsCountDP() = {
@@ -207,33 +225,35 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
   @Test(dataProvider = "wordsCountDP")
   def testWords(count: String) = {
     logger.info("Getting words array generated with length = "+count)
-    expectResult(fabr.words(count.toInt).length)(count.toInt)
+    expectResult(wordsFaker.words(count.toInt).length)(count.toInt)
   }
 
   @Test
   def testSentenceDefault() = {
-    var sentence = fabr.sentence()
+    var sentence = wordsFaker.sentence()
     logger.info("Testing sentence generation. Creating sentence with 10 words lenght: \n" + sentence)
     expectResult(sentence.split(" ").length)(10)
   }
 
   @Test
   def testSentenceCustomLength() = {
-    var sentence = fabr.sentence(20)
+    var sentence = wordsFaker.sentence(20)
     logger.info("Testing sentence generation. Creating sentence with 10 words lenght: \n" + sentence)
     expectResult(sentence.split(" ").length)(20)
   }
 
   @Test
   def testTextDefaultValue() = {
-    logger.info("Testing sentence generation. Creating text with 10 words lenght: \n" + fabr.text())
-    expectResult(fabr.text().length)(60)
+    val paragraph = wordsFaker.paragraph()
+    logger.info("Testing sentence generation. Creating text with 10 words lenght: \n" + paragraph)
+    expectResult(paragraph.length)(100)
   }
 
   @Test(dataProvider = "wordsCountDP")
   def testTextCustomValue(length: String  ) = {
-    logger.info("Testing sentence generation. Creating text with 10 words lenght: \n" + fabr.text(length.toInt))
-    expectResult(fabr.text(length.toInt).length)(length.toInt)
+    val paragraph = wordsFaker.paragraph(length.toInt)
+    logger.info("Testing sentence generation. Creating paragraph with words lenght: \n" + paragraph(length.toInt))
+    expectResult(paragraph(length.toInt))(length.toInt)
   }
 
 

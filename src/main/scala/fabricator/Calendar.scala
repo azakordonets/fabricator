@@ -5,19 +5,19 @@ import com.github.nscala_time.time.Imports._
 /**
  * Created by Andrew Zakordonets on 03/06/14.
  */
-protected class Date extends Fabricator{
+protected class Calendar extends Fabricator{
 
-  def getDate(): String = {
-    getDate("dd-mm-yyyy")
-  }
+//  def date(): String = {
+//    date("dd-mm-yyyy")
+//  }
 
-  def getDate(format:String = "dd-mm-yyyy"): String = {
+  def date(format:String = "dd-mm-yyyy"): String = {
     DateTime.now.toString(format)
   }
 
-  def getDetailedDate(dayOfTheYear:Int = 0, monthOfTheYear:Int = 0, yearVal:Int = 0, hour:Int = 0, minute:Int = 0, defFormat: String = "dd-mm-yyyy"): String = {
-    new DateTime(yearVal, monthOfTheYear, dayOfTheYear, hour, minute).toString(defFormat)
-  }
+//  def date(dayOfTheYear:Int = 0, monthOfTheYear:Int = 0, yearVal:Int = 0, hour:Int = 0, minute:Int = 0, defFormat: String = "dd-mm-yyyy"): String = {
+//    new DateTime(yearVal, monthOfTheYear, dayOfTheYear, hour, minute).toString(defFormat)
+//  }
 
   def checkDay() = {
 
