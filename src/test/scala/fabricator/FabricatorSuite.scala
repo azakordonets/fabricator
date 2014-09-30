@@ -88,38 +88,39 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
           Array(100.10, classOf[java.lang.Double]),
           Array(100.10f, classOf[java.lang.Float])
     )
-
   }
 
   @Test(dataProvider = "numbersCustomTypes")
   def testCustomNumberType(value: Any, numberType: Any) {
-    val result: AnyRef
-    result match  {
-      case value: Int =>  alpha.number(value)
-      case value: Double => alpha.double(value)
-      case value: Float => alpha.float(value)
+
+    def calculate(numberValue: Any): Any = numberValue match{
+      case numberValue: Int =>  alpha.number(numberValue)
+      case numberValue: Double => alpha.double(numberValue)
+      case numberValue: Float => alpha.float(numberValue)
     }
+    val result = calculate(value)
     logger.info("Checking custom number with "+numberType+" type function. Should return with specific type and below specified value : ")
     expectResult(result.getClass)(numberType)
     assert(util.less(result, value))
   }
 
   @DataProvider(name = "numbersRandomRange")
-  def numbersRandomRange() = {
+  def numbersRandomRange():Array[Array[_ >: Int with Double with Float <: AnyVal]] = {
     Array(Array(100, 150),
-      Array(100.10, 150.1),
-      Array(100.10f, 150.01f)
+      Array(100.10, 200.01),
+      Array(100.10f, 250.10f)
     )
   }
 
   @Test(dataProvider = "numbersRandomRange")
-  def testNumbersRandomRange(min: Any, max: Any) = {
-    val actualNumber = null
-     actualNumber match {
+  def testNumbersRandomRange(min: Any, max: Any)  {
+
+    def calculate(minValue: Any, maxValue: Any): Any = (minValue, maxValue) match{
       case (min:Int, max:Int) => alpha.number(min, max)
       case (min:Double, max:Double) => alpha.double(min, max)
       case (min:Float, max:Float) => alpha.float(min, max)
     }
+    val actualNumber = calculate(min, max)
     logger.info("Checking custom number with  type function. Should return with specific type and below specified value : ")
     expectResult(actualNumber.getClass)(min.getClass)
     assert(util.less(actualNumber, max))
@@ -252,8 +253,8 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
   @Test(dataProvider = "wordsCountDP")
   def testTextCustomValue(length: String  ) = {
     val paragraph = wordsFaker.paragraph(length.toInt)
-    logger.info("Testing sentence generation. Creating paragraph with words lenght: \n" + paragraph(length.toInt))
-    expectResult(paragraph(length.toInt))(length.toInt)
+    logger.info("Testing sentence generation. Creating paragraph with chars lenght: "+length.toInt + "\n" +paragraph)
+    expectResult(paragraph.length())(length.toInt)
   }
 
 
