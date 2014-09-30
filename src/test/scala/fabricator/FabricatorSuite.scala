@@ -37,6 +37,28 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
     assert(contact.eMail().nonEmpty)
   }
 
+  @DataProvider(name = "birthdayDP")
+  def birthdayDP():Array[Array[Any]] = {
+    Array(Array(0),
+      Array(10),
+      Array(25),
+      Array(50),
+      Array(100),
+      Array(1000)
+    )
+  }
+
+  @Test(dataProvider = "birthdayDP")
+  def testBirthDay(age: Int) = {
+    logger.info("Checking when is the birthday of an "+age+" years old")
+    val birthDate = contact.birthday(age)
+    val day = DateTime.now.getDayOfMonth()
+    val month = DateTime.now.getMonthOfYear()
+    assert(birthDate.getDayOfMonth == day)
+    assert(birthDate.getMonthOfYear == month)
+    assert(DateTime.now.getYear - age == birthDate.getYear)
+  }
+
   @DataProvider(name = "numerifyDP")
   def numerifyDP = {
     Array(Array("###ABC", "\\d{3}\\w{3}"),
@@ -105,7 +127,7 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
   }
 
   @DataProvider(name = "numbersRandomRange")
-  def numbersRandomRange():Array[Array[_ >: Int with Double with Float <: AnyVal]] = {
+  def numbersRandomRange():Array[Array[Any]] = {
     Array(Array(100, 150),
       Array(100.10, 200.01),
       Array(100.10f, 250.10f)

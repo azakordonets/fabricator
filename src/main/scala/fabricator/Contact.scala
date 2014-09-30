@@ -1,5 +1,9 @@
 package fabricator
 
+import java.util.Calendar
+
+import com.github.nscala_time.time.Imports._
+
 /**
  * Created by Andrew Zakordonets on 02/06/14.
  */
@@ -16,6 +20,10 @@ protected class Contact extends Fabricator{
   def fullName(prefix:Boolean = false ):String = {
     if (prefix)  prefix + " "+ firstName() + " " + lastName()
     else firstName() + " " + lastName()
+  }
+
+  def birthday(age : Int) : DateTime = {
+    DateTime.now - age.years
   }
 
   def eMail():String = {
