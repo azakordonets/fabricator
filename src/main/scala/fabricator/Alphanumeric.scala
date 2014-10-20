@@ -1,26 +1,32 @@
 package fabricator
 
+import scala.util.Random
+
 /**
  * Created by Andrew Zakordonets on 02/06/14.
  * This class generates random numbers and strings
  */
-protected class Alphanumeric extends Fabricator{
+class Alphanumeric(private val random: Random) {
+
+  def this () {
+    this(new Random())
+  }
 
 
   def number(): Int = {
-    rand.nextInt(1000)
+    random.nextInt(1000)
   }
 
   def number(max: Int):Int = {
-    rand.nextInt(max)
+    random.nextInt(max)
   }
 
   def number(min: Int, max: Int): Int = {
-    rand.nextInt(max - min) + min
+    random.nextInt(max - min) + min
   }
 
   def double(): Double = {
-    rand.nextDouble()
+    random.nextDouble()
   }
   
   def double(max:Double): Double = {
@@ -28,11 +34,11 @@ protected class Alphanumeric extends Fabricator{
   }
   
   def double(min: Double, max: Double): Double = {
-    min + ((getRandomDouble()*(max - min)))
+    min + ((random.nextDouble()*(max - min)))
   }
 
   def float() :Float = {
-    rand.nextFloat()
+    random.nextFloat()
   }
   
   def float(max: Float): Float = {
@@ -40,33 +46,33 @@ protected class Alphanumeric extends Fabricator{
   }
   
   def float(min: Float, max: Float): Float = {
-    min + ((getRandomFloat()*(max - min)))
+    min + ((random.nextFloat()*(max - min)))
   }
 
   def boolean() : Boolean = {
-    rand.nextBoolean()
+    random.nextBoolean()
   }
 
   def gausian(): Double  = {
-    rand.nextGaussian()
+    random.nextGaussian()
   }
 
   def string(): String = {
-    rand.nextString(30)
+    random.nextString(30)
   }
 
   def string (max: Int): String = {
-    rand.nextString(max)
+    random.nextString(max)
   }
 
 
   def numerify(string: String): String = {
-    string.map(letter=>letter match {case '#' => getRandomValue(10).toString case _  => letter}).mkString
+    string.map(letter=>letter match {case '#' => random.nextInt(10).toString case _  => letter}).mkString
   }
 
   def letterify(string: String): String = {
     val chars = ('a' to 'z') ++ ('A' to 'Z')
-    string.map(letter=>letter match {case '?' => chars(getRandomInt(chars.length)) case _  => letter}).mkString
+    string.map(letter=>letter match {case '?' => chars(random.nextInt(chars.length)) case _  => letter}).mkString
   }
 
   def botify(string: String): String = {

@@ -11,7 +11,7 @@ import com.typesafe.scalalogging.slf4j.LazyLogging
 class FabricatorSuite extends TestNGSuite with LazyLogging{
 
   val fabr = new Fabricator
-  val util = new Utility("en")
+  val util = new UtilityService("en")
   val alpha = fabr.alphaNumeric()
   val contact = fabr.contact()
   val calendar = fabr.calendar()
@@ -123,7 +123,7 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
     val result = calculate(value)
     logger.info("Checking custom number with "+numberType+" type function. Should return with specific type and below specified value : ")
     expectResult(result.getClass)(numberType)
-    assert(util.less(result, value))
+    assert(util.isLess(result, value))
   }
 
   @DataProvider(name = "numbersRandomRange")
@@ -145,8 +145,8 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
     val actualNumber = calculate(min, max)
     logger.info("Checking custom number with  type function. Should return with specific type and below specified value : ")
     expectResult(actualNumber.getClass)(min.getClass)
-    assert(util.less(actualNumber, max))
-    assert(util.less(min, actualNumber))
+    assert(util.isLess(actualNumber, max))
+    assert(util.isLess(min, actualNumber))
   }
 
   @Test

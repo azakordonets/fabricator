@@ -5,12 +5,16 @@ import play.libs.Json
 /**
  * Created by Andrew Zakordonets on 22/09/14.
  */
-protected class Internet extends Fabricator {
+class Internet (private val utility: UtilityService, private val alpha: Alphanumeric){
 
-  protected var internetMap = getListFromJson("internet")
+  def this() {
+    this(new UtilityService(), new Alphanumeric())
+  }
+
+  protected var internetMap = utility.getListFromJson("internet")
 
   def url (): String = {
-    alphaNumeric().botify("????#####??????.")+getValueFromArray("domain_suffix")
+    alpha.botify("????#####??????.")+utility.getValueFromArray("domain_suffix")
   }
 
   def url(host:String, callName:String, params:Json):String = {

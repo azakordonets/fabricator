@@ -1,26 +1,46 @@
 package fabricator
 
 
-class Fabricator(lang: String = "en") extends Utility(lang){
+class Fabricator(lang: String = "en",
+                 private val utility: UtilityService,
+                      alphaFaker: Alphanumeric = new Alphanumeric,
+                      contactFaker: Contact = new Contact,
+                      calendarFaker: Calendar = new Calendar,
+                      wordsFaker: Words = new Words,
+                      internetFaker: Internet = new Internet) extends UtilityService(lang) {
 
-  protected lazy val alphaFaker = new Alphanumeric
-  protected lazy val contactFaker = new Contact
-  protected lazy val calendarFaker = new Calendar
-  protected lazy val wordsFaker = new Words
-  protected lazy val internetFaker = new Internet
+  def this () {
+    this("en",
+      new UtilityService("en"),
+      new Alphanumeric,
+      new Contact,
+      new Calendar,
+      new Words,
+      new Internet)
+  }
 
+  object Fabricator {
+    def apply() = new Fabricator("en",
+      new UtilityService(lang),
+      new Alphanumeric,
+      new Contact,
+      new Calendar,
+      new Words,
+      new Internet)
+  }
 
-  def contact() : Contact = {
+  def contact(): Contact = {
     contactFaker
   }
 
-  def alphaNumeric() : Alphanumeric = {
+  def alphaNumeric(): Alphanumeric = {
     alphaFaker
   }
 
-  def calendar() : Calendar = {
+  def calendar(): Calendar = {
     calendarFaker
   }
+
   def words(): Words = {
     wordsFaker
   }

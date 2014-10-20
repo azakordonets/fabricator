@@ -8,4 +8,4 @@ lazy val buildSettings = Seq(
   scalaVersion := "2.10.1"
 )
 
-jarName in assembly := "src.main.scala.fabricator.jar"
+jarName in assembly := "fabricator.jar"

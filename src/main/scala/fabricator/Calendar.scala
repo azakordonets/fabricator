@@ -5,7 +5,7 @@ import com.github.nscala_time.time.Imports._
 /**
  * Created by Andrew Zakordonets on 03/06/14.
  */
-protected class Calendar extends Fabricator{
+class Calendar {
 
   def date(format:String = "dd-mm-yyyy"): String = {
     DateTime.now.toString(format)

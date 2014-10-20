@@ -1,21 +1,27 @@
 package fabricator
 
+import scala.util.Random
+
 /**
  * Created by Andrew Zakordonets on 05/06/14.
  */
-protected class Words extends Fabricator{
+class Words (private val utility: UtilityService, private val random: Random){
 
-  protected val wordsList = getListFromJson("words")
+  def this() {
+    this(new UtilityService(), new Random())
+  }
+
+  protected val wordsList = utility.getListFromJson("lorem\\words")
 
   def word(): String = {
-    getValueFromArray("word")
+    utility.getValueFromArray("word")
   }
 
   def words(quantity: Int = 10): Array[String] = {
     val resultArray = new Array[String](quantity)
     for ( count <- quantity-1 to 0 by -1 ) {
       for (wordsUnit <- wordsList) {
-        resultArray(count) = wordsUnit(getRandomInt(wordsUnit.length - 1))
+        resultArray(count) = wordsUnit(random.nextInt(wordsUnit.length - 1))
       }
     }
     resultArray

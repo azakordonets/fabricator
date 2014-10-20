@@ -1,20 +1,28 @@
 package fabricator
 
-import java.util.Calendar
-
 import com.github.nscala_time.time.Imports._
 
+
 /**
- * Created by Andrew Zakordonets on 02/06/14.
+  * Created by Andrew Zakordonets on 02/06/14.
  */
-protected class Contact extends Fabricator{
+class Contact( private val utility:UtilityService,
+               private val alpha: Alphanumeric)  {
+
+
+  def this () = {
+    this( new UtilityService(), new Alphanumeric);
+
+  }
+
+
 
   def firstName():String =  {
-    getValueFromArray("first_name")
+    utility.getValueFromArray("first_name")
   }
 
   def lastName():String = {
-    getValueFromArray("last_name")
+    utility.getValueFromArray("last_name")
   }
 
   def fullName(prefix:Boolean = false ):String = {
@@ -27,39 +35,39 @@ protected class Contact extends Fabricator{
   }
 
   def eMail():String = {
-    firstName() + "_" + lastName() +  alphaFaker.numerify("###") + "@" + getValueFromArray("free_email")
+    firstName() + "_" + lastName() +  alpha.numerify("###") + "@" + utility.getValueFromArray("free_email")
   }
 
   def phoneNumber() = {
-    alphaFaker.numerify(getValueFromArray("phone_formats"))
+    alpha.numerify(utility.getValueFromArray("phone_formats"))
   }
 
   def streetName() = {
-    getValueFromArray("street_suffix")
+    utility.getValueFromArray("street_suffix")
   }
 
   def houseNumber() = {
-    alphaFaker.numerify(getValueFromArray("house_number"))
+    alpha.numerify(utility.getValueFromArray("house_number"))
   }
 
   def appartmentNumber() = {
-    alphaFaker.numerify(getValueFromArray("app_number"))
+    alpha.numerify(utility.getValueFromArray("app_number"))
   }
 
   def postcode() = {
-    alphaFaker.botify(getValueFromArray("postcode"))
+    alpha.botify(utility.getValueFromArray("postcode"))
   }
 
   def state() = {
-    getValueFromArray("state")
+    utility.getValueFromArray("state")
   }
 
   def stateShortCode() = {
-    getValueFromArray("state_abbr")
+    utility.getValueFromArray("state_abbr")
   }
 
   def company() = {
-    getValueFromArray("company_suffix")
+    utility.getValueFromArray("company_suffix")
   }
 
 }
