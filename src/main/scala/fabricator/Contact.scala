@@ -30,8 +30,12 @@ class Contact( private val utility:UtilityService,
     else firstName() + " " + lastName()
   }
 
-  def birthday(age : Int) : DateTime = {
-    DateTime.now - age.years
+  def birthday(age: Int): String = {
+    DateTimeFormat.forPattern("dd-MM-yyyy").print(DateTime.now - age.years)
+  }
+
+  def birthday(age: Int, format: String ): String = {
+    DateTimeFormat.forPattern(format).print(DateTime.now - age.years)
   }
 
   def eMail():String = {

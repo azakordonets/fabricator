@@ -16,24 +16,23 @@ class UtilityService(lang: String, private val random:Random) {
   def this(lang:String){
     this(lang, new Random())
   }
+  private val valuesJson = Json.parse(Source.fromInputStream(getClass().getClassLoader().getResourceAsStream(lang + ".json")).mkString)
 
-  private val valuesJson = Json.parse(Source.fromFile("src/main/resources/" + lang + ".json").mkString)
-
-  def getValueFromArray(key: String): String = {
+   def getValueFromArray(key: String): String = {
     val array = (valuesJson \\ key)(0).asOpt[Array[String]].get
     val random_index = random.nextInt(array.length);
     array(random_index)
   }
 
-  def getArrayFromJson(key: String): Array[String] = {
+   def getArrayFromJson(key: String): Array[String] = {
     (valuesJson \\ key)(0).asOpt[Array[String]].get
   }
 
-  def getListFromJson(key: String): List[Array[String]] = {
+   def getListFromJson(key: String): List[Array[String]] = {
     (valuesJson \\ key)(0).asOpt[List[Array[String]]].get
   }
 
-  def isLess(a: Any, b: Any): Boolean = (a, b) match {
+   def isLess(a: Any, b: Any): Boolean = (a, b) match {
     case (a: Int, b: Int) => a < b
     case (a: Double, b: Double) => a < b
     case (a: Float, b: Float) => a < b

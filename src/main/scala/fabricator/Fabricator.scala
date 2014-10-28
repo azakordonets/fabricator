@@ -7,11 +7,11 @@ class Fabricator(lang: String = "en",
                       contactFaker: Contact = new Contact,
                       calendarFaker: Calendar = new Calendar,
                       wordsFaker: Words = new Words,
-                      internetFaker: Internet = new Internet) extends UtilityService(lang) {
+                      internetFaker: Internet = new Internet) {
 
   def this () {
     this("en",
-      new UtilityService("en"),
+      new UtilityService(),
       new Alphanumeric,
       new Contact,
       new Calendar,
@@ -19,8 +19,8 @@ class Fabricator(lang: String = "en",
       new Internet)
   }
 
-  object Fabricator {
-    def apply() = new Fabricator("en",
+  def this (lang: String) {
+    this(lang,
       new UtilityService(lang),
       new Alphanumeric,
       new Contact,
@@ -43,6 +43,10 @@ class Fabricator(lang: String = "en",
 
   def words(): Words = {
     wordsFaker
+  }
+
+  def internet() : Internet = {
+    internetFaker
   }
 
 }

@@ -11,11 +11,12 @@ import com.typesafe.scalalogging.slf4j.LazyLogging
 class FabricatorSuite extends TestNGSuite with LazyLogging{
 
   val fabr = new Fabricator
-  val util = new UtilityService("en")
+  val util = new UtilityService()
   val alpha = fabr.alphaNumeric()
   val contact = fabr.contact()
   val calendar = fabr.calendar()
   var wordsFaker = fabr.words()
+  val internet = fabr.internet()
   
   @Test
   def testFirstName() = {
@@ -50,13 +51,38 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
 
   @Test(dataProvider = "birthdayDP")
   def testBirthDay(age: Int) = {
-    logger.info("Checking when is the birthday of an "+age+" years old")
+    logger.info("Checking when is the birthday of an "+age+" years old. It's " + contact.birthday(age))
     val birthDate = contact.birthday(age)
-    val day = DateTime.now.getDayOfMonth()
-    val month = DateTime.now.getMonthOfYear()
-    assert(birthDate.getDayOfMonth == day)
-    assert(birthDate.getMonthOfYear == month)
-    assert(DateTime.now.getYear - age == birthDate.getYear)
+    val currentDay = DateTimeFormat.forPattern("dd-MM-yyyy").print(DateTime.now-age.years)
+    assert(birthDate == currentDay)
+  }
+
+  @DataProvider(name = "birthdayWithFormatsDP")
+  def birthdayWithFormatsDP():Array[Array[Any]] = {
+    Array(Array(21,"dd:mm:yyyy"),
+      Array(25,"mm:dd:yyyy"),
+      Array(40,"dd:mm:yyyy"),
+      Array(50,"dd:MM:yyyy"),
+      Array(30,"dd:MM:YYYY"),
+      Array(100,"dd/MM/YYYY"),
+      Array(0,"dd/MM/YY"),
+      Array(80,"dd-MM-yyyy"),
+      Array(23,"dd.MM.yyyy"),
+      Array(33,"dd.M.yyyy"),
+      Array(59,"dd-MM-yyyy HH"),
+      Array(30,"dd-MM-yyyy HH:mm"),
+      Array(20,"dd-MM-yyyy HH:mm:ss"),
+      Array(18,"dd-MM-yyyy H:m:s"),
+      Array(5,"dd-MM-yyyy H:m:s a")
+    )
+  }
+
+  @Test(dataProvider = "birthdayWithFormatsDP")
+  def testBirthDayWithFormat(age: Int, format: String) = {
+    logger.info("Checking when is the birthday of an "+age+" years old and format "+ format+ " . It's " + contact.birthday(age, format))
+    val birthDate = contact.birthday(age, format)
+    val currentDay = DateTimeFormat.forPattern(format).print(DateTime.now-age.years)
+    assert(birthDate == currentDay)
   }
 
   @DataProvider(name = "numerifyDP")
@@ -248,35 +274,55 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
   @Test(dataProvider = "wordsCountDP")
   def testWords(count: String) = {
     logger.info("Getting words array generated with length = "+count)
-    expectResult(wordsFaker.words(count.toInt).length)(count.toInt)
+    assertResult(wordsFaker.words(count.toInt).length)(count.toInt)
   }
 
   @Test
   def testSentenceDefault() = {
     var sentence = wordsFaker.sentence()
     logger.info("Testing sentence generation. Creating sentence with 10 words lenght: \n" + sentence)
-    expectResult(sentence.split(" ").length)(10)
+    assertResult(sentence.split(" ").length)(10)
   }
 
   @Test
   def testSentenceCustomLength() = {
     var sentence = wordsFaker.sentence(20)
     logger.info("Testing sentence generation. Creating sentence with 10 words lenght: \n" + sentence)
-    expectResult(sentence.split(" ").length)(20)
+    assertResult(sentence.split(" ").length)(20)
   }
 
   @Test
   def testTextDefaultValue() = {
     val paragraph = wordsFaker.paragraph()
     logger.info("Testing sentence generation. Creating text with 10 words lenght: \n" + paragraph)
-    expectResult(paragraph.length)(100)
+    assertResult(paragraph.length)(100)
   }
 
   @Test(dataProvider = "wordsCountDP")
   def testTextCustomValue(length: String  ) = {
     val paragraph = wordsFaker.paragraph(length.toInt)
     logger.info("Testing sentence generation. Creating paragraph with chars lenght: "+length.toInt + "\n" +paragraph)
-    expectResult(paragraph.length())(length.toInt)
+    assertResult(paragraph.length())(length.toInt)
+  }
+
+  @Test
+  def testCustomUrl() = {
+    val url = internet.url("http", "test.ru", "getUser", Map("id"->"123", "ts"->"09-12-10") )
+    logger.info("Testing custom url. Url is " + url)
+    assertResult("http://test.ru/getUser?id=123&ts=09-12-10")(url)
+  }
+
+  @Test
+  def testIp() = {
+    val ip = internet.ip()
+    logger.info("Testing custom ip. Ip is " + ip)
+    assert(ip != "0.0.0.0")
+    assert(ip != "255.255.255.255")
+    val ipValues  = ip.split("\\.")
+    for (i <- 0 to ipValues.size-1) {
+      assert(ipValues(i).toInt <= 256)
+    }
+
   }
 
 

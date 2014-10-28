@@ -11,7 +11,7 @@ class Words (private val utility: UtilityService, private val random: Random){
     this(new UtilityService(), new Random())
   }
 
-  protected val wordsList = utility.getListFromJson("lorem\\words")
+  protected val wordsList = utility.getListFromJson("words")
 
   def word(): String = {
     utility.getValueFromArray("word")
