@@ -6,9 +6,9 @@ import org.scalatest.testng.TestNGSuite
 import org.testng.annotations._
 
 /**
-  * Created by Andrew Zakordonets on 16/05/14.
+ * Created by Andrew Zakordonets on 16/05/14.
  */
-class FabricatorSuite extends TestNGSuite with LazyLogging{
+class FabricatorSuite extends TestNGSuite with LazyLogging {
 
   val fabr = new Fabricator
   val util = new UtilityService()
@@ -17,29 +17,29 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
   val calendar = fabr.calendar()
   var wordsFaker = fabr.words()
   val internet = fabr.internet()
-  
+
   @Test
   def testFirstName() = {
     val name = contact.firstName()
-    logger.info("Checking first name value "+name)
+    logger.info("Checking first name value " + name)
     assert(name.nonEmpty)
   }
 
   @Test
   def testLastName() = {
     val name = contact.lastName()
-    logger.info("Checking last name value "+name)
+    logger.info("Checking last name value " + name)
     assert(name.nonEmpty)
   }
 
   @Test
   def testEmail() = {
-    logger.info("Checking email "+contact.eMail())
+    logger.info("Checking email " + contact.eMail())
     assert(contact.eMail().nonEmpty)
   }
 
   @DataProvider(name = "birthdayDP")
-  def birthdayDP():Array[Array[Any]] = {
+  def birthdayDP(): Array[Array[Any]] = {
     Array(Array(0),
       Array(10),
       Array(25),
@@ -51,37 +51,37 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
 
   @Test(dataProvider = "birthdayDP")
   def testBirthDay(age: Int) = {
-    logger.info("Checking when is the birthday of an "+age+" years old. It's " + contact.birthday(age))
+    logger.info("Checking when is the birthday of an " + age + " years old. It's " + contact.birthday(age))
     val birthDate = contact.birthday(age)
-    val currentDay = DateTimeFormat.forPattern("dd-MM-yyyy").print(DateTime.now-age.years)
+    val currentDay = DateTimeFormat.forPattern("dd-MM-yyyy").print(DateTime.now - age.years)
     assert(birthDate == currentDay)
   }
 
   @DataProvider(name = "birthdayWithFormatsDP")
-  def birthdayWithFormatsDP():Array[Array[Any]] = {
-    Array(Array(21,"dd:mm:yyyy"),
-      Array(25,"mm:dd:yyyy"),
-      Array(40,"dd:mm:yyyy"),
-      Array(50,"dd:MM:yyyy"),
-      Array(30,"dd:MM:YYYY"),
-      Array(100,"dd/MM/YYYY"),
-      Array(0,"dd/MM/YY"),
-      Array(80,"dd-MM-yyyy"),
-      Array(23,"dd.MM.yyyy"),
-      Array(33,"dd.M.yyyy"),
-      Array(59,"dd-MM-yyyy HH"),
-      Array(30,"dd-MM-yyyy HH:mm"),
-      Array(20,"dd-MM-yyyy HH:mm:ss"),
-      Array(18,"dd-MM-yyyy H:m:s"),
-      Array(5,"dd-MM-yyyy H:m:s a")
+  def birthdayWithFormatsDP(): Array[Array[Any]] = {
+    Array(Array(21, "dd:mm:yyyy"),
+      Array(25, "mm:dd:yyyy"),
+      Array(40, "dd:mm:yyyy"),
+      Array(50, "dd:MM:yyyy"),
+      Array(30, "dd:MM:YYYY"),
+      Array(100, "dd/MM/YYYY"),
+      Array(0, "dd/MM/YY"),
+      Array(80, "dd-MM-yyyy"),
+      Array(23, "dd.MM.yyyy"),
+      Array(33, "dd.M.yyyy"),
+      Array(59, "dd-MM-yyyy HH"),
+      Array(30, "dd-MM-yyyy HH:mm"),
+      Array(20, "dd-MM-yyyy HH:mm:ss"),
+      Array(18, "dd-MM-yyyy H:m:s"),
+      Array(5, "dd-MM-yyyy H:m:s a")
     )
   }
 
   @Test(dataProvider = "birthdayWithFormatsDP")
   def testBirthDayWithFormat(age: Int, format: String) = {
-    logger.info("Checking when is the birthday of an "+age+" years old and format "+ format+ " . It's " + contact.birthday(age, format))
+    logger.info("Checking when is the birthday of an " + age + " years old and format " + format + " . It's " + contact.birthday(age, format))
     val birthDate = contact.birthday(age, format)
-    val currentDay = DateTimeFormat.forPattern(format).print(DateTime.now-age.years)
+    val currentDay = DateTimeFormat.forPattern(format).print(DateTime.now - age.years)
     assert(birthDate == currentDay)
   }
 
@@ -99,7 +99,7 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
   @Test(dataProvider = "numerifyDP")
   def testNumerify(value: String, matchPattern: String) = {
     val result = alpha.numerify(value)
-    logger.info("Checking numerify "+result)
+    logger.info("Checking numerify " + result)
     assert(result.matches(matchPattern))
   }
 
@@ -113,11 +113,11 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
       Array("154,??$$%123", "\\d{3}\\W{1}\\w{2}\\W{3}\\d{3}")
     )
   }
-  
+
   @Test(dataProvider = "letterifyDP")
   def testLetterify(value: String, matchPatter: String) = {
     val result = alpha.letterify(value)
-    logger.info("Checking letterify "+result)
+    logger.info("Checking letterify " + result)
     assert(result.matches(matchPatter))
   }
 
@@ -126,34 +126,34 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
   def testDefaultNumbers() {
     val number = alpha.number()
     logger.info("Checking default number function. Should return random number below 1000 : ")
-    assert( 0 to 1000 contains number)
+    assert(0 to 1000 contains number)
   }
 
 
   @DataProvider(name = "numbersCustomTypes")
   def numbersCustomTypes() = {
     Array(Array(100, classOf[Integer]),
-          Array(100.10, classOf[java.lang.Double]),
-          Array(100.10f, classOf[java.lang.Float])
+      Array(100.10, classOf[java.lang.Double]),
+      Array(100.10f, classOf[java.lang.Float])
     )
   }
 
   @Test(dataProvider = "numbersCustomTypes")
   def testCustomNumberType(value: Any, numberType: Any) {
 
-    def calculate(numberValue: Any): Any = numberValue match{
-      case numberValue: Int =>  alpha.number(numberValue)
+    def calculate(numberValue: Any): Any = numberValue match {
+      case numberValue: Int => alpha.number(numberValue)
       case numberValue: Double => alpha.double(numberValue)
       case numberValue: Float => alpha.float(numberValue)
     }
     val result = calculate(value)
-    logger.info("Checking custom number with "+numberType+" type function. Should return with specific type and below specified value : ")
+    logger.info("Checking custom number with " + numberType + " type function. Should return with specific type and below specified value : ")
     expectResult(result.getClass)(numberType)
     assert(util.isLess(result, value))
   }
 
   @DataProvider(name = "numbersRandomRange")
-  def numbersRandomRange():Array[Array[Any]] = {
+  def numbersRandomRange(): Array[Array[Any]] = {
     Array(Array(100, 150),
       Array(100.10, 200.01),
       Array(100.10f, 250.10f)
@@ -161,12 +161,12 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
   }
 
   @Test(dataProvider = "numbersRandomRange")
-  def testNumbersRandomRange(min: Any, max: Any)  {
+  def testNumbersRandomRange(min: Any, max: Any) {
 
-    def calculate(minValue: Any, maxValue: Any): Any = (minValue, maxValue) match{
-      case (min:Int, max:Int) => alpha.number(min, max)
-      case (min:Double, max:Double) => alpha.double(min, max)
-      case (min:Float, max:Float) => alpha.float(min, max)
+    def calculate(minValue: Any, maxValue: Any): Any = (minValue, maxValue) match {
+      case (min: Int, max: Int) => alpha.number(min, max)
+      case (min: Double, max: Double) => alpha.double(min, max)
+      case (min: Float, max: Float) => alpha.float(min, max)
     }
     val actualNumber = calculate(min, max)
     logger.info("Checking custom number with  type function. Should return with specific type and below specified value : ")
@@ -177,103 +177,103 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
 
   @Test
   def testDefaultDateGetter() = {
-    logger.info("Checking default date value "+calendar.date())
+    logger.info("Checking default date value " + calendar.date())
     expectResult(calendar.date())(DateTime.now.toString("dd-mm-yyyy"))
   }
 
   @DataProvider(name = "dateFormats")
   def dateFormats() = {
     Array(Array("dd:mm:yyyy"),
-          Array("mm:dd:yyyy"),
-          Array("dd:mm:yyyy"),
-          Array("dd:MM:yyyy"),
-          Array("dd:MM:YYYY"),
-          Array("dd/MM/YYYY"),
-          Array("dd/MM/YY"),
-          Array("dd-MM-yyyy"),
-          Array("dd.MM.yyyy"),
-          Array("dd.M.yyyy"),
-          Array("dd-MM-yyyy HH"),
-          Array("dd-MM-yyyy HH:mm"),
-          Array("dd-MM-yyyy HH:mm:ss"),
-          Array("dd-MM-yyyy H:m:s"),
-          Array("dd-MM-yyyy H:m:s a")
+      Array("mm:dd:yyyy"),
+      Array("dd:mm:yyyy"),
+      Array("dd:MM:yyyy"),
+      Array("dd:MM:YYYY"),
+      Array("dd/MM/YYYY"),
+      Array("dd/MM/YY"),
+      Array("dd-MM-yyyy"),
+      Array("dd.MM.yyyy"),
+      Array("dd.M.yyyy"),
+      Array("dd-MM-yyyy HH"),
+      Array("dd-MM-yyyy HH:mm"),
+      Array("dd-MM-yyyy HH:mm:ss"),
+      Array("dd-MM-yyyy H:m:s"),
+      Array("dd-MM-yyyy H:m:s a")
     )
   }
 
   @Test(dataProvider = "dateFormats")
   def testDateGetterWithDifferentFormats(format: String) = {
-    logger.info("Checking date value with "+format+" format :"+calendar.date(format))
+    logger.info("Checking date value with " + format + " format :" + calendar.date(format))
     expectResult(calendar.date(format))(DateTime.now.toString(format))
   }
 
   @DataProvider(name = "datesVariations")
   def datesVariations() = {
-    Array(Array("1","6","1800","00","00", "dd-mm-yyy hh:mm a", "01-00-1800 12:00 AM"),
-          Array("12","1","2012","02","10", "dd-mm-yyy hh:mm", "12-10-2012 02:10"),
-          Array("1","2","2014","14","10", "dd-mm-yyy hh:mm a", "01-10-2014 02:10 PM"),
-          Array("10","3","2014","14","10", "dd/mm/yyy hh:mm", "10/10/2014 02:10"),
-          Array("20","4","2014","14","10", "dd.mm.yyy hh-mm", "20.10.2014 02-10"),
-          Array("20","4","2014","14","10", "dd.mm.yyy hh-mm-ss", "20.10.2014 02-10-00"),
-          Array("13","5","2014","14","10", "ddmmyyy hh:mm", "13102014 02:10"),
-          Array("16","6","2014","14","10", "dd-mm-yyy hh", "16-10-2014 02"),
-          Array("18","7","2014","14","10", "dd-mm-yyy", "18-10-2014"),
-          Array("20","8","2014","14","10", "dd-mm-yy hh:mm", "20-10-14 02:10"),
-          Array("30","9","2014","14","10", "dd-MM-yyy hh:mm", "30-09-2014 02:10"),
-          Array("18","10","2014","14","10", "dd-mm-yyyy hh:mm", "18-10-2014 02:10"),
-          Array("18","11","2014","14","10", "dd-mm-y hh:mm", "18-10-2014 02:10"),
-          Array("02","12","2014","14","10", "d-mm-yyy hh:mm", "2-10-2014 02:10"),
-          Array("5","6","2014","14","10", "d-m-yyyy hh:mm", "5-10-2014 02:10"),
-          Array("14","6","2014","14","10", "d-m-y h:m", "14-10-2014 2:10"),
-          Array("14","6","2014","14","10", "dd-mmm-yyyy h:m", "14-010-2014 2:10"),
-          Array("12","6","2014","14","10", "dd MMM yyyy h:m", "12 Jun 2014 2:10"),
-          Array("12","6","2014","14","10", "dd MMMM yyyy h:m", "12 June 2014 2:10")
+    Array(Array("1", "6", "1800", "00", "00", "dd-mm-yyy hh:mm a", "01-00-1800 12:00 AM"),
+      Array("12", "1", "2012", "02", "10", "dd-mm-yyy hh:mm", "12-10-2012 02:10"),
+      Array("1", "2", "2014", "14", "10", "dd-mm-yyy hh:mm a", "01-10-2014 02:10 PM"),
+      Array("10", "3", "2014", "14", "10", "dd/mm/yyy hh:mm", "10/10/2014 02:10"),
+      Array("20", "4", "2014", "14", "10", "dd.mm.yyy hh-mm", "20.10.2014 02-10"),
+      Array("20", "4", "2014", "14", "10", "dd.mm.yyy hh-mm-ss", "20.10.2014 02-10-00"),
+      Array("13", "5", "2014", "14", "10", "ddmmyyy hh:mm", "13102014 02:10"),
+      Array("16", "6", "2014", "14", "10", "dd-mm-yyy hh", "16-10-2014 02"),
+      Array("18", "7", "2014", "14", "10", "dd-mm-yyy", "18-10-2014"),
+      Array("20", "8", "2014", "14", "10", "dd-mm-yy hh:mm", "20-10-14 02:10"),
+      Array("30", "9", "2014", "14", "10", "dd-MM-yyy hh:mm", "30-09-2014 02:10"),
+      Array("18", "10", "2014", "14", "10", "dd-mm-yyyy hh:mm", "18-10-2014 02:10"),
+      Array("18", "11", "2014", "14", "10", "dd-mm-y hh:mm", "18-10-2014 02:10"),
+      Array("02", "12", "2014", "14", "10", "d-mm-yyy hh:mm", "2-10-2014 02:10"),
+      Array("5", "6", "2014", "14", "10", "d-m-yyyy hh:mm", "5-10-2014 02:10"),
+      Array("14", "6", "2014", "14", "10", "d-m-y h:m", "14-10-2014 2:10"),
+      Array("14", "6", "2014", "14", "10", "dd-mmm-yyyy h:m", "14-010-2014 2:10"),
+      Array("12", "6", "2014", "14", "10", "dd MMM yyyy h:m", "12 Jun 2014 2:10"),
+      Array("12", "6", "2014", "14", "10", "dd MMMM yyyy h:m", "12 June 2014 2:10")
     )
   }
 
-//  @Test(dataProvider = "datesVariations")
-//  def testDatesVariations(day:String, month:String, year:String, hour:String, minute:String, format:String, expectedResult: String) {
-//    val date = calendar.date(day.toInt, month.toInt, year.toInt, hour.toInt, minute.toInt, format)
-//    logger.info("Checking date value with "+format+" format :"+date)
-//    expectResult(date)(expectedResult)
-//  }
+  //  @Test(dataProvider = "datesVariations")
+  //  def testDatesVariations(day:String, month:String, year:String, hour:String, minute:String, format:String, expectedResult: String) {
+  //    val date = calendar.date(day.toInt, month.toInt, year.toInt, hour.toInt, minute.toInt, format)
+  //    logger.info("Checking date value with "+format+" format :"+date)
+  //    expectResult(date)(expectedResult)
+  //  }
 
   @DataProvider(name = "datesNegativeVariations")
   def datesNegativeVariations() = {
     Array(
-      Array("31","6","1800","00","00", "dd-mm-yyy hh:mm a", "01-00-1800 12:00 AM"),
-      Array("0","1","2012","02","10", "dd-mm-yyy hh:mm", "12-10-2012 02:10"),
-      Array("-1","1","2012","02","10", "dd-mm-yyy hh:mm", "12-10-2012 02:10"),
-      Array("1","-1","2012","02","10", "dd-mm-yyy hh:mm", "12-10-2012 02:10"),
-      Array("1","1","2012","-02","10", "dd-mm-yyy hh:mm", "12-10-2012 02:10"),
-      Array("1","1","2012","02","-10", "dd-mm-yyy hh:mm", "12-10-2012 02:10"),
-      Array("1","1","2012","02","10", "ffffffff", "12-10-2012 02:10"),
-      Array("","","","","", "", "12-10-2012 02:10")
+      Array("31", "6", "1800", "00", "00", "dd-mm-yyy hh:mm a", "01-00-1800 12:00 AM"),
+      Array("0", "1", "2012", "02", "10", "dd-mm-yyy hh:mm", "12-10-2012 02:10"),
+      Array("-1", "1", "2012", "02", "10", "dd-mm-yyy hh:mm", "12-10-2012 02:10"),
+      Array("1", "-1", "2012", "02", "10", "dd-mm-yyy hh:mm", "12-10-2012 02:10"),
+      Array("1", "1", "2012", "-02", "10", "dd-mm-yyy hh:mm", "12-10-2012 02:10"),
+      Array("1", "1", "2012", "02", "-10", "dd-mm-yyy hh:mm", "12-10-2012 02:10"),
+      Array("1", "1", "2012", "02", "10", "ffffffff", "12-10-2012 02:10"),
+      Array("", "", "", "", "", "", "12-10-2012 02:10")
     )
   }
 
-//  @Test(dataProvider = "datesNegativeVariations")
-//  def datesNegativeVariationsTest(day:String, month:String, year:String, hour:String, minute:String, format:String, expectedResult: String) {
-//    intercept[Exception]{
-//        val date = calendar.date(day.toInt, month.toInt, year.toInt, hour.toInt, minute.toInt, format)
-//        logger.info("Checking date value with "+format+" format :"+date)
-//    }
-//  }
+  //  @Test(dataProvider = "datesNegativeVariations")
+  //  def datesNegativeVariationsTest(day:String, month:String, year:String, hour:String, minute:String, format:String, expectedResult: String) {
+  //    intercept[Exception]{
+  //        val date = calendar.date(day.toInt, month.toInt, year.toInt, hour.toInt, minute.toInt, format)
+  //        logger.info("Checking date value with "+format+" format :"+date)
+  //    }
+  //  }
 
   @DataProvider(name = "wordsCountDP")
   def wordsCountDP() = {
     Array(Array("10"),
-          Array("10"),
-          Array("100"),
-          Array("1000"),
-          Array("10000"),
-          Array("100000")
+      Array("10"),
+      Array("100"),
+      Array("1000"),
+      Array("10000"),
+      Array("100000")
     )
   }
 
   @Test(dataProvider = "wordsCountDP")
   def testWords(count: String) = {
-    logger.info("Getting words array generated with length = "+count)
+    logger.info("Getting words array generated with length = " + count)
     assertResult(wordsFaker.words(count.toInt).length)(count.toInt)
   }
 
@@ -299,15 +299,15 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
   }
 
   @Test(dataProvider = "wordsCountDP")
-  def testTextCustomValue(length: String  ) = {
+  def testTextCustomValue(length: String) = {
     val paragraph = wordsFaker.paragraph(length.toInt)
-    logger.info("Testing sentence generation. Creating paragraph with chars lenght: "+length.toInt + "\n" +paragraph)
+    logger.info("Testing sentence generation. Creating paragraph with chars lenght: " + length.toInt + "\n" + paragraph)
     assertResult(paragraph.length())(length.toInt)
   }
 
   @Test
   def testCustomUrl() = {
-    val url = internet.url("http", "test.ru", "getUser", Map("id"->"123", "ts"->"09-12-10") )
+    val url = internet.url("http", "test.ru", "getUser", Map("id" -> "123", "ts" -> "09-12-10"))
     logger.info("Testing custom url. Url is " + url)
     assertResult("http://test.ru/getUser?id=123&ts=09-12-10")(url)
   }
@@ -324,11 +324,43 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
     }
   }
 
-    @Test
-    def testMacAddress() = {
-      val macAddress = internet.macAddress()
-      logger.info("Testing random mac address " + macAddress)
-      assert(macAddress.matches("^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$"))
+  @Test
+  def testMacAddress() = {
+    val macAddress = internet.macAddress()
+    val UUID = internet.UUID()
+    logger.info("Testing random mac address " + macAddress)
+    assert(macAddress.matches("^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$"))
+  }
+
+  @Test
+  def testUUID() = {
+    val UUID = internet.UUID()
+    logger.info("Testing random UUID " + UUID)
+    assert(UUID.matches("[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}"))
+  }
+
+  @Test
+  def testBsn() = {
+    val bsn = contact.bsn()
+    logger.info("Testing random bsn number : " + bsn)
+    assert(isValidBSN(bsn.toInt))
+  }
+
+  private def isValidBSN(candidate: Int): Boolean = {
+    var bsn = candidate
+    if (bsn <= 9999999 || bsn > 999999999) {
+      return false;
     }
+    var sum: Int = -1 * bsn % 10;
+
+    for (multiplier <- 2 to 100; if bsn > 0) {
+      bsn = bsn / 10
+      var value = bsn % 10
+      sum = sum + (multiplier * value)
+    }
+
+    return sum != 0 && sum % 11 == 0;
+  }
+
 
 }

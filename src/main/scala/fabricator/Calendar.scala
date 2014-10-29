@@ -7,9 +7,15 @@ import com.github.nscala_time.time.Imports._
  */
 class Calendar {
 
-  def date(format:String = "dd-mm-yyyy"): String = {
+  def date() : String = {
+    date("dd-mm-yyyy")
+  }
+
+  def date(format:String ): String = {
     DateTime.now.toString(format)
   }
+
+
 
 //  def date(dayOfTheYear:Int = 0, monthOfTheYear:Int = 0, yearVal:Int = 0, hour:Int = 0, minute:Int = 0, defFormat: String = "dd-mm-yyyy"): String = {
 //    new DateTime(yearVal, monthOfTheYear, dayOfTheYear, hour, minute).toString(defFormat)
