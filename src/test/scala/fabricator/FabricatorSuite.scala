@@ -1,9 +1,9 @@
 package fabricator
 
-import org.testng.annotations._
 import com.github.nscala_time.time.Imports._
-import org.scalatest.testng.TestNGSuite
 import com.typesafe.scalalogging.slf4j.LazyLogging
+import org.scalatest.testng.TestNGSuite
+import org.testng.annotations._
 
 /**
   * Created by Andrew Zakordonets on 16/05/14.
@@ -318,13 +318,17 @@ class FabricatorSuite extends TestNGSuite with LazyLogging{
     logger.info("Testing custom ip. Ip is " + ip)
     assert(ip != "0.0.0.0")
     assert(ip != "255.255.255.255")
-    val ipValues  = ip.split("\\.")
-    for (i <- 0 to ipValues.size-1) {
+    val ipValues = ip.split("\\.")
+    for (i <- 0 to ipValues.size - 1) {
       assert(ipValues(i).toInt <= 256)
     }
-
   }
 
-
+    @Test
+    def testMacAddress() = {
+      val macAddress = internet.macAddress()
+      logger.info("Testing random mac address " + macAddress)
+      assert(macAddress.matches("^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$"))
+    }
 
 }

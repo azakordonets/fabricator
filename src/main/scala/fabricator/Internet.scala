@@ -7,10 +7,10 @@ import scala.util.Random
 /**
  * Created by Andrew Zakordonets on 22/09/14.
  */
-class Internet (private val utility: UtilityService, private val alpha: Alphanumeric){
+class Internet (private val utility: UtilityService, private val alpha: Alphanumeric, private val random: Random){
 
   def this() {
-    this(new UtilityService(), new Alphanumeric())
+    this(new UtilityService(), new Alphanumeric(), new Random())
   }
 
   def url (): String = {
@@ -26,10 +26,13 @@ class Internet (private val utility: UtilityService, private val alpha: Alphanum
   }
 
   def ip(): String = {
-    val random = new Random()
     val ip = random.nextInt(256) + "." + random.nextInt(256) + "." + random.nextInt(256) + "." + random.nextInt(256)
     if (ip == "0.0.0.0" || ip == "255.255.255.255") this.ip()
     else ip
+  }
+
+  def macAddress(): String = {
+    Iterator.continually(Array.fill[String](6)(f"${random.nextInt(255)}%02x").mkString(":")).toSeq.head.toUpperCase
   }
 
 
