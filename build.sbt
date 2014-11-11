@@ -18,6 +18,8 @@ libraryDependencies ++= Seq(
   "org.slf4j" % "slf4j-api" % "1.7.1",
   "org.slf4j" % "log4j-over-slf4j" % "1.7.1",  // for any java classes looking for this
   "ch.qos.logback" % "logback-classic" % "1.0.3",
+  "org.iban4j" % "iban4j" % "2.1.1",
+  "commons-validator" % "commons-validator" % "1.4.0",
   "com.google.inject" % "guice" % "3.0"
 )
 

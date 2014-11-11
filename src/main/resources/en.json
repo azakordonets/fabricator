@@ -25,6 +25,20 @@
     "word" : ["age","air","anger","animal","answer","apple","area","arm","art","atom","baby","back","ball","band","bank","bar","base","bat","bear","beauty","bell","bird","bit","block","blood","blow","board","boat","body","bone","book","bottom","box","boy","branch","bread","break","brother","call","camp","capital","captain","car"],
     "words": [["this", "is", "the", "even", "with", "us", "seven", "school", "correct", "even", "father", "mean", "these", "thats", "land", "water", "professional", "his", "master", "cold water", "worn", "because", "night", "out", "since"], ["plumbing", "company", "pipes", "done", "another", "why", "available", "still", "on-call", "eleven", "let", "also", "eye", "between", "way", "why", "rated", "who", "keeps", "still", "she", "also", "hot", "parts", "fortified"], ["sewer", "line", "notice", "leak", "about", "there", "restore", "answer", "to", "try", "such", "another", "maintenance", "star", "we", "us", "all", "restore", "about", "has", "water heater", "price", "a", "ability", "first", "act"], ["matter", "our", "would", "off", "is", "repairs", "flow", "ability", "go", "which", "does", "ones", "kind", "did", "do", "often", "fix", "nowhere", "were", "online", "and", "take", "good", "like", "note"], ["new", "used", "disposal", "shower", "faucet", "no", "point", "chart", "mountain", "slab", "I", "land", "adjust", "is", "things", "live", "system", "copper", "about", "old", "expert", "every", "much", "none", "opinion"], ["want", "fan", "boy", "progress", "after", "study", "work", "down", "way", "view", "last", "fried", "that", "often", "worth", "torn", "process", "clean", "accurate", "save", "money", "optional", "does", "before", "through"], ["turn", "read", "ton", "close", "day", "before", "animal", "rim", "should", "your", "mine", "our", "sink", "done", "or", "way", "of", "drain", "nozzle", "open", "doing", "close", "con", "high", "right"], ["install", "grow", "tell", "add", "because", "keep", "knob", "like", "understand", "small", "turn", "now", "doing", "ofcourse", "large", "cross", "picture", "who", "aim", "right", "auto", "fixed", "another", "commercial", "management"], ["try", "sun", "year", "down", "first", "by", "but", "will", "write", "of", "any", "if", "here", "so", "run", "narrow", "low", "with", "form", "look", "what", "back", "here", "long", "sound"]]
   },
+  "finance": {
+      "countryCode" : ["GB"],
+      "branchCode":["######"],
+      "bic" : ["MIDLGB####?","LOYDGB##?##","SMBCG##LXXX", "AIBKGB#LSDV", "RBOSGB2RTCM", "RBOSGB2RTCM", "RBOSGB2RTCM", "RBOSGB2RTCM", "RBOSGB2RTCM", "ROYCGB22XXX", "ROYCGB22XXX", "ROYCGB22XXX", "ROYCGB22XXX", "ROYCGB22XXX", "CLSBUS33XXX", "ABNAGB2LXXX", "CLSBUS33XXX", "BOFAGB3SSWI", "ABNAGB2LXXX", "BOFAGB3SSWI", "CLSBUS33XXX", "ABNAGB2LXXX", "BOFAGB3SSWI", "CLSBUS33XXX", "ABNAGB2LXXX", "BOFAGB3SSWI", "CLSBUS33XXX", "ABNAGB2LXXX", "BOFAGB3SSWI", "BARCGB####?" ],
+      "accountNumber": ["########"],
+      "visa_prefix": [ "4539", "4556", "4916", "4532", "4929", "40240071", "4485", "4716", "4"],
+      "mastercard_prefix" : ["51", "52", "53", "54", "55" ],
+      "amex_prefix": [ "34", "37" ],
+      "discover_prefix": ["6011" ],
+      "dinners_prefix" : [ "300", "301", "302", "303", "36", "38" ],
+      "enroute_prefix": [ "2014", "2149" ],
+      "jcb_prefix": [ "35" ],
+      "voyager_prefix": [ "8699" ]
+  },
   "phone_number": {
     "phone_formats": ["###-###-####","(###)###-####","1-###-###-####","###.###.####","###-###-####","(###)###-####","1-###-###-####","###.###.####","###-###-#### x###","(###)###-#### x###","1-###-###-#### x###","###.###.#### x###","###-###-#### x####","(###)###-#### x####","1-###-###-#### x####","###.###.#### x####","###-###-#### x#####","(###)###-#### x#####","1-###-###-#### x#####","###.###.#### x#####"]
   }

@@ -7,7 +7,8 @@ class Fabricator(lang: String = "en",
                       contactFaker: Contact = new Contact,
                       calendarFaker: Calendar = new Calendar,
                       wordsFaker: Words = new Words,
-                      internetFaker: Internet = new Internet) {
+                      internetFaker: Internet = new Internet,
+                      financeFaker: Finance = new Finance) {
 
   def this () {
     this("en",
@@ -16,7 +17,8 @@ class Fabricator(lang: String = "en",
       new Contact,
       new Calendar,
       new Words,
-      new Internet)
+      new Internet,
+      new Finance)
   }
 
   def this (lang: String) {
@@ -26,7 +28,8 @@ class Fabricator(lang: String = "en",
       new Contact,
       new Calendar,
       new Words,
-      new Internet)
+      new Internet,
+      new Finance)
   }
 
   def contact(): Contact = {
@@ -47,6 +50,10 @@ class Fabricator(lang: String = "en",
 
   def internet() : Internet = {
     internetFaker
+  }
+
+  def finance() = {
+    financeFaker
   }
 
 }
