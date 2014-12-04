@@ -65,8 +65,8 @@ class InternetTestSuite extends TestNGSuite with LazyLogging{
 
   @DataProvider(name = "colorVariations")
   def colorVariations() = {
-    Array(Array("hex",false,  "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"),
-      Array("hex", true, "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"),
+    Array(Array("hex",false,  "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{5}|[A-Fa-f0-9]{4}|[A-Fa-f0-9]{3})$"),
+      Array("hex", true, "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{5}|[A-Fa-f0-9]{3})$"),
       Array("shorthex", false, "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"),
       Array("shorthex", true, "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"),
       Array("rgb", true, "rgb\\(\\s*((?:[0-2]?[0-9])?[0-9])\\s*,\\s*((?:[0-2]?[0-9])?[0-9])\\s*,\\s*((?:[0-2]?[0-9])?[0-9])\\s*\\)$"),
@@ -76,9 +76,11 @@ class InternetTestSuite extends TestNGSuite with LazyLogging{
 
   @Test(dataProvider = "colorVariations")
   def testColor(codeType: String, grayscale: Boolean, regexMatch: String) = {
-    val color = internet.color(codeType, grayscale)
-    logger.info("Testing random "+codeType+" color with greyscale = "+grayscale+". Color code is : "  +color)
-    assert(color.matches(regexMatch))
+    for (i <- 1 to 10) {
+      val color = internet.color(codeType, grayscale)
+      logger.info("Testing random " + codeType + " color with greyscale = " + grayscale + ". Color code is : " + color)
+      assert(color.matches(regexMatch), "Color " + color + " didn't match to regex : " + regexMatch)
+    }
   }
 
   @Test

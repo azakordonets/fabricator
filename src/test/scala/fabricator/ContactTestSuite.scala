@@ -55,7 +55,12 @@ class ContactTestSuite extends TestNGSuite with LazyLogging {
   def testPhoneNumber() = {
     val phone = contact.phoneNumber()
     logger.info("Checking phone number value " + phone)
-    val reversedPhone = phone.replaceAll("[0-9]", "#")
+    var reversedPhone = ""
+    if (phone.substring(0,2).equals("1-")){
+      reversedPhone = "1-" + phone.substring(2, phone.length).replaceAll("[0-9]", "#")
+    }else {
+      reversedPhone = phone.replaceAll("[0-9]", "#")
+    }
     assert(phoneFormatsList.contains(reversedPhone))
   }
 

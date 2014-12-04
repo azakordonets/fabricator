@@ -77,36 +77,14 @@ class Contact( private val utility:UtilityService,
     utility.getValueFromArray("company_suffix")
   }
 
-  def bsn(): String = {
-    val bsn: Array[Int]  = new Array[Int](9);
-    bsn(0) = random.nextInt(9) + 1;
-    for (i <- 1 to 8) {
-      bsn(i) = random.nextInt(10);
-    }
-    bsn(8) = 0;
-    if (bsn(0) + bsn(1) + bsn(2) == 0) {
-      bsn(1) = 1;
-    }
-    var sum = 0;
-    for ( i <- 1 to 8) {
-      sum += bsn(i) * (9 - i);
-    }
-    bsn(8) = sum % 11;
-    if (bsn(8) > 9) {
-      if (bsn(7) > 0) {
-        bsn(7) -= 1;
-        bsn(8) = 8;
-      } else {
-        bsn(7) += 1;
-        bsn(8) = 1;
-      }
-    }
-    var result: String = ""
-    for (i <- 1 to 8 ) {
-      result += bsn(i);
-    }
-    return result;
-
+  /**
+   * BSN number is generated in accordance with http://nl.wikipedia.org/wiki/Burgerservicenummer article
+   * @return
+   */
+  def bsn() : String = {
+    val firstFour: String = alpha.integer(1000, 9999).toString
+    val secondFour = firstFour.reverse
+    return firstFour + secondFour + "0"
   }
 
 }
