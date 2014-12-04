@@ -120,6 +120,10 @@ class Finance(private val utility: UtilityService,
     creditCard.createCreditCardNumber(creditCard.jcbPrefixList, 15, howMany)
   }
 
+  def pinCode(): String = {
+    alpha.numerify("####")
+  }
+
 
 
 

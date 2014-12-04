@@ -8,7 +8,7 @@ import com.github.nscala_time.time.Imports._
 class Calendar {
 
   def date() : String = {
-    date("dd-mm-yyyy")
+    date("dd-MM-yyyy")
   }
 
   def date(format:String ): String = {

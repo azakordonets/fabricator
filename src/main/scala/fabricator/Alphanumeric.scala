@@ -13,15 +13,15 @@ class Alphanumeric(private val random: Random) {
   }
 
 
-  def number(): Int = {
+  def integer(): Int = {
     random.nextInt(1000)
   }
 
-  def number(max: Int):Int = {
+  def integer(max: Int):Int = {
     random.nextInt(max)
   }
 
-  def number(min: Int, max: Int): Int = {
+  def integer(min: Int, max: Int): Int = {
     random.nextInt(max - min) + min
   }
 

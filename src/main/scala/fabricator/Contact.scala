@@ -57,7 +57,7 @@ class Contact( private val utility:UtilityService,
     alpha.numerify(utility.getValueFromArray("house_number"))
   }
 
-  def appartmentNumber() = {
+  def apartmentNumber() = {
     alpha.numerify(utility.getValueFromArray("app_number"))
   }
 
