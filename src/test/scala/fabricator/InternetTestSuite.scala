@@ -65,10 +65,10 @@ class InternetTestSuite extends TestNGSuite with LazyLogging{
 
   @DataProvider(name = "colorVariations")
   def colorVariations() = {
-    Array(Array("hex",false,  "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{5}|[A-Fa-f0-9]{4}|[A-Fa-f0-9]{3})$"),
-      Array("hex", true, "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{5}|[A-Fa-f0-9]{3})$"),
-      Array("shorthex", false, "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"),
-      Array("shorthex", true, "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"),
+    Array(Array("hex",false,  "^#[A-Fa-f0-9]{1,6}"),
+      Array("hex", true, "^#[A-Fa-f0-9]{1,6}"),
+      Array("shorthex", false, "^#[A-Fa-f0-9]{1,6}"),
+      Array("shorthex", true, "^#[A-Fa-f0-9]{1,6}"),
       Array("rgb", true, "rgb\\(\\s*((?:[0-2]?[0-9])?[0-9])\\s*,\\s*((?:[0-2]?[0-9])?[0-9])\\s*,\\s*((?:[0-2]?[0-9])?[0-9])\\s*\\)$"),
       Array("rgb", false, "rgb\\(\\s*((?:[0-2]?[0-9])?[0-9])\\s*,\\s*((?:[0-2]?[0-9])?[0-9])\\s*,\\s*((?:[0-2]?[0-9])?[0-9])\\s*\\)$")
     )
