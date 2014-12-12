@@ -87,4 +87,8 @@ class Contact( private val utility:UtilityService,
     return firstFour + secondFour + "0"
   }
 
+  def religion(): String = {
+    utility.getValueFromArray("religion")
+  }
+
 }

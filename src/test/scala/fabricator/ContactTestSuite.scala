@@ -20,6 +20,7 @@ class ContactTestSuite extends TestNGSuite with LazyLogging {
   val stateList: Array[String] = utility.getArrayFromJson("state")
   val stateAbbrList: Array[String] = utility.getArrayFromJson("state_abbr")
   val companyList: Array[String] = utility.getArrayFromJson("company_suffix")
+  val religionList: Array[String] = utility.getArrayFromJson("religion")
 
   @Test
   def testFirstName() = {
@@ -179,6 +180,14 @@ class ContactTestSuite extends TestNGSuite with LazyLogging {
       }
       assert(sum != 0 && sum % 11 == 0)
     }
+  }
+
+  @Test
+  def testReligion() = {
+    val religion = contact.religion()
+    logger.info("Checking religion value " + religion)
+    assert(religionList.contains(religion))
+
   }
 
 
