@@ -9,7 +9,9 @@ class Fabricator(lang: String = "en",
                       wordsFaker: Words = new Words,
                       internetFaker: Internet = new Internet,
                       financeFaker: Finance = new Finance,
-                      locationFaker: Location = new Location()) {
+                      locationFaker: Location = new Location(),
+                      fileFaker: FileGenerator = new FileGenerator()) {
+
 
 
   def this () {
@@ -21,7 +23,8 @@ class Fabricator(lang: String = "en",
     new Words,
     new Internet,
     new Finance,
-    new Location)
+    new Location,
+    new FileGenerator)
   }
 
   def this (lang: String) {
@@ -33,7 +36,8 @@ class Fabricator(lang: String = "en",
     new Words,
     new Internet,
     new Finance,
-    new Location)
+    new Location,
+    new FileGenerator)
   }
 
   def contact(): Contact = {
@@ -62,5 +66,9 @@ class Fabricator(lang: String = "en",
 
   def location(): Location = {
     locationFaker
+  }
+
+  def file(): FileGenerator = {
+    fileFaker
   }
 }

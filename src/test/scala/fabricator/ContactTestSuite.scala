@@ -21,6 +21,9 @@ class ContactTestSuite extends TestNGSuite with LazyLogging {
   val stateAbbrList: Array[String] = utility.getArrayFromJson("state_abbr")
   val companyList: Array[String] = utility.getArrayFromJson("company_suffix")
   val religionList: Array[String] = utility.getArrayFromJson("religion")
+  val zodiacList: Array[String] = utility.getArrayFromJson("zodiac")
+  val bloodTypeList: Array[String] = utility.getArrayFromJson("blood_type")
+  val occupationList: Array[String] = utility.getArrayFromJson("occupation")
 
   @Test
   def testFirstName() = {
@@ -187,7 +190,68 @@ class ContactTestSuite extends TestNGSuite with LazyLogging {
     val religion = contact.religion()
     logger.info("Checking religion value " + religion)
     assert(religionList.contains(religion))
+  }
 
+  @Test
+  def testZodiac() = {
+    val zodiac = contact.zodiac()
+    logger.info("Checking zodiac value " + zodiac)
+    assert(zodiacList.contains(zodiac))
+  }
+
+  @DataProvider(name = "zodiacDP")
+  def zodiacDP(): Array[Array[Any]] = {
+    Array(Array("10-01-2001", "Capricorn"),
+      Array("22-01-2001", "Aquarius"),
+      Array("25-02-2001", "Pisces"),
+      Array("25-03-2001", "Aries"),
+      Array("25-04-2001", "Taurus"),
+      Array("25-05-2001", "Gemini"),
+      Array("25-06-2001", "Cancer"),
+      Array("25-07-2001", "Leo"),
+      Array("25-08-2001", "Virgo"),
+      Array("25-09-2001", "Libra"),
+      Array("25-10-2001", "Scorpio"),
+      Array("25-11-2001", "Sagittarius")
+    )
+  }
+
+  @Test(dataProvider = "zodiacDP")
+  def testZodiacByDate(date: String, expectedZodiac: String) = {
+    val zodiac = contact.zodiac(date)
+    logger.info("Testing zodiac for specific date: " + date + " . Zodiac is "+zodiac)
+    assertResult(expectedZodiac)(zodiac)
+  }
+
+  @Test
+  def testHeight() = {
+    logger.info("Testing random height in cm "+ contact.height(true))
+    logger.info("Testing random height in m "+ contact.height(false))
+    val heightInCm = contact.height(true).split(" ")(0).toDouble
+    val heightInM = contact.height(false).split(" ")(0).toDouble
+    assert(heightInCm >= 1.50 && heightInCm <= 2.20)
+    assert(heightInM >= 150 && heightInM <= 220)
+  }
+
+  @Test
+  def testWeight() = {
+    val weight = contact.weight()
+    logger.info("Testing random weight value : "+weight)
+    assert(weight.split(" ")(0).toInt >= 50 && weight.split(" ")(0).toInt <= 110)
+  }
+
+  @Test
+  def testBloodType() = {
+    val bloodType = contact.bloodType()
+    logger.info("Testing random blood type: "+bloodType)
+    assert(bloodTypeList.contains(bloodType))
+  }
+
+  @Test
+  def testOccupation() = {
+    val occupation = contact.occupation()
+    logger.info("Testing random occupation value: "+occupation)
+    assert(occupationList.contains(occupation))
   }
 
 

@@ -1,5 +1,7 @@
 package fabricator
 
+import com.spatial4j.core.io.GeohashUtils
+
 import scala.util.Random
 
 class Location(private val utility: UtilityService,
@@ -52,7 +54,7 @@ class Location(private val utility: UtilityService,
 
 
   def latitude(): String = {
-    latitude(-90, 90)
+    latitude(-89, 89)
   }
 
   def latitude(min: Int, max: Int): String = {
@@ -60,7 +62,7 @@ class Location(private val utility: UtilityService,
   }
 
   def latitude(accuracy: Int): String = {
-    latitude(-90, 90, accuracy)
+    latitude(-89, 89, accuracy)
   }
 
   def latitude(min: Int, max: Int, accuracy: Int): String = {
@@ -72,7 +74,7 @@ class Location(private val utility: UtilityService,
 
 
   def longitude(): String = {
-    longitude(-180, 180)
+    longitude(-179, 179)
   }
 
   def longitude(min: Int, max: Int): String = {
@@ -80,7 +82,7 @@ class Location(private val utility: UtilityService,
   }
 
   def longitude(accuracy: Int): String = {
-    longitude(-180, 180, accuracy)
+    longitude(-179, 179, accuracy)
   }
 
   def longitude(min: Int, max: Int, accuracy: Int): String = {
@@ -88,6 +90,14 @@ class Location(private val utility: UtilityService,
       throw new IllegalArgumentException("Accuracy cannot be more then 10 digits")
     }
     alpha.integer(min, max) + "." + alpha.integer(100000, 1000000000).toString.substring(0, accuracy)
+  }
+
+  def geohash(): String = {
+    GeohashUtils.encodeLatLon(latitude().toDouble, longitude().toDouble)
+  }
+
+  def geohash(latitude: Double, longitude: Double): String = {
+    GeohashUtils.encodeLatLon(latitude, longitude)
   }
 
 
