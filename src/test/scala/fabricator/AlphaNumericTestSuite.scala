@@ -104,6 +104,23 @@ class AlphaNumericTestSuite extends TestNGSuite with LazyLogging {
     assert(extendedString.isInstanceOf[String])
   }
 
+  @DataProvider(name = "charSets")
+  def charSets() = {
+    Array(Array("aaaa", 10),
+      Array("1234567890", 100),
+      Array("0123456789abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_", 500),
+      Array("!@#$%^&*()_+{}\"|:?><",30)
+    )
+  }
+
+  @Test(dataProvider = "charSets")
+  def testCustomStringWithSpecificCharSet(charSet: String, max: Int) = {
+    val string = alpha.string(charSet, max)
+    logger.info("Checking default extendedString function. Should return random extendedString below "+max+" : " + string)
+    assert(string.length == max)
+    for (symbol <- string) assert(charSet.contains(symbol))
+  }
+
 
   @DataProvider(name = "numbersCustomTypes")
   def numbersCustomTypes() = {
@@ -147,7 +164,7 @@ class AlphaNumericTestSuite extends TestNGSuite with LazyLogging {
     logger.info("Checking custom number with  type function. Should return with specific type and below specified value : ")
     assertResult(actualNumber.getClass)(min.getClass)
     assert(util.isLess(actualNumber, max))
-    assert(util.isLess(min, actualNumber))
+    assert(util.isLessOrEqual(min, actualNumber))
   }
 
 }

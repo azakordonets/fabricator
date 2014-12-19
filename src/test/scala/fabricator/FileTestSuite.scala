@@ -19,7 +19,7 @@ class FileTestSuite extends TestNGSuite with LazyLogging {
 
   @Test
   def testMidi() = {
-    file.midiFile()
+//    file.midiFile()
   }
 
 

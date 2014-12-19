@@ -18,12 +18,12 @@ libraryDependencies ++= Seq(
   "org.slf4j" % "slf4j-api" % "1.7.1",
   "org.slf4j" % "log4j-over-slf4j" % "1.7.1",  // for any java classes looking for this
   "ch.qos.logback" % "logback-classic" % "1.0.3",
-  "com.googlecode.scala-midi" % "scala-midi_2.10.2" % "0.2",
-  "org.scala-lang" % "scala-reflect" % "2.10.4",
   "com.spatial4j" % "spatial4j" % "0.4.1",
   "org.iban4j" % "iban4j" % "2.1.1",
   "commons-validator" % "commons-validator" % "1.4.0",
   "com.google.inject" % "guice" % "3.0"
 )
+
+ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) }
 
 unmanagedResourceDirectories in Compile += { baseDirectory.value / "src/main/resources" }

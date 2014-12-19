@@ -171,7 +171,6 @@ class ContactTestSuite extends TestNGSuite with LazyLogging {
 
   @Test
   def testBsn() = {
-    for (i <- 0 to 100) {
       var bsn = contact.bsn().toInt
       logger.info("Testing random bsn number : " + bsn)
       assert(bsn < 999999999 && bsn >= 9999999)
@@ -183,7 +182,6 @@ class ContactTestSuite extends TestNGSuite with LazyLogging {
       }
       assert(sum != 0 && sum % 11 == 0)
     }
-  }
 
   @Test
   def testReligion() = {

@@ -4,7 +4,7 @@ import com.typesafe.scalalogging.slf4j.LazyLogging
 import org.scalatest.testng.TestNGSuite
 import org.testng.annotations.{DataProvider, Test}
 
-class InternetTestSuite extends TestNGSuite with LazyLogging{
+class InternetTestSuite extends TestNGSuite with LazyLogging {
 
   val fabr = new Fabricator
   val util = new UtilityService()
@@ -65,7 +65,7 @@ class InternetTestSuite extends TestNGSuite with LazyLogging{
 
   @DataProvider(name = "colorVariations")
   def colorVariations() = {
-    Array(Array("hex",false,  "^#[A-Fa-f0-9]{1,6}"),
+    Array(Array("hex", false, "^#[A-Fa-f0-9]{1,6}"),
       Array("hex", true, "^#[A-Fa-f0-9]{1,6}"),
       Array("shorthex", false, "^#[A-Fa-f0-9]{1,6}"),
       Array("shorthex", true, "^#[A-Fa-f0-9]{1,6}"),
@@ -86,32 +86,30 @@ class InternetTestSuite extends TestNGSuite with LazyLogging{
   @Test
   def testTwitter() = {
     val twitter = internet.twitter()
-    logger.info("Testing random twitter account name : "+twitter)
+    logger.info("Testing random twitter account name : " + twitter)
     assert(twitter.matches("@[a-zA-Z]+"))
   }
 
   @Test
   def testHashtag() = {
     val hashtag = internet.hashtag()
-    logger.info("Testing random hashtag account name : "+hashtag)
+    logger.info("Testing random hashtag account name : " + hashtag)
     assert(hashtag.matches("#[a-zA-Z]+"))
   }
 
   @Test
   def testGoogleAnalyticks() = {
     val gaCode = internet.googleAnalyticsTrackCode()
-    logger.info("Testing random google analytics tracking code : "+ gaCode)
-    assert(gaCode.matches("UA-\\d{5}-\\d{2}"))
+    logger.info("Testing random google analytics tracking code : " + gaCode)
+    assert(gaCode.matches("UA-\\d{4,5}-\\d{2}"))
   }
 
   @Test
   def testFacebookId() = {
     val facebookId = internet.facebookId()
-    logger.info("Testing random facebook id : "+ facebookId)
+    logger.info("Testing random facebook id : " + facebookId)
     assert(facebookId.length == 16)
   }
-
-
 
 
 }

@@ -88,7 +88,7 @@ class Internet (private val utility: UtilityService,
   }
 
   def googleAnalyticsTrackCode(): String = {
-    "UA-" + random.nextInt(100000) + "-" + alpha.integer(10,100)
+    "UA-" + alpha.integer(10000, 100000) + "-" + alpha.integer(10,100)
   }
 
   def facebookId(): String = {

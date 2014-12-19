@@ -16,7 +16,7 @@ class UtilityService(lang: String, private val random:Random) {
   def this(lang:String){
     this(lang, new Random())
   }
-  private val valuesJson = Json.parse(Source.fromInputStream(getClass().getClassLoader().getResourceAsStream(lang + ".json")).mkString)
+  private val valuesJson = Json.parse(Source.fromInputStream(getClass().getClassLoader().getResourceAsStream(lang + ".json"))("UTF-8").mkString)
 
    def getValueFromArray(key: String): String = {
     val array = (valuesJson \\ key)(0).asOpt[Array[String]].get
@@ -36,6 +36,13 @@ class UtilityService(lang: String, private val random:Random) {
     case (a: Int, b: Int) => a < b
     case (a: Double, b: Double) => a < b
     case (a: Float, b: Float) => a < b
+    case _ => throw new Exception("Invalid arguments were passed .They should be either int, double, float and both same type")
+  }
+
+  def isLessOrEqual(a: Any, b: Any): Boolean = (a, b) match {
+    case (a: Int, b: Int) => a <= b
+    case (a: Double, b: Double) => a <= b
+    case (a: Float, b: Float) => a <= b
     case _ => throw new Exception("Invalid arguments were passed .They should be either int, double, float and both same type")
   }
 

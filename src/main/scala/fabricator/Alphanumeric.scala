@@ -57,12 +57,49 @@ class Alphanumeric(private val random: Random) {
     random.nextGaussian()
   }
 
-  def string(): String = {
-    random.nextString(30)
+  def string(charsSequence: String, max: Int): String = {
+    var builder = new StringBuilder
+    var counter = 0
+    while (counter < max) {
+      builder.append(charsSequence.charAt(random.nextInt(charsSequence.length-1)))
+      counter += 1
+    }
+    builder.toString()
   }
 
-  def string (max: Int): String = {
-    random.nextString(max)
+  def string(): String = {
+    string("0123456789abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_",30)
+  }
+
+  def string (length: Int): String = {
+    string("0123456789abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_",length)
+  }
+
+
+  def hash(): String = {
+    string("0123456789abcdef",40)
+  }
+
+  def hash(length: Int) = {
+    string("0123456789abcdef",length)
+  }
+
+  def guid(): String = {
+    guid(5)
+  }
+
+  def guid(version: Int): String = {
+    val guid_pool = "abcdef1234567890"
+    val variant_pool = "ab89"
+    return    string(guid_pool, 8) + "-" +
+              string(guid_pool, 4) + "-" +
+              // The Version
+              version +
+              string(guid_pool, 3) + "-" +
+              // The Variant
+              string(variant_pool, 1) +
+              string(guid_pool, 3) + "-" +
+              string(guid_pool, 12)
   }
 
 
