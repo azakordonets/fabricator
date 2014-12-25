@@ -2,7 +2,7 @@ name := "fabricator"
 
 version := "1.0"
 
-scalaVersion := "2.10.2"
+scalaVersion := "2.11.2"
 
 resolvers += "Typesafe Simple Repository" at "http://repo.typesafe.com/typesafe/simple/maven-releases/"
 
@@ -27,3 +27,9 @@ libraryDependencies ++= Seq(
 ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) }
 
 unmanagedResourceDirectories in Compile += { baseDirectory.value / "src/main/resources" }
+
+resolvers += Classpaths.sbtPluginReleases
+
+addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.0.1")
+
+addSbtPlugin("org.scoverage" % "sbt-coveralls" % "1.0.0.BETA1")
