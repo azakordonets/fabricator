@@ -1,6 +1,6 @@
 package fabricator
 
-import org.joda.time.{IllegalFieldValueException, DateTime}
+import org.joda.time.{DateTime, IllegalFieldValueException}
 
 import scala.util.Random
 
@@ -42,12 +42,12 @@ class Calendar(private val utility: UtilityService,
   def day(year: Int, month: Int): String = {
     var result = ""
     var dayValue = 0
-    while(result.eq("")){
-      try{
+    while (result.eq("")) {
+      try {
         dayValue = alpha.integer(1, 31)
         new DateTime(year, month, dayValue, 0, 0)
         result = dayValue.toString
-      }catch {
+      } catch {
         case e: IllegalFieldValueException => this.day(year, month)
       }
     }
@@ -78,17 +78,17 @@ class Calendar(private val utility: UtilityService,
   }
 
   def dateObject(): DateTime = {
-    new DateTime(year().toInt, month().toInt, 1, hour().toInt, minute().toInt, second().toInt).plusDays(alpha.integer(1,31))
+    new DateTime(year().toInt, month().toInt, 1, hour().toInt, minute().toInt, second().toInt).plusDays(alpha.integer(1, 31))
   }
 
   def date(year: Int, month: Int, day: Int, hour: Int, minute: Int): String = {
     var date = ""
-    try{
-      while(date.equals("")) {
-          date = new DateTime(year, month, day, hour, minute).toString("dd-MM-yyyy hh:mm")
+    try {
+      while (date.equals("")) {
+        date = new DateTime(year, month, day, hour, minute).toString("dd-MM-yyyy hh:mm")
       }
-    }catch {
-      case e: IllegalFieldValueException => return this.date(year, month, day-1, hour, minute)
+    } catch {
+      case e: IllegalFieldValueException => return this.date(year, month, day - 1, hour, minute)
     }
     date
   }
@@ -106,35 +106,45 @@ class Calendar(private val utility: UtilityService,
   }
 
   def dateWithPeriod(date: DateTime, years: Int, months: Int, weeks: Int, days: Int, hours: Int, minutes: Int, format: String): String = {
-    (years, months, weeks, days, hours, minutes) match {
-      case (0 , 0, 0, 0, 0, 0)  => date.toString(format)
-      case (years , 0, 0, 0, 0, 0) if years > 0 => date.plusYears(years).toString(format)
-      case (years , 0, 0, 0, 0, 0) if years < 0=> date.minusYears(Math.abs(years)).toString(format)
-      case (0 , months, 0, 0, 0, 0) if months > 0 => date.plusMonths(months).toString(format)
-      case (0 , months, 0, 0, 0, 0) if months < 0=> date.minusMonths(Math.abs(months)).toString(format)
-      case (0 , 0, weeks, 0, 0, 0) if weeks > 0 => date.plusWeeks(weeks).toString(format)
-      case (0 , 0, weeks, 0, 0, 0) if weeks < 0=> date.minusWeeks(Math.abs(weeks)).toString(format)
-      case (0 , 0, 0, days, 0, 0) if days > 0 => date.plusDays(days).toString(format)
-      case (0 , 0, 0, days, 0, 0) if days < 0=> date.minusDays(Math.abs(days)).toString(format)
-      case (0 , 0, 0, 0, hours, 0) if hours > 0 => date.plusHours(hours).toString(format)
-      case (0 , 0, 0, 0, hours, 0) if hours < 0=> date.minusHours(Math.abs(hours)).toString(format)
-      case (0 , 0, 0, 0, 0, minutes) if minutes > 0 => date.plusMinutes(minutes).toString(format)
-      case (0 , 0, 0, 0, 0, minutes) if minutes < 0=> date.minusMinutes(Math.abs(minutes)).toString(format)
-      case (years , months, 0, 0, 0, 0) if years > 0 && months > 0 => date.plusYears(years).plusMonths(months).toString(format)
-      case (years , months, 0, 0, 0, 0) if years < 0 && months < 0 => date.minusYears(Math.abs(years)).minusMonths(Math.abs(months)).toString(format)
-      case (years , months, weeks, 0, 0, 0) if years > 0 && months > 0 && weeks > 0 => date.plusYears(years).plusMonths(months).plusWeeks(weeks).toString(format)
-      case (years , months, weeks, 0, 0, 0) if years < 0 && months < 0 && weeks < 0 => date.minusYears(Math.abs(years)).minusMonths(Math.abs(months)).minusWeeks(Math.abs(weeks)).toString(format)
-      case (years , months, weeks, days, 0, 0) if years > 0 && months > 0 && weeks > 0 && days > 0=> date.plusYears(years).plusMonths(months).plusWeeks(weeks).plusDays(days).toString(format)
-      case (years , months, weeks, days, 0, 0) if years < 0 && months < 0 && weeks < 0 && days < 0 => date.minusYears(Math.abs(years)).minusMonths(Math.abs(months)).minusWeeks(Math.abs(weeks)).minusDays(Math.abs(days)).toString(format)
-      case (years , months, weeks, days, hours, 0) if years > 0 && months > 0 && weeks > 0 && days > 0 && hours > 0 => date.plusYears(years).plusMonths(months).plusWeeks(weeks).plusDays(days).plusHours(hours).toString(format)
-      case (years , months, weeks, days, hours, 0) if years < 0 && months < 0 && weeks < 0 && days < 0 && hours < 0 => date.minusYears(Math.abs(years)).minusMonths(Math.abs(months)).minusWeeks(Math.abs(weeks)).minusDays(Math.abs(days)).minusHours(Math.abs(hours)).toString(format)
-      case (years , months, weeks, days, hours, minutes) if years > 0 && months > 0 && weeks > 0 && days > 0 && hours > 0 && minutes > 0 => date.plusYears(years).plusMonths(months).plusWeeks(weeks).plusDays(days).plusHours(hours).plusMinutes(minutes).toString(format)
-      case (years , months, weeks, days, hours, minutes) if years < 0 && months < 0 && weeks < 0 && days < 0 && hours < 0 && minutes < 0=> date.minusYears(Math.abs(years)).minusMonths(Math.abs(months)).minusWeeks(Math.abs(weeks)).minusDays(Math.abs(days)).minusHours(Math.abs(hours)).minusMinutes(Math.abs(minutes)).toString(format)
-      case _ => throw new IllegalArgumentException ("Invalid format of values. Values can be either 0, or > 0, or < 0. You're not allowed to enter +3 days - 2 hours. ")
+    var finalDate = date
+    if (years > 0) {
+      finalDate = finalDate.plusYears(years)
     }
-
+    if (years < 0) {
+      finalDate = finalDate.minusYears(Math.abs(years))
+    }
+    if (months > 0) {
+      finalDate = finalDate.plusMonths(months)
+    }
+    if (months < 0) {
+      finalDate = finalDate.minusMonths(Math.abs(months))
+    }
+    if (weeks > 0) {
+      finalDate = finalDate.plusWeeks(weeks)
+    }
+    if (weeks < 0) {
+      finalDate = finalDate.minusWeeks(Math.abs(weeks))
+    }
+    if (days > 0) {
+      finalDate = finalDate.plusDays(days)
+    }
+    if (days < 0) {
+      finalDate = finalDate.minusDays(Math.abs(days))
+    }
+    if (hours > 0) {
+      finalDate = finalDate.plusHours(hours)
+    }
+    if (hours < 0) {
+      finalDate = finalDate.minusHours(Math.abs(hours))
+    }
+    if (minutes > 0) {
+      finalDate = finalDate.plusMinutes(minutes)
+    }
+    if (minutes < 0) {
+      finalDate = finalDate.minusMinutes(Math.abs(minutes))
+    }
+    finalDate.toString(format)
   }
-
 
 
 }

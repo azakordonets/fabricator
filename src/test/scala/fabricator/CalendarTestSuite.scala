@@ -57,14 +57,14 @@ class CalendarTestSuite extends TestNGSuite with LazyLogging {
   def testSecond() = {
     val second = calendar.second()
     logger.info("Testing random second value: " + second)
-    assert(second.toInt > 0 && second.toInt <= 60)
+    assert(second.toInt >= 0 && second.toInt <= 60)
   }
 
   @Test
   def testMinute() = {
     val minute = calendar.minute()
     logger.info("Testing random minute value: " + minute)
-    assert(minute.toInt > 0 && minute.toInt < 60)
+    assert(minute.toInt >= 0 && minute.toInt < 60)
   }
 
   @Test
@@ -126,7 +126,7 @@ class CalendarTestSuite extends TestNGSuite with LazyLogging {
     val hour = dateObject.hourOfDay().get()
     val minute = dateObject.minuteOfHour().get()
     val second = dateObject.secondOfMinute().get()
-    assert(year > 1970 && year < 2015)
+    assert(year >= 1970 && year < 2015)
     assert(month > 0 && month < 12)
     assert(day > 0 && day < 31)
     assert(hour >= 0 && hour < 24)
@@ -157,8 +157,8 @@ class CalendarTestSuite extends TestNGSuite with LazyLogging {
       Array(-5, -5, -5, -5, 0, 0, "dd:MM:yyyy", DateTime.now.minusYears(5).minusMonths(5).minusWeeks(5).minusDays(5).toString("dd:MM:yyyy")),
       Array(1, 1, 1, 1, 1, 0, "dd:MM:yyyy HH", DateTime.now.plusYears(1).plusMonths(1).plusWeeks(1).plusDays(1).plusHours(1).toString("dd:MM:yyyy HH")),
       Array(-1, -1, -1, -1, -1, 0, "dd:MM:yyyy HH", DateTime.now.minusYears(1).minusMonths(1).minusWeeks(1).minusDays(1).minusHours(1).toString("dd:MM:yyyy HH")),
-      Array(10, 10, 10, 10, 10, 10, "dd:MM:yyyy HH:ss", DateTime.now.plusYears(10).plusMonths(10).plusWeeks(10).plusDays(10).plusHours(10).plusMinutes(10).toString("dd:MM:yyyy HH:ss")),
-      Array(-100, -100, -100, -100, -100, -100, "dd:MM:yyyy HH:ss", DateTime.now.minusYears(100).minusMonths(100).minusWeeks(100).minusDays(100).minusHours(100).minusMinutes(100).toString("dd:MM:yyyy HH:ss"))
+      Array(10, 10, 10, 10, 10, 10, "dd:MM:yyyy HH", DateTime.now.plusYears(10).plusMonths(10).plusWeeks(10).plusDays(10).plusHours(10).plusMinutes(10).toString("dd:MM:yyyy HH")),
+      Array(-100, -100, -100, -100, -100, -100, "dd:MM:yyyy HH", DateTime.now.minusYears(100).minusMonths(100).minusWeeks(100).minusDays(100).minusHours(100).minusMinutes(100).toString("dd:MM:yyyy HH"))
     )
   }
 
@@ -168,11 +168,5 @@ class CalendarTestSuite extends TestNGSuite with LazyLogging {
     logger.info("Testing random date with dateWithPeriod method: "+date)
     assertResult(expectedDate)(date)
   }
-
-  @Test(expectedExceptions = Array(classOf[IllegalArgumentException]))
-  def testDateWithPeriodException() = {
-    val date = calendar.dateWithPeriod(-100, 100, -100, -100, -100, -100)
-  }
-
 
 }
