@@ -1,5 +1,1 @@
 language: scala
-scala:
-  - 2.10.3
-script: "sbt clean coverage test"
-after_success: "sbt coveralls"
