@@ -1,15 +1,8 @@
 package fabricator
 
-import com.typesafe.scalalogging.slf4j.LazyLogging
-import org.scalatest.testng.TestNGSuite
 import org.testng.annotations.{DataProvider, Test}
 
-class AlphaNumericTestSuite extends TestNGSuite with LazyLogging {
-
-  val fabr = new Fabricator
-  val util = new UtilityService()
-  val alpha = fabr.alphaNumeric()
-
+class AlphaNumericTestSuite extends BaseTestSuite {
 
   @DataProvider(name = "numerifyDP")
   def numerifyDP = {
@@ -25,7 +18,7 @@ class AlphaNumericTestSuite extends TestNGSuite with LazyLogging {
   @Test(dataProvider = "numerifyDP")
   def testNumerify(value: String, matchPattern: String) = {
     val result = alpha.numerify(value)
-    logger.info("Checking numerify " + result)
+    if (debugEnabled) logger.debug("Checking numerify with pattern: " + value + " : " + result)
     assert(result.matches(matchPattern))
   }
 
@@ -41,17 +34,35 @@ class AlphaNumericTestSuite extends TestNGSuite with LazyLogging {
   }
 
   @Test(dataProvider = "letterifyDP")
-  def testLetterify(value: String, matchPatter: String) = {
+  def testLetterify(value: String, matchPattern: String) = {
     val result = alpha.letterify(value)
-    logger.info("Checking letterify " + result)
-    assert(result.matches(matchPatter))
+    if (debugEnabled) logger.debug("Checking letterify with pattern: " + value + " : " + result)
+    assert(result.matches(matchPattern))
+  }
+
+  @DataProvider(name = "botifyDP")
+  def botifyDP = {
+    Array(Array("???123###", "\\w{3}\\d{6}"),
+      Array("???123???###", "\\w{3}\\d{3}\\w{3}\\d{3}"),
+      Array("123???", "\\d{3}\\w{3}"),
+      Array("1?2?3?", "\\d{1}\\w{1}\\d{1}\\w{1}\\d{1}\\w{1}"),
+      Array("123", "\\d{3}"),
+      Array("154,??$$%123", "\\d{3}\\W{1}\\w{2}\\W{3}\\d{3}")
+    )
+  }
+
+  @Test(dataProvider = "botifyDP")
+  def testBotify(value: String, matchPattern: String) = {
+    val result = alpha.botify(value)
+    if (debugEnabled) logger.debug("Checking botify with pattern: " + value + " : " + result)
+    assert(result.matches(matchPattern))
   }
 
 
   @Test
   def testDefaultInteger() {
     val integer = alpha.integer()
-    logger.info("Checking default integer function. Should return random integer below 1000 : " + integer)
+    if (debugEnabled) logger.debug("Checking default integer function. Should return random integer below 1000 : " + integer)
     assert(0 to 1000 contains integer)
     assert(integer.isInstanceOf[Int])
   }
@@ -59,7 +70,7 @@ class AlphaNumericTestSuite extends TestNGSuite with LazyLogging {
   @Test
   def testDefaultDouble() {
     val double = alpha.double()
-    logger.info("Checking default double function. Should return random double below 1000 : " + double)
+    if (debugEnabled) logger.debug("Checking default double function. Should return random double below 1000 : " + double)
     assert(double > 0 && double < 1000)
     assert(double.isInstanceOf[Double])
   }
@@ -67,7 +78,7 @@ class AlphaNumericTestSuite extends TestNGSuite with LazyLogging {
   @Test
   def testDefaultFloat() {
     val float = alpha.float()
-    logger.info("Checking default float function. Should return random float below 1000 : " + float)
+    if (debugEnabled) logger.debug("Checking default float function. Should return random float below 1000 : " + float)
     assert(float > 0 && float < 1000)
     assert(float.isInstanceOf[Float])
   }
@@ -75,7 +86,7 @@ class AlphaNumericTestSuite extends TestNGSuite with LazyLogging {
   @Test
   def testDefaultBoolean() {
     val boolean = alpha.boolean()
-    logger.info("Checking default boolean function. Should return random boolean below 1000 : " + boolean)
+    if (debugEnabled) logger.debug("Checking default boolean function. Should return random boolean below 1000 : " + boolean)
     assert(boolean == true || boolean == false)
     assert(boolean.isInstanceOf[Boolean])
   }
@@ -83,7 +94,7 @@ class AlphaNumericTestSuite extends TestNGSuite with LazyLogging {
   @Test
   def testDefaultGausian() {
     val gausian = alpha.gausian()
-    logger.info("Checking default gausian function. Should return random gausian below 1000 : " + gausian)
+    if (debugEnabled) logger.debug("Checking default gausian function. Should return random gausian below 1000 : " + gausian)
     assert(gausian < 1000)
     assert(gausian.isInstanceOf[Double])
   }
@@ -91,7 +102,7 @@ class AlphaNumericTestSuite extends TestNGSuite with LazyLogging {
   @Test
   def testDefaultString() {
     val string = alpha.string()
-    logger.info("Checking default string function. Should return random string below 30 : " + string)
+    if (debugEnabled) logger.debug("Checking default string function. Should return random string below 30 : " + string)
     assert(string.length == 30)
     assert(string.isInstanceOf[String])
   }
@@ -99,7 +110,7 @@ class AlphaNumericTestSuite extends TestNGSuite with LazyLogging {
   @Test
   def testCustomString() {
     val extendedString = alpha.string(50)
-    logger.info("Checking default extendedString function. Should return random extendedString below 50 : " + extendedString)
+    if (debugEnabled) logger.debug("Checking default extendedString function. Should return random extendedString below 50 : " + extendedString)
     assert(extendedString.length == 50)
     assert(extendedString.isInstanceOf[String])
   }
@@ -109,14 +120,14 @@ class AlphaNumericTestSuite extends TestNGSuite with LazyLogging {
     Array(Array("aaaa", 10),
       Array("1234567890", 100),
       Array("0123456789abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_", 500),
-      Array("!@#$%^&*()_+{}\"|:?><",30)
+      Array("!@#$%^&*()_+{}\"|:?><", 30)
     )
   }
 
   @Test(dataProvider = "charSets")
   def testCustomStringWithSpecificCharSet(charSet: String, max: Int) = {
     val string = alpha.string(charSet, max)
-    logger.info("Checking default extendedString function. Should return random extendedString below "+max+" : " + string)
+    if (debugEnabled) logger.debug("Checking default extendedString function. Should return random extendedString below " + max + " : " + string)
     assert(string.length == max)
     for (symbol <- string) assert(charSet.contains(symbol))
   }
@@ -139,7 +150,7 @@ class AlphaNumericTestSuite extends TestNGSuite with LazyLogging {
       case numberValue: Float => alpha.float(numberValue)
     }
     val result = calculate(value)
-    logger.info("Checking custom number with " + numberType + " type function. Should return with specific type and below specified value : ")
+    if (debugEnabled) logger.debug("Checking custom number with " + numberType + " type function. Should return with specific type and below specified value : ")
     assertResult(result.getClass)(numberType)
     assert(util.isLess(result, value))
   }
@@ -161,10 +172,29 @@ class AlphaNumericTestSuite extends TestNGSuite with LazyLogging {
       case (min: Float, max: Float) => alpha.float(min, max)
     }
     val actualNumber = calculate(min, max)
-    logger.info("Checking custom number with  type function. Should return with specific type and below specified value : ")
+    if (debugEnabled) logger.debug("Checking random number in range: " + actualNumber)
     assertResult(actualNumber.getClass)(min.getClass)
     assert(util.isLess(actualNumber, max))
     assert(util.isLessOrEqual(min, actualNumber))
   }
+
+  @Test
+  def testHash() = {
+    val hash = alpha.hash()
+    if (debugEnabled) logger.debug("Checking random hash number with default length:  " + hash)
+    assert(hash.length() == 40)
+    val customLengthHash = alpha.hash(10)
+    if (debugEnabled) logger.debug("Checking random hash number with length = 10:  " + customLengthHash)
+    assert(customLengthHash.length == 10)
+  }
+
+  @Test
+  def testGuid() = {
+    val guid = alpha.guid()
+    if (debugEnabled) logger.debug("Checking random guid number :  " + guid)
+    assert(guid.matches("\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}"))
+  }
+
+
 
 }

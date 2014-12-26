@@ -1,19 +1,8 @@
 package fabricator
 
-import com.typesafe.scalalogging.slf4j.LazyLogging
-import org.scalatest.testng.TestNGSuite
-import org.testng.annotations.{Test, DataProvider}
+import org.testng.annotations.{DataProvider, Test}
 
-class WordsTestSuite extends TestNGSuite with LazyLogging {
-
-  val fabr = new Fabricator
-  val util = new UtilityService()
-  val alpha = fabr.alphaNumeric()
-  val contact = fabr.contact()
-  val calendar = fabr.calendar()
-  var wordsFaker = fabr.words()
-  val internet = fabr.internet()
-  val finance = fabr.finance()
+class WordsTestSuite extends BaseTestSuite {
 
   @DataProvider(name = "wordsCountDP")
   def wordsCountDP() = {
@@ -28,38 +17,37 @@ class WordsTestSuite extends TestNGSuite with LazyLogging {
 
   @Test(dataProvider = "wordsCountDP")
   def testWords(count: String) = {
-    logger.info("Getting words array generated with length = " + count)
+    if (debugEnabled) logger.debug("Getting words array generated with length = " + count)
     assertResult(wordsFaker.words(count.toInt).length)(count.toInt)
   }
 
   @Test
   def testSentenceDefault() = {
     var sentence = wordsFaker.sentence()
-    logger.info("Testing sentence generation. Creating sentence with 10 words lenght: \n" + sentence)
+    if (debugEnabled) logger.debug("Testing sentence generation. Creating sentence with 10 words lenght: \n" + sentence)
     assertResult(sentence.split(" ").length)(10)
   }
 
   @Test
   def testSentenceCustomLength() = {
     var sentence = wordsFaker.sentence(20)
-    logger.info("Testing sentence generation. Creating sentence with 10 words lenght: \n" + sentence)
+    if (debugEnabled) logger.debug("Testing sentence generation. Creating sentence with 10 words lenght: \n" + sentence)
     assertResult(sentence.split(" ").length)(20)
   }
 
   @Test
   def testTextDefaultValue() = {
     val paragraph = wordsFaker.paragraph()
-    logger.info("Testing sentence generation. Creating text with 10 words lenght: \n" + paragraph)
+    if (debugEnabled) logger.debug("Testing sentence generation. Creating text with 10 words lenght: \n" + paragraph)
     assertResult(paragraph.length)(100)
   }
 
   @Test(dataProvider = "wordsCountDP")
   def testTextCustomValue(length: String) = {
     val paragraph = wordsFaker.paragraph(length.toInt)
-    logger.info("Testing sentence generation. Creating paragraph with chars lenght: " + length.toInt + "\n" + paragraph)
+    if (debugEnabled) logger.debug("Testing sentence generation. Creating paragraph with chars lenght: " + length.toInt + "\n" + paragraph)
     assertResult(paragraph.length())(length.toInt)
   }
-
 
 
 }

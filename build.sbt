@@ -2,17 +2,24 @@ name := "fabricator"
 
 version := "1.0"
 
-scalaVersion := "2.11.2"
+scalaVersion := "2.10.4"
 
 resolvers += "Typesafe Simple Repository" at "http://repo.typesafe.com/typesafe/simple/maven-releases/"
 
-resolvers += "JCenter" at "http://jcenter.bintray.com/"
+resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/"
 
+resolvers += "JCenter" at "http://dl.bintray.com/"
+
+resolvers += Classpaths.sbtPluginReleases
+
+//addSbtPlugin("org.scoverage" %% "sbt-scoverage" % "1.0.1")
+
+//addSbtPlugin("org.scoverage" %% "sbt-coveralls" % "1.0.0.BETA1")
 
 libraryDependencies ++= Seq(
-  "com.typesafe.play" %% "play-json" % "2.2.0" ,
+  "com.typesafe.play" % "play-json_2.10" % "2.4.0-M2",
   "org.testng" % "testng" % "6.8.8" % "test",
-  "org.scalatest" % "scalatest_2.10" % "2.0" % "test",
+  "org.scalatest" % "scalatest_2.10" % "3.0.0-SNAP4" % "test",
   "com.github.nscala-time" %% "nscala-time" % "1.2.0",
   "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2",
   "org.slf4j" % "slf4j-api" % "1.7.1",
@@ -24,12 +31,9 @@ libraryDependencies ++= Seq(
   "com.google.inject" % "guice" % "3.0"
 )
 
+scalacOptions += "-deprecation"
+
 ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) }
 
 unmanagedResourceDirectories in Compile += { baseDirectory.value / "src/main/resources" }
 
-resolvers += Classpaths.sbtPluginReleases
-
-addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.0.1")
-
-addSbtPlugin("org.scoverage" % "sbt-coveralls" % "1.0.0.BETA1")

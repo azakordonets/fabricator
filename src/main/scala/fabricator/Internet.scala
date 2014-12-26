@@ -29,7 +29,7 @@ class Internet (private val utility: UtilityService,
   }
 
   def url (): String = {
-    alpha.botify("????#####??????.")+utility.getValueFromArray("domain_suffix")
+    "http://" + alpha.botify("????#####??????.")+utility.getValueFromArray("domain_suffix")
   }
 
   def url(protocol: String, host:String, callName:String, params:Map[String, String]):String = {

@@ -1,48 +1,43 @@
 package fabricator
 
 import com.github.nscala_time.time.Imports._
-import com.typesafe.scalalogging.slf4j.LazyLogging
-import org.scalatest.testng.TestNGSuite
 import org.testng.annotations.{DataProvider, Test}
 
-class ContactTestSuite extends TestNGSuite with LazyLogging {
+class ContactTestSuite extends BaseTestSuite {
 
-  val fabr = new Fabricator
-  val contact = fabr.contact()
-  val utility = new UtilityService()
-  val firstNameList:Array[String] = utility.getArrayFromJson("first_name")
-  val lastNameList:Array[String] = utility.getArrayFromJson("last_name")
-  val phoneFormatsList: Array[String] = utility.getArrayFromJson("phone_formats")
-  val streetNameList: Array[String] = utility.getArrayFromJson("street_suffix")
-  val houseNumberList: Array[String] = utility.getArrayFromJson("house_number")
-  val appNumberList: Array[String] = utility.getArrayFromJson("app_number")
-  val postcodeList: Array[String] = utility.getArrayFromJson("postcode")
-  val stateList: Array[String] = utility.getArrayFromJson("state")
-  val stateAbbrList: Array[String] = utility.getArrayFromJson("state_abbr")
-  val companyList: Array[String] = utility.getArrayFromJson("company_suffix")
-  val religionList: Array[String] = utility.getArrayFromJson("religion")
-  val zodiacList: Array[String] = utility.getArrayFromJson("zodiac")
-  val bloodTypeList: Array[String] = utility.getArrayFromJson("blood_type")
-  val occupationList: Array[String] = utility.getArrayFromJson("occupation")
+  val firstNameList: Array[String] = util.getArrayFromJson("first_name")
+  val lastNameList: Array[String] = util.getArrayFromJson("last_name")
+  val phoneFormatsList: Array[String] = util.getArrayFromJson("phone_formats")
+  val streetNameList: Array[String] = util.getArrayFromJson("street_suffix")
+  val houseNumberList: Array[String] = util.getArrayFromJson("house_number")
+  val appNumberList: Array[String] = util.getArrayFromJson("app_number")
+  val postcodeList: Array[String] = util.getArrayFromJson("postcode")
+  val stateList: Array[String] = util.getArrayFromJson("state")
+  val stateAbbrList: Array[String] = util.getArrayFromJson("state_abbr")
+  val companyList: Array[String] = util.getArrayFromJson("company_suffix")
+  val religionList: Array[String] = util.getArrayFromJson("religion")
+  val zodiacList: Array[String] = util.getArrayFromJson("zodiac")
+  val bloodTypeList: Array[String] = util.getArrayFromJson("blood_type")
+  val occupationList: Array[String] = util.getArrayFromJson("occupation")
 
   @Test
   def testFirstName() = {
     val name = contact.firstName()
-    logger.info("Checking first name value " + name)
+    if (debugEnabled) logger.debug("Checking first name value " + name)
     assert(firstNameList.contains(name))
   }
 
   @Test
   def testLastName() = {
     val name = contact.lastName()
-    logger.info("Checking last name value " + name)
+    if (debugEnabled) logger.debug("Checking last name value " + name)
     assert(lastNameList.contains(name))
   }
 
   @Test
   def testFullName() = {
     val name = contact.fullName()
-    logger.info("Checking full name value " + name)
+    if (debugEnabled) logger.debug("Checking full name value " + name)
     firstNameList.contains(name.split(" ")(0))
     lastNameList.contains(name.split(" ")(1))
   }
@@ -50,7 +45,7 @@ class ContactTestSuite extends TestNGSuite with LazyLogging {
 
   @Test
   def testEmail() = {
-    logger.info("Checking email " + contact.eMail())
+    if (debugEnabled) logger.debug("Checking email " + contact.eMail())
     val email = contact.eMail()
     assert(email.nonEmpty)
   }
@@ -58,11 +53,11 @@ class ContactTestSuite extends TestNGSuite with LazyLogging {
   @Test
   def testPhoneNumber() = {
     val phone = contact.phoneNumber()
-    logger.info("Checking phone number value " + phone)
+    if (debugEnabled) logger.debug("Checking phone number value " + phone)
     var reversedPhone = ""
-    if (phone.substring(0,2).equals("1-")){
+    if (phone.substring(0, 2).equals("1-")) {
       reversedPhone = "1-" + phone.substring(2, phone.length).replaceAll("[0-9]", "#")
-    }else {
+    } else {
       reversedPhone = phone.replaceAll("[0-9]", "#")
     }
     assert(phoneFormatsList.contains(reversedPhone))
@@ -70,56 +65,55 @@ class ContactTestSuite extends TestNGSuite with LazyLogging {
 
   @Test
   def testStreetName() = {
-  val street = contact.streetName()
-  logger.info("Checking street name value " + street)
-  assert(streetNameList.contains(street))
+    val street = contact.streetName()
+    if (debugEnabled) logger.debug("Checking street name value " + street)
+    assert(streetNameList.contains(street))
   }
 
   @Test
   def testhouseNumber() = {
     val houseNumber = contact.houseNumber()
-    val reversedHouseNumber = houseNumber.replaceAll("[0-9]","#")
-    logger.info("Checking houseNumber value " + houseNumber)
+    val reversedHouseNumber = houseNumber.replaceAll("[0-9]", "#")
+    if (debugEnabled) logger.debug("Checking houseNumber value " + houseNumber)
     assert(houseNumberList.contains(reversedHouseNumber))
   }
 
   @Test
   def testApartmentNumber() = {
     val apartmentNumber = contact.apartmentNumber()
-    val reversedApp = apartmentNumber.replaceAll("[0-9]","#")
-    logger.info("Checking apartmentNumber value " + apartmentNumber)
+    val reversedApp = apartmentNumber.replaceAll("[0-9]", "#")
+    if (debugEnabled) logger.debug("Checking apartmentNumber value " + apartmentNumber)
     assert(appNumberList.contains(reversedApp))
   }
 
   @Test
   def testPostcode() = {
     val postCode = contact.postcode()
-    val reversedPostCode = postCode.replaceAll("[0-9]","#")
-    logger.info("Checking postCode value " + postCode)
+    val reversedPostCode = postCode.replaceAll("[0-9]", "#")
+    if (debugEnabled) logger.debug("Checking postCode value " + postCode)
     assert(postcodeList.contains(reversedPostCode))
   }
 
   @Test
   def testState() = {
     val state = contact.state()
-    logger.info("Checking state value " + state)
+    if (debugEnabled) logger.debug("Checking state value " + state)
     assert(stateList.contains(state))
   }
 
   @Test
   def testStateAbbr() = {
     val stateAbbr = contact.stateShortCode()
-    logger.info("Checking stateAbbr value " + stateAbbr)
+    if (debugEnabled) logger.debug("Checking stateAbbr value " + stateAbbr)
     assert(stateAbbrList.contains(stateAbbr))
   }
 
   @Test
   def testCompany() = {
     val company = contact.company()
-    logger.info("Checking company value " + company)
+    if (debugEnabled) logger.debug("Checking company value " + company)
     assert(companyList.contains(company))
   }
-
 
 
   @DataProvider(name = "birthdayDP")
@@ -135,7 +129,7 @@ class ContactTestSuite extends TestNGSuite with LazyLogging {
 
   @Test(dataProvider = "birthdayDP")
   def testBirthDay(age: Int) = {
-    logger.info("Checking when is the birthday of an " + age + " years old. It's " + contact.birthday(age))
+    if (debugEnabled) logger.debug("Checking when is the birthday of an " + age + " years old. It's " + contact.birthday(age))
     val birthDate = contact.birthday(age)
     val currentDay = DateTimeFormat.forPattern("dd-MM-yyyy").print(DateTime.now - age.years)
     assert(birthDate == currentDay)
@@ -163,7 +157,7 @@ class ContactTestSuite extends TestNGSuite with LazyLogging {
 
   @Test(dataProvider = "birthdayWithFormatsDP")
   def testBirthDayWithFormat(age: Int, format: String) = {
-    logger.info("Checking when is the birthday of an " + age + " years old and format " + format + " . It's " + contact.birthday(age, format))
+    if (debugEnabled) logger.debug("Checking when is the birthday of an " + age + " years old and format " + format + " . It's " + contact.birthday(age, format))
     val birthDate = contact.birthday(age, format)
     val currentDay = DateTimeFormat.forPattern(format).print(DateTime.now - age.years)
     assert(birthDate == currentDay)
@@ -171,29 +165,29 @@ class ContactTestSuite extends TestNGSuite with LazyLogging {
 
   @Test
   def testBsn() = {
-      var bsn = contact.bsn().toInt
-      logger.info("Testing random bsn number : " + bsn)
-      assert(bsn < 999999999 && bsn >= 9999999)
-      var sum: Int = -1 * bsn % 10;
-      for (multiplier <- 2 to 100; if bsn > 0) {
-        bsn = bsn / 10
-        var value = bsn % 10
-        sum = sum + (multiplier * value)
-      }
-      assert(sum != 0 && sum % 11 == 0)
+    var bsn = contact.bsn().toInt
+    if (debugEnabled) logger.debug("Testing random bsn number : " + bsn)
+    assert(bsn < 999999999 && bsn >= 9999999)
+    var sum: Int = -1 * bsn % 10;
+    for (multiplier <- 2 to 100; if bsn > 0) {
+      bsn = bsn / 10
+      var value = bsn % 10
+      sum = sum + (multiplier * value)
     }
+    assert(sum != 0 && sum % 11 == 0)
+  }
 
   @Test
   def testReligion() = {
     val religion = contact.religion()
-    logger.info("Checking religion value " + religion)
+    if (debugEnabled) logger.debug("Checking religion value " + religion)
     assert(religionList.contains(religion))
   }
 
   @Test
   def testZodiac() = {
     val zodiac = contact.zodiac()
-    logger.info("Checking zodiac value " + zodiac)
+    if (debugEnabled) logger.debug("Checking zodiac value " + zodiac)
     assert(zodiacList.contains(zodiac))
   }
 
@@ -217,14 +211,14 @@ class ContactTestSuite extends TestNGSuite with LazyLogging {
   @Test(dataProvider = "zodiacDP")
   def testZodiacByDate(date: String, expectedZodiac: String) = {
     val zodiac = contact.zodiac(date)
-    logger.info("Testing zodiac for specific date: " + date + " . Zodiac is "+zodiac)
+    if (debugEnabled) logger.debug("Testing zodiac for specific date: " + date + " . Zodiac is " + zodiac)
     assertResult(expectedZodiac)(zodiac)
   }
 
   @Test
   def testHeight() = {
-    logger.info("Testing random height in cm "+ contact.height(true))
-    logger.info("Testing random height in m "+ contact.height(false))
+    if (debugEnabled) logger.debug("Testing random height in cm " + contact.height(true))
+    if (debugEnabled) logger.debug("Testing random height in m " + contact.height(false))
     val heightInCm = contact.height(true).split(" ")(0).toDouble
     val heightInM = contact.height(false).split(" ")(0).toDouble
     assert(heightInCm >= 1.50 && heightInCm <= 2.20)
@@ -234,21 +228,21 @@ class ContactTestSuite extends TestNGSuite with LazyLogging {
   @Test
   def testWeight() = {
     val weight = contact.weight()
-    logger.info("Testing random weight value : "+weight)
+    if (debugEnabled) logger.debug("Testing random weight value : " + weight)
     assert(weight.split(" ")(0).toInt >= 50 && weight.split(" ")(0).toInt <= 110)
   }
 
   @Test
   def testBloodType() = {
     val bloodType = contact.bloodType()
-    logger.info("Testing random blood type: "+bloodType)
+    if (debugEnabled) logger.debug("Testing random blood type: " + bloodType)
     assert(bloodTypeList.contains(bloodType))
   }
 
   @Test
   def testOccupation() = {
     val occupation = contact.occupation()
-    logger.info("Testing random occupation value: "+occupation)
+    if (debugEnabled) logger.debug("Testing random occupation value: " + occupation)
     assert(occupationList.contains(occupation))
   }
 

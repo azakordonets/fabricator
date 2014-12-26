@@ -1,20 +1,15 @@
 package fabricator
 
 import com.github.nscala_time.time.Imports._
-import com.typesafe.scalalogging.slf4j.LazyLogging
-import org.scalatest.testng.TestNGSuite
 import org.testng.annotations.{DataProvider, Test}
 
-class CalendarTestSuite extends TestNGSuite with LazyLogging {
+class CalendarTestSuite extends BaseTestSuite {
 
-  val fabr = new Fabricator
-  val util = new UtilityService()
-  val calendar = fabr.calendar()
 
   @Test
   def testDefaultDateGetter() = {
     val date = calendar.date()
-    logger.info("Checking default date value " + date)
+    if (debugEnabled) logger.debug("Checking default date value " + date)
     assert(date.matches("\\d{2}-\\d{2}-\\d{4}"))
   }
 
@@ -41,7 +36,7 @@ class CalendarTestSuite extends TestNGSuite with LazyLogging {
   @Test(dataProvider = "dateFormats")
   def testDateGetterWithDifferentFormats(format: String, regex: String) = {
     val date = calendar.date(format)
-    logger.info("Checking date value with " + format + " format :" + date)
+    if (debugEnabled) logger.debug("Checking date value with " + format + " format :" + date)
     assert(date.matches(regex))
   }
 
@@ -49,21 +44,21 @@ class CalendarTestSuite extends TestNGSuite with LazyLogging {
   @Test
   def testAmPm() = {
     val ampm = calendar.ampm()
-    logger.info("Testing random amPm value : " + ampm)
+    if (debugEnabled) logger.debug("Testing random amPm value : " + ampm)
     assert(ampm.equals("am") || ampm.equals("pm"))
   }
 
   @Test
   def testSecond() = {
     val second = calendar.second()
-    logger.info("Testing random second value: " + second)
+    if (debugEnabled) logger.debug("Testing random second value: " + second)
     assert(second.toInt >= 0 && second.toInt <= 60)
   }
 
   @Test
   def testMinute() = {
     val minute = calendar.minute()
-    logger.info("Testing random minute value: " + minute)
+    if (debugEnabled) logger.debug("Testing random minute value: " + minute)
     assert(minute.toInt >= 0 && minute.toInt < 60)
   }
 
@@ -80,14 +75,14 @@ class CalendarTestSuite extends TestNGSuite with LazyLogging {
     val year = calendar.year()
     val month = calendar.month()
     val day = calendar.day(year.toInt, month.toInt)
-    logger.info("Testing random day value: " + day)
+    if (debugEnabled) logger.debug("Testing random day value: " + day)
     assert(day.toInt > 0 && day.toInt < 31)
   }
 
   @Test
   def testMonth() = {
     val monthNumber = calendar.month(true)
-    logger.info("Checking random month value numeric: " + monthNumber)
+    if (debugEnabled) logger.debug("Checking random month value numeric: " + monthNumber)
     assert(monthNumber.toInt > 0 && monthNumber.toInt < 12)
     val monthLettered = calendar.month(false)
     val months = util.getArrayFromJson("month")
@@ -97,22 +92,22 @@ class CalendarTestSuite extends TestNGSuite with LazyLogging {
   @Test
   def testYear() = {
     val year = calendar.year().toInt
-    logger.info("Testing random year value: " + year)
+    if (debugEnabled) logger.debug("Testing random year value: " + year)
     assert(year > 1970 && year < 2015)
   }
 
   @DataProvider
   def dateDP() = {
-    Array(Array(2014, 02, 30, 00, 00, "28-02-2014 12:00"),
-      Array(1000, 02, 30, 00, 00, "28-02-1000 12:00"),
-      Array(1980, 01, 50, 12, 30, "31-01-1980 12:30"),
-      Array(2250, 02, 30, 00, 00, "28-02-2250 12:00"))
+    Array(Array(2014, 2, 30, 0, 0, "28-02-2014 12:00"),
+      Array(1000, 2, 30, 0, 0, "28-02-1000 12:00"),
+      Array(1980, 1, 50, 12, 30, "31-01-1980 12:30"),
+      Array(2250, 2, 30, 0, 0, "28-02-2250 12:00"))
   }
 
   @Test(dataProvider = "dateDP")
   def testDate(year: Int, month: Int, day: Int, hour: Int, minute: Int, expectedResult: String) = {
     val date = calendar.date(year, month, day, hour, minute)
-    logger.info("Testing random date: " + date)
+    if (debugEnabled) logger.debug("Testing random date: " + date)
     assert(date.equals(expectedResult))
   }
 
@@ -165,7 +160,7 @@ class CalendarTestSuite extends TestNGSuite with LazyLogging {
   @Test(dataProvider = "dateWithPeriodDP")
   def testDateWithPeriod(year: Int, month: Int, week: Int, day: Int, hour: Int, minute: Int, format: String, expectedDate: String) = {
     val date = calendar.dateWithPeriod(year, month, week, day, hour, minute, format)
-    logger.info("Testing random date with dateWithPeriod method: "+date)
+    if (debugEnabled) logger.debug("Testing random date with dateWithPeriod method: " + date)
     assertResult(expectedDate)(date)
   }
 

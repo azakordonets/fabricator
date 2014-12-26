@@ -67,6 +67,10 @@ class Calendar(private val utility: UtilityService,
     alpha.integer(1970, 2015).toString
   }
 
+  def time(twentyFourHour: Boolean): String = {
+    hour(twentyFourHour) + ":" + minute()
+  }
+
   def date(): String = {
     date("dd-MM-yyyy")
   }

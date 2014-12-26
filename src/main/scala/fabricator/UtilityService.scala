@@ -1,5 +1,8 @@
 package fabricator
 
+import java.io.FileInputStream
+import java.util.Properties
+
 import play.api.libs.json.Json
 import scala.io.Source
 import scala.util.Random
@@ -30,6 +33,17 @@ class UtilityService(lang: String, private val random:Random) {
 
    def getListFromJson(key: String): List[Array[String]] = {
     (valuesJson \\ key)(0).asOpt[List[Array[String]]].get
+  }
+
+  def getProperty(name: String): String = {
+    try {
+      val properties = new Properties()//Source.fromInputStream(getClass().getClassLoader().getResourceAsStream(lang + ".json")
+      properties.load(new FileInputStream(getClass().getClassLoader().getResource("config.properties").getPath))
+      return properties.getProperty(name)
+    } catch { case e: Exception =>
+      e.printStackTrace()
+      sys.exit(1)
+    }
   }
 
    def isLess(a: Any, b: Any): Boolean = (a, b) match {
