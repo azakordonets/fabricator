@@ -1,7 +1,7 @@
 package fabricator
 
 
-class Fabricator(lang: String = "en",
+class Fabricator(lang: String = "us",
                  private val utility: UtilityService,
                       alphaFaker: Alphanumeric = new Alphanumeric,
                       contactFaker: Contact = new Contact,
@@ -16,8 +16,8 @@ class Fabricator(lang: String = "en",
 
 
   def this () {
-    this("en",
-    new UtilityService(),
+    this("us",
+    new UtilityService("us"),
     new Alphanumeric,
     new Contact,
     new Calendar,

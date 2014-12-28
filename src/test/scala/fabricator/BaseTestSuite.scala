@@ -14,7 +14,8 @@ class BaseTestSuite extends TestNGSuite with LazyLogging {
   val finance = fabr.finance()
   val internet = fabr.internet()
   val mobile = fabr.mobile()
+  val file = fabr.file()
   val debugEnabled: Boolean = util.getProperty("loggerDebug").equals("true")
-  var wordsFaker = fabr.words()
+  var words = fabr.words()
 
 }

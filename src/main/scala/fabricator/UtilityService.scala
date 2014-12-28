@@ -13,13 +13,16 @@ import scala.util.Random
 class UtilityService(lang: String, private val random:Random) {
 
   def this() {
-    this("en", new Random())
+    this("us", new Random())
   }
 
   def this(lang:String){
     this(lang, new Random())
   }
+
   private val valuesJson = Json.parse(Source.fromInputStream(getClass().getClassLoader().getResourceAsStream(lang + ".json"))("UTF-8").mkString)
+
+  if (valuesJson == null) throw new Exception(lang +".json doesn't exist. ")
 
    def getValueFromArray(key: String): String = {
     val array = (valuesJson \\ key)(0).asOpt[Array[String]].get

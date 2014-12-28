@@ -45,7 +45,7 @@ class Contact( private val utility:UtilityService,
   }
 
   def eMail():String = {
-    firstName() + "_" + lastName() +  alpha.numerify("###") + "@" + utility.getValueFromArray("free_email")
+    firstName().toLowerCase() + "_" + lastName().toLowerCase() +  alpha.numerify("###") + "@" + utility.getValueFromArray("free_email").toLowerCase()
   }
 
   def phoneNumber() = {
@@ -62,6 +62,10 @@ class Contact( private val utility:UtilityService,
 
   def apartmentNumber() = {
     alpha.numerify(utility.getValueFromArray("app_number"))
+  }
+
+  def address() = {
+    streetName() + " " + houseNumber() + ", " + apartmentNumber()
   }
 
   def postcode() = {

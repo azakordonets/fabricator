@@ -10,6 +10,8 @@ resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/release
 
 resolvers += "JCenter" at "http://dl.bintray.com/"
 
+resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+
 resolvers += Classpaths.sbtPluginReleases
 
 //addSbtPlugin("org.scoverage" %% "sbt-scoverage" % "1.0.1")
@@ -28,7 +30,8 @@ libraryDependencies ++= Seq(
   "com.spatial4j" % "spatial4j" % "0.4.1",
   "org.iban4j" % "iban4j" % "2.1.1",
   "commons-validator" % "commons-validator" % "1.4.0",
-  "com.google.inject" % "guice" % "3.0"
+  "com.google.inject" % "guice" % "3.0",
+  "com.github.tototoshi" %% "scala-csv" % "1.2.0-SNAPSHOT"
 )
 
 scalacOptions += "-deprecation"
