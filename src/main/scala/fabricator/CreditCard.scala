@@ -1,7 +1,7 @@
 package fabricator
 
 import scala.collection.immutable.VectorBuilder
-import scala.collection.mutable.Stack
+import scala.collection.mutable
 
 class CreditCard {
   val visaPrefixList = Array("4539", "4556", "4916", "4532", "4929", "40240071", "4485", "4716", "4")
@@ -27,7 +27,7 @@ class CreditCard {
     for (i <- str.length -1  to 0 by -1) {
       revstr += str.charAt(i)
     }
-    return revstr
+    revstr
   }
 
 
@@ -42,12 +42,12 @@ class CreditCard {
     // generate digits
 
     while (ccnumber.length() < (length - 1)) {
-      ccnumber = ccnumber + (Math.floor(Math.random() * 10).toInt)
+      ccnumber = ccnumber + Math.floor(Math.random() * 10).toInt
     }
 
     // reverse number and convert to int
 
-    var reversedCCnumberString = strrev(ccnumber)
+    val reversedCCnumberString = strrev(ccnumber)
 
     var builder: VectorBuilder[Int] = new VectorBuilder[Int]
     for (i <- 0 to reversedCCnumberString.length-1) {
@@ -55,7 +55,7 @@ class CreditCard {
         builder.+=(reversedCCnumberString.charAt(i).asDigit)
       }
     }
-    var reversedCCnumberList: Vector[Int] = builder.result()
+    val reversedCCnumberList: Vector[Int] = builder.result()
 
 
     // calculate sum
@@ -63,7 +63,7 @@ class CreditCard {
     var sum = 0
     var pos = 0
 
-    val reversedCCnumber: Array[Int] = (reversedCCnumberList map (_.toInt)).toArray
+    val reversedCCnumber: Array[Int] = reversedCCnumberList.toArray
     while (pos < length - 1) {
 
       var odd = reversedCCnumber(pos) * 2
@@ -81,35 +81,35 @@ class CreditCard {
 
     // calculate check digit
 
-    var checkdigit = ((((Math.floor(sum / 10) + 1) * 10 - sum) % 10).intValue())
+    var checkdigit = (((Math.floor(sum / 10) + 1) * 10 - sum) % 10).intValue()
     ccnumber += checkdigit
-    if (isValidCreditCardNumber(ccnumber)) return ccnumber
+    if (isValidCreditCardNumber(ccnumber)) ccnumber
     else throw new Exception ("Credit card number "+ccnumber + "is not valid")
 
   }
 
   def createCreditCardNumber(prefixList: Array[String], length: Int, howMany: Int): Array[String] = {
 
-    val result: Stack[String] = Stack()
+    val result = mutable.Stack[String]()
     for (i <- 0 to howMany) {
-      var randomArrayIndex: Int = Math.floor(Math.random() * prefixList.length).toInt
-      var ccnumber: String = prefixList(randomArrayIndex)
+      val randomArrayIndex: Int = Math.floor(Math.random() * prefixList.length).toInt
+      val ccnumber: String = prefixList(randomArrayIndex)
       result.push(completed_number(ccnumber, length))
     }
 
-    return result.toArray
+    result.toArray
   }
 
   private def isValidCreditCardNumber(creditCardNumber: String): Boolean = {
     var isValid = false
 
     try {
-      var reversedNumber = new StringBuffer(creditCardNumber).reverse().toString()
+      val reversedNumber = new StringBuffer(creditCardNumber).reverse().toString()
       var mod10Count = 0
       for (i <- 0 to reversedNumber.length-1) {
         var augend = Integer.parseInt(String.valueOf(reversedNumber.charAt(i)))
         if (((i + 1) % 2) == 0) {
-          var productString: String = String.valueOf(augend * 2)
+          val productString: String = String.valueOf(augend * 2)
           augend = 0
           for (j <- 0 to productString.length -1) {
             augend += Integer.parseInt(String.valueOf(productString.charAt(j)))
@@ -126,8 +126,6 @@ class CreditCard {
       case e: NumberFormatException =>
     }
 
-    return isValid
+    isValid
   }
-
-
 }

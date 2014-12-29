@@ -34,7 +34,7 @@ class Alphanumeric(private val random: Random) {
   }
   
   def double(min: Double, max: Double): Double = {
-    min + ((random.nextDouble()*(max - min)))
+    min + random.nextDouble() * (max - min)
   }
 
   def float() :Float = {
@@ -46,7 +46,7 @@ class Alphanumeric(private val random: Random) {
   }
   
   def float(min: Float, max: Float): Float = {
-    min + ((random.nextFloat()*(max - min)))
+    min + random.nextFloat() * (max - min)
   }
 
   def boolean() : Boolean = {
@@ -58,7 +58,7 @@ class Alphanumeric(private val random: Random) {
   }
 
   def string(charsSequence: String, max: Int): String = {
-    var builder = new StringBuilder
+    val builder = new StringBuilder
     var counter = 0
     while (counter < max) {
       builder.append(charsSequence.charAt(random.nextInt(charsSequence.length-1)))
@@ -91,25 +91,25 @@ class Alphanumeric(private val random: Random) {
   def guid(version: Int): String = {
     val guid_pool = "abcdef1234567890"
     val variant_pool = "ab89"
-    return    string(guid_pool, 8) + "-" +
-              string(guid_pool, 4) + "-" +
-              // The Version
-              version +
-              string(guid_pool, 3) + "-" +
-              // The Variant
-              string(variant_pool, 1) +
-              string(guid_pool, 3) + "-" +
-              string(guid_pool, 12)
+    string(guid_pool, 8) + "-" +
+      string(guid_pool, 4) + "-" +
+      // The Version
+      version +
+      string(guid_pool, 3) + "-" +
+      // The Variant
+      string(variant_pool, 1) +
+      string(guid_pool, 3) + "-" +
+      string(guid_pool, 12)
   }
 
 
   def numerify(string: String): String = {
-    string.map(letter=>letter match {case '#' => random.nextInt(10).toString case _  => letter}).mkString
+    string.map { case '#' => random.nextInt(10).toString case letter => letter}.mkString
   }
 
   def letterify(string: String): String = {
     val chars = ('a' to 'z') ++ ('A' to 'Z')
-    string.map(letter=>letter match {case '?' => chars(random.nextInt(chars.length)) case _  => letter}).mkString
+    string.map { case '?' => chars(random.nextInt(chars.length)) case letter => letter}.mkString
   }
 
   def botify(string: String): String = {

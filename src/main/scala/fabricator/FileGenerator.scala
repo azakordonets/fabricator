@@ -5,7 +5,6 @@ import java.awt.font.{FontRenderContext, TextLayout}
 import java.awt.image.BufferedImage
 import java.io.File
 import com.github.tototoshi.csv._
-import com.github.tototoshi.csv.CSVFormat
 import scala.util.Random
 
 
@@ -37,20 +36,20 @@ class FileGenerator(private val utility: UtilityService,
   def image(width: Int, height: Int, path: String) = {
     if (width > 2560 || height > 2560) throw new Exception("Image cannot be more then 2560x2560")
     val label: String = "" + width + "x" + height
-    val font: Font = new Font("Arial", Font.PLAIN, 32);
-    val frc: FontRenderContext = new FontRenderContext(null, true, true);
-    val layout: TextLayout = new TextLayout(label, font, frc);
-    val rectangle: Rectangle = layout.getPixelBounds(null, 0, 0);
-    val bufferedImage: BufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+    val font: Font = new Font("Arial", Font.PLAIN, 32)
+    val frc: FontRenderContext = new FontRenderContext(null, true, true)
+    val layout: TextLayout = new TextLayout(label, font, frc)
+    val rectangle: Rectangle = layout.getPixelBounds(null, 0, 0)
+    val bufferedImage: BufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
     val graphics2D: Graphics2D = bufferedImage.getGraphics().asInstanceOf[Graphics2D]
     //filing background with black color
     graphics2D.setColor(Color.black)
     graphics2D.fillRect(0, 0, width, height)
     //writing with white color width and height of the image
-    graphics2D.setColor(Color.white);
-    layout.draw(graphics2D, width / 2 - rectangle.getWidth().toInt / 2, height / 2);
+    graphics2D.setColor(Color.white)
+    layout.draw(graphics2D, width / 2 - rectangle.getWidth().toInt / 2, height / 2)
     //done with drawing
-    graphics2D.dispose();
+    graphics2D.dispose()
     // write image to a file
     javax.imageio.ImageIO.write(bufferedImage, "png", new java.io.File(path))
 

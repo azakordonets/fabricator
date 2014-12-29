@@ -53,7 +53,7 @@ class Finance(private val utility: UtilityService,
   }
 
   def bic(): String = {
-    return alpha.botify(utility.getValueFromArray("bic").toUpperCase)
+    alpha.botify(utility.getValueFromArray("bic").toUpperCase)
   }
 
   def mastercreditCard():String = {
