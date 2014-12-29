@@ -58,7 +58,7 @@ class Alphanumeric(private val random: Random) {
   }
 
   def string(charsSequence: String, max: Int): String = {
-    var builder = new StringBuilder
+    val builder = new StringBuilder
     var counter = 0
     while (counter < max) {
       builder.append(charsSequence.charAt(random.nextInt(charsSequence.length-1)))
