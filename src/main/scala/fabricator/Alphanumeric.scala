@@ -91,15 +91,15 @@ class Alphanumeric(private val random: Random) {
   def guid(version: Int): String = {
     val guid_pool = "abcdef1234567890"
     val variant_pool = "ab89"
-    return    string(guid_pool, 8) + "-" +
-              string(guid_pool, 4) + "-" +
-              // The Version
-              version +
-              string(guid_pool, 3) + "-" +
-              // The Variant
-              string(variant_pool, 1) +
-              string(guid_pool, 3) + "-" +
-              string(guid_pool, 12)
+    string(guid_pool, 8) + "-" +
+      string(guid_pool, 4) + "-" +
+      // The Version
+      version +
+      string(guid_pool, 3) + "-" +
+      // The Variant
+      string(variant_pool, 1) +
+      string(guid_pool, 3) + "-" +
+      string(guid_pool, 12)
   }
 
 

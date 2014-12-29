@@ -27,7 +27,7 @@ class CreditCard {
     for (i <- str.length -1  to 0 by -1) {
       revstr += str.charAt(i)
     }
-    return revstr
+    revstr
   }
 
 
@@ -42,7 +42,7 @@ class CreditCard {
     // generate digits
 
     while (ccnumber.length() < (length - 1)) {
-      ccnumber = ccnumber + (Math.floor(Math.random() * 10).toInt)
+      ccnumber = ccnumber + Math.floor(Math.random() * 10).toInt
     }
 
     // reverse number and convert to int
@@ -81,9 +81,9 @@ class CreditCard {
 
     // calculate check digit
 
-    var checkdigit = ((((Math.floor(sum / 10) + 1) * 10 - sum) % 10).intValue())
+    var checkdigit = (((Math.floor(sum / 10) + 1) * 10 - sum) % 10).intValue()
     ccnumber += checkdigit
-    if (isValidCreditCardNumber(ccnumber)) return ccnumber
+    if (isValidCreditCardNumber(ccnumber)) ccnumber
     else throw new Exception ("Credit card number "+ccnumber + "is not valid")
 
   }
@@ -97,7 +97,7 @@ class CreditCard {
       result.push(completed_number(ccnumber, length))
     }
 
-    return result.toArray
+    result.toArray
   }
 
   private def isValidCreditCardNumber(creditCardNumber: String): Boolean = {
@@ -126,8 +126,6 @@ class CreditCard {
       case e: NumberFormatException =>
     }
 
-    return isValid
+    isValid
   }
-
-
 }

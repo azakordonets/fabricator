@@ -20,13 +20,13 @@ class UtilityService(lang: String, private val random:Random) {
     this(lang, new Random())
   }
 
-  private val valuesJson = Json.parse(Source.fromInputStream(getClass().getClassLoader().getResourceAsStream(lang + ".json"))("UTF-8").mkString)
+  private val valuesJson = Json.parse(Source.fromInputStream(getClass.getClassLoader.getResourceAsStream(lang + ".json"))("UTF-8").mkString)
 
   if (valuesJson == null) throw new Exception(lang +".json doesn't exist. ")
 
    def getValueFromArray(key: String): String = {
     val array = (valuesJson \\ key)(0).asOpt[Array[String]].get
-    val random_index = random.nextInt(array.length);
+    val random_index = random.nextInt(array.length)
     array(random_index)
   }
 
@@ -41,8 +41,8 @@ class UtilityService(lang: String, private val random:Random) {
   def getProperty(name: String): String = {
     try {
       val properties = new Properties()//Source.fromInputStream(getClass().getClassLoader().getResourceAsStream(lang + ".json")
-      properties.load(new FileInputStream(getClass().getClassLoader().getResource("config.properties").getPath))
-      return properties.getProperty(name)
+      properties.load(new FileInputStream(getClass.getClassLoader.getResource("config.properties").getPath))
+      properties.getProperty(name)
     } catch { case e: Exception =>
       e.printStackTrace()
       sys.exit(1)
