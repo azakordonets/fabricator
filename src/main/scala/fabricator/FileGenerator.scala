@@ -65,10 +65,10 @@ class FileGenerator(private val utility: UtilityService,
 
   def csv(seq: Seq[Any], rows: Int, path: String, customDelimiter: Char):Unit = {
     val expectedFile = new File(path)
-    val writer = CSVWriter.open(expectedFile)
     implicit object MyFormat extends DefaultCSVFormat {
       override val delimiter = customDelimiter
     }
+    val writer = CSVWriter.open(expectedFile)
     for (i <- 0 to rows) {
       writer.writeRow(seq)
     }
@@ -77,10 +77,10 @@ class FileGenerator(private val utility: UtilityService,
 
   def csvFromCodes(codes: Array[String], rows: Int, path: String, customDelimiter: Char):Unit = {
     val expectedFile = new File(path)
-    val writer = CSVWriter.open(expectedFile)
     implicit object MyFormat extends DefaultCSVFormat {
       override val delimiter = customDelimiter
     }
+    val writer = CSVWriter.open(expectedFile)
     for (i <- 0 to rows) {
       val generatedMap = codes.map(x => generateValue(x))
       writer.writeRow(generatedMap)
