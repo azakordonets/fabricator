@@ -63,6 +63,11 @@ class InternetTestSuite extends BaseTestSuite {
     )
   }
 
+  @Test(expectedExceptions = Array(classOf[IllegalArgumentException]))
+  def testColorCodeException() = {
+    val color = internet.color("wrong", true)
+  }
+
   @Test(dataProvider = "colorVariations")
   def testColor(codeType: String, grayscale: Boolean, regexMatch: String) = {
     for (i <- 1 to 10) {

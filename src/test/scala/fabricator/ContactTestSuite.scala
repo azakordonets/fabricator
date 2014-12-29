@@ -36,10 +36,14 @@ class ContactTestSuite extends BaseTestSuite {
 
   @Test
   def testFullName() = {
-    val name = contact.fullName()
+    val name = contact.fullName(false)
     if (debugEnabled) logger.debug("Checking full name value " + name)
     firstNameList.contains(name.split(" ")(0))
     lastNameList.contains(name.split(" ")(1))
+    val nameWithPrefix = contact.fullName(false)
+    if (debugEnabled) logger.debug("Checking full name value " + nameWithPrefix)
+    firstNameList.contains(nameWithPrefix.split(" ")(1))
+    lastNameList.contains(nameWithPrefix.split(" ")(2))
   }
 
 
@@ -84,6 +88,17 @@ class ContactTestSuite extends BaseTestSuite {
     val reversedApp = apartmentNumber.replaceAll("[0-9]", "#")
     if (debugEnabled) logger.debug("Checking apartmentNumber value " + apartmentNumber)
     assert(appNumberList.contains(reversedApp))
+  }
+
+  @Test
+  def testAddress() = {
+    var address = contact.address()
+    if (debugEnabled) logger.debug("Checking address value " + address)
+    address = address.replaceAll(",", "")
+    val addressArray = address.split(" ")
+    assert(streetNameList.contains(addressArray(0)))
+    assert(houseNumberList.contains(addressArray(1).replaceAll("[0-9]", "#")))
+    assert(appNumberList.contains((addressArray(2) + " " + addressArray(3)).replaceAll("[0-9]", "#")))
   }
 
   @Test

@@ -22,23 +22,6 @@ class Calendar(private val utility: UtilityService,
     if (randomVal < 5) "am" else "pm"
   }
 
-  def second(): String = {
-    alpha.integer(0, 59).toString
-  }
-
-  def minute(): String = {
-    alpha.integer(0, 59).toString
-  }
-
-  def hour(): String = {
-    hour(false)
-  }
-
-  def hour(twentyfour: Boolean): String = {
-    if (twentyfour) alpha.integer(0, 24).toString
-    else alpha.integer(1, 12).toString
-  }
-
   def day(year: Int, month: Int): String = {
     var result = ""
     var dayValue = 0
@@ -52,19 +35,6 @@ class Calendar(private val utility: UtilityService,
       }
     }
     result
-  }
-
-  def month(): String = {
-    month(true)
-  }
-
-  def month(numberFormat: Boolean): String = {
-    if (numberFormat) alpha.integer(1, 12).toString
-    else utility.getValueFromArray("month")
-  }
-
-  def year(): String = {
-    alpha.integer(1970, 2015).toString
   }
 
   def time(twentyFourHour: Boolean): String = {
@@ -85,6 +55,36 @@ class Calendar(private val utility: UtilityService,
     new DateTime(year().toInt, month().toInt, 1, hour().toInt, minute().toInt, second().toInt).plusDays(alpha.integer(1, 31))
   }
 
+  def second(): String = {
+    alpha.integer(0, 59).toString
+  }
+
+  def minute(): String = {
+    alpha.integer(0, 59).toString
+  }
+
+  def hour(): String = {
+    hour(false)
+  }
+
+  def hour(twentyfour: Boolean): String = {
+    if (twentyfour) alpha.integer(0, 24).toString
+    else alpha.integer(1, 12).toString
+  }
+
+  def month(): String = {
+    month(true)
+  }
+
+  def month(numberFormat: Boolean): String = {
+    if (numberFormat) alpha.integer(1, 12).toString
+    else utility.getValueFromArray("month")
+  }
+
+  def year(): String = {
+    alpha.integer(1970, 2015).toString
+  }
+
   def date(year: Int, month: Int, day: Int, hour: Int, minute: Int): String = {
     var date = ""
     try {
@@ -98,7 +98,7 @@ class Calendar(private val utility: UtilityService,
   }
 
   def date(year: Int, month: Int, day: Int, hour: Int, minute: Int, defFormat: String): String = {
-    new DateTime(day, month, year, hour, minute).toString(defFormat)
+    new DateTime(year, month, day, hour, minute).toString(defFormat)
   }
 
   def dateWithPeriod(years: Int, months: Int, weeks: Int, days: Int, hours: Int, minutes: Int): String = {

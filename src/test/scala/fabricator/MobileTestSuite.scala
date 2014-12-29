@@ -38,4 +38,11 @@ class MobileTestSuite extends BaseTestSuite {
     if (debugEnabled) logger.debug("Testing random windows 7 ID : " + windows7Id)
     assert(windows7Id.matches("A=\\w(.+?)&E=\\w{3}&W=\\d{1}"))
   }
+
+  @Test
+  def testBlackBerryPin() = {
+    val hash = mobile.blackBerryPin()
+    if (debugEnabled) logger.debug("Checking random blackberry number :  " + hash)
+    assert(hash.length() == 8)
+  }
 }

@@ -1,9 +1,6 @@
 package fabricator
 
 import java.awt.Color
-import java.math.BigInteger
-
-import play.libs.Json
 
 import scala.util.Random
 
@@ -75,7 +72,7 @@ class Internet (private val utility: UtilityService,
       case "shorthex"  if grayscale => "#000"
       case "shorthex" => ("#" + Integer.toHexString(color.getRGB() & 0x00ffffff)).substring(0,4)
       case "rgb" => "rgb(" + color.getRed + "," + color.getBlue + "," + color.getBlue + ")"
-      case _ => throw new Exception("Incorrect type is specified. Possible options : hex, shorthex, rgb")
+      case _ => throw new IllegalArgumentException("Incorrect type is specified. Possible options : hex, shorthex, rgb")
     }
   }
 

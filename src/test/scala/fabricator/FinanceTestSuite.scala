@@ -80,4 +80,11 @@ class FinanceTestSuite extends BaseTestSuite {
     for ((card, index) <- voyagerCrediCards.view.zipWithIndex) if (debugEnabled) logger.debug("Voyager Credit card #" + index + " is " + card)
   }
 
+  @Test
+  def testPin() = {
+    val pin = finance.pinCode()
+    assert(pin.length == 4)
+    assert(pin.toInt >= 0 && pin.toInt <= 9999)
+  }
+
 }

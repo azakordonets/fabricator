@@ -1,11 +1,15 @@
+
+
 package fabricator
 
 import java.io.File
 
+import com.github.tototoshi.csv.CSVReader
 import org.testng.annotations.{AfterTest, Test}
 
 class FileTestSuite extends BaseTestSuite {
 
+  protected val csvFilePath: String = "test-output/result.csv"
   protected var fileObject: File = null
 
   @Test
@@ -21,11 +25,73 @@ class FileTestSuite extends BaseTestSuite {
   @Test
   def testCsv() = {
     val result = file.csv()
-    val fileOnADrive: File = new File("test-output/result.csv")
+    val fileOnADrive: File = new File(csvFilePath)
     fileObject = fileOnADrive
     assert(fileObject.exists())
     logger.info("Checking csv file")
   }
+
+  @Test
+  def testCustomCsv() = {
+    val codes = Array("first_name", "last_name", "birthday", "email", "phone", "address", "bsn", "weight", "height")
+    val result = file.csvFromCodes(codes, 10, csvFilePath)
+    val fileOnADrive: File = new File(csvFilePath)
+    fileObject = fileOnADrive
+    assert(fileObject.exists())
+    val line = CSVReader.open(fileOnADrive).readNext()
+    val firstNameList: Array[String] = util.getArrayFromJson("first_name")
+    assert(firstNameList.contains(line.get.head))
+  }
+
+  @Test
+  def testCsvWithCustomDelimiter() = {
+    // creating file
+    val codes = Array("occupation", "visa", "master", "iban", "bic", "url", "ip", "macaddress", "uuid", "color", "twitter", "hashtag", "facebook", "google_analytics", "altitude", "depth", "latitude", "longitude", "coordinates", "geohash", "apple_token", "android", "windows7Token", "windows8Token", "word", "sentence")
+    val numberOfRows = 10
+    val result = file.csvFromCodes(codes, 10, csvFilePath)
+
+    // check that file exists
+    val fileOnADrive: File = new File(csvFilePath)
+    fileObject = fileOnADrive
+    assert(fileObject.exists())
+    // read file and confirm that correct data is present
+    val reader = CSVReader.open(fileOnADrive)
+    val lines = reader.all()
+    val numberOfRowsInFile = lines.length
+    assertResult(numberOfRows)(numberOfRowsInFile)
+    // asser that inserted data is correct
+    val line = reader.readNext()
+    val occupationList: Array[String] = util.getArrayFromJson("occupation")
+    assert(occupationList.contains(lines(0)(0)))
+    assertResult(codes.length)(lines(0).size)
+  }
+
+  @Test
+  def testCsvWithCustomSequence() = {
+    val values = Seq(alpha.integer(), alpha.double(), calendar.ampm(), null)
+    val numberOfRows = 10
+    val result = file.csv(values, 10, csvFilePath)
+    // check that file exists
+    val fileOnADrive: File = new File(csvFilePath)
+    fileObject = fileOnADrive
+    assert(fileObject.exists())
+    // read file and confirm that correct data is present
+    val reader = CSVReader.open(fileOnADrive)
+    val lines = reader.all()
+    val numberOfRowsInFile = lines.length
+    assertResult(numberOfRows)(numberOfRowsInFile)
+    // asser that inserted data is correct
+    val line = reader.readNext()
+    assert(lines(0)(0).toInt <= 1000)
+    assertResult(values.length)(lines(0).size)
+  }
+
+  @Test(expectedExceptions = Array(classOf[IllegalArgumentException]))
+  def testCsvFileWithException() = {
+    val codes = Array("wrongInput")
+    val result = file.csvFromCodes(codes, 1, csvFilePath)
+  }
+
 
   @AfterTest
   def tearDown() = {

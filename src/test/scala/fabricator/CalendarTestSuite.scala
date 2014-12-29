@@ -71,6 +71,18 @@ class CalendarTestSuite extends BaseTestSuite {
   }
 
   @Test
+  def testTime() = {
+    val time24 = calendar.time(true)
+    val hour24 = time24.split(":")(0).toInt
+    val minute24 = time24.split(":")(1).toInt
+    assert(hour24 >= 0 && hour24 < 24 && minute24 >= 0 && minute24 < 60)
+    val time = calendar.time(false)
+    val hour = time.split(":")(0).toInt
+    val minute = time.split(":")(1).toInt
+    assert(hour >= 0 && hour < 12 && minute >= 0 && minute < 60)
+  }
+
+  @Test
   def testDay() = {
     val year = calendar.year()
     val month = calendar.month()
@@ -110,6 +122,19 @@ class CalendarTestSuite extends BaseTestSuite {
     if (debugEnabled) logger.debug("Testing random date: " + date)
     assert(date.equals(expectedResult))
   }
+
+  @Test
+  def testDateWithFormat() = {
+    val format = "dd_MM_yyyy"
+    val year = calendar.year().toInt
+    val month = calendar.month().toInt
+    val day = calendar.day(year, month).toInt
+    val hour = calendar.hour().toInt
+    val minute = calendar.minute().toInt
+    val date = calendar.date(year, month, day, hour, minute, format)
+    assertResult(new DateTime(year, month, day, hour, minute).toString(format))(date)
+  }
+
 
   @Test
   def testDateObject() = {
@@ -162,6 +187,12 @@ class CalendarTestSuite extends BaseTestSuite {
     val date = calendar.dateWithPeriod(year, month, week, day, hour, minute, format)
     if (debugEnabled) logger.debug("Testing random date with dateWithPeriod method: " + date)
     assertResult(expectedDate)(date)
+  }
+
+  @Test
+  def testDateWithPeriodWithDefaultFormat() = {
+    val date = calendar.dateWithPeriod(0, 0, 0, 0, 0, 0)
+    assertResult(DateTime.now.toString("dd-MM-yyyy hh:mm"))(date)
   }
 
 }

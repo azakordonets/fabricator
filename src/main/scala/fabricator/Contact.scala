@@ -1,7 +1,5 @@
 package fabricator
 
-import java.lang.IllegalArgumentException
-
 import com.github.nscala_time.time.Imports._
 import org.joda.time.format.DateTimeFormatter
 
@@ -21,7 +19,10 @@ class Contact( private val utility:UtilityService,
 
   }
 
-
+  def fullName(prefix: Boolean): String = {
+    if (prefix)  prefix + " "+ firstName() + " " + lastName()
+    else firstName() + " " + lastName()
+  }
 
   def firstName():String =  {
     utility.getValueFromArray("first_name")
@@ -29,11 +30,6 @@ class Contact( private val utility:UtilityService,
 
   def lastName():String = {
     utility.getValueFromArray("last_name")
-  }
-
-  def fullName(prefix:Boolean = false ):String = {
-    if (prefix)  prefix + " "+ firstName() + " " + lastName()
-    else firstName() + " " + lastName()
   }
 
   def birthday(age: Int): String = {
@@ -52,6 +48,10 @@ class Contact( private val utility:UtilityService,
     alpha.numerify(utility.getValueFromArray("phone_formats"))
   }
 
+  def address() = {
+    streetName() + " " + houseNumber() + ", " + apartmentNumber()
+  }
+
   def streetName() = {
     utility.getValueFromArray("street_suffix")
   }
@@ -62,10 +62,6 @@ class Contact( private val utility:UtilityService,
 
   def apartmentNumber() = {
     alpha.numerify(utility.getValueFromArray("app_number"))
-  }
-
-  def address() = {
-    streetName() + " " + houseNumber() + ", " + apartmentNumber()
   }
 
   def postcode() = {
@@ -139,7 +135,6 @@ class Contact( private val utility:UtilityService,
     } else {
       "uknown"
     }
-    
   }
 
   def height(cm: Boolean): String = {

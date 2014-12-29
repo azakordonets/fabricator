@@ -4,7 +4,9 @@ import java.awt._
 import java.awt.font.{FontRenderContext, TextLayout}
 import java.awt.image.BufferedImage
 import java.io.File
+
 import com.github.tototoshi.csv._
+
 import scala.util.Random
 
 
@@ -62,16 +64,24 @@ class FileGenerator(private val utility: UtilityService,
   }
 
 
+  def csv(seq: Seq[Any], rows: Int, path: String): Unit = {
+    csv(seq, rows, path, ',')
+  }
+
   def csv(seq: Seq[Any], rows: Int, path: String, customDelimiter: Char):Unit = {
     val expectedFile = new File(path)
     implicit object MyFormat extends DefaultCSVFormat {
       override val delimiter = customDelimiter
     }
     val writer = CSVWriter.open(expectedFile)
-    for (i <- 0 to rows) {
+    for (i <- 0 to rows - 1) {
       writer.writeRow(seq)
     }
     writer.close()
+  }
+
+  def csvFromCodes(codes: Array[String], rows: Int, path: String): Unit = {
+    csvFromCodes(codes, rows, path, ',')
   }
 
   def csvFromCodes(codes: Array[String], rows: Int, path: String, customDelimiter: Char):Unit = {
@@ -80,7 +90,7 @@ class FileGenerator(private val utility: UtilityService,
       override val delimiter = customDelimiter
     }
     val writer = CSVWriter.open(expectedFile)
-    for (i <- 0 to rows) {
+    for (i <- 0 to rows - 1) {
       val generatedMap = codes.map(x => generateValue(x))
       writer.writeRow(generatedMap)
     }
@@ -96,7 +106,7 @@ class FileGenerator(private val utility: UtilityService,
       case "guid" => alpha.guid()
       case "time" => calendar.time(true)
       case "date" => calendar.date()
-      case "name" => contact.fullName()
+      case "name" => contact.fullName(false)
       case "first_name" => contact.firstName()
       case "last_name" => contact.lastName()
       case "birthday" => contact.birthday(alpha.integer(21, 80))
