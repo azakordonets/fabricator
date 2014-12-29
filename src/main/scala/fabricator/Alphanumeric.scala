@@ -34,7 +34,7 @@ class Alphanumeric(private val random: Random) {
   }
   
   def double(min: Double, max: Double): Double = {
-    min + ((random.nextDouble()*(max - min)))
+    min + random.nextDouble() * (max - min)
   }
 
   def float() :Float = {
@@ -46,7 +46,7 @@ class Alphanumeric(private val random: Random) {
   }
   
   def float(min: Float, max: Float): Float = {
-    min + ((random.nextFloat()*(max - min)))
+    min + random.nextFloat() * (max - min)
   }
 
   def boolean() : Boolean = {
@@ -104,12 +104,12 @@ class Alphanumeric(private val random: Random) {
 
 
   def numerify(string: String): String = {
-    string.map(letter=>letter match {case '#' => random.nextInt(10).toString case _  => letter}).mkString
+    string.map { case '#' => random.nextInt(10).toString case letter => letter}.mkString
   }
 
   def letterify(string: String): String = {
     val chars = ('a' to 'z') ++ ('A' to 'Z')
-    string.map(letter=>letter match {case '?' => chars(random.nextInt(chars.length)) case _  => letter}).mkString
+    string.map { case '?' => chars(random.nextInt(chars.length)) case letter => letter}.mkString
   }
 
   def botify(string: String): String = {
