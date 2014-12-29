@@ -4,14 +4,13 @@ lazy val commonSettings = Seq(
   name := "fabricator",
   version := "0.1-SNAPSHOT",
   organization := "com.github",
-  scalaVersion := "2.10.4"
+  scalaVersion := "2.10.4",
+  crossScalaVersions := Seq("2.10.4", "2.11.4"),
+  licenses += ("MIT", url("http://opensource.org/licenses/MIT")),
+  publishMavenStyle := true,
+  publishArtifact in Test := false,
+  unmanagedResourceDirectories in Compile += {baseDirectory.value / "src/main/resources"}
 )
-
-lazy val app = (project in file("app")).
-  settings(commonSettings: _*).
-  settings(
-    crossScalaVersions := Seq("2.10.4", "2.11.4")
-  )
 
 resolvers += "Typesafe Simple Repository" at "http://repo.typesafe.com/typesafe/simple/maven-releases/"
 
@@ -37,14 +36,4 @@ libraryDependencies ++= Seq(
   "com.google.inject"           %  "guice"                  % "3.0",
   "com.github.tototoshi"        %%  "scala-csv"             % "1.2.0-SNAPSHOT"
 )
-
-scalacOptions += "-deprecation"
-
-ivyScala := ivyScala.value map {
-  _.copy(overrideScalaVersion = true)
-}
-
-unmanagedResourceDirectories in Compile += {
-  baseDirectory.value / "src/main/resources"
-}
 
