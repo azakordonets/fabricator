@@ -1,3 +1,16 @@
+
+lazy val commonSettings = Seq(
+  version := "0.1-SNAPSHOT",
+  organization := "com.github",
+  scalaVersion := "2.10.4"
+)
+
+lazy val app = (project in file("app")).
+  settings(commonSettings: _*).
+  settings(
+    assemblyJarName in assembly := "fabricator.jar"
+  )
+
 name := "fabricator"
 
 version := "1.0"
