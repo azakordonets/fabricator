@@ -14,10 +14,6 @@ resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repos
 
 resolvers += Classpaths.sbtPluginReleases
 
-//addSbtPlugin("org.scoverage" %% "sbt-scoverage" % "1.0.1")
-
-//addSbtPlugin("org.scoverage" %% "sbt-coveralls" % "1.0.0.BETA1")
-
 libraryDependencies ++= Seq(
   "com.typesafe.play" % "play-json_2.10" % "2.4.0-M2",
   "org.testng" % "testng" % "6.8.8" % "test",
