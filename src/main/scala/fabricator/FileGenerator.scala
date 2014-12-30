@@ -36,7 +36,7 @@ class FileGenerator(private val utility: UtilityService,
   }
 
   def image(width: Int, height: Int, path: String) = {
-    if (width > 2560 || height > 2560) throw new Exception("Image cannot be more then 2560x2560")
+    if (width > 2560 || height > 2560) throw new IllegalArgumentException("Image cannot be more then 2560x2560")
     val label: String = "" + width + "x" + height
     val font: Font = new Font("Arial", Font.PLAIN, 32)
     val frc: FontRenderContext = new FontRenderContext(null, true, true)

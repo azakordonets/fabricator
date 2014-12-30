@@ -5,7 +5,7 @@ package fabricator
 import java.io.File
 
 import com.github.tototoshi.csv.CSVReader
-import org.testng.annotations.{AfterTest, Test}
+import org.testng.annotations.{DataProvider, AfterTest, Test}
 
 class FileTestSuite extends BaseTestSuite {
 
@@ -46,7 +46,9 @@ class FileTestSuite extends BaseTestSuite {
   @Test
   def testCsvWithCustomDelimiter() = {
     // creating file
-    val codes = Array("occupation", "visa", "master", "iban", "bic", "url", "ip", "macaddress", "uuid", "color", "twitter", "hashtag", "facebook", "google_analytics", "altitude", "depth", "latitude", "longitude", "coordinates", "geohash", "apple_token", "android", "windows7Token", "windows8Token", "word", "sentence")
+    val codes = Array("occupation", "visa", "master", "iban", "bic", "url", "ip", "macaddress", "uuid", "color", "twitter", "hashtag", "facebook",
+                      "google_analytics", "altitude", "depth", "latitude", "longitude", "coordinates", "geohash", "apple_token", "android", "postcode",
+                      "windows7Token", "windows8Token", "word", "sentence", "integer", "integer" ,"double" ,"hash" ,"guid" ,"time" ,"date" ,"name" )
     val numberOfRows = 10
     val result = file.csvFromCodes(codes, 10, csvFilePath)
 
@@ -90,6 +92,20 @@ class FileTestSuite extends BaseTestSuite {
   def testCsvFileWithException() = {
     val codes = Array("wrongInput")
     val result = file.csvFromCodes(codes, 1, csvFilePath)
+  }
+
+  @DataProvider
+  def sizeDP(): Array[Array[Any]] = {
+      Array(Array(100, 3000, "path"),
+        Array(10000, 300, "path"),
+        Array(10000, 3000, "path")
+      )
+    }
+
+
+  @Test(expectedExceptions = Array(classOf[IllegalArgumentException]), dataProvider = "sizeDP")
+  def testImageFileWithExceptionForSize(width: Int, height: Int, path: String) = {
+    val result = file.image(width, height, path)
   }
 
 

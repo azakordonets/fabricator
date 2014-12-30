@@ -1,15 +1,54 @@
 import sbt.Keys._
 
 lazy val commonSettings = Seq(
+
   name := "fabricator",
-  version := "0.1-SNAPSHOT",
-  organization := "com.github",
+
+  version := "1.0",
+
+  organization := "com.github.azakordonets",
+
   scalaVersion := "2.10.4",
+
   crossScalaVersions := Seq("2.10.4", "2.11.4"),
-  licenses += ("MIT", url("http://opensource.org/licenses/MIT")),
+
+  scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8"),
+
+  licenses +=("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html")),
+
+  homepage := Some(url("https://github.com/azakordonets/fabricator")),
+
+  organizationHomepage := Some(url("https://biercoff.com")),
+
   publishMavenStyle := true,
+
   publishArtifact in Test := false,
-  unmanagedResourceDirectories in Compile += {baseDirectory.value / "src/main/resources"}
+
+  publishTo := {
+    val nexus = "https://oss.sonatype.org/"
+    if (isSnapshot.value)
+      Some("snapshots" at nexus + "content/repositories/snapshots")
+    else
+      Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+  },
+
+  pomIncludeRepository := { _ => false },
+
+  unmanagedResourceDirectories in Compile += {baseDirectory.value / "src/main/resources"},
+
+  pomExtra := (
+    <url>https://github.com/azakordonets/fabricator</url>
+      <scm>
+        <url>git@github.com:azakordonets/fabricator.git</url>
+        <connection>scm:git:git@github.com:azakordonets/fabricator.git</connection>
+      </scm>
+      <developers>
+        <developer>
+          <id>azakordonets</id>
+          <name>Andrew Zakordonets</name>
+          <url>http://biercoff.com</url>
+        </developer>
+      </developers>)
 )
 
 resolvers += "Typesafe Simple Repository" at "http://repo.typesafe.com/typesafe/simple/maven-releases/"
