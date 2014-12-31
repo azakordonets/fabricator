@@ -1,6 +1,5 @@
 import sbt.Keys._
 import scoverage.ScoverageSbtPlugin.ScoverageKeys
-import bintray._
 
 lazy val commonSettings = Seq(
 
