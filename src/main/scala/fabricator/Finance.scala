@@ -34,7 +34,7 @@ import scala.util.Random
 //     */
 class Finance(private val utility: UtilityService,
               private val random: Random,
-              private val alpha: Alphanumeric, 
+              private val alpha: Alphanumeric,
               private val creditCard: CreditCard) {
 
   def this() {
@@ -54,11 +54,11 @@ class Finance(private val utility: UtilityService,
     alpha.botify(utility.getValueFromArray("bic").toUpperCase)
   }
 
-  def mastercreditCard():String = {
-    creditCard.createCreditCardNumber(creditCard.masterCardPrefixList,16,1)(0)
+  def mastercreditCard(): String = {
+    creditCard.createCreditCardNumber(creditCard.masterCardPrefixList, 16, 1)(0)
   }
 
-  def mastercreditCards(howMany : Int): Array[String] = {
+  def mastercreditCards(howMany: Int): Array[String] = {
     creditCard.createCreditCardNumber(creditCard.masterCardPrefixList, 16, howMany)
   }
 
@@ -70,22 +70,22 @@ class Finance(private val utility: UtilityService,
     creditCard.createCreditCardNumber(creditCard.visaPrefixList, cardNumberLength, 1)(0)
   }
 
-  def visacreditCards(howMany : Int): Array[String] = {
+  def visacreditCards(howMany: Int): Array[String] = {
     creditCard.createCreditCardNumber(creditCard.visaPrefixList, 16, 1)
   }
 
-  def visacreditCards(howMany : Int, cardNumberLength: Int): Array[String] = {
+  def visacreditCards(howMany: Int, cardNumberLength: Int): Array[String] = {
     creditCard.createCreditCardNumber(creditCard.visaPrefixList, cardNumberLength, 1)
   }
 
   def americanExpresscreditCard(): String = {
     creditCard.createCreditCardNumber(creditCard.amexPrefixList, 16, 1)(0)
   }
-  
+
   def americanExpresscreditCards(howMany: Int): Array[String] = {
     creditCard.createCreditCardNumber(creditCard.amexPrefixList, 16, howMany)
   }
-  
+
   def discoverCreditCard(): String = {
     creditCard.createCreditCardNumber(creditCard.discoverPrefixList, 16, 1)(0)
   }
@@ -121,8 +121,6 @@ class Finance(private val utility: UtilityService,
   def pinCode(): String = {
     alpha.numerify("####")
   }
-
-
 
 
 }

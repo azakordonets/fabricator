@@ -30,12 +30,14 @@ lazy val commonSettings = Seq(
     if (isSnapshot.value)
       Some("snapshots" at nexus + "content/repositories/snapshots")
     else
-      Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+      Some("releases" at nexus + "service/local/staging/deploy/maven2")
   },
 
-  pomIncludeRepository := { _ => false },
+  pomIncludeRepository := { _ => false},
 
-  unmanagedResourceDirectories in Compile += {baseDirectory.value / "src/main/resources"},
+  unmanagedResourceDirectories in Compile += {
+    baseDirectory.value / "src/main/resources"
+  },
 
   pomExtra := (
     <url>https://github.com/azakordonets/fabricator</url>
@@ -57,7 +59,7 @@ lazy val commonSettings = Seq(
 
   ScoverageKeys.coverageHighlighting := {
     if (scalaBinaryVersion.value == "2.10") true else false
-},
+  },
   bintray.Keys.repository in bintray.Keys.bintray := "Fabricator",
 
   bintray.Keys.bintrayOrganization in bintray.Keys.bintray := None
@@ -74,18 +76,18 @@ resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repos
 resolvers += Classpaths.sbtPluginReleases
 
 libraryDependencies ++= Seq(
-  "com.typesafe.play"           %%  "play-json"             % "2.4.0-M2",
-  "org.testng"                  %  "testng"                 % "6.8.8"       % "test",
-  "org.scalatest"               %%  "scalatest"             % "3.0.0-SNAP4" % "test",
-  "com.github.nscala-time"      %%  "nscala-time"           % "1.2.0",
-  "com.typesafe.scala-logging"  %%  "scala-logging-slf4j"   % "2.1.2",
-  "org.slf4j"                   %  "slf4j-api"              % "1.7.1",
-  "ch.qos.logback"              %  "logback-classic"        % "1.0.3",
-  "com.spatial4j"               %  "spatial4j"              % "0.4.1",
-  "org.iban4j"                  %  "iban4j"                 % "2.1.1",
-  "commons-validator"           %  "commons-validator"      % "1.4.0",
-  "com.google.inject"           %  "guice"                  % "3.0",
-  "com.github.tototoshi"        %%  "scala-csv"             % "1.2.0-SNAPSHOT"
+  "com.typesafe.play" %% "play-json" % "2.4.0-M2",
+  "org.testng" % "testng" % "6.8.8" % "test",
+  "org.scalatest" %% "scalatest" % "3.0.0-SNAP4" % "test",
+  "com.github.nscala-time" %% "nscala-time" % "1.2.0",
+  "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2",
+  "org.slf4j" % "slf4j-api" % "1.7.1",
+  "ch.qos.logback" % "logback-classic" % "1.0.3",
+  "com.spatial4j" % "spatial4j" % "0.4.1",
+  "org.iban4j" % "iban4j" % "2.1.1",
+  "commons-validator" % "commons-validator" % "1.4.0",
+  "com.google.inject" % "guice" % "3.0",
+  "com.github.tototoshi" %% "scala-csv" % "1.2.0-SNAPSHOT"
 )
 
 

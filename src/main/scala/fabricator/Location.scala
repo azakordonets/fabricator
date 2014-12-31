@@ -26,7 +26,7 @@ class Location(private val utility: UtilityService,
     if (accuracy > 10) {
       throw new IllegalArgumentException("Accuracy cannot be more then 10 digits")
     }
-    alpha.integer(0,max) + "." + alpha.integer(100000, 1000000000).toString.substring(0, accuracy)
+    alpha.integer(0, max) + "." + alpha.integer(100000, 1000000000).toString.substring(0, accuracy)
   }
 
   def depth(): String = {
@@ -41,7 +41,7 @@ class Location(private val utility: UtilityService,
     if (accuracy > 10) {
       throw new IllegalArgumentException("Accuracy cannot be more then 10 digits")
     }
-    "-"+alpha.integer(0, Math.abs(min)) + "." + alpha.integer(100000, 1000000000).toString.substring(0, accuracy)
+    "-" + alpha.integer(0, Math.abs(min)) + "." + alpha.integer(100000, 1000000000).toString.substring(0, accuracy)
   }
 
   def coordinates(): String = {
@@ -50,15 +50,6 @@ class Location(private val utility: UtilityService,
 
   def coordinates(accuracy: Int): String = {
     latitude(accuracy) + ", " + longitude(accuracy)
-  }
-
-
-  def latitude(): String = {
-    latitude(-89, 89)
-  }
-
-  def latitude(min: Int, max: Int): String = {
-    latitude(min, max, 5)
   }
 
   def latitude(accuracy: Int): String = {
@@ -70,15 +61,6 @@ class Location(private val utility: UtilityService,
       throw new IllegalArgumentException("Accuracy cannot be more then 10 digits")
     }
     alpha.integer(min, max) + "." + alpha.integer(100000, 1000000000).toString.substring(0, accuracy)
-  }
-
-
-  def longitude(): String = {
-    longitude(-179, 179)
-  }
-
-  def longitude(min: Int, max: Int): String = {
-    longitude(min, max, 5)
   }
 
   def longitude(accuracy: Int): String = {
@@ -94,6 +76,22 @@ class Location(private val utility: UtilityService,
 
   def geohash(): String = {
     GeohashUtils.encodeLatLon(latitude().toDouble, longitude().toDouble)
+  }
+
+  def latitude(): String = {
+    latitude(-89, 89)
+  }
+
+  def latitude(min: Int, max: Int): String = {
+    latitude(min, max, 5)
+  }
+
+  def longitude(): String = {
+    longitude(-179, 179)
+  }
+
+  def longitude(min: Int, max: Int): String = {
+    longitude(min, max, 5)
   }
 
   def geohash(latitude: Double, longitude: Double): String = {

@@ -7,34 +7,34 @@ import scala.util.Random
 /**
  * Created by Andrew Zakordonets on 22/09/14.
  */
-class Internet (private val utility: UtilityService,
-                private val alpha: Alphanumeric,
-                private val random: Random,
-                private val contact: Contact,
-                 private val word: Words){
+class Internet(private val utility: UtilityService,
+               private val alpha: Alphanumeric,
+               private val random: Random,
+               private val contact: Contact,
+               private val word: Words) {
 
   def this() {
     this(new UtilityService(),
-         new Alphanumeric(),
-         new Random(),
-         new Contact(),
-         new Words())
+      new Alphanumeric(),
+      new Random(),
+      new Contact(),
+      new Words())
   }
 
   def appleToken(): String = {
     random.alphanumeric.take(64).mkString.toLowerCase
   }
 
-  def url (): String = {
-    "http://" + alpha.botify("????#####??????.")+utility.getValueFromArray("domain_suffix")
+  def url(): String = {
+    "http://" + alpha.botify("????#####??????.") + utility.getValueFromArray("domain_suffix")
   }
 
-  def url(protocol: String, host:String, callName:String, params:Map[String, String]):String = {
+  def url(protocol: String, host: String, callName: String, params: Map[String, String]): String = {
     var paramsString: String = ""
     for ((key, value) <- params) {
       paramsString += key + "=" + value + "&"
     }
-    protocol + "://" + host + "/" + callName + "?" + paramsString.substring(0, paramsString.size-1)
+    protocol + "://" + host + "/" + callName + "?" + paramsString.substring(0, paramsString.size - 1)
   }
 
   def ip(): String = {
@@ -45,7 +45,7 @@ class Internet (private val utility: UtilityService,
 
   def ipv6() = {
     val alphabet = "abcdefABCDEF0123456789"
-    (1 to 8).map(i => "" + (1 to 4).map(y=>"" +alphabet.charAt(Random.nextInt(alphabet.length))).mkString).mkString(":")
+    (1 to 8).map(i => "" + (1 to 4).map(y => "" + alphabet.charAt(Random.nextInt(alphabet.length))).mkString).mkString(":")
   }
 
   def macAddress(): String = {
@@ -69,23 +69,23 @@ class Internet (private val utility: UtilityService,
     }
     format match {
       case "hex" => "#" + Integer.toHexString(color.getRGB() & 0x00ffffff)
-      case "shorthex"  if grayscale => "#000"
-      case "shorthex" => ("#" + Integer.toHexString(color.getRGB() & 0x00ffffff)).substring(0,4)
+      case "shorthex" if grayscale => "#000"
+      case "shorthex" => ("#" + Integer.toHexString(color.getRGB() & 0x00ffffff)).substring(0, 4)
       case "rgb" => "rgb(" + color.getRed + "," + color.getBlue + "," + color.getBlue + ")"
       case _ => throw new IllegalArgumentException("Incorrect type is specified. Possible options : hex, shorthex, rgb")
     }
   }
 
   def twitter(): String = {
-    "@"+contact.firstName()+contact.lastName()
+    "@" + contact.firstName() + contact.lastName()
   }
 
   def hashtag(): String = {
-    "#"+word.words(3).mkString
+    "#" + word.words(3).mkString
   }
 
   def googleAnalyticsTrackCode(): String = {
-    "UA-" + alpha.integer(10000, 100000) + "-" + alpha.integer(10,100)
+    "UA-" + alpha.integer(10000, 100000) + "-" + alpha.integer(10, 100)
   }
 
   def facebookId(): String = {

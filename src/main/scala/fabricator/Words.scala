@@ -5,37 +5,23 @@ import scala.util.Random
 /**
  * Created by Andrew Zakordonets on 05/06/14.
  */
-class Words (private val utility: UtilityService, private val random: Random){
+class Words(private val utility: UtilityService, private val random: Random) {
+
+  protected val wordsList = utility.getListFromJson("words")
 
   def this() {
     this(new UtilityService(), new Random())
   }
 
-  protected val wordsList = utility.getListFromJson("words")
-
   def word(): String = {
     utility.getValueFromArray("word")
   }
 
-  def words(quantity: Int = 10): Array[String] = {
-    val resultArray = new Array[String](quantity)
-    for ( count <- quantity-1 to 0 by -1 ) {
-      for (wordsUnit <- wordsList) {
-        resultArray(count) = wordsUnit(random.nextInt(wordsUnit.length - 1))
-      }
-    }
-    resultArray
-  }
-
-  def sentence(wordQuantity: Int = 10): String  = {
-    words(wordQuantity).mkString(" ") + ". "
-  }
-
   def paragraph(): String = {
-      paragraph(100)
+    paragraph(100)
   }
 
-  def paragraph(charsLength: Int):String = {
+  def paragraph(charsLength: Int): String = {
     val wordsSequence = sentence(charsLength)
     var builder = new StringBuilder
     var counter = 0
@@ -44,6 +30,20 @@ class Words (private val utility: UtilityService, private val random: Random){
       counter += 1
     }
     builder.toString()
+  }
+
+  def sentence(wordQuantity: Int = 10): String = {
+    words(wordQuantity).mkString(" ") + ". "
+  }
+
+  def words(quantity: Int = 10): Array[String] = {
+    val resultArray = new Array[String](quantity)
+    for (count <- quantity - 1 to 0 by -1) {
+      for (wordsUnit <- wordsList) {
+        resultArray(count) = wordsUnit(random.nextInt(wordsUnit.length - 1))
+      }
+    }
+    resultArray
   }
 
 }

@@ -20,16 +20,17 @@ class CreditCard {
 
   val voyagerPrefixList = Array("8699")
 
-  private def strrev(str: String): String = {
-    if (str == null)
-      return ""
-    var revstr = ""
-    for (i <- str.length -1  to 0 by -1) {
-      revstr += str.charAt(i)
-    }
-    revstr
-  }
+  def createCreditCardNumber(prefixList: Array[String], length: Int, howMany: Int): Array[String] = {
 
+    val result = mutable.Stack[String]()
+    for (i <- 0 to howMany) {
+      val randomArrayIndex: Int = Math.floor(Math.random() * prefixList.length).toInt
+      val ccnumber: String = prefixList(randomArrayIndex)
+      result.push(completed_number(ccnumber, length))
+    }
+
+    result.toArray
+  }
 
   /*
    * 'prefix' is the start of the CC number as a string, any number of digits.
@@ -50,7 +51,7 @@ class CreditCard {
     val reversedCCnumberString = strrev(ccnumber)
 
     var builder: VectorBuilder[Int] = new VectorBuilder[Int]
-    for (i <- 0 to reversedCCnumberString.length-1) {
+    for (i <- 0 to reversedCCnumberString.length - 1) {
       if (reversedCCnumberString.charAt(i) != 46) {
         builder.+=(reversedCCnumberString.charAt(i).asDigit)
       }
@@ -84,20 +85,18 @@ class CreditCard {
     var checkdigit = (((Math.floor(sum / 10) + 1) * 10 - sum) % 10).intValue()
     ccnumber += checkdigit
     if (isValidCreditCardNumber(ccnumber)) ccnumber
-    else throw new Exception ("Credit card number "+ccnumber + "is not valid")
+    else throw new Exception("Credit card number " + ccnumber + "is not valid")
 
   }
 
-  def createCreditCardNumber(prefixList: Array[String], length: Int, howMany: Int): Array[String] = {
-
-    val result = mutable.Stack[String]()
-    for (i <- 0 to howMany) {
-      val randomArrayIndex: Int = Math.floor(Math.random() * prefixList.length).toInt
-      val ccnumber: String = prefixList(randomArrayIndex)
-      result.push(completed_number(ccnumber, length))
+  private def strrev(str: String): String = {
+    if (str == null)
+      return ""
+    var revstr = ""
+    for (i <- str.length - 1 to 0 by -1) {
+      revstr += str.charAt(i)
     }
-
-    result.toArray
+    revstr
   }
 
   private def isValidCreditCardNumber(creditCardNumber: String): Boolean = {
@@ -106,12 +105,12 @@ class CreditCard {
     try {
       val reversedNumber = new StringBuffer(creditCardNumber).reverse().toString()
       var mod10Count = 0
-      for (i <- 0 to reversedNumber.length-1) {
+      for (i <- 0 to reversedNumber.length - 1) {
         var augend = Integer.parseInt(String.valueOf(reversedNumber.charAt(i)))
         if (((i + 1) % 2) == 0) {
           val productString: String = String.valueOf(augend * 2)
           augend = 0
-          for (j <- 0 to productString.length -1) {
+          for (j <- 0 to productString.length - 1) {
             augend += Integer.parseInt(String.valueOf(productString.charAt(j)))
           }
         }

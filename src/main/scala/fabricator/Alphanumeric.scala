@@ -8,7 +8,7 @@ import scala.util.Random
  */
 class Alphanumeric(private val random: Random) {
 
-  def this () {
+  def this() {
     this(new Random())
   }
 
@@ -17,7 +17,7 @@ class Alphanumeric(private val random: Random) {
     random.nextInt(1000)
   }
 
-  def integer(max: Int):Int = {
+  def integer(max: Int): Int = {
     random.nextInt(max)
   }
 
@@ -28,60 +28,59 @@ class Alphanumeric(private val random: Random) {
   def double(): Double = {
     random.nextDouble()
   }
-  
-  def double(max:Double): Double = {
+
+  def double(max: Double): Double = {
     double(0, max)
   }
-  
+
   def double(min: Double, max: Double): Double = {
     min + random.nextDouble() * (max - min)
   }
 
-  def float() :Float = {
+  def float(): Float = {
     random.nextFloat()
   }
-  
+
   def float(max: Float): Float = {
     float(0, max)
   }
-  
+
   def float(min: Float, max: Float): Float = {
     min + random.nextFloat() * (max - min)
   }
 
-  def boolean() : Boolean = {
+  def boolean(): Boolean = {
     random.nextBoolean()
   }
 
-  def gausian(): Double  = {
+  def gausian(): Double = {
     random.nextGaussian()
+  }
+
+  def string(): String = {
+    string("0123456789abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_", 30)
+  }
+
+  def string(length: Int): String = {
+    string("0123456789abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_", length)
+  }
+
+  def hash(): String = {
+    string("0123456789abcdef", 40)
   }
 
   def string(charsSequence: String, max: Int): String = {
     val builder = new StringBuilder
     var counter = 0
     while (counter < max) {
-      builder.append(charsSequence.charAt(random.nextInt(charsSequence.length-1)))
+      builder.append(charsSequence.charAt(random.nextInt(charsSequence.length - 1)))
       counter += 1
     }
     builder.toString()
   }
 
-  def string(): String = {
-    string("0123456789abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_",30)
-  }
-
-  def string (length: Int): String = {
-    string("0123456789abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_",length)
-  }
-
-
-  def hash(): String = {
-    string("0123456789abcdef",40)
-  }
-
   def hash(length: Int) = {
-    string("0123456789abcdef",length)
+    string("0123456789abcdef", length)
   }
 
   def guid(): String = {
@@ -102,6 +101,9 @@ class Alphanumeric(private val random: Random) {
       string(guid_pool, 12)
   }
 
+  def botify(string: String): String = {
+    letterify(numerify(string))
+  }
 
   def numerify(string: String): String = {
     string.map { case '#' => random.nextInt(10).toString case letter => letter}.mkString
@@ -110,10 +112,6 @@ class Alphanumeric(private val random: Random) {
   def letterify(string: String): String = {
     val chars = ('a' to 'z') ++ ('A' to 'Z')
     string.map { case '?' => chars(random.nextInt(chars.length)) case letter => letter}.mkString
-  }
-
-  def botify(string: String): String = {
-    letterify(numerify(string))
   }
 
 }

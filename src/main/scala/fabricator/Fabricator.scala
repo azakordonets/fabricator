@@ -3,44 +3,43 @@ package fabricator
 
 class Fabricator(lang: String = "us",
                  private val utility: UtilityService,
-                      alphaFaker: Alphanumeric = new Alphanumeric,
-                      contactFaker: Contact = new Contact,
-                      calendarFaker: Calendar = new Calendar,
-                      wordsFaker: Words = new Words,
-                      internetFaker: Internet = new Internet,
-                      financeFaker: Finance = new Finance,
-                      locationFaker: Location = new Location(),
-                      fileFaker: FileGenerator = new FileGenerator(),
-                      mobileFaker: Mobile = new Mobile()) {
+                 alphaFaker: Alphanumeric = new Alphanumeric,
+                 contactFaker: Contact = new Contact,
+                 calendarFaker: Calendar = new Calendar,
+                 wordsFaker: Words = new Words,
+                 internetFaker: Internet = new Internet,
+                 financeFaker: Finance = new Finance,
+                 locationFaker: Location = new Location(),
+                 fileFaker: FileGenerator = new FileGenerator(),
+                 mobileFaker: Mobile = new Mobile()) {
 
 
-
-  def this () {
+  def this() {
     this("us",
-    new UtilityService("us"),
-    new Alphanumeric,
-    new Contact,
-    new Calendar,
-    new Words,
-    new Internet,
-    new Finance,
-    new Location,
-    new FileGenerator,
-    new Mobile)
+      new UtilityService("us"),
+      new Alphanumeric,
+      new Contact,
+      new Calendar,
+      new Words,
+      new Internet,
+      new Finance,
+      new Location,
+      new FileGenerator,
+      new Mobile)
   }
 
-  def this (lang: String) {
+  def this(lang: String) {
     this(lang,
-    new UtilityService(lang),
-    new Alphanumeric,
-    new Contact,
-    new Calendar,
-    new Words,
-    new Internet,
-    new Finance,
-    new Location,
-    new FileGenerator,
-    new Mobile)
+      new UtilityService(lang),
+      new Alphanumeric,
+      new Contact,
+      new Calendar,
+      new Words,
+      new Internet,
+      new Finance,
+      new Location,
+      new FileGenerator,
+      new Mobile)
   }
 
   def contact(): Contact = {
@@ -59,7 +58,7 @@ class Fabricator(lang: String = "us",
     wordsFaker
   }
 
-  def internet() : Internet = {
+  def internet(): Internet = {
     internetFaker
   }
 

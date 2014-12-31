@@ -68,7 +68,7 @@ class FileGenerator(private val utility: UtilityService,
     csv(seq, rows, path, ',')
   }
 
-  def csv(seq: Seq[Any], rows: Int, path: String, customDelimiter: Char):Unit = {
+  def csv(seq: Seq[Any], rows: Int, path: String, customDelimiter: Char): Unit = {
     val expectedFile = new File(path)
     implicit object MyFormat extends DefaultCSVFormat {
       override val delimiter = customDelimiter
@@ -84,7 +84,7 @@ class FileGenerator(private val utility: UtilityService,
     csvFromCodes(codes, rows, path, ',')
   }
 
-  def csvFromCodes(codes: Array[String], rows: Int, path: String, customDelimiter: Char):Unit = {
+  def csvFromCodes(codes: Array[String], rows: Int, path: String, customDelimiter: Char): Unit = {
     val expectedFile = new File(path)
     implicit object MyFormat extends DefaultCSVFormat {
       override val delimiter = customDelimiter

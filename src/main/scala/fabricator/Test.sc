@@ -12,7 +12,7 @@ val mobile = new Mobile()
 val words = new Words()
 
 val alphabet = "abcdefABCDEF0123456789"
-(1 to 8).map(i => "" + (1 to 4).map(y=>"" +alphabet.charAt(Random.nextInt(alphabet.length))).mkString).mkString(":")
+(1 to 8).map(i => "" + (1 to 4).map(y => "" + alphabet.charAt(Random.nextInt(alphabet.length))).mkString).mkString(":")
 
 //val word = new Words
 //val internet = new Internet()

@@ -2,10 +2,10 @@ package fabricator
 
 import scala.util.Random
 
-class Mobile (private val utility: UtilityService,
-              private val random: Random,
-              private val alpha: Alphanumeric,
-              private val creditCard: CreditCard) {
+class Mobile(private val utility: UtilityService,
+             private val random: Random,
+             private val alpha: Alphanumeric,
+             private val creditCard: CreditCard) {
 
   def this() {
     this(new UtilityService(), new Random(), new Alphanumeric(), new CreditCard)
@@ -24,7 +24,7 @@ class Mobile (private val utility: UtilityService,
    * @return
    */
   def applePushToken(): String = {
-    alpha.string("abcdef1234567890",64)
+    alpha.string("abcdef1234567890", 64)
   }
 
   /**
@@ -37,8 +37,9 @@ class Mobile (private val utility: UtilityService,
 
   //// Windows Phone 7 ANID
   def wp7_anid(): String = {
-    "A=" + alpha.guid().replace("-","").toUpperCase + "&E=" + alpha.hash(3) + "&W=" + alpha.integer(0,9)
+    "A=" + alpha.guid().replace("-", "").toUpperCase + "&E=" + alpha.hash(3) + "&W=" + alpha.integer(0, 9)
   }
+
   // // BlackBerry Device PIN
   def blackBerryPin(): String = {
     alpha.hash(8)

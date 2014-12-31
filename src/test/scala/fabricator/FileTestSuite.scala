@@ -15,7 +15,7 @@ class FileTestSuite extends BaseTestSuite {
   @Test
   def testImage() = {
     val path: String = "test-output/drawing.png"
-    val result = file.image(200,300, path)
+    val result = file.image(200, 300, path)
     val fileOnADrive: File = new File(path)
     fileObject = fileOnADrive
     assert(fileOnADrive.exists())
@@ -47,8 +47,8 @@ class FileTestSuite extends BaseTestSuite {
   def testCsvWithCustomDelimiter() = {
     // creating file
     val codes = Array("occupation", "visa", "master", "iban", "bic", "url", "ip", "macaddress", "uuid", "color", "twitter", "hashtag", "facebook",
-                      "google_analytics", "altitude", "depth", "latitude", "longitude", "coordinates", "geohash", "apple_token", "android", "postcode",
-                      "windows7Token", "windows8Token", "word", "sentence", "integer", "integer" ,"double" ,"hash" ,"guid" ,"time" ,"date" ,"name" )
+      "google_analytics", "altitude", "depth", "latitude", "longitude", "coordinates", "geohash", "apple_token", "android", "postcode",
+      "windows7Token", "windows8Token", "word", "sentence", "integer", "integer", "double", "hash", "guid", "time", "date", "name")
     val numberOfRows = 10
     val result = file.csvFromCodes(codes, 10, csvFilePath)
 
@@ -96,11 +96,11 @@ class FileTestSuite extends BaseTestSuite {
 
   @DataProvider
   def sizeDP(): Array[Array[Any]] = {
-      Array(Array(100, 3000, "path"),
-        Array(10000, 300, "path"),
-        Array(10000, 3000, "path")
-      )
-    }
+    Array(Array(100, 3000, "path"),
+      Array(10000, 300, "path"),
+      Array(10000, 3000, "path")
+    )
+  }
 
 
   @Test(expectedExceptions = Array(classOf[IllegalArgumentException]), dataProvider = "sizeDP")
@@ -111,11 +111,9 @@ class FileTestSuite extends BaseTestSuite {
 
   @AfterTest
   def tearDown() = {
-   logger.info("Deleting file")
+    logger.info("Deleting file")
     if (fileObject != null) fileObject.delete()
   }
-
-
 
 
 }

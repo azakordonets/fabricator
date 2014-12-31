@@ -196,5 +196,4 @@ class AlphaNumericTestSuite extends BaseTestSuite {
   }
 
 
-
 }
