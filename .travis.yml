@@ -10,4 +10,5 @@ env:
   - secure: WfHXClQceC5kUmMJWhglcD7tLF5BjLlqyMJeOO8wbdCs3s9OZYBaw1R+hdye34NjIVWnt4PA68xW4fDtXSCfQndNCOVanx3v+4gq3i/iPcuXv1oA5faY4p8P/8nSPbSWbsGOgX/n7OTxwQzCP9DeN1RXN+kS7R7ZKXfbRaC8X6E=
 branches:
   only:
+    - master
     - publish
