@@ -1,4 +1,6 @@
 import sbt.Keys._
+import scoverage.ScoverageSbtPlugin.ScoverageKeys
+import bintray._
 
 lazy val commonSettings = Seq(
 
@@ -48,7 +50,18 @@ lazy val commonSettings = Seq(
           <name>Andrew Zakordonets</name>
           <url>http://biercoff.com</url>
         </developer>
-      </developers>)
+      </developers>),
+
+  ScoverageKeys.coverageMinimum := 80,
+
+  ScoverageKeys.coverageFailOnMinimum := false,
+
+  ScoverageKeys.coverageHighlighting := {
+    if (scalaBinaryVersion.value == "2.10") true else false
+},
+  bintray.Keys.repository in bintray.Keys.bintray := "Fabricator",
+
+  bintray.Keys.bintrayOrganization in bintray.Keys.bintray := None
 )
 
 resolvers += "Typesafe Simple Repository" at "http://repo.typesafe.com/typesafe/simple/maven-releases/"
@@ -75,4 +88,7 @@ libraryDependencies ++= Seq(
   "com.google.inject"           %  "guice"                  % "3.0",
   "com.github.tototoshi"        %%  "scala-csv"             % "1.2.0-SNAPSHOT"
 )
+
+
+
 
