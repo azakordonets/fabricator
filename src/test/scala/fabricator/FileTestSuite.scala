@@ -5,7 +5,7 @@ package fabricator
 import java.io.File
 
 import com.github.tototoshi.csv.CSVReader
-import org.testng.annotations.{DataProvider, AfterTest, Test}
+import org.testng.annotations.{AfterTest, DataProvider, Test}
 
 class FileTestSuite extends BaseTestSuite {
 

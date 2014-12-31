@@ -1,6 +1,19 @@
 language: scala
-script: sbt clean coverage test
-after_success: sbt coveralls
+jdk:
+- oraclejdk8
+- oraclejdk7
+script:
+- sbt clean coverage test
+- sbt coveralls
+after_success:
+  - >
+      test "${TRAVIS_PULL_REQUEST}" = 'false' &&
+      test "${TRAVIS_JDK_VERSION}" = 'oraclejdk7' &&
+      sbt 'set credentials += Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", System.getenv("SONATYPE_USER"), System.getenv("SONATYPE_PASS"))' publish
+      test "${TRAVIS_PULL_REQUEST}" = 'false' &&
+      test "${TRAVIS_JDK_VERSION}" = 'oraclejdk7' &&
+      sh "иіе/.travis.credentials.sh" &&
+      sbt 'set version := version.value + "." + System.getenv("TRAVIS_BUILD_NUMBER")' publish
 env:
   global:
   - secure: GhPbAqIwIiCWRdPxza/GNQOxgreU8ZqRisVVLFRpoN9jkP8vgA49FHaurswq2jXP4S4jY9ZaCdAyUXxLduWfTWOzG1IC8RtjcvRUTsGpZpDr2GhFRP1xlILahvdiftLPKAs3dRZ9+aPmN76e+NQdR28IfdeOa4iqPJuXpHbwAyI=
