@@ -3,67 +3,70 @@ import scoverage.ScoverageSbtPlugin.ScoverageKeys
 
 lazy val commonSettings = Seq(
 
-  name := "fabricator",
-
-  version := "1.0",
-
-  organization := "com.github.azakordonets",
-
   scalaVersion := "2.10.4",
 
   crossScalaVersions := Seq("2.10.4", "2.11.4"),
 
-  scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8"),
+  scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8")
 
-  licenses +=("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html")),
-
-  homepage := Some(url("https://github.com/azakordonets/fabricator")),
-
-  organizationHomepage := Some(url("https://biercoff.com")),
-
-  publishMavenStyle := true,
-
-  publishArtifact in Test := false,
-
-  publishTo := {
-    val nexus = "https://oss.sonatype.org/"
-    if (isSnapshot.value)
-      Some("snapshots" at nexus + "content/repositories/snapshots")
-    else
-      Some("releases" at nexus + "service/local/staging/deploy/maven2")
-  },
-
-  pomIncludeRepository := { _ => false},
-
-  unmanagedResourceDirectories in Compile += {
-    baseDirectory.value / "src/main/resources"
-  },
-
-  pomExtra := (
-    <url>https://github.com/azakordonets/fabricator</url>
-      <scm>
-        <url>git@github.com:azakordonets/fabricator.git</url>
-        <connection>scm:git:git@github.com:azakordonets/fabricator.git</connection>
-      </scm>
-      <developers>
-        <developer>
-          <id>azakordonets</id>
-          <name>Andrew Zakordonets</name>
-          <url>http://biercoff.com</url>
-        </developer>
-      </developers>),
-
-  ScoverageKeys.coverageMinimum := 80,
-
-  ScoverageKeys.coverageFailOnMinimum := false,
-
-  ScoverageKeys.coverageHighlighting := {
-    if (scalaBinaryVersion.value == "2.10") true else false
-  },
-  bintray.Keys.repository in bintray.Keys.bintray := "Fabricator",
-
-  bintray.Keys.bintrayOrganization in bintray.Keys.bintray := None
 )
+
+name := "fabricator"
+
+version := "1.0"
+
+organization := "com.github.azakordonets"
+
+licenses +=("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html"))
+
+homepage := Some(url("https://github.com/azakordonets/fabricator"))
+
+organizationHomepage := Some(url("https://biercoff.com"))
+
+publishMavenStyle := true
+
+publishTo := {
+  val nexus = "https://oss.sonatype.org/"
+  if (isSnapshot.value)
+  Some("snapshots" at nexus + "content/repositories/snapshots")
+  else
+  Some("releases" at nexus + "service/local/staging/deploy/maven2")
+}
+
+publishArtifact in Test := false
+
+pomIncludeRepository := { _ => false}
+
+unmanagedResourceDirectories in Compile += {
+  baseDirectory.value / "src/main/resources"
+}
+
+pomExtra := (
+<scm>
+  <url>git@github.com:azakordonets/fabricator.git</url>
+  <connection>scm:git:git@github.com:azakordonets/fabricator.git</connection>
+</scm>
+<developers>
+  <developer>
+    <id>azakordonets</id>
+    <name>Andrew Zakordonets</name>
+    <url>http://biercoff.com</url>
+  </developer>
+</developers>)
+
+ScoverageKeys.coverageMinimum := 80
+
+ScoverageKeys.coverageFailOnMinimum := false
+
+ScoverageKeys.coverageHighlighting := {
+  if (scalaBinaryVersion.value == "2.10") true else false
+}
+
+//Seq(bintrayPublishSettings:_*)
+
+bintray.Keys.repository in bintray.Keys.bintray := "Fabricator"
+
+bintray.Keys.bintrayOrganization in bintray.Keys.bintray := None
 
 resolvers += "Typesafe Simple Repository" at "http://repo.typesafe.com/typesafe/simple/maven-releases/"
 
