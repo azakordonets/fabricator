@@ -2,7 +2,7 @@ package fabricator
 
 import scala.util.Random
 
-class CreditCard {
+object CreditCard {
 
   val visaPrefixList = Array("4539", "4556", "4916", "4532", "4929", "40240071", "4485", "4716", "4")
   val masterCardPrefixList = Array("51", "52", "53", "54", "55")

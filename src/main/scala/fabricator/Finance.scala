@@ -34,11 +34,10 @@ import scala.util.Random
 //     */
 class Finance(private val utility: UtilityService,
               private val random: Random,
-              private val alpha: Alphanumeric,
-              private val creditCard: CreditCard) {
+              private val alpha: Alphanumeric) {
 
   def this() {
-    this(new UtilityService(), new Random(), new Alphanumeric(), new CreditCard)
+    this(new UtilityService(), new Random(), new Alphanumeric())
   }
 
   def iban(): String = {
@@ -55,67 +54,67 @@ class Finance(private val utility: UtilityService,
   }
 
   def mastercreditCard(): String = {
-    creditCard.createCreditCardNumber(creditCard.masterCardPrefixList, 16, 1)(0)
+    CreditCard.createCreditCardNumber(CreditCard.masterCardPrefixList, 16, 1)(0)
   }
 
   def mastercreditCards(howMany: Int): Array[String] = {
-    creditCard.createCreditCardNumber(creditCard.masterCardPrefixList, 16, howMany)
+    CreditCard.createCreditCardNumber(CreditCard.masterCardPrefixList, 16, howMany)
   }
 
   def visacreditCard(): String = {
-    creditCard.createCreditCardNumber(creditCard.visaPrefixList, 16, 1)(0)
+    CreditCard.createCreditCardNumber(CreditCard.visaPrefixList, 16, 1)(0)
   }
 
   def visacreditCard(cardNumberLength: Int): String = {
-    creditCard.createCreditCardNumber(creditCard.visaPrefixList, cardNumberLength, 1)(0)
+    CreditCard.createCreditCardNumber(CreditCard.visaPrefixList, cardNumberLength, 1)(0)
   }
 
   def visacreditCards(howMany: Int): Array[String] = {
-    creditCard.createCreditCardNumber(creditCard.visaPrefixList, 16, 1)
+    CreditCard.createCreditCardNumber(CreditCard.visaPrefixList, 16, 1)
   }
 
   def visacreditCards(howMany: Int, cardNumberLength: Int): Array[String] = {
-    creditCard.createCreditCardNumber(creditCard.visaPrefixList, cardNumberLength, 1)
+    CreditCard.createCreditCardNumber(CreditCard.visaPrefixList, cardNumberLength, 1)
   }
 
   def americanExpresscreditCard(): String = {
-    creditCard.createCreditCardNumber(creditCard.amexPrefixList, 16, 1)(0)
+    CreditCard.createCreditCardNumber(CreditCard.amexPrefixList, 16, 1)(0)
   }
 
   def americanExpresscreditCards(howMany: Int): Array[String] = {
-    creditCard.createCreditCardNumber(creditCard.amexPrefixList, 16, howMany)
+    CreditCard.createCreditCardNumber(CreditCard.amexPrefixList, 16, howMany)
   }
 
   def discoverCreditCard(): String = {
-    creditCard.createCreditCardNumber(creditCard.discoverPrefixList, 16, 1)(0)
+    CreditCard.createCreditCardNumber(CreditCard.discoverPrefixList, 16, 1)(0)
   }
 
   def discoverCreditCards(howMany: Int): Array[String] = {
-    creditCard.createCreditCardNumber(creditCard.discoverPrefixList, 16, howMany)
+    CreditCard.createCreditCardNumber(CreditCard.discoverPrefixList, 16, howMany)
   }
 
   def dinersCreditCard(): String = {
-    creditCard.createCreditCardNumber(creditCard.dinersPrefixList, 16, 1)(0)
+    CreditCard.createCreditCardNumber(CreditCard.dinersPrefixList, 16, 1)(0)
   }
 
   def dinersCreditCards(howMany: Int): Array[String] = {
-    creditCard.createCreditCardNumber(creditCard.dinersPrefixList, 16, howMany)
+    CreditCard.createCreditCardNumber(CreditCard.dinersPrefixList, 16, howMany)
   }
 
   def jcbCreditCard(): String = {
-    creditCard.createCreditCardNumber(creditCard.jcbPrefixList, 16, 1)(0)
+    CreditCard.createCreditCardNumber(CreditCard.jcbPrefixList, 16, 1)(0)
   }
 
   def jcbCreditCards(howMany: Int): Array[String] = {
-    creditCard.createCreditCardNumber(creditCard.jcbPrefixList, 16, howMany)
+    CreditCard.createCreditCardNumber(CreditCard.jcbPrefixList, 16, howMany)
   }
 
   def voyagerCreditCard(): String = {
-    creditCard.createCreditCardNumber(creditCard.jcbPrefixList, 15, 1)(0)
+    CreditCard.createCreditCardNumber(CreditCard.jcbPrefixList, 15, 1)(0)
   }
 
   def voyagerCreditCards(howMany: Int): Array[String] = {
-    creditCard.createCreditCardNumber(creditCard.jcbPrefixList, 15, howMany)
+    CreditCard.createCreditCardNumber(CreditCard.jcbPrefixList, 15, howMany)
   }
 
   def pinCode(): String = {

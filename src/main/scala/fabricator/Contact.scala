@@ -15,8 +15,7 @@ class Contact(private val utility: UtilityService,
 
 
   def this() = {
-    this(new UtilityService(), new Alphanumeric, new Random());
-
+    this(new UtilityService(), new Alphanumeric, new Random())
   }
 
   def fullName(prefix: Boolean): String = {
@@ -101,7 +100,7 @@ class Contact(private val utility: UtilityService,
   def zodiac(birthday: String): String = {
     var date: DateTime = null
     try {
-      val formatter: DateTimeFormatter = DateTimeFormat.forPattern("dd-MM-yyyy");
+      val formatter: DateTimeFormatter = DateTimeFormat.forPattern("dd-MM-yyyy")
       date = formatter.parseDateTime(birthday);
     } catch {
       case e: IllegalArgumentException => throw new IllegalArgumentException("Format of the date should be dd-MM-yyyy")
