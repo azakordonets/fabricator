@@ -18,7 +18,7 @@ class CreditCard {
   }
 
   def createCreditCardNumber(prefixes: Array[String], length: Int): String = {
-    completed_number(Random.shuffle(prefixes).head, length)
+    completed_number(Random.shuffle(prefixes.toList).head, length)
   }
 
   /*
