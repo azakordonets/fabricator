@@ -85,7 +85,7 @@ class Contact(private val utility: UtilityService,
    * @
    */
   def bsn(): String = {
-    val firstFour: String = alpha.integer(1000, 9999).toString
+    val firstFour: String = alpha.getInteger(1000, 9999).toString
     val secondFour = firstFour.reverse
     firstFour + secondFour + "0"
   }
@@ -138,11 +138,11 @@ class Contact(private val utility: UtilityService,
   }
 
   def height(cm: Boolean): String = {
-    if (cm) alpha.double(1.50, 2.20).toString + " cm" else alpha.integer(150, 220).toString() + " m"
+    if (cm) alpha.getDouble(1.50, 2.20).toString + " cm" else alpha.getInteger(150, 220).toString() + " m"
   }
 
   def weight(): String = {
-    alpha.integer(50, 110).toString + " kg"
+    alpha.getInteger(50, 110).toString + " kg"
   }
 
   def bloodType(): String = {

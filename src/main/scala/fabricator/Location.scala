@@ -26,7 +26,7 @@ class Location(private val utility: UtilityService,
     if (accuracy > 10) {
       throw new IllegalArgumentException("Accuracy cannot be more then 10 digits")
     }
-    alpha.integer(0, max) + "." + alpha.integer(100000, 1000000000).toString.substring(0, accuracy)
+    alpha.getInteger(0, max) + "." + alpha.getInteger(100000, 1000000000).toString.substring(0, accuracy)
   }
 
   def depth(): String = {
@@ -41,7 +41,7 @@ class Location(private val utility: UtilityService,
     if (accuracy > 10) {
       throw new IllegalArgumentException("Accuracy cannot be more then 10 digits")
     }
-    "-" + alpha.integer(0, Math.abs(min)) + "." + alpha.integer(100000, 1000000000).toString.substring(0, accuracy)
+    "-" + alpha.getInteger(0, Math.abs(min)) + "." + alpha.getInteger(100000, 1000000000).toString.substring(0, accuracy)
   }
 
   def coordinates(): String = {
@@ -60,7 +60,7 @@ class Location(private val utility: UtilityService,
     if (accuracy > 10) {
       throw new IllegalArgumentException("Accuracy cannot be more then 10 digits")
     }
-    alpha.integer(min, max) + "." + alpha.integer(100000, 1000000000).toString.substring(0, accuracy)
+    alpha.getInteger(min, max) + "." + alpha.getInteger(100000, 1000000000).toString.substring(0, accuracy)
   }
 
   def longitude(accuracy: Int): String = {
@@ -71,7 +71,7 @@ class Location(private val utility: UtilityService,
     if (accuracy > 10) {
       throw new IllegalArgumentException("Accuracy cannot be more then 10 digits")
     }
-    alpha.integer(min, max) + "." + alpha.integer(100000, 1000000000).toString.substring(0, accuracy)
+    alpha.getInteger(min, max) + "." + alpha.getInteger(100000, 1000000000).toString.substring(0, accuracy)
   }
 
   def geohash(): String = {

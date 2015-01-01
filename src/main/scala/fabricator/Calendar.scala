@@ -18,7 +18,7 @@ class Calendar(private val utility: UtilityService,
 
 
   def ampm(): String = {
-    val randomVal = alpha.integer(0, 10)
+    val randomVal = alpha.getInteger(0, 10)
     if (randomVal < 5) "am" else "pm"
   }
 
@@ -27,7 +27,7 @@ class Calendar(private val utility: UtilityService,
     var dayValue = 0
     while (result.eq("")) {
       try {
-        dayValue = alpha.integer(1, 31)
+        dayValue = alpha.getInteger(1, 31)
         new DateTime(year, month, dayValue, 0, 0)
         result = dayValue.toString
       } catch {
@@ -52,15 +52,15 @@ class Calendar(private val utility: UtilityService,
   }
 
   def dateObject(): DateTime = {
-    new DateTime(year().toInt, month().toInt, 1, hour().toInt, minute().toInt, second().toInt).plusDays(alpha.integer(1, 31))
+    new DateTime(year().toInt, month().toInt, 1, hour().toInt, minute().toInt, second().toInt).plusDays(alpha.getInteger(1, 31))
   }
 
   def second(): String = {
-    alpha.integer(0, 59).toString
+    alpha.getInteger(0, 59).toString
   }
 
   def minute(): String = {
-    alpha.integer(0, 59).toString
+    alpha.getInteger(0, 59).toString
   }
 
   def hour(): String = {
@@ -68,8 +68,8 @@ class Calendar(private val utility: UtilityService,
   }
 
   def hour(twentyfour: Boolean): String = {
-    if (twentyfour) alpha.integer(0, 24).toString
-    else alpha.integer(1, 12).toString
+    if (twentyfour) alpha.getInteger(0, 24).toString
+    else alpha.getInteger(1, 12).toString
   }
 
   def month(): String = {
@@ -77,12 +77,12 @@ class Calendar(private val utility: UtilityService,
   }
 
   def month(numberFormat: Boolean): String = {
-    if (numberFormat) alpha.integer(1, 12).toString
+    if (numberFormat) alpha.getInteger(1, 12).toString
     else utility.getValueFromArray("month")
   }
 
   def year(): String = {
-    alpha.integer(1970, 2015).toString
+    alpha.getInteger(1970, 2015).toString
   }
 
   def date(year: Int, month: Int, day: Int, hour: Int, minute: Int): String = {

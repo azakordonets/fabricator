@@ -13,55 +13,55 @@ class Alphanumeric(private val random: Random) {
   }
 
 
-  def integer(): Int = {
+  def getInteger(): Int = {
     random.nextInt(1000)
   }
 
-  def integer(max: Int): Int = {
+  def getInteger(max: Int): Int = {
     random.nextInt(max)
   }
 
-  def integer(min: Int, max: Int): Int = {
+  def getInteger(min: Int, max: Int): Int = {
     random.nextInt(max - min) + min
   }
 
-  def double(): Double = {
+  def getDouble(): Double = {
     random.nextDouble()
   }
 
-  def double(max: Double): Double = {
-    double(0, max)
+  def getDouble(max: Double): Double = {
+    getDouble(0, max)
   }
 
-  def double(min: Double, max: Double): Double = {
+  def getDouble(min: Double, max: Double): Double = {
     min + random.nextDouble() * (max - min)
   }
 
-  def float(): Float = {
+  def getFloat(): Float = {
     random.nextFloat()
   }
 
-  def float(max: Float): Float = {
-    float(0, max)
+  def getFloat(max: Float): Float = {
+    getFloat(0, max)
   }
 
-  def float(min: Float, max: Float): Float = {
+  def getFloat(min: Float, max: Float): Float = {
     min + random.nextFloat() * (max - min)
   }
 
-  def boolean(): Boolean = {
+  def getBoolean(): Boolean = {
     random.nextBoolean()
   }
 
-  def gausian(): Double = {
+  def getGausian(): Double = {
     random.nextGaussian()
   }
 
-  def string(): String = {
+  def getString(): String = {
     string("0123456789abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_", 30)
   }
 
-  def string(length: Int): String = {
+  def getString(length: Int): String = {
     string("0123456789abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_", length)
   }
 

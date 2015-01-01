@@ -16,7 +16,7 @@ class Mobile(private val utility: UtilityService,
    * @return
    */
   def androidGsmId(): String = {
-    "APA91" + alpha.string(178)
+    "APA91" + alpha.getString(178)
   }
 
   /**
@@ -32,12 +32,12 @@ class Mobile(private val utility: UtilityService,
    * @return
    */
   def wp8_anid2(): String = {
-    new sun.misc.BASE64Encoder().encode(alpha.string().getBytes("UTF-8"))
+    new sun.misc.BASE64Encoder().encode(alpha.getString().getBytes("UTF-8"))
   }
 
   //// Windows Phone 7 ANID
   def wp7_anid(): String = {
-    "A=" + alpha.guid().replace("-", "").toUpperCase + "&E=" + alpha.hash(3) + "&W=" + alpha.integer(0, 9)
+    "A=" + alpha.guid().replace("-", "").toUpperCase + "&E=" + alpha.hash(3) + "&W=" + alpha.getInteger(0, 9)
   }
 
   // // BlackBerry Device PIN

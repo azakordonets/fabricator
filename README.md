@@ -52,11 +52,11 @@ alpha.letterify("???123") // LsQ123
 
 alpha.botify("???###") // AbC329
 
-alpha.integer() // random integer in 0 to 1000 range
+alpha.getInteger() // random integer in 0 to 1000 range
 
-alpha.integer(100) // random integer in 0 to 100 range
+alpha.getInteger(100) // random integer in 0 to 100 range
 
-alpha.integer(200, 300) // random integer in 200 to 300 range
+alpha.getInteger(200, 300) // random integer in 200 to 300 range
 
 alpha.hash() // d750c843c83a3a980082361e72aa41ac48975eab
 
@@ -221,7 +221,7 @@ val fabricator = new Fabricator() // initialize fabricator
 
 val file = fabr.file() // initialize file module
 
-val values = Seq(alpha.integer(), alpha.double(), calendar.ampm(), null)
+val values = Seq(alpha.getInteger(), alpha.getDouble(), calendar.ampm(), null)
 
 file.csv(values, 10, csvFilePath) // csv file with 10 lines of data from Set will be generated in csvFilePath
 ```

@@ -60,7 +60,11 @@ class FileGenerator(private val utility: UtilityService,
 
   def csv(): Unit = {
     val values = Array("first_name", "last_name", "birthday", "email", "phone", "address", "bsn", "weight", "height")
-    csvFromCodes(values, 100, "test-output/result.csv", ',')
+    // create temporary generatedFiles dir
+    val dir: File = new File("generatedFiles")
+    dir.mkdir()
+    // save it in this folder by default result.
+    csvFromCodes(values, 100, "generatedFiles/result.csv", ',')
   }
 
 
@@ -70,6 +74,7 @@ class FileGenerator(private val utility: UtilityService,
 
   def csv(seq: Seq[Any], rows: Int, path: String, customDelimiter: Char): Unit = {
     val expectedFile = new File(path)
+    if (!expectedFile.exists()) expectedFile.createNewFile()
     implicit object MyFormat extends DefaultCSVFormat {
       override val delimiter = customDelimiter
     }
@@ -100,8 +105,8 @@ class FileGenerator(private val utility: UtilityService,
 
   private def generateValue(code: String): String = {
     code match {
-      case "integer" => alpha.integer().toString
-      case "double" => alpha.double().toString
+      case "integer" => alpha.getInteger().toString
+      case "double" => alpha.getDouble().toString
       case "hash" => alpha.hash()
       case "guid" => alpha.guid()
       case "time" => calendar.time(true)
@@ -109,7 +114,7 @@ class FileGenerator(private val utility: UtilityService,
       case "name" => contact.fullName(false)
       case "first_name" => contact.firstName()
       case "last_name" => contact.lastName()
-      case "birthday" => contact.birthday(alpha.integer(21, 80))
+      case "birthday" => contact.birthday(alpha.getInteger(21, 80))
       case "email" => contact.eMail()
       case "phone" => contact.phoneNumber()
       case "address" => contact.streetName() + " " + contact.houseNumber() + ", " + contact.apartmentNumber()

@@ -32,11 +32,19 @@ class Words(private val utility: UtilityService, private val random: Random) {
     builder.toString()
   }
 
-  def sentence(wordQuantity: Int = 10): String = {
+  def sentence(): String = {
+    sentence(10)
+  }
+
+  def sentence(wordQuantity: Int): String = {
     words(wordQuantity).mkString(" ") + ". "
   }
 
-  def words(quantity: Int = 10): Array[String] = {
+  def words(): Array[String] = {
+    words(10)
+  }
+
+  def words(quantity: Int): Array[String] = {
     val resultArray = new Array[String](quantity)
     for (count <- quantity - 1 to 0 by -1) {
       for (wordsUnit <- wordsList) {

@@ -90,7 +90,7 @@ libraryDependencies ++= Seq(
   "org.iban4j" % "iban4j" % "2.1.1",
   "commons-validator" % "commons-validator" % "1.4.0",
   "com.google.inject" % "guice" % "3.0",
-  "com.github.tototoshi" %% "scala-csv" % "1.2.0-SNAPSHOT"
+  "com.github.tototoshi" % "scala-csv_2.10" % "1.1.2"
 )
 
 
