@@ -23,6 +23,8 @@ lazy val commonSettings = Seq(
 
   publishMavenStyle := true,
 
+  seq(bintrayPublishSettings:_*),
+
   publishArtifact in Test := false,
 
   publishTo := {
