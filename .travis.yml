@@ -12,7 +12,7 @@ after_success:
       sbt 'set credentials += Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", System.getenv("SONATYPE_USER"), System.getenv("SONATYPE_PASS"))' publish
       test "${TRAVIS_PULL_REQUEST}" = 'false' &&
       test "${TRAVIS_JDK_VERSION}" = 'oraclejdk7' &&
-      sh "иіе/.travis.credentials.sh" &&
+      sh "$TRAVIS_BUILD_DIR/.travis.credentials.sh" &&
       sbt 'set version := version.value + "." + System.getenv("TRAVIS_BUILD_NUMBER")' publish
 env:
   global:
