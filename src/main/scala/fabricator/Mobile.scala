@@ -4,11 +4,10 @@ import scala.util.Random
 
 class Mobile(private val utility: UtilityService,
              private val random: Random,
-             private val alpha: Alphanumeric,
-             private val creditCard: CreditCard) {
+             private val alpha: Alphanumeric) {
 
   def this() {
-    this(new UtilityService(), new Random(), new Alphanumeric(), new CreditCard)
+    this(new UtilityService(), new Random(), new Alphanumeric())
   }
 
   /**

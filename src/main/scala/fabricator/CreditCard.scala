@@ -1,35 +1,24 @@
 package fabricator
 
-import scala.collection.immutable.VectorBuilder
-import scala.collection.mutable
+import scala.util.Random
 
-class CreditCard {
+object CreditCard {
+
   val visaPrefixList = Array("4539", "4556", "4916", "4532", "4929", "40240071", "4485", "4716", "4")
-
   val masterCardPrefixList = Array("51", "52", "53", "54", "55")
-
   val amexPrefixList = Array("34", "37")
-
   val discoverPrefixList = Array("6011")
-
   val dinersPrefixList = Array("300", "301", "302", "303", "36", "38")
-
   val enroutePrefixList = Array("2014", "2149")
-
   val jcbPrefixList = Array("35")
-
   val voyagerPrefixList = Array("8699")
 
   def createCreditCardNumber(prefixList: Array[String], length: Int, howMany: Int): Array[String] = {
+    Array.fill(howMany)(createCreditCardNumber(prefixList, length))
+  }
 
-    val result = mutable.Stack[String]()
-    for (i <- 0 to howMany) {
-      val randomArrayIndex: Int = Math.floor(Math.random() * prefixList.length).toInt
-      val ccnumber: String = prefixList(randomArrayIndex)
-      result.push(completed_number(ccnumber, length))
-    }
-
-    result.toArray
+  def createCreditCardNumber(prefixes: Array[String], length: Int): String = {
+    completed_number(Random.shuffle(prefixes.toList).head, length)
   }
 
   /*
@@ -37,66 +26,19 @@ class CreditCard {
    * 'length' is the length of the CC number to generate. Typically 13 or 16
    */
   private def completed_number(prefix: String, length: Int): String = {
-
-    var ccnumber = prefix
-
-    // generate digits
-
-    while (ccnumber.length() < (length - 1)) {
-      ccnumber = ccnumber + Math.floor(Math.random() * 10).toInt
+    def luhn(str: String): Int = {
+      val sum = str.sliding(1, 2).map(value => {
+        val doubled = value.toInt * 2
+        if (doubled > 9) doubled - 9
+        else doubled
+      }).sum
+      (((Math.floor(sum / 10) + 1) * 10 - sum) % 10).intValue
     }
-
-    // reverse number and convert to int
-
-    val reversedCCnumberString = strrev(ccnumber)
-
-    var builder: VectorBuilder[Int] = new VectorBuilder[Int]
-    for (i <- 0 to reversedCCnumberString.length - 1) {
-      if (reversedCCnumberString.charAt(i) != 46) {
-        builder.+=(reversedCCnumberString.charAt(i).asDigit)
-      }
-    }
-    val reversedCCnumberList: Vector[Int] = builder.result()
-
-
-    // calculate sum
-
-    var sum = 0
-    var pos = 0
-
-    val reversedCCnumber: Array[Int] = reversedCCnumberList.toArray
-    while (pos < length - 1) {
-
-      var odd = reversedCCnumber(pos) * 2
-      if (odd > 9) {
-        odd -= 9
-      }
-
-      sum = sum + odd
-
-      if (pos != (length - 2)) {
-        sum = sum + reversedCCnumber(pos + 1)
-      }
-      pos += 2
-    }
-
-    // calculate check digit
-
-    var checkdigit = (((Math.floor(sum / 10) + 1) * 10 - sum) % 10).intValue()
-    ccnumber += checkdigit
-    if (isValidCreditCardNumber(ccnumber)) ccnumber
-    else throw new Exception("Credit card number " + ccnumber + "is not valid")
-
-  }
-
-  private def strrev(str: String): String = {
-    if (str == null)
-      return ""
-    var revstr = ""
-    for (i <- str.length - 1 to 0 by -1) {
-      revstr += str.charAt(i)
-    }
-    revstr
+    val number = prefix + List.fill(length - prefix.length - 1)(Random.nextInt(10)).mkString
+    val checkdigit = luhn(number)
+    val cc = number + checkdigit
+    isValidCreditCardNumber(cc)
+    cc
   }
 
   private def isValidCreditCardNumber(creditCardNumber: String): Boolean = {
@@ -105,12 +47,12 @@ class CreditCard {
     try {
       val reversedNumber = new StringBuffer(creditCardNumber).reverse().toString()
       var mod10Count = 0
-      for (i <- 0 to reversedNumber.length - 1) {
+      for ( i <- 0 to reversedNumber.length - 1 ) {
         var augend = Integer.parseInt(String.valueOf(reversedNumber.charAt(i)))
         if (((i + 1) % 2) == 0) {
           val productString: String = String.valueOf(augend * 2)
           augend = 0
-          for (j <- 0 to productString.length - 1) {
+          for ( j <- 0 to productString.length - 1 ) {
             augend += Integer.parseInt(String.valueOf(productString.charAt(j)))
           }
         }
