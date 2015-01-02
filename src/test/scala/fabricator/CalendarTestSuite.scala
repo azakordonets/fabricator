@@ -88,7 +88,7 @@ class CalendarTestSuite extends BaseTestSuite {
     val month = calendar.month()
     val day = calendar.day(year.toInt, month.toInt)
     if (debugEnabled) logger.debug("Testing random day value: " + day)
-    assert(day.toInt > 0 && day.toInt < 31)
+    assert(day.toInt >= 0 && day.toInt < 31)
   }
 
   @Test
@@ -105,7 +105,7 @@ class CalendarTestSuite extends BaseTestSuite {
   def testYear() = {
     val year = calendar.year().toInt
     if (debugEnabled) logger.debug("Testing random year value: " + year)
-    assert(year > 1970 && year < 2015)
+    assert(year >= 1970 && year < 2015)
   }
 
   @DataProvider
