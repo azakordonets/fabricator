@@ -9,12 +9,12 @@ import org.testng.annotations.{AfterTest, DataProvider, Test}
 
 class FileTestSuite extends BaseTestSuite {
 
-  protected val csvFilePath: String = "test-output/result.csv"
+  protected val csvFilePath: String = "generatedFiles/result.csv"
   protected var fileObject: File = null
 
   @Test
   def testImage() = {
-    val path: String = "test-output/drawing.png"
+    val path: String = "generatedFiles/drawing.png"
     val result = file.image(200, 300, path)
     val fileOnADrive: File = new File(path)
     fileObject = fileOnADrive
