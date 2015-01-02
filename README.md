@@ -11,10 +11,22 @@ anywhere else you need anything random. It's written on scala but fully backward
 
 ## How to install :
 
-I'm still working on publishing library to maven central repository , so for now you need to clone reposotitory and then run :
+For maven projects you need to add next dependency in your ```pom.xml``` file :
 
-```bash
-sbt assembly
+```java
+<dependency>
+  <groupId>com.github.azakordonets</groupId>
+  <artifactId>fabricator_2.10</artifactId>
+  <version>1.0</version>
+</dependency>
+```
+
+In case you want to use it in your scala project, then just add this lines to your ```build.sbt``` file :
+
+```scala
+resolvers += "Fabricator" at "http://dl.bintray.com/biercoff/Fabricator"
+
+libraryDependencies += "com.github.azakordonets" % "fabricator_2.10" % "1.0",
 ```
 
 Usage
