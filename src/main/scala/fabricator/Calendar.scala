@@ -7,14 +7,21 @@ import scala.util.Random
 /**
  * Created by Andrew Zakordonets on 03/06/14.
  */
+object Calendar {
+
+  def apply(): Calendar = {
+    new Calendar(UtilityService(), new Random(), Alphanumeric())
+  }
+
+  def apply(locale: String) = {
+    new Calendar(UtilityService(locale), new Random(), Alphanumeric())
+  }
+
+}
+
 class Calendar(private val utility: UtilityService,
                private val random: Random,
                private val alpha: Alphanumeric) {
-
-  def this() {
-    this(new UtilityService(), new Random(), new Alphanumeric())
-  }
-
 
   def ampm(): String = {
     val randomVal = alpha.getInteger(0, 10)

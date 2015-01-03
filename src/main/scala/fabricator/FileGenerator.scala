@@ -10,6 +10,22 @@ import com.github.tototoshi.csv._
 import scala.util.Random
 
 
+object FileGenerator {
+
+  def apply(): FileGenerator = {
+    new FileGenerator(UtilityService(), Alphanumeric(), new Random(),
+      Contact(), Words(), Calendar(), Finance(),
+      Internet(), Location(), Mobile())
+  }
+
+  def apply(locale: String): FileGenerator = {
+    new FileGenerator(UtilityService(locale), Alphanumeric(), new Random(),
+      Contact(locale), Words(locale), Calendar(locale), Finance(locale),
+      Internet(locale), Location(locale), Mobile(locale))
+  }
+
+}
+
 class FileGenerator(private val utility: UtilityService,
                     private val alpha: Alphanumeric,
                     private val random: Random,
@@ -21,19 +37,6 @@ class FileGenerator(private val utility: UtilityService,
                     private val location: Location,
                     private val mobile: Mobile
                      ) {
-
-  def this() {
-    this(new UtilityService(),
-      new Alphanumeric(),
-      new Random(),
-      new Contact(),
-      new Words(),
-      new Calendar(),
-      new Finance(),
-      new Internet(),
-      new Location(),
-      new Mobile())
-  }
 
   def image(width: Int, height: Int, path: String) = {
     if (width > 2560 || height > 2560) throw new IllegalArgumentException("Image cannot be more then 2560x2560")

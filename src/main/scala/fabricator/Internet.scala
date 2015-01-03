@@ -7,19 +7,25 @@ import scala.util.Random
 /**
  * Created by Andrew Zakordonets on 22/09/14.
  */
+object Internet {
+
+  def apply(): Internet = {
+    new Internet(UtilityService(), Alphanumeric(),
+      new Random(), Contact(), Words())
+  }
+
+  def apply(locale: String): Internet = {
+    new Internet(UtilityService(locale), Alphanumeric(),
+      new Random(), Contact(locale), Words(locale))
+  }
+
+}
+
 class Internet(private val utility: UtilityService,
                private val alpha: Alphanumeric,
                private val random: Random,
                private val contact: Contact,
                private val word: Words) {
-
-  def this() {
-    this(new UtilityService(),
-      new Alphanumeric(),
-      new Random(),
-      new Contact(),
-      new Words())
-  }
 
   def appleToken(): String = {
     random.alphanumeric.take(64).mkString.toLowerCase
