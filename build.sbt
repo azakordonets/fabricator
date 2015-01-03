@@ -13,7 +13,7 @@ lazy val commonSettings = Seq(
 
 name := "fabricator"
 
-version := "1.0"
+version := "1.0.1"
 
 organization := "com.github.azakordonets"
 
@@ -62,7 +62,7 @@ ScoverageKeys.coverageHighlighting := {
   if (scalaBinaryVersion.value == "2.10") true else false
 }
 
-//Seq(bintrayPublishSettings:_*)
+Seq(bintrayPublishSettings:_*)
 
 bintray.Keys.repository in bintray.Keys.bintray := "Fabricator"
 

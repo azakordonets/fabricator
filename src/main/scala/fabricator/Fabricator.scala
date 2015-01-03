@@ -1,80 +1,74 @@
 package fabricator
 
-
-class Fabricator(lang: String = "us",
-                 private val utility: UtilityService,
-                 alphaFaker: Alphanumeric = new Alphanumeric,
-                 contactFaker: Contact = new Contact,
-                 calendarFaker: Calendar = new Calendar,
-                 wordsFaker: Words = new Words,
-                 internetFaker: Internet = new Internet,
-                 financeFaker: Finance = new Finance,
-                 locationFaker: Location = new Location(),
-                 fileFaker: FileGenerator = new FileGenerator(),
-                 mobileFaker: Mobile = new Mobile()) {
-
-
-  def this() {
-    this("us",
-      new UtilityService("us"),
-      new Alphanumeric,
-      new Contact,
-      new Calendar,
-      new Words,
-      new Internet,
-      new Finance,
-      new Location,
-      new FileGenerator,
-      new Mobile)
-  }
-
-  def this(lang: String) {
-    this(lang,
-      new UtilityService(lang),
-      new Alphanumeric,
-      new Contact,
-      new Calendar,
-      new Words,
-      new Internet,
-      new Finance,
-      new Location,
-      new FileGenerator,
-      new Mobile)
-  }
-
-  def contact(): Contact = {
-    contactFaker
-  }
+object Fabricator {
 
   def alphaNumeric(): Alphanumeric = {
-    alphaFaker
+    Alphanumeric()
   }
 
   def calendar(): Calendar = {
-    calendarFaker
+    Calendar()
   }
 
-  def words(): Words = {
-    wordsFaker
+  def calendar(locale: String): Calendar = {
+    Calendar(locale)
   }
 
-  def internet(): Internet = {
-    internetFaker
+  def contact(): Contact = {
+    Contact()
   }
 
-  def finance() = {
-    financeFaker
-  }
-
-  def location(): Location = {
-    locationFaker
+  def contact(locale: String): Contact = {
+    Contact(locale)
   }
 
   def file(): FileGenerator = {
-    fileFaker
+    FileGenerator()
+  }
+
+  def file(locale: String): FileGenerator = {
+    FileGenerator(locale)
+  }
+
+  def finance(): Finance = {
+    Finance()
+  }
+
+  def finance(locale: String): Finance = {
+    Finance(locale)
+  }
+
+  def internet(): Internet = {
+    Internet()
+  }
+
+  def internet(locale: String): Internet = {
+    Internet(locale)
+  }
+
+  def location(): Location = {
+    Location()
+  }
+
+  def location(locale: String): Location = {
+    Location(locale)
   }
 
   def mobile(): Mobile = {
-    mobileFaker
+    Mobile()
   }
+
+  def mobile(locale: String): Mobile = {
+    Mobile(locale)
+  }
+
+  def words(): Words = {
+    Words()
+  }
+
+  def words(locale: String): Words = {
+    Words(locale)
+
+  }
+
 }

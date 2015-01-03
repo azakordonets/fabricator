@@ -5,13 +5,24 @@ import scala.util.Random
 /**
  * Created by Andrew Zakordonets on 05/06/14.
  */
+object Words {
+
+  def apply(): Words = {
+
+    new Words(UtilityService(), new Random())
+
+  }
+
+  def apply(locale: String): Words = {
+
+    new Words(UtilityService(locale), new Random())
+  }
+
+}
+
 class Words(private val utility: UtilityService, private val random: Random) {
 
   protected val wordsList = utility.getListFromJson("words")
-
-  def this() {
-    this(new UtilityService(), new Random())
-  }
 
   def word(): String = {
     utility.getValueFromArray("word")
@@ -32,16 +43,8 @@ class Words(private val utility: UtilityService, private val random: Random) {
     builder.toString()
   }
 
-  def sentence(): String = {
-    sentence(10)
-  }
-
   def sentence(wordQuantity: Int): String = {
     words(wordQuantity).mkString(" ") + ". "
-  }
-
-  def words(): Array[String] = {
-    words(10)
   }
 
   def words(quantity: Int): Array[String] = {
@@ -52,6 +55,14 @@ class Words(private val utility: UtilityService, private val random: Random) {
       }
     }
     resultArray
+  }
+
+  def sentence(): String = {
+    sentence(10)
+  }
+
+  def words(): Array[String] = {
+    words(10)
   }
 
 }

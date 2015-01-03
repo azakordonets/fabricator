@@ -17,7 +17,7 @@ For maven projects you need to add next dependency in your ```pom.xml``` file :
 <dependency>
   <groupId>com.github.azakordonets</groupId>
   <artifactId>fabricator_2.10</artifactId>
-  <version>1.0</version>
+  <version>1.0.1</version>
 </dependency>
 ```
 
@@ -26,7 +26,7 @@ In case you want to use it in your scala project, then just add this lines to yo
 ```scala
 resolvers += "Fabricator" at "http://dl.bintray.com/biercoff/Fabricator"
 
-libraryDependencies += "com.github.azakordonets" % "fabricator_2.10" % "1.0",
+libraryDependencies += "com.github.azakordonets" % "fabricator_2.10" % "1.0.1",
 ```
 
 Usage
@@ -44,7 +44,7 @@ Fabricator consist of 9 specific modules :
 * Mobile - generates random mobile platforms push tokens or id's
 * Words - generates random words, sentences and even blocks of text
 
-To start using it you need to instantinate fabricator object and then call specific module.
+To start using it you need to import fabricator.* and then make a call to appropriate module. 
 
 Let's look closer what each module can build :
 
@@ -54,9 +54,8 @@ This module allows you to generate any random number or string. As for strings, 
 or you can generate string basing on a pattern.
 
 ```scala
-val fabricator = new Fabricator() // initialize fabricator
 
-val alpha = fabr.alphaNumeric() // initialize alpha numeric module
+val alpha = Fabricator.alphaNumeric() // initialize alpha numeric module
 
 alpha.numerify("###ABC") // 981ABC
 
@@ -82,71 +81,69 @@ Calendar
 
  This module allows you to generate random time or time.
 
- ```scala
- val fabricator = new Fabricator() // initialize fabricator
+```scala
 
- val calendar = fabr.calendar() // initialize calendar module
+val calendar = Fabricator.calendar() // initialize calendar module
 
- calendar.time(false) // 03:15
+calendar.time(false) // 03:15
 
- calendar.time(true) // 15:15
+calendar.time(true) // 15:15
 
- calendar.month(false) // December
+calendar.month(false) // December
 
- calendar.month(true) // 12
+calendar.month(true) // 12
 
- calendar.date() // 10-02-2014
+calendar.date() // 10-02-2014
 
- calendar.date("dd.MM.yyyy") // 10.02.2014
+calendar.date("dd.MM.yyyy") // 10.02.2014
 
- calendar.date("dd/MM/yy HH:ss") // 10.02.14 12:15
+calendar.date("dd/MM/yy HH:ss") // 10.02.14 12:15
 
- calendar.date(calendar.year(), 2, 13, calendar.hour(), calendar.minute()) // 13 February of random year with random time
+calendar.date(calendar.year(), 2, 13, calendar.hour(), calendar.minute()) // 13 February of random year with random time
 
- calendar.dateObject() // random Joda.time object
+calendar.dateObject() // random Joda.time object
 
- calendar.dateWithPeriod(-10, 0, -2, +3, 0, 0) // date that is - 10 years + 0 months -2 weeks + 3 days + 0 hours + 0 minutes
- ```
+calendar.dateWithPeriod(-10, 0, -2, +3, 0, 0) // date that is - 10 years + 0 months -2 weeks + 3 days + 0 hours + 0 minutes
+```
 
 Contact
 --------
 
   This module allows you to generate random person data
 
-  ```scala
-  val fabricator = new Fabricator() // initialize fabricator
+```scala
 
-  val contact = fabr.contact() // initialize contact module
+val contact = Fabricator.contact()
 
-  contact.fullName() // Betty Corwin
+contact.fullName() // Betty Corwin
 
-  contact.birthday(25) // 26.12.1989 (current year - 25 with default format dd.MM.yyyy)
+contact.birthday(25) // 26.12.1989 (current year - 25 with default format dd.MM.yyyy)
 
-  contact.bsn() // 730550370
+contact.bsn() // 730550370
 
-  contact.eMail() // Rebecca_Kohler506@yahoo.com
+contact.eMail() // Rebecca_Kohler506@yahoo.com
 
-  contact.phoneNumber // (792)273-4251 x012
+contact.phoneNumber // (792)273-4251 x012
 
-  contact.postCode() //  44274-6580
+contact.postCode() //  44274-6580
 
-  contact.state() // Alaska
+contact.state() // Alaska
 
-  contact.height(true) // 188 cm
+contact.height(true) // 188 cm
 
-  contact.height(false) // 1.88 m
+contact.height(false) // 1.88 m
 
-  contact.weight() // 108 kg
+contact.weight() // 108 kg
 
-  contact.bloodType() // A-
+contact.bloodType() // A-
 
-  contact.occupation() // Craft Artist
+contact.occupation() // Craft Artist
 
-  contact.religion() // sikhism
+contact.religion() // sikhism
 
-  contact.zodiac() // Taurus
+contact.zodiac() // Taurus
 
-  ```
+```
 
 File
 ----
@@ -156,12 +153,9 @@ For images you can specify width and height ( no more then 2560 px) and as a res
 that has text of it's dimensions on it. It's easy as :
 
 ```scala
-val fabricator = new Fabricator() // initialize fabricator
-
-val file = fabr.file() // initialize file module
+val file = Fabricator.file() // initialize file module
 
 file.image(200,300, "drawing.png") // will create a 200x300 image in the root of the project
-
 ```
 
 For csv there are 2 ways of generating files.
@@ -214,9 +208,8 @@ First one is by using specific codes that correspond to the methods that are ava
 To create csv file using this codes you need to do next :
 
 ```scala
-val fabricator = new Fabricator() // initialize fabricator
 
-val file = fabr.file() // initialize file module
+val file = Fabricator.file() // initialize file module
 
 val codes = Array("first_name", "last_name", "birthday", "email", "phone", "address", "bsn", "weight", "height")
 
@@ -229,9 +222,8 @@ In case you miss some code for your need, or you want to put your data into csv 
 to generate csv file with this data :
 
 ```scala
-val fabricator = new Fabricator() // initialize fabricator
 
-val file = fabr.file() // initialize file module
+val file = Fabricator.file() // initialize file module
 
 val values = Seq(alpha.getInteger(), alpha.getDouble(), calendar.ampm(), null)
 
@@ -244,9 +236,8 @@ Finance
 This module allows you to generate random finance data
   
 ```scala
-val fabricator = new Fabricator() // initialize fabricator
 
-val finance = fabr.finance() // initialize finance module
+val finance = Fabricator.finance() // initialize finance module
 
 finance.iban() // GB91ROYC80901351879409
 
@@ -265,9 +256,8 @@ Internet
 This module allows you to generate random internet data
 
 ```scala
-val fabricator = new Fabricator() // initialize fabricator
 
-val internet = fabr.internet() // initialize internet module
+val internet = Fabricator.internet() // initialize internet module
 
 internet.appleToken() // randon apple push token - ze7w6fn0omtkxjuxgw2dx50iux1ijcmkf9rmcvoshj2vnpflajdlli63g5nxwaqy
 
@@ -305,9 +295,8 @@ Location
 This module allows you to generate random location data - coordinates, etc
 
 ```scala
-val fabricator = new Fabricator() // initialize fabricator
 
-val location = fabr.location() // initialize location module
+val location = Fabricator.location() // initialize location module
 
 location.altitude() // 8171.48498 By default maximum altitude is 8848 and accuracy is 5
 
@@ -336,9 +325,8 @@ Mobile
 This module allows you to generate random mobile operating systems push tokens
 
 ```scala
-val fabricator = new Fabricator() // initialize fabricator
 
-val mobile = fabr.mobile() // initialize mobile module
+val mobile = Fabricator.mobile() // initialize mobile module
 
 mobile.androidGsmId() // APA91fCUNiRP-xKj0qBUoJgGWYnN3zFoznbFL61BkWktXCPTYgw4Xe7phJ3zhOEVYJ4ToZvYTp2f0PPHeNSmYHajXr9fwbDarFh8zTGVz3I54ffViW4Nl8s6XLs7i9lIi3oUeRI5bOx49wIC9EF-IwBcuOT-MQ-Nrw1GUW0cJco1Dti4nAtW7Xx
 
@@ -355,9 +343,8 @@ Words
 This module allows you to generate random words, sentences and even blocks of text
 
 ```scala
-val fabricator = new Fabricator() // initialize fabricator
 
-val words = fabr.words() // initialize word module
+val words = Fabricator.words() // initialize word module
 
 words.word() // random word
 

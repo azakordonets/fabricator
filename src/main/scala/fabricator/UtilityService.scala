@@ -11,17 +11,19 @@ import scala.util.Random
 /**
  * Created by Andrew Zakordonets on 05/06/14.
  */
+object UtilityService {
+  def apply(): UtilityService = {
+    new UtilityService("us", new Random())
+  }
+
+  def apply(locale: String) = {
+    new UtilityService(locale, new Random())
+  }
+}
+
 class UtilityService(lang: String, private val random: Random) {
 
   private val valuesJson = Json.parse(Source.fromInputStream(getClass.getClassLoader.getResourceAsStream(lang + ".json"))("UTF-8").mkString)
-
-  def this() {
-    this("us", new Random())
-  }
-
-  def this(lang: String) {
-    this(lang, new Random())
-  }
 
   if (valuesJson == null) throw new Exception(lang + ".json doesn't exist. ")
 

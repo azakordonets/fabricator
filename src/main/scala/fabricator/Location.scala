@@ -4,22 +4,24 @@ import com.spatial4j.core.io.GeohashUtils
 
 import scala.util.Random
 
+object Location {
+
+  def apply(): Location = {
+    new Location(UtilityService(), Alphanumeric(), new Random())
+  }
+
+  def apply(locale: String): Location = {
+    new Location(UtilityService(locale), Alphanumeric(), new Random())
+  }
+}
+
 class Location(private val utility: UtilityService,
                private val alpha: Alphanumeric,
                private val random: Random) {
 
 
-  def this() = {
-    this(new UtilityService(), new Alphanumeric, new Random());
-
-  }
-
   def altitude(): String = {
     altitude(8848, 5)
-  }
-
-  def altitude(max: Int): String = {
-    altitude(max, 5)
   }
 
   def altitude(max: Int, accuracy: Int): String = {
@@ -27,6 +29,10 @@ class Location(private val utility: UtilityService,
       throw new IllegalArgumentException("Accuracy cannot be more then 10 digits")
     }
     alpha.getInteger(0, max) + "." + alpha.getInteger(100000, 1000000000).toString.substring(0, accuracy)
+  }
+
+  def altitude(max: Int): String = {
+    altitude(max, 5)
   }
 
   def depth(): String = {
@@ -56,22 +62,8 @@ class Location(private val utility: UtilityService,
     latitude(-89, 89, accuracy)
   }
 
-  def latitude(min: Int, max: Int, accuracy: Int): String = {
-    if (accuracy > 10) {
-      throw new IllegalArgumentException("Accuracy cannot be more then 10 digits")
-    }
-    alpha.getInteger(min, max) + "." + alpha.getInteger(100000, 1000000000).toString.substring(0, accuracy)
-  }
-
   def longitude(accuracy: Int): String = {
     longitude(-179, 179, accuracy)
-  }
-
-  def longitude(min: Int, max: Int, accuracy: Int): String = {
-    if (accuracy > 10) {
-      throw new IllegalArgumentException("Accuracy cannot be more then 10 digits")
-    }
-    alpha.getInteger(min, max) + "." + alpha.getInteger(100000, 1000000000).toString.substring(0, accuracy)
   }
 
   def geohash(): String = {
@@ -86,12 +78,26 @@ class Location(private val utility: UtilityService,
     latitude(min, max, 5)
   }
 
+  def latitude(min: Int, max: Int, accuracy: Int): String = {
+    if (accuracy > 10) {
+      throw new IllegalArgumentException("Accuracy cannot be more then 10 digits")
+    }
+    alpha.getInteger(min, max) + "." + alpha.getInteger(100000, 1000000000).toString.substring(0, accuracy)
+  }
+
   def longitude(): String = {
     longitude(-179, 179)
   }
 
   def longitude(min: Int, max: Int): String = {
     longitude(min, max, 5)
+  }
+
+  def longitude(min: Int, max: Int, accuracy: Int): String = {
+    if (accuracy > 10) {
+      throw new IllegalArgumentException("Accuracy cannot be more then 10 digits")
+    }
+    alpha.getInteger(min, max) + "." + alpha.getInteger(100000, 1000000000).toString.substring(0, accuracy)
   }
 
   def geohash(latitude: Double, longitude: Double): String = {

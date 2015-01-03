@@ -9,14 +9,22 @@ import scala.util.Random
 /**
  * Created by Andrew Zakordonets on 02/06/14.
  */
+object Contact {
+
+  def apply(): Contact = {
+    new Contact(UtilityService(), Alphanumeric(), new Random())
+  }
+
+  def apply(locale: String): Contact = {
+    new Contact(UtilityService(locale), Alphanumeric(), new Random())
+  }
+
+}
+
 class Contact(private val utility: UtilityService,
               private val alpha: Alphanumeric,
               private val random: Random) {
 
-
-  def this() = {
-    this(new UtilityService(), new Alphanumeric, new Random())
-  }
 
   def fullName(prefix: Boolean): String = {
     if (prefix) prefix + " " + firstName() + " " + lastName()
