@@ -55,7 +55,7 @@ or you can generate string basing on a pattern.
 
 ```scala
 
-val alpha = Fabricator.alphaNumeric() // initialize alpha numeric module
+val alpha = fabricator.alphaNumeric() // initialize alpha numeric module
 
 alpha.numerify("###ABC") // 981ABC
 
@@ -83,7 +83,7 @@ Calendar
 
 ```scala
 
-val calendar = Fabricator.calendar() // initialize calendar module
+val calendar = fabricator.calendar() // initialize calendar module
 
 calendar.time(false) // 03:15
 
@@ -113,7 +113,7 @@ Contact
 
 ```scala
 
-val contact = Fabricator.contact()
+val contact = fabricator.contact()
 
 contact.fullName() // Betty Corwin
 
@@ -153,7 +153,7 @@ For images you can specify width and height ( no more then 2560 px) and as a res
 that has text of it's dimensions on it. It's easy as :
 
 ```scala
-val file = Fabricator.file() // initialize file module
+val file = fabricator.file() // initialize file module
 
 file.image(200,300, "drawing.png") // will create a 200x300 image in the root of the project
 ```
@@ -209,7 +209,7 @@ To create csv file using this codes you need to do next :
 
 ```scala
 
-val file = Fabricator.file() // initialize file module
+val file = fabricator.file() // initialize file module
 
 val codes = Array("first_name", "last_name", "birthday", "email", "phone", "address", "bsn", "weight", "height")
 
@@ -223,7 +223,7 @@ to generate csv file with this data :
 
 ```scala
 
-val file = Fabricator.file() // initialize file module
+val file = fabricator.file() // initialize file module
 
 val values = Seq(alpha.getInteger(), alpha.getDouble(), calendar.ampm(), null)
 
@@ -237,7 +237,7 @@ This module allows you to generate random finance data
   
 ```scala
 
-val finance = Fabricator.finance() // initialize finance module
+val finance = fabricator.finance() // initialize finance module
 
 finance.iban() // GB91ROYC80901351879409
 
@@ -257,7 +257,7 @@ This module allows you to generate random internet data
 
 ```scala
 
-val internet = Fabricator.internet() // initialize internet module
+val internet = fabricator.internet() // initialize internet module
 
 internet.appleToken() // randon apple push token - ze7w6fn0omtkxjuxgw2dx50iux1ijcmkf9rmcvoshj2vnpflajdlli63g5nxwaqy
 
@@ -296,7 +296,7 @@ This module allows you to generate random location data - coordinates, etc
 
 ```scala
 
-val location = Fabricator.location() // initialize location module
+val location = fabricator.location() // initialize location module
 
 location.altitude() // 8171.48498 By default maximum altitude is 8848 and accuracy is 5
 
@@ -326,7 +326,7 @@ This module allows you to generate random mobile operating systems push tokens
 
 ```scala
 
-val mobile = Fabricator.mobile() // initialize mobile module
+val mobile = fabricator.mobile() // initialize mobile module
 
 mobile.androidGsmId() // APA91fCUNiRP-xKj0qBUoJgGWYnN3zFoznbFL61BkWktXCPTYgw4Xe7phJ3zhOEVYJ4ToZvYTp2f0PPHeNSmYHajXr9fwbDarFh8zTGVz3I54ffViW4Nl8s6XLs7i9lIi3oUeRI5bOx49wIC9EF-IwBcuOT-MQ-Nrw1GUW0cJco1Dti4nAtW7Xx
 
@@ -344,7 +344,7 @@ This module allows you to generate random words, sentences and even blocks of te
 
 ```scala
 
-val words = Fabricator.words() // initialize word module
+val words = fabricator.words() // initialize word module
 
 words.word() // random word
 
