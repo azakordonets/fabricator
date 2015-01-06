@@ -5,6 +5,8 @@ fabricator
 
 #[![Coverage Status](https://coveralls.io/repos/azakordonets/fabricator/badge.png)](https://coveralls.io/r/azakordonets/fabricator)
 
+#[![Get automatic notifications about new "fabricator" versions](https://www.bintray.com/docs/images/bintray_badge_color.png)](https://bintray.com/biercoff/Fabricator/fabricator/view?source=watch)
+
 
 Fabricator is a minimalist generator of random  strings, numbers, etc. to help reduce some monotony particularly while writing automated tests or
 anywhere else you need anything random. It's written on scala but fully backward compatible with Java.

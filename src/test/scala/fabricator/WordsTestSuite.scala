@@ -25,7 +25,7 @@ class WordsTestSuite extends BaseTestSuite {
   def testDefaultWords() {
     val wordsDefaultSet = words.words()
     if (debugEnabled) logger.debug("Getting words array generated with default length ")
-    assertResult(wordsDefaultSet.length == 10)
+    assert(wordsDefaultSet.length == 10)
   }
   
   @Test(dataProvider = "wordsCountDP")
