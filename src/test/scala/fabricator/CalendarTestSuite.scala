@@ -5,6 +5,11 @@ import org.testng.annotations.{DataProvider, Test}
 
 class CalendarTestSuite extends BaseTestSuite {
 
+  @Test
+  def testCustomConstructor()  {
+    val customCalendar = fabricator.Calendar("us")
+    assert(customCalendar != null)
+  }
 
   @Test
   def testDefaultDateGetter() = {

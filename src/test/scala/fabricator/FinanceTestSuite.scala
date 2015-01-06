@@ -6,6 +6,12 @@ import org.testng.annotations.Test
 class FinanceTestSuite extends BaseTestSuite {
 
   @Test
+  def testCustomConstructor()  {
+    val customFinance = fabricator.Finance("us")
+    assert(customFinance != null)
+  }
+
+  @Test
   def testIban() = {
     var iban = finance.iban()
     if (debugEnabled) logger.debug("Testing random IBAN number : " + iban)

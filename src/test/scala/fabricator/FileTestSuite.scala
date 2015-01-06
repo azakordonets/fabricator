@@ -13,6 +13,12 @@ class FileTestSuite extends BaseTestSuite {
   protected var fileObject: File = null
 
   @Test
+  def testCustomConstructor()  {
+    val customFile = fabricator.FileGenerator("us")
+    assert(customFile != null)
+  }
+
+  @Test
   def testImage() = {
     val path: String = "generatedFiles/drawing.png"
     val result = file.image(200, 300, path)

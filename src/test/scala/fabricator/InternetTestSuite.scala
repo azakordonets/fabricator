@@ -5,6 +5,12 @@ import org.testng.annotations.{DataProvider, Test}
 class InternetTestSuite extends BaseTestSuite {
 
   @Test
+  def testCustomConstructor()  {
+    val customInternet = fabricator.Internet("us")
+    assert(customInternet != null)
+  }
+  
+  @Test
   def testCustomUrl() = {
     val url = internet.url("http", "test.ru", "getUser", Map("id" -> "123", "ts" -> "09-12-10"))
     if (debugEnabled) logger.debug("Testing custom url. Url is " + url)

@@ -6,6 +6,12 @@ import sun.misc.BASE64Decoder
 class MobileTestSuite extends BaseTestSuite {
 
   @Test
+  def testCustomConstructor()  {
+    val customMobile = fabricator.Mobile("us")
+    assert(customMobile != null)
+  }
+  
+  @Test
   def testAndroidId() = {
     val androidId = mobile.androidGsmId()
     if (debugEnabled) logger.debug("Testing random android ID : " + androidId)

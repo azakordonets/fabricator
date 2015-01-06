@@ -6,6 +6,12 @@ import org.testng.annotations.{DataProvider, Test}
 
 class LocationTestSuite extends BaseTestSuite {
 
+  @Test
+  def testCustomConstructor()  {
+    val customLocation = fabricator.Location("us")
+    assert(customLocation != null)
+  }
+  
   @DataProvider(name = "altitudeDP")
   def wordsCountDP() = {
     Array(Array("10"),

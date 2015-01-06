@@ -21,6 +21,12 @@ class ContactTestSuite extends BaseTestSuite {
   val occupationList: Array[String] = util.getArrayFromJson("occupation")
 
   @Test
+  def testCustomConstructor()  {
+    val customContact = fabricator.Contact("us")
+    assert(customContact != null)
+  }
+  
+  @Test
   def testFirstName() = {
     val name = contact.firstName
     if (debugEnabled) logger.debug("Checking first name value " + name)

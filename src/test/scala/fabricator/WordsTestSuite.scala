@@ -4,6 +4,12 @@ import org.testng.annotations.{DataProvider, Test}
 
 class WordsTestSuite extends BaseTestSuite {
 
+  @Test
+  def testCustomConstructor()  {
+    val customWords = fabricator.Words("us")
+    assert(customWords != null)
+  }
+  
   @DataProvider(name = "wordsCountDP")
   def wordsCountDP() = {
     Array(Array("10"),
@@ -15,6 +21,13 @@ class WordsTestSuite extends BaseTestSuite {
     )
   }
 
+  @Test
+  def testDefaultWords() {
+    val wordsDefaultSet = words.words()
+    if (debugEnabled) logger.debug("Getting words array generated with default length ")
+    assertResult(wordsDefaultSet.length == 10)
+  }
+  
   @Test(dataProvider = "wordsCountDP")
   def testWords(count: String) = {
     if (debugEnabled) logger.debug("Getting words array generated with length = " + count)
