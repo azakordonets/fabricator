@@ -61,7 +61,7 @@ class AlphaNumericTestSuite extends BaseTestSuite {
 
   @Test
   def testDefaultInteger() {
-    val integer = alpha.getInteger()
+    val integer = alpha.getInteger
     if (debugEnabled) logger.debug("Checking default integer function. Should return random integer below 1000 : " + integer)
     assert(0 to 1000 contains integer)
     assert(integer.isInstanceOf[Int])
@@ -69,7 +69,7 @@ class AlphaNumericTestSuite extends BaseTestSuite {
 
   @Test
   def testDefaultDouble() {
-    val double = alpha.getDouble()
+    val double = alpha.getDouble
     if (debugEnabled) logger.debug("Checking default double function. Should return random double below 1000 : " + double)
     assert(double > 0 && double < 1000)
     assert(double.isInstanceOf[Double])
@@ -77,23 +77,15 @@ class AlphaNumericTestSuite extends BaseTestSuite {
 
   @Test
   def testDefaultFloat() {
-    val float = alpha.getFloat()
+    val float = alpha.getFloat
     if (debugEnabled) logger.debug("Checking default float function. Should return random float below 1000 : " + float)
     assert(float > 0 && float < 1000)
     assert(float.isInstanceOf[Float])
   }
 
   @Test
-  def testDefaultBoolean() {
-    val boolean = alpha.getBoolean()
-    if (debugEnabled) logger.debug("Checking default boolean function. Should return random boolean below 1000 : " + boolean)
-    assert(boolean == true || boolean == false)
-    assert(boolean.isInstanceOf[Boolean])
-  }
-
-  @Test
   def testDefaultGausian() {
-    val gausian = alpha.getGausian()
+    val gausian = alpha.getGausian
     if (debugEnabled) logger.debug("Checking default gausian function. Should return random gausian below 1000 : " + gausian)
     assert(gausian < 1000)
     assert(gausian.isInstanceOf[Double])
@@ -101,7 +93,7 @@ class AlphaNumericTestSuite extends BaseTestSuite {
 
   @Test
   def testDefaultString() {
-    val string = alpha.getString()
+    val string = alpha.getString
     if (debugEnabled) logger.debug("Checking default string function. Should return random string below 30 : " + string)
     assert(string.length == 30)
     assert(string.isInstanceOf[String])

@@ -108,21 +108,21 @@ class FileGenerator(private val utility: UtilityService,
 
   private def generateValue(code: String): String = {
     code match {
-      case "integer" => alpha.getInteger().toString
-      case "double" => alpha.getDouble().toString
+      case "integer" => alpha.getInteger.toString
+      case "double" => alpha.getDouble.toString
       case "hash" => alpha.hash()
       case "guid" => alpha.guid()
       case "time" => calendar.time(true)
       case "date" => calendar.date()
       case "name" => contact.fullName(false)
-      case "first_name" => contact.firstName()
-      case "last_name" => contact.lastName()
+      case "first_name" => contact.firstName
+      case "last_name" => contact.lastName
       case "birthday" => contact.birthday(alpha.getInteger(21, 80))
-      case "email" => contact.eMail()
-      case "phone" => contact.phoneNumber()
-      case "address" => contact.streetName() + " " + contact.houseNumber() + ", " + contact.apartmentNumber()
-      case "postcode" => contact.postcode()
-      case "bsn" => contact.bsn()
+      case "email" => contact.eMail
+      case "phone" => contact.phoneNumber
+      case "address" => contact.streetName + " " + contact.houseNumber + ", " + contact.apartmentNumber
+      case "postcode" => contact.postcode
+      case "bsn" => contact.bsn
       case "height" => contact.height(false)
       case "weight" => contact.weight()
       case "occupation" => contact.occupation()

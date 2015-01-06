@@ -22,14 +22,14 @@ class ContactTestSuite extends BaseTestSuite {
 
   @Test
   def testFirstName() = {
-    val name = contact.firstName()
+    val name = contact.firstName
     if (debugEnabled) logger.debug("Checking first name value " + name)
     assert(firstNameList.contains(name))
   }
 
   @Test
   def testLastName() = {
-    val name = contact.lastName()
+    val name = contact.lastName
     if (debugEnabled) logger.debug("Checking last name value " + name)
     assert(lastNameList.contains(name))
   }
@@ -46,17 +46,16 @@ class ContactTestSuite extends BaseTestSuite {
     lastNameList.contains(nameWithPrefix.split(" ")(2))
   }
 
-
   @Test
   def testEmail() = {
-    if (debugEnabled) logger.debug("Checking email " + contact.eMail())
-    val email = contact.eMail()
+    if (debugEnabled) logger.debug("Checking email " + contact.eMail)
+    val email = contact.eMail
     assert(email.nonEmpty)
   }
 
   @Test
   def testPhoneNumber() = {
-    val phone = contact.phoneNumber()
+    val phone = contact.phoneNumber
     if (debugEnabled) logger.debug("Checking phone number value " + phone)
     var reversedPhone = ""
     if (phone.substring(0, 2).equals("1-")) {
@@ -69,14 +68,14 @@ class ContactTestSuite extends BaseTestSuite {
 
   @Test
   def testStreetName() = {
-    val street = contact.streetName()
+    val street = contact.streetName
     if (debugEnabled) logger.debug("Checking street name value " + street)
     assert(streetNameList.contains(street))
   }
 
   @Test
   def testhouseNumber() = {
-    val houseNumber = contact.houseNumber()
+    val houseNumber = contact.houseNumber
     val reversedHouseNumber = houseNumber.replaceAll("[0-9]", "#")
     if (debugEnabled) logger.debug("Checking houseNumber value " + houseNumber)
     assert(houseNumberList.contains(reversedHouseNumber))
@@ -84,7 +83,7 @@ class ContactTestSuite extends BaseTestSuite {
 
   @Test
   def testApartmentNumber() = {
-    val apartmentNumber = contact.apartmentNumber()
+    val apartmentNumber = contact.apartmentNumber
     val reversedApp = apartmentNumber.replaceAll("[0-9]", "#")
     if (debugEnabled) logger.debug("Checking apartmentNumber value " + apartmentNumber)
     assert(appNumberList.contains(reversedApp))
@@ -92,7 +91,7 @@ class ContactTestSuite extends BaseTestSuite {
 
   @Test
   def testAddress() = {
-    var address = contact.address()
+    var address = contact.address
     if (debugEnabled) logger.debug("Checking address value " + address)
     address = address.replaceAll(",", "")
     val addressArray = address.split(" ")
@@ -103,7 +102,7 @@ class ContactTestSuite extends BaseTestSuite {
 
   @Test
   def testPostcode() = {
-    val postCode = contact.postcode()
+    val postCode = contact.postcode
     val reversedPostCode = postCode.replaceAll("[0-9]", "#")
     if (debugEnabled) logger.debug("Checking postCode value " + postCode)
     assert(postcodeList.contains(reversedPostCode))
@@ -111,25 +110,24 @@ class ContactTestSuite extends BaseTestSuite {
 
   @Test
   def testState() = {
-    val state = contact.state()
+    val state = contact.state
     if (debugEnabled) logger.debug("Checking state value " + state)
     assert(stateList.contains(state))
   }
 
   @Test
   def testStateAbbr() = {
-    val stateAbbr = contact.stateShortCode()
+    val stateAbbr = contact.stateShortCode
     if (debugEnabled) logger.debug("Checking stateAbbr value " + stateAbbr)
     assert(stateAbbrList.contains(stateAbbr))
   }
 
   @Test
   def testCompany() = {
-    val company = contact.company()
+    val company = contact.company
     if (debugEnabled) logger.debug("Checking company value " + company)
     assert(companyList.contains(company))
   }
-
 
   @DataProvider(name = "birthdayDP")
   def birthdayDP(): Array[Array[Any]] = {
@@ -144,7 +142,8 @@ class ContactTestSuite extends BaseTestSuite {
 
   @Test(dataProvider = "birthdayDP")
   def testBirthDay(age: Int) = {
-    if (debugEnabled) logger.debug("Checking when is the birthday of an " + age + " years old. It's " + contact.birthday(age))
+    if (debugEnabled) logger
+      .debug("Checking when is the birthday of an " + age + " years old. It's " + contact.birthday(age))
     val birthDate = contact.birthday(age)
     val currentDay = DateTimeFormat.forPattern("dd-MM-yyyy").print(DateTime.now - age.years)
     assert(birthDate == currentDay)
@@ -172,7 +171,9 @@ class ContactTestSuite extends BaseTestSuite {
 
   @Test(dataProvider = "birthdayWithFormatsDP")
   def testBirthDayWithFormat(age: Int, format: String) = {
-    if (debugEnabled) logger.debug("Checking when is the birthday of an " + age + " years old and format " + format + " . It's " + contact.birthday(age, format))
+    if (debugEnabled) logger
+      .debug("Checking when is the birthday of an " + age + " years old and format " + format + " . It's " + contact
+      .birthday(age, format))
     val birthDate = contact.birthday(age, format)
     val currentDay = DateTimeFormat.forPattern(format).print(DateTime.now - age.years)
     assert(birthDate == currentDay)
@@ -180,13 +181,13 @@ class ContactTestSuite extends BaseTestSuite {
 
   @Test
   def testBsn() = {
-    var bsn = contact.bsn().toInt
+    var bsn = contact.bsn.toInt
     if (debugEnabled) logger.debug("Testing random bsn number : " + bsn)
     assert(bsn < 999999999 && bsn >= 9999999)
-    var sum: Int = -1 * bsn % 10;
-    for (multiplier <- 2 to 100; if bsn > 0) {
+    var sum: Int = -1 * bsn % 10
+    for ( multiplier <- 2 to 100; if bsn > 0 ) {
       bsn = bsn / 10
-      var value = bsn % 10
+      val value = bsn % 10
       sum = sum + (multiplier * value)
     }
     assert(sum != 0 && sum % 11 == 0)
@@ -194,32 +195,57 @@ class ContactTestSuite extends BaseTestSuite {
 
   @Test
   def testReligion() = {
-    val religion = contact.religion()
+    val religion = contact.religion
     if (debugEnabled) logger.debug("Checking religion value " + religion)
     assert(religionList.contains(religion))
   }
 
   @Test
   def testZodiac() = {
-    val zodiac = contact.zodiac()
+    val zodiac = contact.zodiac
     if (debugEnabled) logger.debug("Checking zodiac value " + zodiac)
     assert(zodiacList.contains(zodiac))
   }
 
   @DataProvider(name = "zodiacDP")
   def zodiacDP(): Array[Array[Any]] = {
-    Array(Array("10-01-2001", "Capricorn"),
-      Array("22-01-2001", "Aquarius"),
+    Array(
+      Array("22-12-2001", "Capricorn"),
+      Array("10-01-2001", "Capricorn"),
+      Array("19-01-2001", "Capricorn"),
+      Array("20-01-2001", "Aquarius"),
+      Array("25-01-2001", "Aquarius"),
+      Array("18-02-2001", "Aquarius"),
+      Array("19-02-2001", "Pisces"),
       Array("25-02-2001", "Pisces"),
+      Array("20-03-2001", "Pisces"),
+      Array("21-03-2001", "Aries"),
       Array("25-03-2001", "Aries"),
+      Array("19-04-2001", "Aries"),
+      Array("20-04-2061", "Taurus"),
       Array("25-04-2001", "Taurus"),
+      Array("20-05-2001", "Taurus"),
+      Array("21-05-2001", "Gemini"),
       Array("25-05-2001", "Gemini"),
+      Array("20-06-2001", "Gemini"),
+      Array("21-06-2041", "Cancer"),
       Array("25-06-2001", "Cancer"),
-      Array("25-07-2001", "Leo"),
+      Array("22-07-2001", "Cancer"),
+      Array("23-07-2001", "Leo"),
+      Array("22-08-2021", "Leo"),
+      Array("22-08-2001", "Leo"),
+      Array("23-08-2001", "Virgo"),
       Array("25-08-2001", "Virgo"),
+      Array("22-09-2011", "Virgo"),
+      Array("23-09-2001", "Libra"),
       Array("25-09-2001", "Libra"),
+      Array("22-10-2010", "Libra"),
+      Array("23-10-2001", "Scorpio"),
       Array("25-10-2001", "Scorpio"),
-      Array("25-11-2001", "Sagittarius")
+      Array("21-11-2001", "Scorpio"),
+      Array("22-11-2001", "Sagittarius"),
+      Array("25-11-2001", "Sagittarius"),
+      Array("21-12-2001", "Sagittarius")
     )
   }
 
@@ -260,6 +286,5 @@ class ContactTestSuite extends BaseTestSuite {
     if (debugEnabled) logger.debug("Testing random occupation value: " + occupation)
     assert(occupationList.contains(occupation))
   }
-
 
 }
