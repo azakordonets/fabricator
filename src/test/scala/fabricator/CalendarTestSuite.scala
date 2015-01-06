@@ -151,12 +151,12 @@ class CalendarTestSuite extends BaseTestSuite {
     val hour = dateObject.hourOfDay().get()
     val minute = dateObject.minuteOfHour().get()
     val second = dateObject.secondOfMinute().get()
-    assert(year >= 1970 && year < 2015)
-    assert(month > 0 && month < 12)
-    assert(day > 0 && day < 31)
-    assert(hour >= 0 && hour < 24)
-    assert(minute >= 0 && minute < 60)
-    assert(second >= 0 && second < 60)
+    assert(year >= 1970 && year <= 2015)
+    assert(month >= 0 && month <= 12)
+    assert(day >= 0 && day <= 31)
+    assert(hour >= 0 && hour <= 24)
+    assert(minute >= 0 && minute <= 60)
+    assert(second >= 0 && second <= 60)
   }
 
   @DataProvider
