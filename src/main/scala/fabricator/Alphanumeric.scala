@@ -14,51 +14,22 @@ object Alphanumeric {
 
 class Alphanumeric(private val random: Random) {
 
-  def getInteger(): Int = {
-    random.nextInt(1000)
-  }
+  def getInteger: Int = random.nextInt(1000)
+  def getInteger(max: Int): Int = random.nextInt(max)
+  def getInteger(min: Int, max: Int): Int = random.nextInt(max - min) + min
 
-  def getInteger(max: Int): Int = {
-    random.nextInt(max)
-  }
+  def getDouble: Double = random.nextDouble()
+  def getDouble(max: Double): Double = getDouble(0, max)
+  def getDouble(min: Double, max: Double): Double = min + random.nextDouble() * (max - min)
 
-  def getInteger(min: Int, max: Int): Int = {
-    random.nextInt(max - min) + min
-  }
+  def getFloat: Float = random.nextFloat()
+  def getFloat(max: Float): Float = getFloat(0, max)
+  def getFloat(min: Float, max: Float): Float = min + random.nextFloat() * (max - min)
 
-  def getDouble(): Double = {
-    random.nextDouble()
-  }
+  def getBoolean: Boolean = random.nextBoolean()
+  def getGausian: Double = random.nextGaussian()
 
-  def getDouble(max: Double): Double = {
-    getDouble(0, max)
-  }
-
-  def getDouble(min: Double, max: Double): Double = {
-    min + random.nextDouble() * (max - min)
-  }
-
-  def getFloat(): Float = {
-    random.nextFloat()
-  }
-
-  def getFloat(max: Float): Float = {
-    getFloat(0, max)
-  }
-
-  def getFloat(min: Float, max: Float): Float = {
-    min + random.nextFloat() * (max - min)
-  }
-
-  def getBoolean(): Boolean = {
-    random.nextBoolean()
-  }
-
-  def getGausian(): Double = {
-    random.nextGaussian()
-  }
-
-  def getString(): String = {
+  def getString: String = {
     string("0123456789abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_", 30)
   }
 
@@ -84,10 +55,7 @@ class Alphanumeric(private val random: Random) {
     string("0123456789abcdef", length)
   }
 
-  def guid(): String = {
-    guid(5)
-  }
-
+  def guid(): String = guid(5)
   def guid(version: Int): String = {
     val guid_pool = "abcdef1234567890"
     val variant_pool = "ab89"

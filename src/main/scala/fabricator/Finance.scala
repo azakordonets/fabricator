@@ -172,12 +172,12 @@ class Finance private(private val utility: UtilityService,
       var isValid = false
 
       try {
-        val reversedNumber = new StringBuffer(creditCardNumber).reverse().toString()
+        val reversedNumber = creditCardNumber.reverse
         var mod10Count = 0
         for (i <- 0 to reversedNumber.length - 1) {
-          var augend = Integer.parseInt(String.valueOf(reversedNumber.charAt(i)))
+          var augend = reversedNumber.charAt(i).toString.toInt
           if (((i + 1) % 2) == 0) {
-            val productString: String = String.valueOf(augend * 2)
+            val productString = String.valueOf(augend * 2)
             augend = 0
             for (j <- 0 to productString.length - 1) {
               augend += Integer.parseInt(String.valueOf(productString.charAt(j)))
@@ -193,11 +193,7 @@ class Finance private(private val utility: UtilityService,
       } catch {
         case e: NumberFormatException =>
       }
-
       isValid
     }
-
   }
-
-
 }

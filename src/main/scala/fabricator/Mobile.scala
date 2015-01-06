@@ -39,7 +39,7 @@ class Mobile(private val utility: UtilityService,
    * @return
    */
   def wp8_anid2(): String = {
-    new sun.misc.BASE64Encoder().encode(alpha.getString().getBytes("UTF-8"))
+    new sun.misc.BASE64Encoder().encode(alpha.getString.getBytes("UTF-8"))
   }
 
   //// Windows Phone 7 ANID

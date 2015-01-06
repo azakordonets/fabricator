@@ -83,7 +83,7 @@ class Internet(private val utility: UtilityService,
   }
 
   def twitter(): String = {
-    "@" + contact.firstName() + contact.lastName()
+    "@" + contact.firstName + contact.lastName
   }
 
   def hashtag(): String = {
