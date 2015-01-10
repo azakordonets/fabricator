@@ -13,21 +13,20 @@ import scala.util.Random
 object FileGenerator {
 
   def apply(): FileGenerator = {
-    new FileGenerator(UtilityService(), Alphanumeric(), new Random(),
+    new FileGenerator( Alphanumeric(), new Random(),
       Contact(), Words(), Calendar(), Finance(),
       Internet(), Location(), Mobile())
   }
 
   def apply(locale: String): FileGenerator = {
-    new FileGenerator(UtilityService(locale), Alphanumeric(), new Random(),
+    new FileGenerator(Alphanumeric(), new Random(),
       Contact(locale), Words(locale), Calendar(locale), Finance(locale),
-      Internet(locale), Location(locale), Mobile(locale))
+      Internet(locale), Location(locale), Mobile())
   }
 
 }
 
-class FileGenerator(private val utility: UtilityService,
-                    private val alpha: Alphanumeric,
+class FileGenerator(private val alpha: Alphanumeric,
                     private val random: Random,
                     private val contact: Contact,
                     private val words: Words,
@@ -35,8 +34,7 @@ class FileGenerator(private val utility: UtilityService,
                     private val finance: Finance,
                     private val internet: Internet,
                     private val location: Location,
-                    private val mobile: Mobile
-                     ) {
+                    private val mobile: Mobile) {
 
   def image(width: Int, height: Int, path: String) = {
     if (width > 2560 || height > 2560) throw new IllegalArgumentException("Image cannot be more then 2560x2560")

@@ -2,21 +2,20 @@ package fabricator
 
 import scala.util.Random
 
-object Mobile {
+//object Mobile {
+//
+//  def apply(): Mobile = {
+//    new Mobile(UtilityService(), new Random(), Alphanumeric())
+//  }
+//
+//  def apply(locale: String): Mobile = {
+//    new Mobile(UtilityService(locale), new Random(), Alphanumeric())
+//  }
+//
+//}
 
-  def apply(): Mobile = {
-    new Mobile(UtilityService(), new Random(), Alphanumeric())
-  }
-
-  def apply(locale: String): Mobile = {
-    new Mobile(UtilityService(locale), new Random(), Alphanumeric())
-  }
-
-}
-
-class Mobile(private val utility: UtilityService,
-             private val random: Random,
-             private val alpha: Alphanumeric) {
+case class Mobile(private val random: Random = new Random(),
+             private val alpha: Alphanumeric = Alphanumeric()) {
 
   /**
    * Android GCM Registration ID

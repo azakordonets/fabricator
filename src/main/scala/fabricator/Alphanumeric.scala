@@ -6,13 +6,8 @@ import scala.util.Random
  * Created by Andrew Zakordonets on 02/06/14.
  * This class generates random numbers and strings
  */
-object Alphanumeric {
-  def apply(): Alphanumeric = {
-    new Alphanumeric(new Random())
-  }
-}
 
-class Alphanumeric(private val random: Random) {
+case class Alphanumeric(private val random: Random = new Random()) {
 
   def getInteger: Int = random.nextInt(1000)
   def getInteger(max: Int): Int = random.nextInt(max)

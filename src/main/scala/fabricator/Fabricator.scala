@@ -58,10 +58,6 @@ object Fabricator {
     Mobile()
   }
 
-  def mobile(locale: String): Mobile = {
-    Mobile(locale)
-  }
-
   def words(): Words = {
     Words()
   }

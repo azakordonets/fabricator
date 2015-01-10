@@ -167,10 +167,4 @@ public class AlphaNumericJavaTest extends JavaBaseTest {
 		assertTrue(guid.matches("\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}"));
 	}
 	
-	
-	
-	
-	
-	
-
 }
