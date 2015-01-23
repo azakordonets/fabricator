@@ -60,15 +60,19 @@ alpha.letterify("???123") // LsQ123
 
 alpha.botify("???###") // AbC329
 
-alpha.getInteger() // random integer in 0 to 1000 range
+alpha.getInteger // random integer in 0 to 1000 range
 
 alpha.getInteger(100) // random integer in 0 to 100 range
 
 alpha.getInteger(200, 300) // random integer in 200 to 300 range
 
-alpha.hash() // d750c843c83a3a980082361e72aa41ac48975eab
+alpha.getIntegerRangeAsScalaList(1,10,1) // will return scala List[1,2,3,4,5,6,7,8,9,10]
+ 
+alpha.getIntegerRangeAsJavaList(1,10,1) // will return List<Object>[1,2,3,4,5,6,7,8,9,10] . Each element need to be casted to Integer
 
-alpha.guid() // ed7592b7-11e4-5f7f-b83f-488733c8bc56
+alpha.hash // d750c843c83a3a980082361e72aa41ac48975eab
+
+alpha.guid // ed7592b7-11e4-5f7f-b83f-488733c8bc56
 ```
 
 Besides integer numbers it can generate double, float, gausian, string
@@ -90,15 +94,15 @@ calendar.month(false) // December
 
 calendar.month(true) // 12
 
-calendar.date() // 10-02-2014
+calendar.date // 10-02-2014
 
 calendar.date("dd.MM.yyyy") // 10.02.2014
 
 calendar.date("dd/MM/yy HH:ss") // 10.02.14 12:15
 
-calendar.date(calendar.year(), 2, 13, calendar.hour(), calendar.minute()) // 13 February of random year with random time
+calendar.date(calendar.year, 2, 13, calendar.hour, calendar.minute) // 13 February of random year with random time
 
-calendar.dateObject() // random Joda.time object
+calendar.dateObject // random Joda.time object
 
 calendar.dateWithPeriod(-10, 0, -2, +3, 0, 0) // date that is - 10 years + 0 months -2 weeks + 3 days + 0 hours + 0 minutes
 ```
@@ -112,33 +116,33 @@ Contact
 
 val contact = fabricator.contact()
 
-contact.fullName() // Betty Corwin
+contact.fullName // Betty Corwin
 
 contact.birthday(25) // 26.12.1989 (current year - 25 with default format dd.MM.yyyy)
 
-contact.bsn() // 730550370
+contact.bsn // 730550370
 
-contact.eMail() // Rebecca_Kohler506@yahoo.com
+contact.eMail // Rebecca_Kohler506@yahoo.com
 
 contact.phoneNumber // (792)273-4251 x012
 
-contact.postCode() //  44274-6580
+contact.postCode //  44274-6580
 
-contact.state() // Alaska
+contact.state // Alaska
 
 contact.height(true) // 188 cm
 
 contact.height(false) // 1.88 m
 
-contact.weight() // 108 kg
+contact.weight // 108 kg
 
-contact.bloodType() // A-
+contact.bloodType // A-
 
-contact.occupation() // Craft Artist
+contact.occupation // Craft Artist
 
-contact.religion() // sikhism
+contact.religion // sikhism
 
-contact.zodiac() // Taurus
+contact.zodiac // Taurus
 
 ```
 
@@ -222,7 +226,7 @@ to generate csv file with this data :
 
 val file = fabricator.file() // initialize file module
 
-val values = Seq(alpha.getInteger(), alpha.getDouble(), calendar.ampm(), null)
+val values = Seq(alpha.getInteger, alpha.getDouble, calendar.ampm, null)
 
 file.csv(values, 10, csvFilePath) // csv file with 10 lines of data from Set will be generated in csvFilePath
 ```
@@ -236,15 +240,15 @@ This module allows you to generate random finance data
 
 val finance = fabricator.finance() // initialize finance module
 
-finance.iban() // GB91ROYC80901351879409
+finance.iban // GB91ROYC80901351879409
 
-finance.bic() // CLSBUS33XXX
+finance.bic // CLSBUS33XXX
 
-finance.visacreditCard() // 4556623851035641
+finance.visacreditCard // 4556623851035641
 
 finance.visacreditCard(15) // 455662622900006
 
-finance.pincode() // 1234
+finance.pincode // 1234
 ```
 
 Internet
@@ -256,33 +260,33 @@ This module allows you to generate random internet data
 
 val internet = fabricator.internet() // initialize internet module
 
-internet.appleToken() // randon apple push token - ze7w6fn0omtkxjuxgw2dx50iux1ijcmkf9rmcvoshj2vnpflajdlli63g5nxwaqy
+internet.appleToken // randon apple push token - ze7w6fn0omtkxjuxgw2dx50iux1ijcmkf9rmcvoshj2vnpflajdlli63g5nxwaqy
 
-internet.url() // http://ab82asdK.com
+internet.url // http://ab82asdK.com
 
 internet.url("http", "test.ru", "getUser", Map("id" -> "123", "ts" -> "09-12-10"))
 
-internet.ip() // 234.166.254.103
+internet.ip // 234.166.254.103
 
-internet.ipv6() // c7a5:a6C4:F3C0:d4be:c2Fd:A4Dc:daA8:7fd8
+internet.ipv6 // c7a5:a6C4:F3C0:d4be:c2Fd:A4Dc:daA8:7fd8
 
-internet.macAddress() // F1:D9:16:93:58:C3
+internet.macAddress // F1:D9:16:93:58:C3
 
-internet.UUID() // 543d5f08-acca-426d-b649-a392cc74ce39
+internet.UUID // 543d5f08-acca-426d-b649-a392cc74ce39
 
-internet.color() // #58f946
+internet.color // #58f946
 
 internet.color(rgb, false) // rgb(224,0,0)
 
 internet.color(shorthex, true) // #000 greyscale
 
-internet.twitter() // @AdaSchumm
+internet.twitter // @AdaSchumm
 
 internet.hashtag // #lowofof
 
-internet.googleAnalyticsTrackCode() // UA-15137-66
+internet.googleAnalyticsTrackCode // UA-15137-66
 
-internet.facebookId() // 7848157865252882
+internet.facebookId // 7848157865252882
 
 ```
 
@@ -295,23 +299,23 @@ This module allows you to generate random location data - coordinates, etc
 
 val location = fabricator.location() // initialize location module
 
-location.altitude() // 8171.48498 By default maximum altitude is 8848 and accuracy is 5
+location.altitude // 8171.48498 By default maximum altitude is 8848 and accuracy is 5
 
 location.altitude(1000, 2) // 581.83
 
-location.depth() // -2378.77726 by default maximum depth is 2550 and accuracy is 5
+location.depth // -2378.77726 by default maximum depth is 2550 and accuracy is 5
 
 location.depth(-1000, 2) // -4318.73
 
-location.coordinates() // 25.54691, -26.64447
+location.coordinates // 25.54691, -26.64447
 
 location.coordinates(2) // 25.54, -26.64
 
-location.latitude() // -46.99 by default the range is from -90 to 90
+location.latitude // -46.99 by default the range is from -90 to 90
 
-location.longitude() // -171.72569
+location.longitude // -171.72569
 
-location.geohash() // tc23e0uv9fdk
+location.geohash // tc23e0uv9fdk
 
 location.geohash(-47.44, -150.77) // 0xsf15u9ur59
 ```
@@ -325,13 +329,13 @@ This module allows you to generate random mobile operating systems push tokens
 
 val mobile = fabricator.mobile() // initialize mobile module
 
-mobile.androidGsmId() // APA91fCUNiRP-xKj0qBUoJgGWYnN3zFoznbFL61BkWktXCPTYgw4Xe7phJ3zhOEVYJ4ToZvYTp2f0PPHeNSmYHajXr9fwbDarFh8zTGVz3I54ffViW4Nl8s6XLs7i9lIi3oUeRI5bOx49wIC9EF-IwBcuOT-MQ-Nrw1GUW0cJco1Dti4nAtW7Xx
+mobile.androidGsmId // APA91fCUNiRP-xKj0qBUoJgGWYnN3zFoznbFL61BkWktXCPTYgw4Xe7phJ3zhOEVYJ4ToZvYTp2f0PPHeNSmYHajXr9fwbDarFh8zTGVz3I54ffViW4Nl8s6XLs7i9lIi3oUeRI5bOx49wIC9EF-IwBcuOT-MQ-Nrw1GUW0cJco1Dti4nAtW7Xx
 
-mobile.applePushToken() // a6cc474cd81a9697c2a232744dfdb7ec3f8c72977cd91c23e6ac8e8f75c56697
+mobile.applePushToken // a6cc474cd81a9697c2a232744dfdb7ec3f8c72977cd91c23e6ac8e8f75c56697
 
-mobile.wp8_anid2() // Windows Phone 8 ANID2 - YjBUN0hmYWV1VVEyZ2xIYnZWOWMwaGFoVUhlYlFq
+mobile.wp8_anid2 // Windows Phone 8 ANID2 - YjBUN0hmYWV1VVEyZ2xIYnZWOWMwaGFoVUhlYlFq
 
-mobile.wp7_anid() // Windows Phone 7 ANID - A=AC59226C42245673ABE85A32A8EBCACE&E=aed&W=3
+mobile.wp7_anid // Windows Phone 7 ANID - A=AC59226C42245673ABE85A32A8EBCACE&E=aed&W=3
 ```
 
 Words
@@ -343,13 +347,13 @@ This module allows you to generate random words, sentences and even blocks of te
 
 val words = fabricator.words() // initialize word module
 
-words.word() // random word
+words.word // random word
 
 words.words(10) // array with 10 words
 
 words.sentence(20) // sentence out of 20 words
 
-words.paragraph() // 100 chars length block of text
+words.paragraph // 100 chars length block of text
 
 words.paragraph(2000) // 2000 chars length block of text
 ```

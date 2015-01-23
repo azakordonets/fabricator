@@ -3,6 +3,11 @@ package fabricator.j.tests;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class AlphaNumericJavaTest extends JavaBaseTest {
@@ -121,11 +126,29 @@ public class AlphaNumericJavaTest extends JavaBaseTest {
 
 	@Test(dataProvider = "charSets")
 	public void testJavaCustomStringWithSpecificCharSet(String charSet, int max)  {
-		String string = alpha.string(charSet, max);
+		String string = alpha.getString(charSet, max);
 		assert(string.length() == max);
 		for (int i = 0; i < string.length(); i++) {
 			final char c = string.charAt(i);
 			assertTrue(charSet.indexOf(c) >= 0);
+		}
+	}
+	
+	@Test
+	public void testJavaDefaultStringList() {
+		final List<String> stringsJavaList = alpha.getStringsAsJavaList();
+		assert(stringsJavaList.size() == 10);
+		for (String string : stringsJavaList){
+			assert(string.length() >= 5 && string.length() <= 100);
+		}
+	}
+
+	@Test
+	public void testJavaCustomStringList() {
+		final List<String> stringsJavaList = alpha.getStringsAsJavaList(10, 10, 20);
+		assert(stringsJavaList.size() == 20);
+		for (String string : stringsJavaList){
+			assert(string.length() >= 10 && string.length() <= 10);
 		}
 	}
 
@@ -151,6 +174,27 @@ public class AlphaNumericJavaTest extends JavaBaseTest {
 		assertTrue(aDouble instanceof Double);
 		assertTrue(aFloat >= 100 && aFloat <= 300);
 		assertTrue(aFloat instanceof Float);
+	}
+	
+	@Test
+	public void testJavaIntRangeWithStep() {
+		final List<Object> integerRangeAsJavaList = alpha.getIntegerRangeAsJavaList(1, 10, 1);
+		ArrayList<Integer> expectedList = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10));
+		assertEquals(expectedList, integerRangeAsJavaList);
+	}
+
+	@Test
+	public void testJavaDoubleRangeWithStep() {
+		final List<Object> doubleRangeAsJavaList = alpha.getDoubleRangeAsJavaList(1, 10, 1);
+		ArrayList<Double> expectedList = new ArrayList<>(Arrays.asList(1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0, 10.0));
+		assertEquals(expectedList, doubleRangeAsJavaList);
+	}
+
+	@Test
+	public void testJavaFloatRangeWithStep() {
+		final List<Object> floatRangeAsJavaList = alpha.getFloatRangeAsJavaList(1, 10, 1);
+		ArrayList<Float> expectedList = new ArrayList<>(Arrays.asList(1.0f,2.0f,3.0f,4.0f,5.0f,6.0f,7.0f,8.0f,9.0f, 10.0f));
+		assertEquals(expectedList, floatRangeAsJavaList);
 	}
 
 	@Test

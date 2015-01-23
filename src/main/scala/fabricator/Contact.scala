@@ -29,21 +29,18 @@ class Contact(private val utility: UtilityService,
     else firstName + " " + lastName
   }
 
-  def birthday(age: Int): String = {
-    DateTimeFormat.forPattern("dd-MM-yyyy").print(DateTime.now - age.years)
-  }
+  def birthday(age: Int): String = DateTimeFormat.forPattern("dd-MM-yyyy").print(DateTime.now - age.years)
 
-  def birthday(age: Int, format: String): String = {
-    DateTimeFormat.forPattern(format).print(DateTime.now - age.years)
-  }
+  def birthday(age: Int, format: String): String = DateTimeFormat.forPattern(format).print(DateTime.now - age.years)
 
   def eMail: String = {
     firstName.toLowerCase + "_" + lastName.toLowerCase + alpha.numerify("###") + "@" + utility
       .getValueFromArray("free_email")
-      .toLowerCase()
+      .toLowerCase
   }
 
   def firstName: String = utility.getValueFromArray("first_name")
+  
   def lastName: String = utility.getValueFromArray("last_name")
 
   def phoneNumber = alpha.numerify(utility.getValueFromArray("phone_formats"))
@@ -74,13 +71,9 @@ class Contact(private val utility: UtilityService,
     firstFour + secondFour + "0"
   }
 
-  def religion: String = {
-    utility.getValueFromArray("religion")
-  }
+  def religion: String = utility.getValueFromArray("religion")
 
-  def zodiac: String = {
-    utility.getValueFromArray("zodiac")
-  }
+  def zodiac: String = utility.getValueFromArray("zodiac")
 
   def zodiac(birthday: String): String = {
     try {
@@ -107,19 +100,13 @@ class Contact(private val utility: UtilityService,
   }
 
   def height(cm: Boolean): String = {
-    if (cm) alpha.getDouble(1.50, 2.20).toString + " cm" else alpha.getInteger(150, 220).toString() + " m"
+    if (cm) alpha.getDouble(1.50, 2.20).toString + " cm" else alpha.getInteger(150, 220).toString + " m"
   }
 
-  def weight(): String = {
-    alpha.getInteger(50, 110).toString + " kg"
-  }
+  def weight: String = alpha.getInteger(50, 110).toString + " kg"
 
-  def bloodType(): String = {
-    utility.getValueFromArray("blood_type")
-  }
+  def bloodType: String = utility.getValueFromArray("blood_type")
 
-  def occupation(): String = {
-    utility.getValueFromArray("occupation")
-  }
+  def occupation: String = utility.getValueFromArray("occupation")
 
 }

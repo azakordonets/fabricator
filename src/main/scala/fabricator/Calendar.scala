@@ -1,7 +1,7 @@
 package fabricator
 
 import org.joda.time.{DateTime, IllegalFieldValueException}
-
+import scala.collection.JavaConverters._
 import scala.util.Random
 
 /**
@@ -9,31 +9,30 @@ import scala.util.Random
  */
 object Calendar {
 
-  def apply(): Calendar = {
-    new Calendar(UtilityService(), new Random(), Alphanumeric())
-  }
+  def apply(): Calendar = new Calendar(UtilityService(), new Random(), Alphanumeric())
 
-  def apply(locale: String) = {
-    new Calendar(UtilityService(locale), new Random(), Alphanumeric())
-  }
-
+  def apply(locale: String) = new Calendar(UtilityService(locale), new Random(), Alphanumeric())
 }
 
 class Calendar(private val utility: UtilityService,
                private val random: Random,
                private val alpha: Alphanumeric) {
 
-  def ampm(): String = {
+  def ampm: String = {
     val randomVal = alpha.getInteger(0, 10)
     if (randomVal < 5) "am" else "pm"
   }
 
-  def day(year: Int, month: Int): String = {
+  def day: String = day(year.toInt, month.toInt, 1, 31)
+  def day(year: Int, month: Int): String = day(year, month, 1, 31)
+  
+  def day(year: Int, month: Int, min: Int, max: Int): String = {
+    if (min <= 0 || max > 31) throw new IllegalArgumentException("min and max values should be in [1,31] range")
     var result = ""
     var dayValue = 0
     while (result.eq("")) {
       try {
-        dayValue = alpha.getInteger(1, 31)
+        dayValue = alpha.getInteger(min, max)
         new DateTime(year, month, dayValue, 0, 0)
         result = dayValue.toString
       } catch {
@@ -42,54 +41,63 @@ class Calendar(private val utility: UtilityService,
     }
     result
   }
-
-  def time(twentyFourHour: Boolean): String = {
-    hour(twentyFourHour) + ":" + minute()
+  
+  def daysRange(year: Int, month: Int, min: Int, max: Int, step: Int): List[String] = {
+    if (min <= 0 || max > 31) throw new IllegalArgumentException("min and max values should be in [1,31] range")
+    var day = min
+    var resultList = List()
+    while (min < max) {
+      if (isValidDay(year, month, day)) {
+        resultList :+ day
+        day = day +  step
+      }else day = day +  step
+      
+    }
+    resultList
+  }
+  
+  def daysRangeAsJavaList(year: Int, month: Int, min: Int, max: Int, step: Int) = daysRange(year, month, min, max, step).asJava
+  
+  private def isValidDay(year: Int, month: Int, day: Int) : Boolean = {
+    try {
+      new DateTime(year, month, day, 0, 0)
+      true
+    }catch {
+      case e: IllegalFieldValueException => false
+    }
   }
 
-  def date(): String = {
-    date("dd-MM-yyyy")
-  }
+  def time(twentyFourHour: Boolean): String = hour(twentyFourHour) + ":" + minute
+
+  def date: String = date("dd-MM-yyyy")
 
   def date(format: String): String = {
-    val randomYear = year().toInt
-    val randomMonth = month().toInt
-    new DateTime(randomYear, randomMonth, day(randomYear, randomMonth).toInt, hour().toInt, minute().toInt, second().toInt).toString(format)
+    val randomYear = year.toInt
+    val randomMonth = month.toInt
+    new DateTime(randomYear, randomMonth, day(randomYear, randomMonth).toInt, hour.toInt, minute.toInt, second.toInt).toString(format)
   }
 
-  def dateObject(): DateTime = {
-    new DateTime(year().toInt, month().toInt, 1, hour().toInt, minute().toInt, second().toInt).plusDays(alpha.getInteger(1, 31))
-  }
+  def dateObject: DateTime = new DateTime(year.toInt, month.toInt, 1, hour.toInt, minute.toInt, second.toInt).plusDays(alpha.getInteger(1, 31))
 
-  def second(): String = {
-    alpha.getInteger(0, 59).toString
-  }
+  def second: String = alpha.getInteger(0, 59).toString
 
-  def minute(): String = {
-    alpha.getInteger(0, 59).toString
-  }
+  def minute: String = alpha.getInteger(0, 59).toString
 
-  def hour(): String = {
-    hour(false)
-  }
+  def hour: String = hour(false)
 
   def hour(twentyfour: Boolean): String = {
     if (twentyfour) alpha.getInteger(0, 24).toString
     else alpha.getInteger(1, 12).toString
   }
 
-  def month(): String = {
-    month(true)
-  }
+  def month: String = month(true)
 
   def month(numberFormat: Boolean): String = {
     if (numberFormat) alpha.getInteger(1, 12).toString
     else utility.getValueFromArray("month")
   }
 
-  def year(): String = {
-    alpha.getInteger(1970, 2015).toString
-  }
+  def year: String = alpha.getInteger(1970, 2015).toString
 
   def date(year: Int, month: Int, day: Int, hour: Int, minute: Int): String = {
     var date = ""
@@ -112,7 +120,7 @@ class Calendar(private val utility: UtilityService,
   }
 
   def dateWithPeriod(years: Int, months: Int, weeks: Int, days: Int, hours: Int, minutes: Int, format: String): String = {
-    dateWithPeriod(DateTime.now(), years, months, weeks, days, hours, minutes, format)
+    dateWithPeriod(DateTime.now, years, months, weeks, days, hours, minutes, format)
   }
 
   def dateWithPeriod(date: DateTime, years: Int, months: Int, weeks: Int, days: Int, hours: Int, minutes: Int, format: String): String = {

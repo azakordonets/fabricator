@@ -13,7 +13,7 @@ class CalendarTestSuite extends BaseTestSuite {
 
   @Test
   def testDefaultDateGetter() = {
-    val date = calendar.date()
+    val date = calendar.date
     if (debugEnabled) logger.debug("Checking default date value " + date)
     assert(date.matches("\\d{2}-\\d{2}-\\d{4}"))
   }
@@ -48,21 +48,21 @@ class CalendarTestSuite extends BaseTestSuite {
 
   @Test
   def testAmPm() = {
-    val ampm = calendar.ampm()
+    val ampm = calendar.ampm
     if (debugEnabled) logger.debug("Testing random amPm value : " + ampm)
     assert(ampm.equals("am") || ampm.equals("pm"))
   }
 
   @Test
   def testSecond() = {
-    val second = calendar.second()
+    val second = calendar.second
     if (debugEnabled) logger.debug("Testing random second value: " + second)
     assert(second.toInt >= 0 && second.toInt <= 60)
   }
 
   @Test
   def testMinute() = {
-    val minute = calendar.minute()
+    val minute = calendar.minute
     if (debugEnabled) logger.debug("Testing random minute value: " + minute)
     assert(minute.toInt >= 0 && minute.toInt < 60)
   }
@@ -70,7 +70,7 @@ class CalendarTestSuite extends BaseTestSuite {
   @Test
   def testHour() = {
     val hour24 = calendar.hour(true)
-    val hour12 = calendar.hour()
+    val hour12 = calendar.hour
     assert(hour24.toInt >= 0 && hour24.toInt < 24)
     assert(hour12.toInt >= 0 && hour12.toInt < 12)
   }
@@ -89,11 +89,26 @@ class CalendarTestSuite extends BaseTestSuite {
 
   @Test
   def testDay() = {
-    val year = calendar.year()
-    val month = calendar.month()
+    val year = calendar.year
+    val month = calendar.month
     val day = calendar.day(year.toInt, month.toInt)
     if (debugEnabled) logger.debug("Testing random day value: " + day)
     assert(day.toInt >= 0 && day.toInt < 31)
+  }
+  
+  @Test
+  def testCustomDay() = {
+    val year = calendar.year.toInt
+    val month = calendar.month.toInt
+    val day = calendar.day(year, month, 10, 20 ).toInt
+    if (debugEnabled) logger.debug("Testing random custom day value in range [10,20]: " + day)
+    assert(day >= 10 && day <= 20)
+  }
+  
+  @Test
+  def testDayRange() = {
+    
+    
   }
 
   @Test
@@ -108,7 +123,7 @@ class CalendarTestSuite extends BaseTestSuite {
 
   @Test
   def testYear() = {
-    val year = calendar.year().toInt
+    val year = calendar.year.toInt
     if (debugEnabled) logger.debug("Testing random year value: " + year)
     assert(year >= 1970 && year < 2015)
   }
@@ -131,11 +146,11 @@ class CalendarTestSuite extends BaseTestSuite {
   @Test
   def testDateWithFormat() = {
     val format = "dd_MM_yyyy"
-    val year = calendar.year().toInt
-    val month = calendar.month().toInt
+    val year = calendar.year.toInt
+    val month = calendar.month.toInt
     val day = calendar.day(year, month).toInt
-    val hour = calendar.hour().toInt
-    val minute = calendar.minute().toInt
+    val hour = calendar.hour.toInt
+    val minute = calendar.minute.toInt
     val date = calendar.date(year, month, day, hour, minute, format)
     assertResult(new DateTime(year, month, day, hour, minute).toString(format))(date)
   }
@@ -143,7 +158,7 @@ class CalendarTestSuite extends BaseTestSuite {
 
   @Test
   def testDateObject() = {
-    val dateObject = calendar.dateObject()
+    val dateObject = calendar.dateObject
     assert(dateObject.isInstanceOf[DateTime])
     val year = dateObject.year().get()
     val month = dateObject.monthOfYear().get()

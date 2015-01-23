@@ -118,6 +118,20 @@ class AlphaNumericTestSuite extends BaseTestSuite {
     assert(extendedString.length == 50)
     assert(extendedString.isInstanceOf[String])
   }
+  
+  @Test
+  def testDefaultStringsList() {
+    val strings = alpha.getStrings
+    assertResult(10)(strings.length)
+    strings.foreach(string => assert(string.length >= 5 && string.length <= 100))
+  }
+
+  @Test
+  def testCustomStringsList() {
+    val strings = alpha.getStrings(10,10, 20)
+    assertResult(20)(strings.length)
+    strings.foreach(string => assert(string.length >= 10 && string.length <= 10))
+  }
 
   @DataProvider(name = "charSets")
   def charSets() = {
@@ -130,7 +144,7 @@ class AlphaNumericTestSuite extends BaseTestSuite {
 
   @Test(dataProvider = "charSets")
   def testCustomStringWithSpecificCharSet(charSet: String, max: Int) = {
-    val string = alpha.string(charSet, max)
+    val string = alpha.getString(charSet, max)
     if (debugEnabled) logger.debug("Checking default extendedString function. Should return random extendedString below " + max + " : " + string)
     assert(string.length == max)
     for (symbol <- string) assert(charSet.contains(symbol))
@@ -182,19 +196,103 @@ class AlphaNumericTestSuite extends BaseTestSuite {
     assert(util.isLessOrEqual(min, actualNumber))
   }
 
+  @DataProvider(name = "integerRangeWithStep")
+  def integerRangeWithStep(): Array[Array[Any]] = {
+    Array(Array(1, 10, 1, List(1,2,3,4,5,6,7,8,9,10)),
+      Array(1, 10, 2, List(1,3,5,7,9))
+    )
+  }
+
+  @Test(dataProvider = "integerRangeWithStep")
+  def testIntegerRangeWithStep(min: Int, max: Int, step: Int, expectedResult: List[Int])  {
+    val generatedStream = alpha.getIntegerRange(min, max, step)
+    assertResult(expectedResult)(generatedStream)
+  }
+
+  @DataProvider(name = "integerRangeWithStepException")
+  def integerRangeWithStepException(): Array[Array[Any]] = {
+    Array(Array(1, 10, 0),
+      Array(1, 10, -1)
+    )
+  }
+  
+  @Test(expectedExceptions = Array(classOf[IllegalArgumentException]), dataProvider = "integerRangeWithStepException")
+  def testIntegerRangeWithStepException(min: Int, max: Int, step: Int) = {
+    alpha.getIntegerRange(min, max, step)
+  }
+
+  @DataProvider(name = "doubleRangeWithStep")
+  def doubleRangeWithStep(): Array[Array[Any]] = {
+    Array(Array(1, 10, 1, List(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0)),
+      Array(1, 10, 2, List(1.0,3.0,5.0,7.0,9.0)),
+      Array(1, 3, 0.5, List(1.0,1.5,2.0,2.5,3.0))
+    )
+  }
+
+  @Test(dataProvider = "doubleRangeWithStep")
+  def testDoubleRangeWithStep(min: Double, max: Double, step: Double, expectedResult: List[Double])  {
+    val generatedStream = alpha.getDoubleRange(min, max, step)
+    assertResult(expectedResult)(generatedStream)
+  }
+
+  @DataProvider(name = "doubleRangeWithStepException")
+  def doubleRangeWithStepException(): Array[Array[Any]] = {
+    Array(Array(1, 10, 0),
+      Array(1, 10, -1)
+    )
+  }
+
+  @Test(expectedExceptions = Array(classOf[IllegalArgumentException]), dataProvider = "doubleRangeWithStepException")
+  def testDoubleRangeWithStepException(min: Double, max: Double, step: Double) = {
+    alpha.getDoubleRange(min, max, step)
+  }
+
+  @DataProvider(name = "floatRangeWithStep")
+  def floatRangeWithStep(): Array[Array[Any]] = {
+    Array(Array(1.0f, 10.0f, 1.0f, List(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f)),
+      Array(1.0f, 10.0f, 2.0f, List(1.0f,3.0f,5.0f,7.0f,9.0f)),
+      Array(1.0f, 3.0f, 0.5f, List(1.0f,1.5f,2.0f,2.5f,3.0f))
+    )
+  }
+
+  @Test(dataProvider = "floatRangeWithStep")
+  def testFloatRangeWithStep(min: Float, max: Float, step: Float, expectedResult: List[Float])  {
+    val generatedStream = alpha.getFloatRange(min, max, step)
+    assertResult(expectedResult)(generatedStream)
+  }
+
+  @DataProvider(name = "floatRangeWithStepException")
+  def floatRangeWithStepException(): Array[Array[Any]] = {
+    Array(Array(1, 10, 0),
+      Array(1, 10, -1)
+    )
+  }
+
+  @Test(expectedExceptions = Array(classOf[IllegalArgumentException]), dataProvider = "floatRangeWithStepException")
+  def testFloatRangeWithStepException(min: Float, max: Float, step: Float) = {
+    alpha.getFloatRange(min, max, step)
+  }
+  
+
   @Test
   def testHash() = {
-    val hash = alpha.hash()
+    val hash = alpha.hash
     if (debugEnabled) logger.debug("Checking random hash number with default length:  " + hash)
     assert(hash.length() == 40)
     val customLengthHash = alpha.hash(10)
     if (debugEnabled) logger.debug("Checking random hash number with length = 10:  " + customLengthHash)
     assert(customLengthHash.length == 10)
   }
+  
+  @Test
+  def testDefaultHashList() = {
+    
+    
+  }
 
   @Test
   def testGuid() = {
-    val guid = alpha.guid()
+    val guid = alpha.guid
     if (debugEnabled) logger.debug("Checking random guid number :  " + guid)
     assert(guid.matches("\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}"))
   }

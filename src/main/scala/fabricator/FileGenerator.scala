@@ -44,38 +44,36 @@ class FileGenerator(private val alpha: Alphanumeric,
     val layout: TextLayout = new TextLayout(label, font, frc)
     val rectangle: Rectangle = layout.getPixelBounds(null, 0, 0)
     val bufferedImage: BufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
-    val graphics2D: Graphics2D = bufferedImage.getGraphics().asInstanceOf[Graphics2D]
+    val graphics2D: Graphics2D = bufferedImage.getGraphics.asInstanceOf[Graphics2D]
     //filing background with black color
     graphics2D.setColor(Color.black)
     graphics2D.fillRect(0, 0, width, height)
     //writing with white color width and height of the image
     graphics2D.setColor(Color.white)
-    layout.draw(graphics2D, width / 2 - rectangle.getWidth().toInt / 2, height / 2)
+    layout.draw(graphics2D, width / 2 - rectangle.getWidth.toInt / 2, height / 2)
     //done with drawing
-    graphics2D.dispose()
+    graphics2D.dispose
     // write image to a file
     javax.imageio.ImageIO.write(bufferedImage, "png", new java.io.File(path))
 
   }
 
 
-  def csv(): Unit = {
+  def csv: Unit = {
     val values = Array("first_name", "last_name", "birthday", "email", "phone", "address", "bsn", "weight", "height")
     // create temporary generatedFiles dir
     val dir: File = new File("generatedFiles")
-    dir.mkdir()
+    dir.mkdir
     // save it in this folder by default result.
     csvFromCodes(values, 100, "generatedFiles/result.csv", ',')
   }
 
 
-  def csv(seq: Seq[Any], rows: Int, path: String): Unit = {
-    csv(seq, rows, path, ',')
-  }
+  def csv(seq: Seq[Any], rows: Int, path: String): Unit = csv(seq, rows, path, ',')
 
   def csv(seq: Seq[Any], rows: Int, path: String, customDelimiter: Char): Unit = {
     val expectedFile = new File(path)
-    if (!expectedFile.exists()) expectedFile.createNewFile()
+    if (!expectedFile.exists) expectedFile.createNewFile
     implicit object MyFormat extends DefaultCSVFormat {
       override val delimiter = customDelimiter
     }
@@ -83,12 +81,10 @@ class FileGenerator(private val alpha: Alphanumeric,
     for (i <- 0 to rows - 1) {
       writer.writeRow(seq)
     }
-    writer.close()
+    writer.close
   }
 
-  def csvFromCodes(codes: Array[String], rows: Int, path: String): Unit = {
-    csvFromCodes(codes, rows, path, ',')
-  }
+  def csvFromCodes(codes: Array[String], rows: Int, path: String): Unit = csvFromCodes(codes, rows, path, ',')
 
   def csvFromCodes(codes: Array[String], rows: Int, path: String, customDelimiter: Char): Unit = {
     val expectedFile = new File(path)
@@ -100,7 +96,7 @@ class FileGenerator(private val alpha: Alphanumeric,
       val generatedMap = codes.map(x => generateValue(x))
       writer.writeRow(generatedMap)
     }
-    writer.close()
+    writer.close
   }
 
 
@@ -108,10 +104,10 @@ class FileGenerator(private val alpha: Alphanumeric,
     code match {
       case "integer" => alpha.getInteger.toString
       case "double" => alpha.getDouble.toString
-      case "hash" => alpha.hash()
-      case "guid" => alpha.guid()
+      case "hash" => alpha.hash
+      case "guid" => alpha.guid
       case "time" => calendar.time(true)
-      case "date" => calendar.date()
+      case "date" => calendar.date
       case "name" => contact.fullName(false)
       case "first_name" => contact.firstName
       case "last_name" => contact.lastName
@@ -122,32 +118,32 @@ class FileGenerator(private val alpha: Alphanumeric,
       case "postcode" => contact.postcode
       case "bsn" => contact.bsn
       case "height" => contact.height(false)
-      case "weight" => contact.weight()
-      case "occupation" => contact.occupation()
-      case "visa" => finance.visacreditCard()
-      case "master" => finance.mastercreditCard()
-      case "iban" => finance.iban()
-      case "bic" => finance.bic()
-      case "url" => internet.url()
-      case "ip" => internet.ip()
-      case "macaddress" => internet.macAddress()
-      case "uuid" => internet.UUID()
-      case "color" => internet.color()
-      case "twitter" => internet.twitter()
-      case "hashtag" => internet.hashtag()
-      case "facebook" => internet.facebookId()
-      case "google_analytics" => internet.googleAnalyticsTrackCode()
-      case "altitude" => location.altitude()
-      case "depth" => location.depth()
-      case "latitude" => location.latitude()
-      case "longitude" => location.longitude()
-      case "coordinates" => location.coordinates()
-      case "geohash" => location.geohash()
-      case "apple_token" => mobile.applePushToken()
-      case "android" => mobile.androidGsmId()
-      case "windows7Token" => mobile.wp7_anid()
-      case "windows8Token" => mobile.wp8_anid2()
-      case "word" => words.word()
+      case "weight" => contact.weight
+      case "occupation" => contact.occupation
+      case "visa" => finance.visacreditCard
+      case "master" => finance.mastercreditCard
+      case "iban" => finance.iban
+      case "bic" => finance.bic
+      case "url" => internet.url
+      case "ip" => internet.ip
+      case "macaddress" => internet.macAddress
+      case "uuid" => internet.UUID
+      case "color" => internet.color
+      case "twitter" => internet.twitter
+      case "hashtag" => internet.hashtag
+      case "facebook" => internet.facebookId
+      case "google_analytics" => internet.googleAnalyticsTrackCode
+      case "altitude" => location.altitude
+      case "depth" => location.depth
+      case "latitude" => location.latitude
+      case "longitude" => location.longitude
+      case "coordinates" => location.coordinates
+      case "geohash" => location.geohash
+      case "apple_token" => mobile.applePushToken
+      case "android" => mobile.androidGsmId
+      case "windows7Token" => mobile.wp7_anid
+      case "windows8Token" => mobile.wp8_anid2
+      case "word" => words.word
       case "sentence" => words.sentence(10)
       case _ => throw new IllegalArgumentException(code + " is an incorrect code value")
     }
