@@ -25,7 +25,7 @@ class LocationTestSuite extends BaseTestSuite {
 
   @Test
   def testAltitude() = {
-    val altitude = location.altitude().toDouble
+    val altitude = location.altitude.toDouble
     if (debugEnabled) logger.debug("Testing random altitude: " + altitude)
     assert(altitude >= 0 && altitude <= 8848)
   }
@@ -53,7 +53,7 @@ class LocationTestSuite extends BaseTestSuite {
 
   @Test
   def testDepth() = {
-    val depth = location.depth().toDouble
+    val depth = location.depth.toDouble
     if (debugEnabled) logger.debug("Testing random depth: " + depth)
     assert(depth <= 0 && depth >= -2550)
   }
@@ -81,7 +81,7 @@ class LocationTestSuite extends BaseTestSuite {
 
   @Test
   def testCoordinates() = {
-    val coordinates = location.coordinates()
+    val coordinates = location.coordinates
     val latitude = coordinates.split(",")(0)
     val longitude = coordinates.split(",")(1)
     assert(latitude.toDouble >= -90 && latitude.toDouble < 90)
@@ -103,7 +103,7 @@ class LocationTestSuite extends BaseTestSuite {
 
   @Test
   def testLatitude() = {
-    val latitude = location.latitude().toDouble
+    val latitude = location.latitude.toDouble
     if (debugEnabled) logger.debug("Testing random latitude: " + latitude)
     assert(latitude >= -90 && latitude < 90)
   }
@@ -130,7 +130,7 @@ class LocationTestSuite extends BaseTestSuite {
 
   @Test
   def testLongitude() = {
-    val longitude = location.longitude().toDouble
+    val longitude = location.longitude.toDouble
     if (debugEnabled) logger.debug("Testing random longitude: " + longitude)
     assert(longitude >= -180 && longitude < 180)
   }
@@ -157,7 +157,7 @@ class LocationTestSuite extends BaseTestSuite {
 
   @Test
   def testGeohash() = {
-    val geohash = location.geohash()
+    val geohash = location.geohash
     if (debugEnabled) logger.debug("Testing random geohash: " + geohash)
   }
 

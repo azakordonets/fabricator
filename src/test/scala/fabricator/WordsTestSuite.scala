@@ -23,7 +23,7 @@ class WordsTestSuite extends BaseTestSuite {
 
   @Test
   def testDefaultWords() {
-    val wordsDefaultSet = words.words()
+    val wordsDefaultSet = words.words
     if (debugEnabled) logger.debug("Getting words array generated with default length ")
     assert(wordsDefaultSet.length == 10)
   }
@@ -36,7 +36,7 @@ class WordsTestSuite extends BaseTestSuite {
 
   @Test
   def testSentenceDefault() = {
-    var sentence = words.sentence()
+    var sentence = words.sentence
     if (debugEnabled) logger.debug("Testing sentence generation. Creating sentence with 10 words lenght: \n" + sentence)
     assertResult(sentence.split(" ").length)(10)
   }
@@ -50,7 +50,7 @@ class WordsTestSuite extends BaseTestSuite {
 
   @Test
   def testTextDefaultValue() = {
-    val paragraph = words.paragraph()
+    val paragraph = words.paragraph
     if (debugEnabled) logger.debug("Testing sentence generation. Creating text with 10 words lenght: \n" + paragraph)
     assertResult(paragraph.length)(100)
   }

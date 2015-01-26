@@ -274,21 +274,21 @@ class ContactTestSuite extends BaseTestSuite {
 
   @Test
   def testWeight() = {
-    val weight = contact.weight()
+    val weight = contact.weight
     if (debugEnabled) logger.debug("Testing random weight value : " + weight)
     assert(weight.split(" ")(0).toInt >= 50 && weight.split(" ")(0).toInt <= 110)
   }
 
   @Test
   def testBloodType() = {
-    val bloodType = contact.bloodType()
+    val bloodType = contact.bloodType
     if (debugEnabled) logger.debug("Testing random blood type: " + bloodType)
     assert(bloodTypeList.contains(bloodType))
   }
 
   @Test
   def testOccupation() = {
-    val occupation = contact.occupation()
+    val occupation = contact.occupation
     if (debugEnabled) logger.debug("Testing random occupation value: " + occupation)
     assert(occupationList.contains(occupation))
   }

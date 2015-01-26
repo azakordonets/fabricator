@@ -19,7 +19,7 @@ class InternetTestSuite extends BaseTestSuite {
 
   @Test
   def testIp() = {
-    val ip = internet.ip()
+    val ip = internet.ip
     if (debugEnabled) logger.debug("Testing custom ip. Ip is " + ip)
     assert(ip != "0.0.0.0")
     assert(ip != "255.255.255.255")
@@ -31,29 +31,29 @@ class InternetTestSuite extends BaseTestSuite {
 
   @Test
   def testIpV6() = {
-    val ipv6 = internet.ipv6()
+    val ipv6 = internet.ipv6
     if (debugEnabled) logger.debug("Testing custom ipv6. Ip is " + ipv6)
     assert(ipv6.matches("^(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$"))
   }
 
   @Test
   def testMacAddress() = {
-    val macAddress = internet.macAddress()
-    val UUID = internet.UUID()
+    val macAddress = internet.macAddress
+    val UUID = internet.UUID
     if (debugEnabled) logger.debug("Testing random mac address " + macAddress)
     assert(macAddress.matches("^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$"))
   }
 
   @Test
   def testUUID() = {
-    val UUID = internet.UUID()
+    val UUID = internet.UUID
     if (debugEnabled) logger.debug("Testing random UUID " + UUID)
     assert(UUID.matches("[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}"))
   }
 
   @Test
   def testAppleToken() = {
-    val token = internet.appleToken()
+    val token = internet.appleToken
     if (debugEnabled) logger.debug("Testing random apple push token " + token)
     assert(token.length == 64)
   }
@@ -85,28 +85,28 @@ class InternetTestSuite extends BaseTestSuite {
 
   @Test
   def testTwitter() = {
-    val twitter = internet.twitter()
+    val twitter = internet.twitter
     if (debugEnabled) logger.debug("Testing random twitter account name : " + twitter)
     assert(twitter.matches("@[a-zA-Z]+"))
   }
 
   @Test
   def testHashtag() = {
-    val hashtag = internet.hashtag()
+    val hashtag = internet.hashtag
     if (debugEnabled) logger.debug("Testing random hashtag account name : " + hashtag)
     assert(hashtag.matches("#[a-zA-Z]+"))
   }
 
   @Test
   def testGoogleAnalyticks() = {
-    val gaCode = internet.googleAnalyticsTrackCode()
+    val gaCode = internet.googleAnalyticsTrackCode
     if (debugEnabled) logger.debug("Testing random google analytics tracking code : " + gaCode)
     assert(gaCode.matches("UA-\\d{4,5}-\\d{2}"))
   }
 
   @Test
   def testFacebookId() = {
-    val facebookId = internet.facebookId()
+    val facebookId = internet.facebookId
     if (debugEnabled) logger.debug("Testing random facebook id : " + facebookId)
     assert(facebookId.length == 16)
   }
