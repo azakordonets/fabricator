@@ -29,6 +29,15 @@ public class AlphaNumericJavaTest extends JavaBaseTest {
 		final String result = alpha.numerify(value);
 		assertTrue(result.matches(matchPattern));
 	}
+	
+	@Test
+	public void testNumerifyAsJavaList() {
+		final List<String> stringList = alpha.numerifyAsJavaList("###ABC", 10);
+		assertEquals(10, stringList.size());
+		for (String el: stringList){
+			assertTrue(el.matches("\\d{3}\\w{3}"));
+		}
+	}
 
 	@DataProvider(name = "letterifyJavaDP")
 	public Object[][] letterifyDP() {
@@ -47,6 +56,15 @@ public class AlphaNumericJavaTest extends JavaBaseTest {
 		final String result = alpha.letterify(value);
 		assertTrue(result.matches(matchPattern));
 	}
+	
+	@Test
+	public void testLetterifyAsJavaList() {
+		final List<String> stringList = alpha.letterifyAsJavaList("???123", 10);
+		assertEquals(10, stringList.size());
+		for (String el: stringList){
+			assertTrue(el.matches("\\w{3}\\d{3}"));
+		}
+	}
 
 	@DataProvider(name = "botifyJavaDP")
 	public Object[][] botifyDP() {
@@ -64,6 +82,15 @@ public class AlphaNumericJavaTest extends JavaBaseTest {
 	public void testJavaBotify(String value, String matchPattern)  {
 		String result = alpha.botify(value);
 		assertTrue(result.matches(matchPattern));
+	}
+
+	@Test
+	public void testBotifyAsJavaList() {
+		final List<String> stringList = alpha.botifyAsJavaList("???123###", 10);
+		assertEquals(10, stringList.size());
+		for (String el: stringList){
+			assertTrue(el.matches("\\w{3}\\d{6}"));
+		}
 	}
 
 	@Test
@@ -137,7 +164,7 @@ public class AlphaNumericJavaTest extends JavaBaseTest {
 	@Test
 	public void testJavaDefaultStringList() {
 		final List<String> stringsJavaList = alpha.getStringsAsJavaList();
-		assert(stringsJavaList.size() == 10);
+		assert(stringsJavaList.size() == 100);
 		for (String string : stringsJavaList){
 			assert(string.length() >= 5 && string.length() <= 100);
 		}
@@ -182,12 +209,22 @@ public class AlphaNumericJavaTest extends JavaBaseTest {
 		ArrayList<Integer> expectedList = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10));
 		assertEquals(expectedList, integerRangeAsJavaList);
 	}
+	
+	@Test(expectedExceptions = IllegalArgumentException.class)
+	public void testJavaIntRangeWithStepException() {
+		alpha.getIntegerRangeAsJavaList(100, 200, 0);
+	}
 
 	@Test
 	public void testJavaDoubleRangeWithStep() {
 		final List<Object> doubleRangeAsJavaList = alpha.getDoubleRangeAsJavaList(1, 10, 1);
 		ArrayList<Double> expectedList = new ArrayList<>(Arrays.asList(1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0, 10.0));
 		assertEquals(expectedList, doubleRangeAsJavaList);
+	}
+
+	@Test(expectedExceptions = IllegalArgumentException.class)
+	public void testJavaDoubleRangeWithStepException() {
+		alpha.getDoubleRangeAsJavaList(100, 200, 0);
 	}
 
 	@Test
@@ -197,18 +234,62 @@ public class AlphaNumericJavaTest extends JavaBaseTest {
 		assertEquals(expectedList, floatRangeAsJavaList);
 	}
 
+	@Test(expectedExceptions = IllegalArgumentException.class)
+	public void testJavaFloatRangeWithStepException() {
+		alpha.getFloatRangeAsJavaList(100, 200, 0);
+	}
+	
+	@Test
+	public void testStringsAsJavaList()  {
+		// check default method
+		final List<String> stringsAsJavaList = alpha.getStringsAsJavaList();
+		assertEquals(100, stringsAsJavaList.size());
+		for (String el: stringsAsJavaList) {
+			assertTrue(el.length() >= 5 && el.length() <=100);
+		}
+		//check custom method
+		final List<String> stringsAsJavaListCustom = alpha.getStringsAsJavaList(30, 40, 20);
+		assertEquals(20, stringsAsJavaListCustom.size());
+		for (String el: stringsAsJavaListCustom) {
+			assertTrue(el.length() >= 5 && el.length() <=100);
+		}
+
+	}
+
 	@Test
 	public void testJavaHash()  {
 		String hash = alpha.hash();
-		assertTrue(hash.length() == 40);
+		assertEquals(40, hash.length());
 		String customLengthHash = alpha.hash(10);
-		assertTrue(customLengthHash.length() == 10);
+		assertEquals(10, customLengthHash.length());
+	}
+	
+	@Test
+	public void testHashAsJavaList() {
+		final List<String> hashStrings = alpha.hashAsJavaList();
+		assertEquals(100, hashStrings.size());
+		for (String el: hashStrings) {
+			assertEquals(40, el.length());
+		}
+		final List<String> hashStringsCustom = alpha.hashAsJavaList(10, 60, 10);
+		assertEquals(10, hashStringsCustom.size());
+		for (String el: hashStringsCustom) {
+			assertTrue(el.length()  >= 10 && el.length() <=60);
+		}
 	}
 
 	@Test
 	public void testJavaGuid()  {
 		String guid = alpha.guid();
 		assertTrue(guid.matches("\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}"));
+	}
+
+	@Test
+	public void testGuidAsJavaList() {
+		final List<String> guidStrings = alpha.guidAsJavaList();
+		assertEquals(100, guidStrings.size());
+		final List<String> guidStringsCustom = alpha.guidAsJavaList(10, 20);
+		assertEquals(20, guidStringsCustom.size());
 	}
 	
 }

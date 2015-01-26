@@ -21,6 +21,13 @@ class AlphaNumericTestSuite extends BaseTestSuite {
     if (debugEnabled) logger.debug("Checking numerify with pattern: " + value + " : " + result)
     assert(result.matches(matchPattern))
   }
+  
+  @Test
+  def testNumerifyList() = {
+    val list = alpha.numerifyList("###ABC", 10)
+    assertResult(10)(list.size)
+    list.foreach(x => assert(x.matches("\\d{3}\\w{3}")))
+  }
 
   @DataProvider(name = "letterifyDP")
   def letterifyDP = {
@@ -40,6 +47,13 @@ class AlphaNumericTestSuite extends BaseTestSuite {
     assert(result.matches(matchPattern))
   }
 
+  @Test
+  def testLetterifyList() = {
+    val list = alpha.letterifyList("???123", 10)
+    assertResult(10)(list.size)
+    list.foreach(x => assert(x.matches("\\w{3}\\d{3}")))
+  }
+
   @DataProvider(name = "botifyDP")
   def botifyDP = {
     Array(Array("???123###", "\\w{3}\\d{6}"),
@@ -56,6 +70,13 @@ class AlphaNumericTestSuite extends BaseTestSuite {
     val result = alpha.botify(value)
     if (debugEnabled) logger.debug("Checking botify with pattern: " + value + " : " + result)
     assert(result.matches(matchPattern))
+  }
+
+  @Test
+  def testBotifyList() = {
+    val list = alpha.botifyList("???123###", 10)
+    assertResult(10)(list.size)
+    list.foreach(x => assert(x.matches("\\w{3}\\d{6}")))
   }
 
 
@@ -122,7 +143,7 @@ class AlphaNumericTestSuite extends BaseTestSuite {
   @Test
   def testDefaultStringsList() {
     val strings = alpha.getStrings
-    assertResult(10)(strings.length)
+    assertResult(100)(strings.length)
     strings.foreach(string => assert(string.length >= 5 && string.length <= 100))
   }
 
@@ -285,9 +306,13 @@ class AlphaNumericTestSuite extends BaseTestSuite {
   }
   
   @Test
-  def testDefaultHashList() = {
-    
-    
+  def testHashList() = {
+    val defaultList = alpha.hashList
+    assertResult(100)(defaultList.size)
+    defaultList.foreach(x => assert(x.length == 40))
+    val customList = alpha.hashList(20, 40, 30)
+    assertResult(30)(customList.size)
+    customList.foreach(x => assert(x.length >= 20 && x.length <= 40))
   }
 
   @Test
@@ -295,6 +320,14 @@ class AlphaNumericTestSuite extends BaseTestSuite {
     val guid = alpha.guid
     if (debugEnabled) logger.debug("Checking random guid number :  " + guid)
     assert(guid.matches("\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}"))
+  }
+
+  @Test
+  def testGuidList() = {
+    val defaultList = alpha.guidList
+    assertResult(100)(defaultList.size)
+    val customList = alpha.guidList(8, 30)
+    assertResult(30)(customList.size)
   }
 
 

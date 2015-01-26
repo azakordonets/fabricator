@@ -2,6 +2,7 @@ package fabricator
 
 import org.joda.time.{DateTime, IllegalFieldValueException}
 import scala.collection.JavaConverters._
+import scala.collection.mutable
 import scala.util.Random
 
 /**
@@ -45,15 +46,15 @@ class Calendar(private val utility: UtilityService,
   def daysRange(year: Int, month: Int, min: Int, max: Int, step: Int): List[String] = {
     if (min <= 0 || max > 31) throw new IllegalArgumentException("min and max values should be in [1,31] range")
     var day = min
-    var resultList = List()
-    while (min < max) {
+    var resultList = mutable.MutableList[Int]()
+    while (day <= max) {
       if (isValidDay(year, month, day)) {
-        resultList :+ day
+        resultList.+=(day)
         day = day +  step
       }else day = day +  step
       
     }
-    resultList
+    resultList.map(day => day.toString).toList
   }
   
   def daysRangeAsJavaList(year: Int, month: Int, min: Int, max: Int, step: Int) = daysRange(year, month, min, max, step).asJava

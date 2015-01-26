@@ -66,9 +66,9 @@ case class Alphanumeric(private val random: Random = new Random()) {
 
   def getString: String = string("0123456789abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_", 30)
   
-  def getStrings: List[String] = getStrings(5, 100, 10)
+  def getStrings: List[String] = getStrings(5, 100, 100)
 
-  def getStringsAsJavaList: util.List[String] = getStrings(5, 100, 10).asJava
+  def getStringsAsJavaList: util.List[String] = getStrings(5, 100, 100).asJava
   
   def getStrings(minLength: Int, maxLength: Int, amount: Int): List[String] = {
     if (minLength != maxLength )List.fill(amount)(getString(getInteger(minLength, maxLength))) else
@@ -128,7 +128,7 @@ case class Alphanumeric(private val random: Random = new Random()) {
       string(guid_pool, 12)
   }
 
-  def guidList: List[String] = List.fill(10)(guid(5))
+  def guidList: List[String] = List.fill(100)(guid(5))
 
   def guidAsJavaList = guidList.asJava
   
@@ -148,7 +148,7 @@ case class Alphanumeric(private val random: Random = new Random()) {
   
   def numerifyList(string: String, amount: Int): List[String] = List.fill(amount)(numerify(string))
   
-  def numerifyAsJavaList(string: String, amount: Int) = numerifyList(string, amount)
+  def numerifyAsJavaList(string: String, amount: Int) = numerifyList(string, amount).asJava
 
   def letterify(string: String): String = {
     val chars = ('a' to 'z') ++ ('A' to 'Z')
@@ -157,6 +157,6 @@ case class Alphanumeric(private val random: Random = new Random()) {
   
   def letterifyList(string: String, amount: Int): List[String] = List.fill(amount)(letterify(string))
   
-  def letterifyAsJavaList(string: String, amount: Int) = letterifyList(string, amount)
+  def letterifyAsJavaList(string: String, amount: Int) = letterifyList(string, amount).asJava
 
 }

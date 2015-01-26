@@ -88,6 +88,12 @@ class CalendarTestSuite extends BaseTestSuite {
   }
 
   @Test
+  def testDefaultDay() = {
+    val day = calendar.day.toInt
+    assert(day >= 1 && day <= 31)
+  }
+  
+  @Test
   def testDay() = {
     val year = calendar.year
     val month = calendar.month
@@ -95,7 +101,7 @@ class CalendarTestSuite extends BaseTestSuite {
     if (debugEnabled) logger.debug("Testing random day value: " + day)
     assert(day.toInt >= 0 && day.toInt < 31)
   }
-  
+
   @Test
   def testCustomDay() = {
     val year = calendar.year.toInt
@@ -104,13 +110,15 @@ class CalendarTestSuite extends BaseTestSuite {
     if (debugEnabled) logger.debug("Testing random custom day value in range [10,20]: " + day)
     assert(day >= 10 && day <= 20)
   }
-  
+
   @Test
   def testDayRange() = {
-    
-    
+    val daysRange = calendar.daysRange(calendar.year.toInt, calendar.month.toInt, 10, 20, 2)
+    for (i <- 0 to daysRange.length-2) assert(daysRange(i+1).toInt - daysRange(i).toInt == 2)
+    assertResult(10)(daysRange(0).toInt)
+    assertResult(20)(daysRange(daysRange.length-1).toInt)
   }
-
+  
   @Test
   def testMonth() = {
     val monthNumber = calendar.month(true)
