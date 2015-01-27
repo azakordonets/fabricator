@@ -1,9 +1,10 @@
 package fabricator.j.tests;
 
 import fabricator.*;
+import org.scalatest.testng.TestNGSuite;
 import org.testng.TestNG;
 
-public class JavaBaseTest extends TestNG {
+public class JavaBaseTest extends TestNGSuite {
 
 	protected Alphanumeric alpha = Fabricator.alphaNumeric();
 	protected Calendar calendar = Fabricator.calendar();

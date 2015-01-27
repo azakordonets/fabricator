@@ -54,9 +54,9 @@ pomExtra := (
   </developer>
 </developers>)
 
-ScoverageKeys.coverageMinimum := 80
+ScoverageKeys.coverageMinimum := 90
 
-ScoverageKeys.coverageFailOnMinimum := false
+ScoverageKeys.coverageFailOnMinimum := true
 
 ScoverageKeys.coverageHighlighting := {
   if (scalaBinaryVersion.value == "2.10") true else false

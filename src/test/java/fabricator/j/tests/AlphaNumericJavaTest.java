@@ -265,7 +265,7 @@ public class AlphaNumericJavaTest extends JavaBaseTest {
 	}
 	
 	@Test
-	public void testHashAsJavaList() {
+	public void testHashAsDefaultJavaList() {
 		final List<String> hashStrings = alpha.hashAsJavaList();
 		assertEquals(100, hashStrings.size());
 		for (String el: hashStrings) {
@@ -275,6 +275,24 @@ public class AlphaNumericJavaTest extends JavaBaseTest {
 		assertEquals(10, hashStringsCustom.size());
 		for (String el: hashStringsCustom) {
 			assertTrue(el.length()  >= 10 && el.length() <=60);
+		}
+	}
+
+	@Test
+	public void testHashAsCustomJavaList() {
+		final List<String> hashStringsCustom = alpha.hashAsJavaList(10, 60, 10);
+		assertEquals(10, hashStringsCustom.size());
+		for (String el: hashStringsCustom) {
+			assertTrue(el.length()  >= 10 && el.length() <=60);
+		}
+	}
+
+	@Test
+	public void testHashAsCustomJavaListWithSameMinMax() {
+		final List<String> hashStringsCustom = alpha.hashAsJavaList(10, 10, 20);
+		assertEquals(20, hashStringsCustom.size());
+		for (String el: hashStringsCustom) {
+			assertTrue(el.length() == 10);
 		}
 	}
 
