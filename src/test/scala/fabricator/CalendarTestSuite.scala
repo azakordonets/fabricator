@@ -151,6 +151,23 @@ class CalendarTestSuite extends BaseTestSuite {
     assert(date.equals(expectedResult))
   }
 
+  @DataProvider
+  def datesRangeDP() = {
+    Array(Array(2001, 1, 1, 2010, 1, 1,"year", 1, 9),
+      Array(2001, 1, 1, 2010, 1, 1,"year", 2, 5),
+      Array(2001, 1, 1, 2010, 1, 1,"month", 1, 108),
+      Array(2001, 1, 1, 2010, 1, 1,"month", 2, 54),
+      Array(2001, 1, 1, 2001, 10, 1,"day", 10, 28)
+    )
+  }
+  
+  @Test(dataProvider = "datesRangeDP")
+  def testDateRangeInYears(startYear: Int, startMonth: Int, startDay: Int, endYear: Int, endMonth: Int, endDay: Int, rangeType: String, step: Int, expectedSize: Int ) = {
+    val datesRange = calendar.datesRange(startYear, startMonth, startDay, endYear, endMonth, endDay, rangeType, step)
+    assertResult(expectedSize)(datesRange.length)
+    
+  }
+
   @Test
   def testDateWithFormat() = {
     val format = "dd_MM_yyyy"
