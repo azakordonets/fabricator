@@ -29,7 +29,7 @@ class Calendar(private val utility: UtilityService,
   def day(year: Int, month: Int): String = day(year, month, 1, 31)
   
   def day(year: Int, month: Int, min: Int, max: Int): String = {
-    if (min <= 0 || max > 31) throw new IllegalArgumentException("min and max values should be in [1,31] range")
+    if ((min <= 0 || max > 31) || (min >= 31 || max <= 0)) throw new IllegalArgumentException("min and max values should be in [1,31] range")
     var result = ""
     var dayValue = 0
     while (result.eq("")) {
@@ -45,7 +45,7 @@ class Calendar(private val utility: UtilityService,
   }
   
   def daysRange(year: Int, month: Int, min: Int, max: Int, step: Int): List[String] = {
-    if (min <= 0 || max > 31) throw new IllegalArgumentException("min and max values should be in [1,31] range")
+    if ((min <= 0 || max > 31) || (min >= 31 || max <= 0)) throw new IllegalArgumentException("min and max values should be in [1,31] range")
     var day = min
     var resultList = ListBuffer[Int]()
     while (day <= max) {

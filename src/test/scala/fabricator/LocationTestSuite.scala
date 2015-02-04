@@ -13,7 +13,7 @@ class LocationTestSuite extends BaseTestSuite {
   }
   
   @DataProvider(name = "altitudeDP")
-  def wordsCountDP() = {
+  def wordsCountDP():Array[Array[Any]]= {
     Array(Array("10"),
       Array("100"),
       Array("1000"),

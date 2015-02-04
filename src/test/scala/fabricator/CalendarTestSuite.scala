@@ -48,9 +48,14 @@ class CalendarTestSuite extends BaseTestSuite {
 
   @Test
   def testAmPm() = {
-    val ampm = calendar.ampm
-    if (debugEnabled) logger.debug("Testing random amPm value : " + ampm)
-    assert(ampm.equals("am") || ampm.equals("pm"))
+    var amCount = 0
+    var pmCount = 0
+    for (i <- 1 to 50){
+      val ampm = calendar.ampm
+      if (ampm.equals("am")) amCount = amCount + 1 else pmCount = pmCount + 1
+      if (debugEnabled) logger.debug("Testing random amPm value : " + ampm)
+    }
+    assert(amCount > 0 && pmCount > 0)
   }
 
   @Test
@@ -101,6 +106,33 @@ class CalendarTestSuite extends BaseTestSuite {
     if (debugEnabled) logger.debug("Testing random day value: " + day)
     assert(day.toInt >= 0 && day.toInt < 31)
   }
+  
+  @DataProvider(name = "dayExceptionDP")
+  def dayExceptionDP():Array[Array[Any]] = {
+    Array(Array(0, 12),
+      Array(1, 32),
+      Array(32, 10)
+    )
+  }
+  
+  @Test(dataProvider = "dayExceptionDP")
+  def testDayException(min: Int, max: Int) = {
+    try {
+      val date = calendar.day(2000, 2, min, max)
+    } catch  {
+      case e: IllegalArgumentException => assertResult("min and max values should be in [1,31] range")(e.getMessage)
+    }
+  }
+
+  @Test(dataProvider = "dayExceptionDP")
+  def testDayRangeException(min: Int, max: Int) = {
+    try {
+      val dateRange = calendar.daysRange(2000, 2, 0, min, max)
+    } catch  {
+      case e: IllegalArgumentException => assertResult("min and max values should be in [1,31] range")(e.getMessage)
+
+    }
+  }
 
   @Test
   def testCustomDay() = {
@@ -137,7 +169,7 @@ class CalendarTestSuite extends BaseTestSuite {
   }
 
   @DataProvider
-  def dateDP() = {
+  def dateDP():Array[Array[Any]] = {
     Array(Array(2014, 2, 30, 0, 0, "28-02-2014 12:00"),
       Array(1000, 2, 30, 0, 0, "28-02-1000 12:00"),
       Array(1980, 1, 50, 12, 30, "31-01-1980 12:30"),
@@ -152,7 +184,7 @@ class CalendarTestSuite extends BaseTestSuite {
   }
 
   @DataProvider
-  def datesRangeDP() = {
+  def datesRangeDP():Array[Array[Any]] = {
     Array(Array(2001, 1, 1, 2010, 1, 1,"year", 1, 9),
       Array(2001, 1, 1, 2010, 1, 1,"year", 2, 5),
       Array(2001, 1, 1, 2010, 1, 1,"month", 1, 108),
@@ -200,7 +232,7 @@ class CalendarTestSuite extends BaseTestSuite {
   }
 
   @DataProvider
-  def dateWithPeriodDP() = {
+  def dateWithPeriodDP():Array[Array[Any]] = {
     Array(Array(0, 0, 0, 0, 0, 0, "dd:MM:yyyy", DateTime.now.toString("dd:MM:yyyy")),
       Array(1, 0, 0, 0, 0, 0, "dd:MM:yyyy", DateTime.now.plusYears(1).toString("dd:MM:yyyy")),
       Array(-1, 0, 0, 0, 0, 0, "dd:MM:yyyy", DateTime.now.minusYears(1).toString("dd:MM:yyyy")),

@@ -11,7 +11,7 @@ class WordsTestSuite extends BaseTestSuite {
   }
   
   @DataProvider(name = "wordsCountDP")
-  def wordsCountDP() = {
+  def wordsCountDP():Array[Array[Any]]= {
     Array(Array("10"),
       Array("100"),
       Array("1000"),
