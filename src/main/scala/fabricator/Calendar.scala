@@ -140,19 +140,20 @@ class Calendar(private val utility: UtilityService,
   
   def datesRange(config: JsValue): List[String] = {
     // checking start section
-    var start: JsValue = (config \ "start").asOpt[JsValue].get
+    var start: JsValue = getJsValue(config, "start")
     if (start == JsNull)  {
       val date = new DateTime()
-      start = Json.parse("{\"year\": " + date.year() + "" +
-        ",\"month\": " + date.monthOfYear() + "," +
-        "\"day\": " + date.dayOfMonth() + "," +
-        "\"hour\": " + date.hourOfDay() + "," +
-        "\"minute\": " + date.minuteOfHour() + "}").asOpt[JsValue].get
+      val year = date.getYear
+      val month = date.getMonthOfYear
+      val day = date.getDayOfMonth
+      val hour = date.getHourOfDay
+      val minute = date.getMinuteOfHour
+      start = Json.parse(s"""{"year": $year, "month": $month , "day" : $day, "hour": $hour, "minute": $minute}""".stripMargin).asOpt[JsValue].get
     }
     // checking end section, step and format. end section and step are mandatory
-    val end: JsValue = (config \ "end").asOpt[JsValue].get
+    val end: JsValue = getJsValue(config, "end")
     val format = if ((config \ "format").asOpt[String] == None) "dd-MM-yyyy hh:mm" else (config \ "format").asOpt[String].get
-    val step:JsValue = (config \ "step").asOpt[JsValue].get
+    val step:JsValue = getJsValue(config, "step")
 
     if (end == JsNull) throw new IllegalArgumentException("End section is not specified")
     if (step == JsNull) throw new IllegalArgumentException("Step section is not specified")
@@ -191,7 +192,11 @@ class Calendar(private val utility: UtilityService,
     }
     datesList.toList
   }
-  
+
+  private def getJsValue(config: JsValue, key: String): JsValue = {
+    if ((config \ key).asOpt[JsValue] == None) JsNull else (config \ key).asOpt[JsValue].get
+  }
+
   def datesRange(config: String): List[String] = { val jsonConfig: JsValue = Json.parse(config); datesRange(jsonConfig)}
 
   def datesRangeJavaList(config: String) = datesRange(config).asJava
