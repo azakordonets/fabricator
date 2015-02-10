@@ -136,27 +136,27 @@ case class Alphanumeric(private val random: Random = new Random()) {
   
   def guidAsJavaList(version: Int, amount: Int) = guidList(version, amount).asJava
 
-  def botify(string: String): String = letterify(numerify(string))
+  def botify(pattern: String): String = letterify(numerify(pattern))
   
-  def botifyList(string: String, amount: Int): List[String] = List.fill(amount)(botify(string))
+  def botifyList(pattern: String, amount: Int): List[String] = List.fill(amount)(botify(pattern))
   
-  def botifyAsJavaList(string: String, amount: Int) = botifyList(string, amount).asJava
+  def botifyAsJavaList(pattern: String, amount: Int) = botifyList(pattern, amount).asJava
   
-  def numerify(string: String): String = {
-    string.map { case '#' => random.nextInt(10).toString case letter => letter}.mkString
+  def numerify(pattern: String): String = {
+    pattern.map { case '#' => random.nextInt(10).toString case letter => letter}.mkString
   }
   
-  def numerifyList(string: String, amount: Int): List[String] = List.fill(amount)(numerify(string))
+  def numerifyList(pattern: String, amount: Int): List[String] = List.fill(amount)(numerify(pattern))
   
-  def numerifyAsJavaList(string: String, amount: Int) = numerifyList(string, amount).asJava
+  def numerifyAsJavaList(pattern: String, amount: Int) = numerifyList(pattern, amount).asJava
 
-  def letterify(string: String): String = {
+  def letterify(pattern: String): String = {
     val chars = ('a' to 'z') ++ ('A' to 'Z')
-    string.map { case '?' => chars(random.nextInt(chars.length)) case letter => letter}.mkString
+    pattern.map { case '?' => chars(random.nextInt(chars.length)) case letter => letter}.mkString
   }
   
-  def letterifyList(string: String, amount: Int): List[String] = List.fill(amount)(letterify(string))
+  def letterifyList(pattern: String, amount: Int): List[String] = List.fill(amount)(letterify(pattern))
   
-  def letterifyAsJavaList(string: String, amount: Int) = letterifyList(string, amount).asJava
+  def letterifyAsJavaList(pattern: String, amount: Int) = letterifyList(pattern, amount).asJava
 
 }
