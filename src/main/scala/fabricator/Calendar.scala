@@ -158,13 +158,15 @@ class Calendar(private val utility: UtilityService,
     if (end == JsNull) throw new IllegalArgumentException("End section is not specified")
     if (step == JsNull) throw new IllegalArgumentException("Step section is not specified")
     // internal methods for reading json
-    def getValue(json: JsValue, key: String): Int = (json \ key).asOpt[Int].get
+    def getValue(json: JsValue, key: String): Int = 
+      if ((json \ key).asOpt[Int] == None) 1
+      else (json \ key).asOpt[Int].get
 
     def getStepValue(json: JsValue, key: String): Int = {
       if ((json \ key).asOpt[Int] == None) 0
       else (json \ key).asOpt[Int].get
     }
-    // setting step values and making sure that at least of them is > 0 
+    // setting step values and making sure that at least of them is > 0
     
     val yearStep = getStepValue(step, "year")
     val monthStep = getStepValue(step, "month")
