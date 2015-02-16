@@ -207,15 +207,15 @@ class Calendar(private val utility: UtilityService,
     new DateTime(year, month, day, hour, minute).toString(defFormat)
   }
 
-  def dateWithPeriod(years: Int, months: Int, weeks: Int, days: Int, hours: Int, minutes: Int): String = {
-    dateWithPeriod(years, months, weeks, days, hours, minutes, "dd-MM-yyyy hh:mm")
+  def dateRelative(years: Int, months: Int, weeks: Int, days: Int, hours: Int, minutes: Int): String = {
+    dateRelative(years, months, weeks, days, hours, minutes, "dd-MM-yyyy hh:mm")
   }
 
-  def dateWithPeriod(years: Int, months: Int, weeks: Int, days: Int, hours: Int, minutes: Int, format: String): String = {
-    dateWithPeriod(DateTime.now, years, months, weeks, days, hours, minutes, format)
+  def dateRelative(years: Int, months: Int, weeks: Int, days: Int, hours: Int, minutes: Int, format: String): String = {
+    dateRelative(DateTime.now, years, months, weeks, days, hours, minutes, format)
   }
 
-  def dateWithPeriod(date: DateTime, years: Int, months: Int, weeks: Int, days: Int, hours: Int, minutes: Int, format: String): String = {
+  def dateRelative(date: DateTime, years: Int, months: Int, weeks: Int, days: Int, hours: Int, minutes: Int, format: String): String = {
     var finalDate = date
     if (years > 0) {
       finalDate = finalDate.plusYears(years)

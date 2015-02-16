@@ -235,6 +235,22 @@ class CalendarTestSuite extends BaseTestSuite {
     assertResult(10)(datesRange.size)
     assertResult(11)(datesRangeWithDefaultStart.size)
   }
+
+  @Test
+  def testDateRangeWithSimpleJson() = {
+    //every year
+    val json: JsValue = Json.parse(s"""{"start": {"year": 2001},"end": {"year": 2010},"step": {"year": 1}}""")
+    val datesRange = calendar.datesRange(json)
+    assertResult(10)(datesRange.size)
+    //every month
+    val jsonMonth: JsValue = Json.parse(s"""{"start": {"year": 2001},"end": {"year": 2010},"step": {"month": 1}}""")
+    val datesRangeMonth = calendar.datesRange(jsonMonth)
+    assertResult(109)(datesRangeMonth.size)
+    //every day
+    val jsonDay: JsValue = Json.parse(s"""{"start": {"year": 2001},"end": {"year": 2010},"step": {"day": 1}}""")
+    val datesRangeDay = calendar.datesRange(jsonDay)
+    assertResult(3288)(datesRangeDay.size)
+  }
   
   @Test
   def testDateRangeWithJsonNoFormat() = {
@@ -322,14 +338,14 @@ class CalendarTestSuite extends BaseTestSuite {
 
   @Test(dataProvider = "dateWithPeriodDP")
   def testDateWithPeriod(year: Int, month: Int, week: Int, day: Int, hour: Int, minute: Int, format: String, expectedDate: String) = {
-    val date = calendar.dateWithPeriod(year, month, week, day, hour, minute, format)
+    val date = calendar.dateRelative(year, month, week, day, hour, minute, format)
     if (debugEnabled) logger.debug("Testing random date with dateWithPeriod method: " + date)
     assertResult(expectedDate)(date)
   }
 
   @Test
   def testDateWithPeriodWithDefaultFormat() = {
-    val date = calendar.dateWithPeriod(0, 0, 0, 0, 0, 0)
+    val date = calendar.dateRelative(0, 0, 0, 0, 0, 0)
     assertResult(DateTime.now.toString("dd-MM-yyyy hh:mm"))(date)
   }
 
