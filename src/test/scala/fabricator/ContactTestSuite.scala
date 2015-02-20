@@ -7,6 +7,8 @@ class ContactTestSuite extends BaseTestSuite {
 
   val firstNameList: Array[String] = util.getArrayFromJson("first_name")
   val lastNameList: Array[String] = util.getArrayFromJson("last_name")
+  val prefixList: Array[String] = util.getArrayFromJson("prefix")
+  val suffixList: Array[String] = util.getArrayFromJson("suffix")
   val phoneFormatsList: Array[String] = util.getArrayFromJson("phone_formats")
   val streetNameList: Array[String] = util.getArrayFromJson("street_suffix")
   val houseNumberList: Array[String] = util.getArrayFromJson("house_number")
@@ -42,14 +44,30 @@ class ContactTestSuite extends BaseTestSuite {
 
   @Test
   def testFullName() = {
-    val name = contact.fullName(false)
+    // no prefix and suffix
+    val name = contact.fullName(false, false)
     if (debugEnabled) logger.debug("Checking full name value " + name)
     firstNameList.contains(name.split(" ")(0))
     lastNameList.contains(name.split(" ")(1))
-    val nameWithPrefix = contact.fullName(false)
+    // with prefix
+    val nameWithPrefix = contact.fullName(true, false)
     if (debugEnabled) logger.debug("Checking full name value " + nameWithPrefix)
+    prefixList.contains(nameWithPrefix.split(" ")(0))
     firstNameList.contains(nameWithPrefix.split(" ")(1))
     lastNameList.contains(nameWithPrefix.split(" ")(2))
+    //with suffix
+    val nameWithSuffix = contact.fullName(false, true)
+    if (debugEnabled) logger.debug("Checking full name value " + nameWithSuffix)
+    firstNameList.contains(nameWithSuffix.split(" ")(0))
+    lastNameList.contains(nameWithSuffix.split(" ")(1))
+    suffixList.contains(nameWithSuffix.split(" ")(2))
+    //with prefix and suffix 
+    val nameWithPrefixAndSuffix = contact.fullName(true, true)
+    if (debugEnabled) logger.debug("Checking full name value " + nameWithPrefixAndSuffix)
+    prefixList.contains(nameWithPrefixAndSuffix.split(" ")(0))
+    firstNameList.contains(nameWithPrefixAndSuffix.split(" ")(1))
+    lastNameList.contains(nameWithPrefixAndSuffix.split(" ")(2))
+    suffixList.contains(nameWithPrefixAndSuffix.split(" ")(3))
   }
 
   @Test

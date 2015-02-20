@@ -108,7 +108,7 @@ class FileGenerator(private val alpha: Alphanumeric,
       case "guid" => alpha.guid
       case "time" => calendar.time(true)
       case "date" => calendar.date
-      case "name" => contact.fullName(false)
+      case "name" => contact.fullName(false, false)
       case "first_name" => contact.firstName
       case "last_name" => contact.lastName
       case "birthday" => contact.birthday(alpha.getInteger(21, 80))

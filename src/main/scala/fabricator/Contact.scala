@@ -24,8 +24,11 @@ class Contact(private val utility: UtilityService,
               private val alpha: Alphanumeric,
               private val random: Random) {
 
-  def fullName(prefix: Boolean): String = {
-    if (prefix) prefix + " " + firstName + " " + lastName
+  def fullName(setPrefix: Boolean, setSuffix: Boolean): String = {
+    
+    if (setPrefix && !setSuffix) String.format("%s %s %s", prefix, firstName, lastName)
+    else if (setPrefix & setSuffix) String.format("%s %s %s %s", prefix, firstName, lastName, suffix)
+    else if (!setPrefix & setSuffix) String.format("%s %s %s", firstName, lastName, suffix)
     else firstName + " " + lastName
   }
 
@@ -39,6 +42,10 @@ class Contact(private val utility: UtilityService,
       .toLowerCase
   }
 
+  def prefix: String = utility.getValueFromArray("prefix")
+  
+  def suffix: String = utility.getValueFromArray("suffix")
+  
   def firstName: String = utility.getValueFromArray("first_name")
   
   def lastName: String = utility.getValueFromArray("last_name")
