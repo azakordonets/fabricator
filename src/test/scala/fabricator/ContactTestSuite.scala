@@ -14,8 +14,11 @@ class ContactTestSuite extends BaseTestSuite {
   val houseNumberList: Array[String] = util.getArrayFromJson("house_number")
   val appNumberList: Array[String] = util.getArrayFromJson("app_number")
   val postcodeList: Array[String] = util.getArrayFromJson("postcode")
+  val countryList: Array[String] = util.getArrayFromJson("country")
   val stateList: Array[String] = util.getArrayFromJson("state")
   val stateAbbrList: Array[String] = util.getArrayFromJson("state_abbr")
+  val cityPrefixList: Array[String] = util.getArrayFromJson("city_prefix")
+  val citySuffixList: Array[String] = util.getArrayFromJson("city_suffix")
   val companyList: Array[String] = util.getArrayFromJson("company_suffix")
   val religionList: Array[String] = util.getArrayFromJson("religion")
   val zodiacList: Array[String] = util.getArrayFromJson("zodiac")
@@ -131,6 +134,13 @@ class ContactTestSuite extends BaseTestSuite {
     if (debugEnabled) logger.debug("Checking postCode value " + postCode)
     assert(postcodeList.contains(reversedPostCode))
   }
+  
+  @Test
+  def testCountry() = {
+    val country = contact.country
+    if (debugEnabled) logger.debug("Checking country value " + country)
+    assert(countryList.contains(country))
+  }
 
   @Test
   def testState() = {
@@ -145,6 +155,23 @@ class ContactTestSuite extends BaseTestSuite {
     if (debugEnabled) logger.debug("Checking stateAbbr value " + stateAbbr)
     assert(stateAbbrList.contains(stateAbbr))
   }
+  
+  @Test
+  def testCity() = {
+    val city = contact.city
+    if (debugEnabled) logger.debug("Checking city value " + city)
+    var prefixAvailability = 0
+    var suffixAvailability = 0
+    for (prefix <- cityPrefixList){
+      if (city.contains(prefix)) prefixAvailability = prefixAvailability + 1
+    }
+    for (suffix <- citySuffixList){
+      if (city.contains(suffix)) suffixAvailability = suffixAvailability + 1
+    }
+    assert(prefixAvailability >= 1)
+    assert(suffixAvailability >= 1)
+  }
+  
 
   @Test
   def testCompany() = {

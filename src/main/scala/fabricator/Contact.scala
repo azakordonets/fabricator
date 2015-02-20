@@ -61,6 +61,10 @@ class Contact(private val utility: UtilityService,
   def apartmentNumber = alpha.numerify(utility.getValueFromArray("app_number"))
 
   def postcode = alpha.botify(utility.getValueFromArray("postcode"))
+  
+  def country = utility.getValueFromArray("country")
+  
+  def city: String = utility.getValueFromArray("city_prefix") + utility.getValueFromArray("city_suffix")
 
   def state = utility.getValueFromArray("state")
 
