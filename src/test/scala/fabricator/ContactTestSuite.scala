@@ -319,9 +319,14 @@ class ContactTestSuite extends BaseTestSuite {
 
   @Test
   def testWeight() = {
-    val weight = contact.weight
+    val weight = contact.weight(true)
     if (debugEnabled) logger.debug("Testing random weight value : " + weight)
+    assert(weight.split(" ")(1).equals("kg"))
     assert(weight.split(" ")(0).toInt >= 50 && weight.split(" ")(0).toInt <= 110)
+    val weightPounds = contact.weight(false)
+    assert(weightPounds.split(" ")(1).equals("lbs"))
+    if (debugEnabled) logger.debug("Testing random weight value : " + weightPounds)
+    assert(weightPounds.split(" ")(0).toInt >= 30 && weightPounds.split(" ")(0).toInt <= 90)
   }
 
   @Test

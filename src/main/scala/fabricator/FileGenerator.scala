@@ -118,7 +118,7 @@ class FileGenerator(private val alpha: Alphanumeric,
       case "postcode" => contact.postcode
       case "bsn" => contact.bsn
       case "height" => contact.height(false)
-      case "weight" => contact.weight
+      case "weight" => contact.weight(true)
       case "occupation" => contact.occupation
       case "visa" => finance.visacreditCard
       case "master" => finance.mastercreditCard

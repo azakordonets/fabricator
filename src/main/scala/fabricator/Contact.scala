@@ -114,7 +114,7 @@ class Contact(private val utility: UtilityService,
     if (cm) alpha.getDouble(1.50, 2.20).toString + " cm" else alpha.getInteger(150, 220).toString + " m"
   }
 
-  def weight: String = alpha.getInteger(50, 110).toString + " kg"
+  def weight(metric: Boolean): String = if (metric) alpha.getInteger(50, 110).toString + " kg" else alpha.getInteger(30, 90).toString + " lbs"
 
   def bloodType: String = utility.getValueFromArray("blood_type")
 
