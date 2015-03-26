@@ -63,9 +63,9 @@ class Finance private(private val utility: UtilityService,
 
   def visacreditCard(cardNumberLength: Int): String = CreditCard.createCreditCardNumber(CreditCard.visaPrefixList, cardNumberLength, 1)(0)
   
-  def visacreditCards(howMany: Int): Array[String] = CreditCard.createCreditCardNumber(CreditCard.visaPrefixList, 16, 1)
+  def visacreditCards(howMany: Int): Array[String] = CreditCard.createCreditCardNumber(CreditCard.visaPrefixList, 16, howMany)
 
-  def visacreditCards(howMany: Int, cardNumberLength: Int): Array[String] = CreditCard.createCreditCardNumber(CreditCard.visaPrefixList, cardNumberLength, 1)
+  def visacreditCards(howMany: Int, cardNumberLength: Int): Array[String] = CreditCard.createCreditCardNumber(CreditCard.visaPrefixList, cardNumberLength, howMany)
 
   def americanExpresscreditCard: String = CreditCard.createCreditCardNumber(CreditCard.amexPrefixList, 16, 1)(0)
 
