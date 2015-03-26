@@ -233,7 +233,7 @@ class CalendarTestSuite extends BaseTestSuite {
     val datesRange = calendar.datesRange(json)
     val datesRangeWithDefaultStart = calendar.datesRange(jsonWithNoStartSection)
     assertResult(10)(datesRange.size)
-    assertResult(11)(datesRangeWithDefaultStart.size)
+    assertResult(10)(datesRangeWithDefaultStart.size)
   }
 
   @Test

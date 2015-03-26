@@ -111,7 +111,7 @@ class Contact(private val utility: UtilityService,
   }
 
   def height(cm: Boolean): String = {
-    if (cm) alpha.getDouble(1.50, 2.20).toString + " cm" else alpha.getInteger(150, 220).toString + " m"
+    if (cm) alpha.getDouble(1.50, 2.20).toString.substring(0,4) + " cm" else alpha.getInteger(150, 220).toString + " m"
   }
 
   def weight(metric: Boolean): String = if (metric) alpha.getInteger(50, 110).toString + " kg" else alpha.getInteger(30, 90).toString + " lbs"

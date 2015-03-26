@@ -312,7 +312,7 @@ class ContactTestSuite extends BaseTestSuite {
     if (debugEnabled) logger.debug("Testing random height in cm " + contact.height(true))
     if (debugEnabled) logger.debug("Testing random height in m " + contact.height(false))
     val heightInCm = contact.height(true).split(" ")(0).toDouble
-    val heightInM = contact.height(false).split(" ")(0).toDouble
+    val heightInM = contact.height(false).split(" ")(0).toInt
     assert(heightInCm >= 1.50 && heightInCm <= 2.20)
     assert(heightInM >= 150 && heightInM <= 220)
   }
