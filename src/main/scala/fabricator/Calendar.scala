@@ -6,9 +6,6 @@ import scala.collection.JavaConverters._
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
-/**
- * Created by Andrew Zakordonets on 03/06/14.
- */
 object Calendar {
 
   def apply(): Calendar = new Calendar(UtilityService(), new Random(), Alphanumeric())
@@ -91,7 +88,7 @@ class Calendar(private val utility: UtilityService,
 
   def hour12h: String = alpha.getInteger(0, 12).toString
 
-  def month: String = month(true)
+  def month: String = month(numberFormat = true)
 
   def month(numberFormat: Boolean): String = {
     if (numberFormat) alpha.getInteger(1, 12).toString

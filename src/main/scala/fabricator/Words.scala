@@ -2,9 +2,6 @@ package fabricator
 
 import scala.util.Random
 
-/**
- * Created by Andrew Zakordonets on 05/06/14.
- */
 object Words {
 
   def apply(): Words = new Words(UtilityService(), new Random())

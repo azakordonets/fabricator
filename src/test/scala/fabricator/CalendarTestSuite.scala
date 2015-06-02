@@ -148,16 +148,16 @@ class CalendarTestSuite extends BaseTestSuite {
   def testDayRange() = {
     val daysRange = calendar.daysRange(calendar.year.toInt, calendar.month.toInt, 10, 20, 2)
     for (i <- 0 to daysRange.length-2) assert(daysRange(i+1).toInt - daysRange(i).toInt == 2)
-    assertResult(10)(daysRange(0).toInt)
+    assertResult(10)(daysRange.head.toInt)
     assertResult(20)(daysRange(daysRange.length-1).toInt)
   }
   
   @Test
   def testMonth() = {
-    val monthNumber = calendar.month(true)
+    val monthNumber = calendar.month(numberFormat = true)
     if (debugEnabled) logger.debug("Checking random month value numeric: " + monthNumber)
     assert(monthNumber.toInt > 0 && monthNumber.toInt < 12)
-    val monthLettered = calendar.month(false)
+    val monthLettered = calendar.month(numberFormat = false)
     val months = util.getArrayFromJson("month")
     assert(months.contains(monthLettered))
   }

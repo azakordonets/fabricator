@@ -8,9 +8,6 @@ import play.api.libs.json.Json
 import scala.io.Source
 import scala.util.Random
 
-/**
- * Created by Andrew Zakordonets on 05/06/14.
- */
 case class UtilityService(lang: String = "us", private val random: Random = new Random()) {
 
   private val valuesJson = Json.parse(Source.fromInputStream(getClass.getClassLoader.getResourceAsStream(lang + ".json"))("UTF-8").mkString)
@@ -18,17 +15,17 @@ case class UtilityService(lang: String = "us", private val random: Random = new 
   if (valuesJson == null) throw new Exception(lang + ".json doesn't exist. ")
 
   def getValueFromArray(key: String): String = {
-    val array = (valuesJson \\ key)(0).asOpt[Array[String]].get
+    val array = (valuesJson \\ key).head.asOpt[Array[String]].get
     val random_index = random.nextInt(array.length)
     array(random_index)
   }
 
   def getArrayFromJson(key: String): Array[String] = {
-    (valuesJson \\ key)(0).asOpt[Array[String]].get
+    (valuesJson \\ key).head.asOpt[Array[String]].get
   }
 
   def getListFromJson(key: String): List[Array[String]] = {
-    (valuesJson \\ key)(0).asOpt[List[Array[String]]].get
+    (valuesJson \\ key).head.asOpt[List[Array[String]]].get
   }
 
   def getProperty(name: String): String = {

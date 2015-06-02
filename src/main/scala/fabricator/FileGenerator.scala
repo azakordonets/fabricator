@@ -52,7 +52,7 @@ class FileGenerator(private val alpha: Alphanumeric,
     graphics2D.setColor(Color.white)
     layout.draw(graphics2D, width / 2 - rectangle.getWidth.toInt / 2, height / 2)
     //done with drawing
-    graphics2D.dispose
+    graphics2D.dispose()
     // write image to a file
     javax.imageio.ImageIO.write(bufferedImage, "png", new java.io.File(path))
 
@@ -108,7 +108,7 @@ class FileGenerator(private val alpha: Alphanumeric,
       case "guid" => alpha.guid
       case "time" => calendar.time24h
       case "date" => calendar.date
-      case "name" => contact.fullName(false, false)
+      case "name" => contact.fullName(setPrefix = false, setSuffix = false)
       case "first_name" => contact.firstName
       case "last_name" => contact.lastName
       case "birthday" => contact.birthday(alpha.getInteger(21, 80))
@@ -117,8 +117,8 @@ class FileGenerator(private val alpha: Alphanumeric,
       case "address" => contact.streetName + " " + contact.houseNumber + ", " + contact.apartmentNumber
       case "postcode" => contact.postcode
       case "bsn" => contact.bsn
-      case "height" => contact.height(false)
-      case "weight" => contact.weight(true)
+      case "height" => contact.height(cm = false)
+      case "weight" => contact.weight(metric = true)
       case "occupation" => contact.occupation
       case "visa" => finance.visacreditCard
       case "master" => finance.mastercreditCard

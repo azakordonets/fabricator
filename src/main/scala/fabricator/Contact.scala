@@ -5,9 +5,6 @@ import org.joda.time.format.DateTimeFormatter
 
 import scala.util.Random
 
-/**
- * Created by Andrew Zakordonets on 02/06/14.
- */
 object Contact {
 
   def apply(): Contact = {

@@ -118,7 +118,7 @@ class AlphaNumericTestSuite extends BaseTestSuite {
     var falseCount = 0
     for (i <- 0 to 100) {
       val boolean = alpha.getBoolean
-      if (boolean == true) trueCount = trueCount + 1
+      if (boolean) trueCount = trueCount + 1
       else falseCount = falseCount + 1
     }
     assert(trueCount > 0 && falseCount > 0)

@@ -4,9 +4,6 @@ import java.awt.Color
 
 import scala.util.Random
 
-/**
- * Created by Andrew Zakordonets on 22/09/14.
- */
 object Internet {
 
   def apply(): Internet = {
@@ -36,7 +33,7 @@ class Internet(private val utility: UtilityService,
     for ((key, value) <- params) {
       paramsString += key + "=" + value + "&"
     }
-    protocol + "://" + host + "/" + callName + "?" + paramsString.substring(0, paramsString.size - 1)
+    protocol + "://" + host + "/" + callName + "?" + paramsString.substring(0, paramsString.length - 1)
   }
 
   def ip: String = {

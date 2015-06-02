@@ -34,7 +34,7 @@ public class CalendarJavaTest extends JavaBaseTest {
 	
 	@Test
 	public void testJavaDatesRangeWithJson() throws IOException {
-		String config = readFileContent("javaDatesRangeJson.json");
+		String config = readFileContent();
 		final List<String> datesRangeList = calendar.datesRangeJavaList(config);
 		assertEquals(10, datesRangeList.size());
 	}
@@ -57,14 +57,14 @@ public class CalendarJavaTest extends JavaBaseTest {
 		assertEquals(expectedSize, datesRange.size());
 	}
 	
-	private String readFileContent(String fileName) throws IOException {
-		String path = CalendarJavaTest.class.getResource("/"+fileName).toString();
+	private String readFileContent() throws IOException {
+		String path = CalendarJavaTest.class.getResource("/"+ "javaDatesRangeJson.json").toString();
 		final List<String> strings = Files.readAllLines(Paths.get(path.substring(5, path.length())), Charset.defaultCharset());
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder builder = new StringBuilder();
 		for (String el: strings){
-			buffer.append(el);
+			builder.append(el);
 		}
-		return buffer.toString();
+		return builder.toString();
 	}
 	
 }

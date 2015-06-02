@@ -2,6 +2,7 @@ package fabricator
 
 import java.util
 
+import scala.language.postfixOps
 import scala.util.Random
 import scala.collection.JavaConverters._
 

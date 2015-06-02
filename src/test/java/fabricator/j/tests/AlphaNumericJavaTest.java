@@ -116,7 +116,7 @@ public class AlphaNumericJavaTest extends JavaBaseTest {
 	@Test
 	public void testJavaDefaultBoolean() {
 		Boolean booleanValue = alpha.getBoolean();
-		assertTrue(booleanValue == true || booleanValue == false);
+		assertTrue(booleanValue || !booleanValue);
 		assertTrue(booleanValue instanceof Boolean);
 	}
 

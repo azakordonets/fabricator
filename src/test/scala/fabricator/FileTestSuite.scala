@@ -70,8 +70,8 @@ class FileTestSuite extends BaseTestSuite {
     // asser that inserted data is correct
     val line = reader.readNext()
     val occupationList: Array[String] = util.getArrayFromJson("occupation")
-    assert(occupationList.contains(lines(0)(0)))
-    assertResult(codes.length)(lines(0).size)
+    assert(occupationList.contains(lines.head.head))
+    assertResult(codes.length)(lines.head.size)
   }
 
   @Test
@@ -90,8 +90,8 @@ class FileTestSuite extends BaseTestSuite {
     assertResult(numberOfRows)(numberOfRowsInFile)
     // asser that inserted data is correct
     val line = reader.readNext()
-    assert(lines(0)(0).toInt <= 1000)
-    assertResult(values.length)(lines(0).size)
+    assert(lines.head.head.toInt <= 1000)
+    assertResult(values.length)(lines.head.size)
   }
 
   @Test(expectedExceptions = Array(classOf[IllegalArgumentException]))

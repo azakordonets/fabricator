@@ -48,24 +48,24 @@ class ContactTestSuite extends BaseTestSuite {
   @Test
   def testFullName() = {
     // no prefix and suffix
-    val name = contact.fullName(false, false)
+    val name = contact.fullName(setPrefix = false, setSuffix = false)
     if (debugEnabled) logger.debug("Checking full name value " + name)
     firstNameList.contains(name.split(" ")(0))
     lastNameList.contains(name.split(" ")(1))
     // with prefix
-    val nameWithPrefix = contact.fullName(true, false)
+    val nameWithPrefix = contact.fullName(setPrefix = true, setSuffix = false)
     if (debugEnabled) logger.debug("Checking full name value " + nameWithPrefix)
     prefixList.contains(nameWithPrefix.split(" ")(0))
     firstNameList.contains(nameWithPrefix.split(" ")(1))
     lastNameList.contains(nameWithPrefix.split(" ")(2))
     //with suffix
-    val nameWithSuffix = contact.fullName(false, true)
+    val nameWithSuffix = contact.fullName(setPrefix = false, setSuffix = true)
     if (debugEnabled) logger.debug("Checking full name value " + nameWithSuffix)
     firstNameList.contains(nameWithSuffix.split(" ")(0))
     lastNameList.contains(nameWithSuffix.split(" ")(1))
     suffixList.contains(nameWithSuffix.split(" ")(2))
     //with prefix and suffix 
-    val nameWithPrefixAndSuffix = contact.fullName(true, true)
+    val nameWithPrefixAndSuffix = contact.fullName(setPrefix = true, setSuffix = true)
     if (debugEnabled) logger.debug("Checking full name value " + nameWithPrefixAndSuffix)
     prefixList.contains(nameWithPrefixAndSuffix.split(" ")(0))
     firstNameList.contains(nameWithPrefixAndSuffix.split(" ")(1))
@@ -309,21 +309,21 @@ class ContactTestSuite extends BaseTestSuite {
 
   @Test
   def testHeight() = {
-    if (debugEnabled) logger.debug("Testing random height in cm " + contact.height(true))
-    if (debugEnabled) logger.debug("Testing random height in m " + contact.height(false))
-    val heightInCm = contact.height(true).split(" ")(0).toDouble
-    val heightInM = contact.height(false).split(" ")(0).toInt
+    if (debugEnabled) logger.debug("Testing random height in cm " + contact.height(cm = true))
+    if (debugEnabled) logger.debug("Testing random height in m " + contact.height(cm = false))
+    val heightInCm = contact.height(cm = true).split(" ")(0).toDouble
+    val heightInM = contact.height(cm = false).split(" ")(0).toInt
     assert(heightInCm >= 1.50 && heightInCm <= 2.20)
     assert(heightInM >= 150 && heightInM <= 220)
   }
 
   @Test
   def testWeight() = {
-    val weight = contact.weight(true)
+    val weight = contact.weight(metric = true)
     if (debugEnabled) logger.debug("Testing random weight value : " + weight)
     assert(weight.split(" ")(1).equals("kg"))
     assert(weight.split(" ")(0).toInt >= 50 && weight.split(" ")(0).toInt <= 110)
-    val weightPounds = contact.weight(false)
+    val weightPounds = contact.weight(metric = false)
     assert(weightPounds.split(" ")(1).equals("lbs"))
     if (debugEnabled) logger.debug("Testing random weight value : " + weightPounds)
     assert(weightPounds.split(" ")(0).toInt >= 30 && weightPounds.split(" ")(0).toInt <= 90)
