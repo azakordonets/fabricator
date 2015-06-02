@@ -69,28 +69,27 @@ class Calendar(private val utility: UtilityService,
     }
   }
 
-  def time(twentyFourHour: Boolean): String = hour(twentyFourHour) + ":" + minute
+  def time24h: String = hour24h + ":" + minute
+
+  def time12h: String = hour12h + ":" + minute
 
   def date: String = date("dd-MM-yyyy")
 
   def date(format: String): String = {
     val randomYear = year.toInt
     val randomMonth = month.toInt
-    new DateTime(randomYear, randomMonth, day(randomYear, randomMonth).toInt, hour.toInt, minute.toInt, second.toInt).toString(format)
+    new DateTime(randomYear, randomMonth, day(randomYear, randomMonth).toInt, hour24h.toInt, minute.toInt, second.toInt).toString(format)
   }
 
-  def dateObject: DateTime = new DateTime(year.toInt, month.toInt, 1, hour.toInt, minute.toInt, second.toInt).plusDays(alpha.getInteger(1, 31))
+  def dateObject: DateTime = new DateTime(year.toInt, month.toInt, 1, hour24h.toInt, minute.toInt, second.toInt).plusDays(alpha.getInteger(1, 31))
 
   def second: String = alpha.getInteger(0, 59).toString
 
   def minute: String = alpha.getInteger(0, 59).toString
 
-  def hour: String = hour(false)
+  def hour24h : String = alpha.getInteger(0, 24).toString
 
-  def hour(twentyfour: Boolean): String = {
-    if (twentyfour) alpha.getInteger(0, 24).toString
-    else alpha.getInteger(1, 12).toString
-  }
+  def hour12h: String = alpha.getInteger(0, 12).toString
 
   def month: String = month(true)
 

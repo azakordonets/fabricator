@@ -86,9 +86,9 @@ Calendar
 
 val calendar = fabricator.calendar() // initialize calendar module
 
-calendar.time(false) // 03:15
+calendar.time12h // 03:15
 
-calendar.time(true) // 15:15
+calendar.time24h // 15:15
 
 calendar.month(false) // December
 

@@ -75,19 +75,19 @@ class CalendarTestSuite extends BaseTestSuite {
 
   @Test
   def testHour() = {
-    val hour24 = calendar.hour(true)
-    val hour12 = calendar.hour
+    val hour24 = calendar.hour24h
+    val hour12 = calendar.hour12h
     assert(hour24.toInt >= 0 && hour24.toInt < 24)
     assert(hour12.toInt >= 0 && hour12.toInt < 12)
   }
 
   @Test
   def testTime() = {
-    val time24 = calendar.time(true)
+    val time24 = calendar.time24h
     val hour24 = time24.split(":")(0).toInt
     val minute24 = time24.split(":")(1).toInt
     assert(hour24 >= 0 && hour24 < 24 && minute24 >= 0 && minute24 < 60)
-    val time = calendar.time(false)
+    val time = calendar.time12h
     val hour = time.split(":")(0).toInt
     val minute = time.split(":")(1).toInt
     assert(hour >= 0 && hour < 12 && minute >= 0 && minute < 60)
@@ -283,7 +283,7 @@ class CalendarTestSuite extends BaseTestSuite {
     val year = calendar.year.toInt
     val month = calendar.month.toInt
     val day = calendar.day(year, month).toInt
-    val hour = calendar.hour.toInt
+    val hour = calendar.hour12h.toInt
     val minute = calendar.minute.toInt
     val date = calendar.date(year, month, day, hour, minute, format)
     assertResult(new DateTime(year, month, day, hour, minute).toString(format))(date)

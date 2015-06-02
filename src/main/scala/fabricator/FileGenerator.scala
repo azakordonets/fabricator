@@ -106,7 +106,7 @@ class FileGenerator(private val alpha: Alphanumeric,
       case "double" => alpha.getDouble.toString
       case "hash" => alpha.hash
       case "guid" => alpha.guid
-      case "time" => calendar.time(true)
+      case "time" => calendar.time24h
       case "date" => calendar.date
       case "name" => contact.fullName(false, false)
       case "first_name" => contact.firstName
