@@ -105,6 +105,16 @@ calendar.date(calendar.year, 2, 13, calendar.hour, calendar.minute) // 13 Februa
 calendar.dateObject // random Joda.time object
 
 calendar.dateWithPeriod(-10, 0, -2, +3, 0, 0) // date that is - 10 years + 0 months -2 weeks + 3 days + 0 hours + 0 minutes
+
+calendar.datesRange
+        .startYear(2010)
+        .startMonth(1)
+        .startDay(1)
+        .stepEvery(1, DateRangeType.DAYS)
+        .endYear(2011)
+        .endMonth(1)
+        .endDay(1)
+        .asList // list of dates between 2010-1-1 and 2011-1-1 with a step of 1 day between each date 
 ```
 
 Contact
