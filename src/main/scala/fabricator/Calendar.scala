@@ -1,7 +1,7 @@
 package fabricator
 
 import org.joda.time.{DateTime, IllegalFieldValueException}
-import play.api.libs.json.{JsNull, Json, JsValue}
+
 import scala.collection.JavaConverters._
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
@@ -88,10 +88,10 @@ class Calendar(private val utility: UtilityService,
 
   def hour12h: String = alpha.getInteger(0, 12).toString
 
-  def month: String = month(numberFormat = true)
+  def month: String = month(asNumber = true)
 
-  def month(numberFormat: Boolean): String = {
-    if (numberFormat) alpha.getInteger(1, 12).toString
+  def month(asNumber: Boolean): String = {
+    if (asNumber) alpha.getInteger(1, 12).toString
     else utility.getValueFromArray("month")
   }
 
@@ -109,95 +109,7 @@ class Calendar(private val utility: UtilityService,
     date
   }
 
-  def datesRange(startYear: Int, startMonth: Int, startDay: Int, endYear: Int, endMonth: Int, endDay: Int, stepType: String, step: Int): List[String] = {
-    datesRange(startYear, startMonth, startDay, endYear, endMonth, endDay, stepType, step, "dd-MM-yyyy")
-  }
-
-  def datesRangeJavaList(startYear: Int, startMonth: Int, startDay: Int, endYear: Int, endMonth: Int, endDay: Int, stepType: String, step: Int) = {
-    datesRange(startYear, startMonth, startDay, endYear, endMonth, endDay, stepType, step, "dd-MM-yyyy").asJava
-  }
-  
-  def datesRange(startYear: Int, startMonth: Int, startDay: Int, endYear: Int, endMonth: Int, endDay: Int, stepType: String, step: Int, format: String): List[String] = {
-    if (step <= 0) throw new IllegalArgumentException("Step should be > 0")
-    var startDate = new DateTime(startYear, startMonth, startDay, 0, 0)
-    val endDate = new DateTime(endYear, endMonth, endDay, 0, 0)
-    var rangeList = ListBuffer[String]()
-    rangeList += startDate.toString(format)
-    while(startDate.compareTo(endDate) == -1) {
-      stepType match {
-        case "year" => startDate = startDate.plusYears(step); if (startDate.compareTo(endDate) == -1) rangeList += startDate.toString(format)
-        case "month" => startDate = startDate.plusMonths(step);  if (startDate.compareTo(endDate) == -1) rangeList += startDate.toString(format)
-        case "day" => startDate = startDate.plusDays(step);   if (startDate.compareTo(endDate) == -1) rangeList += startDate.toString(format)
-        case _ => throw new IllegalArgumentException(stepType + " stepType is not supported. Only year, month, dat are supported")
-      }  
-    }
-    rangeList.toList
-  }
-  
-  def datesRange(config: JsValue): List[String] = {
-    // checking start section
-    var start: JsValue = getJsValue(config, "start")
-    if (start == JsNull)  {
-      val date = new DateTime()
-      val year = date.getYear
-      val month = date.getMonthOfYear
-      val day = date.getDayOfMonth
-      val hour = date.getHourOfDay
-      val minute = date.getMinuteOfHour
-      start = Json.parse(s"""{"year": $year, "month": $month , "day" : $day, "hour": $hour, "minute": $minute}""".stripMargin).asOpt[JsValue].get
-    }
-    // checking end section, step and format. end section and step are mandatory
-    val end: JsValue = getJsValue(config, "end")
-    val format = if ((config \ "format").asOpt[String] == None) "dd-MM-yyyy hh:mm" else (config \ "format").asOpt[String].get
-    val step:JsValue = getJsValue(config, "step")
-
-    if (end == JsNull) throw new IllegalArgumentException("End section is not specified")
-    if (step == JsNull) throw new IllegalArgumentException("Step section is not specified")
-    // internal methods for reading json
-    def getValue(json: JsValue, key: String): Int = 
-      if ((json \ key).asOpt[Int] == None) 1
-      else (json \ key).asOpt[Int].get
-
-    def getStepValue(json: JsValue, key: String): Int = {
-      if ((json \ key).asOpt[Int] == None) 0
-      else (json \ key).asOpt[Int].get
-    }
-    // setting step values and making sure that at least of them is > 0
-    
-    val yearStep = getStepValue(step, "year")
-    val monthStep = getStepValue(step, "month")
-    val dayStep = getStepValue(step, "day")
-    val hourStep = getStepValue(step, "hour")
-    val minuteStep = getStepValue(step, "minute")
-    if (yearStep == 0 && monthStep == 0 && dayStep == 0 && hourStep == 0 && minuteStep == 0 ) throw new IllegalArgumentException("At least one step parameter should be > 0 ")
-    // setting start and end dates basing on params we have
-    var startDate = new DateTime(getValue(start, "year"),
-                                 getValue(start, "month"),
-                                 getValue(start, "day"),
-                                 getValue(start, "hour"),
-                                 getValue(start, "minute"))
-    val endDate =   new DateTime(getValue(end, "year"),
-                                 getValue(end, "month"),
-                                 getValue(end, "day"),
-                                 getValue(end, "hour"),
-                                 getValue(end, "minute"))
-    var datesList = new ListBuffer[String]()
-    datesList += startDate.toString(format)
-    // while start date is < end date, generate next date with step and put it into the resulting list
-    while(startDate.compareTo(endDate) == -1) {
-      startDate = startDate.plusYears(yearStep).plusMonths(monthStep).plusDays(dayStep).plusHours(hourStep).plusMinutes(minuteStep)
-      datesList += startDate.toString(format)
-    }
-    datesList.toList
-  }
-
-  private def getJsValue(config: JsValue, key: String): JsValue = {
-    if ((config \ key).asOpt[JsValue] == None) JsNull else (config \ key).asOpt[JsValue].get
-  }
-
-  def datesRange(config: String): List[String] = { val jsonConfig: JsValue = Json.parse(config); datesRange(jsonConfig)}
-
-  def datesRangeJavaList(config: String) = datesRange(config).asJava
+  def datesRange: DateRange = new DateRange
 
   def date(year: Int, month: Int, day: Int, hour: Int, minute: Int, defFormat: String): String = {
     new DateTime(year, month, day, hour, minute).toString(defFormat)

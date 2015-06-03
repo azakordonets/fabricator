@@ -1,8 +1,8 @@
 package fabricator
 
 import com.github.nscala_time.time.Imports._
+import fabricator.enums.DateRangeType
 import org.testng.annotations.{DataProvider, Test}
-import play.api.libs.json.{Json, JsValue}
 
 class CalendarTestSuite extends BaseTestSuite {
 
@@ -154,10 +154,10 @@ class CalendarTestSuite extends BaseTestSuite {
   
   @Test
   def testMonth() = {
-    val monthNumber = calendar.month(numberFormat = true)
+    val monthNumber = calendar.month(asNumber = true)
     if (debugEnabled) logger.debug("Checking random month value numeric: " + monthNumber)
     assert(monthNumber.toInt > 0 && monthNumber.toInt < 12)
-    val monthLettered = calendar.month(numberFormat = false)
+    val monthLettered = calendar.month(asNumber = false)
     val months = util.getArrayFromJson("month")
     assert(months.contains(monthLettered))
   }
@@ -186,97 +186,48 @@ class CalendarTestSuite extends BaseTestSuite {
 
   @DataProvider
   def datesRangeDP():Array[Array[Any]] = {
-    Array(Array(2001, 1, 1, 2010, 1, 1,"year", 1, 9),
-      Array(2001, 1, 1, 2010, 1, 1,"year", 2, 5),
-      Array(2001, 1, 1, 2010, 1, 1,"month", 1, 108),
-      Array(2001, 1, 1, 2010, 1, 1,"month", 2, 54),
-      Array(2001, 1, 1, 2001, 10, 1,"day", 10, 28)
+    Array(Array(2001, 1, 1, 2010, 1, 1,DateRangeType.YEARS, 1, 9),
+      Array(2001, 1, 1, 2010, 1, 1,DateRangeType.YEARS, 2, 5),
+      Array(2001, 1, 1, 2010, 1, 1,DateRangeType.MONTHS, 1, 108),
+      Array(2001, 1, 1, 2010, 1, 1,DateRangeType.MONTHS, 2, 54),
+      Array(2001, 1, 1, 2010, 1, 1,DateRangeType.WEEKS, 2, 235),
+      Array(2001, 1, 1, 2001, 10, 1,DateRangeType.DAYS, 10, 28),
+      Array(2001, 1, 1, 2001, 10, 1,DateRangeType.HOURS, 10, 656),
+      Array(2001, 1, 1, 2001, 10, 1,DateRangeType.MINUTES, 10, 39306)
     )
   }
   
   @Test(dataProvider = "datesRangeDP")
-  def testDateRangeInYears(startYear: Int, startMonth: Int, startDay: Int, endYear: Int, endMonth: Int, endDay: Int, rangeType: String, step: Int, expectedSize: Int ) = {
-    val datesRange = calendar.datesRange(startYear, startMonth, startDay, endYear, endMonth, endDay, rangeType, step)
+  def testDateRangeInYears(startYear: Int, startMonth: Int, startDay: Int, endYear: Int, endMonth: Int, endDay: Int, rangeType: DateRangeType, step: Int, expectedSize: Int ) = {
+    val datesRange = calendar.datesRange
+                             .startYear(startYear)
+                             .startMonth(startMonth)
+                             .startDay(startDay)
+                             .stepEvery(step, rangeType)
+                             .endYear(endYear)
+                             .endMonth(endMonth)
+                             .endDay(endDay)
+                             .asList
     assertResult(expectedSize)(datesRange.length)
   }
   
   @Test
   def testDateRangeInYearsWithException() = {
     try {
-      val datesRange = calendar.datesRange(2001, 1, 1, 2010, 1, 1, "year", 0)
+      val datesRange = calendar.datesRange
+        .startYear(2010)
+        .startMonth(1)
+        .startDay(1)
+        .stepEvery(0, DateRangeType.DAYS)
+        .endYear(2011)
+        .endMonth(1)
+        .endDay(1)
+        .asList
     }catch {
       case e: IllegalArgumentException => assertResult("Step should be > 0")(e.getMessage)
     }
   }
   
-  @Test
-  def testDateRangeWithJson() = {
-    val todaysYear = DateTime.now.getYear
-    val endYear = todaysYear + 10
-    val json: JsValue = Json.parse(s"""{"start": {"year": 2001,"month": 1,"day": 1,"hour": 0,"minute": 0},"end": {"year": 2010,"month": 1,"day": 1,"hour": 0,"minute": 0},"step": {"year": 1,"month": 1,"day": 1,"hour": 0,"minute": 0},"format": "dd-MM-yyyy hh:mm"}""")
-    val jsonWithNoStartSection: JsValue = Json.parse(s"""{"end": {
-                                                            "year": $endYear,
-                                                            "month": 1,
-                                                            "day": 1,
-                                                            "hour": 0,
-                                                            "minute": 0
-                                                          },
-                                                          "step": {
-                                                            "year": 1,
-                                                            "month": 1,
-                                                            "day": 1,
-                                                            "hour": 0,
-                                                            "minute": 0
-                                                          },
-                                                          "format": "dd-MM-yyyy hh:mm"
-                                                        }""")
-    val datesRange = calendar.datesRange(json)
-    val datesRangeWithDefaultStart = calendar.datesRange(jsonWithNoStartSection)
-    assertResult(10)(datesRange.size)
-    assertResult(10)(datesRangeWithDefaultStart.size)
-  }
-
-  @Test
-  def testDateRangeWithSimpleJson() = {
-    //every year
-    val json: JsValue = Json.parse(s"""{"start": {"year": 2001},"end": {"year": 2010},"step": {"year": 1}}""")
-    val datesRange = calendar.datesRange(json)
-    assertResult(10)(datesRange.size)
-    //every month
-    val jsonMonth: JsValue = Json.parse(s"""{"start": {"year": 2001},"end": {"year": 2010},"step": {"month": 1}}""")
-    val datesRangeMonth = calendar.datesRange(jsonMonth)
-    assertResult(109)(datesRangeMonth.size)
-    //every day
-    val jsonDay: JsValue = Json.parse(s"""{"start": {"year": 2001},"end": {"year": 2010},"step": {"day": 1}}""")
-    val datesRangeDay = calendar.datesRange(jsonDay)
-    assertResult(3288)(datesRangeDay.size)
-  }
-  
-  @Test
-  def testDateRangeWithJsonNoFormat() = {
-    val json: JsValue = Json.parse(s"""{"start": {"year": 2001,"month": 1,"day": 1,"hour": 0,"minute": 0},"end": {"year": 2010,"month": 1,"day": 1,"hour": 0,"minute": 0},"step": {"year": 1,"month": 1,"day": 1,"hour": 0,"minute": 0}}""")
-    val datesRange = calendar.datesRange(json)
-    assertResult(10)(datesRange.size)
-  }
-
-  @DataProvider
-  def datesRangeExceptionDP():Array[Array[Any]] = {
-    Array(Array("""{"step": {"year": 1,"month": 1,"day": 1,"hour": 0,"minute": 0},"format": "dd-MM-yyyy hh:mm"}""", "End section is not specified"),
-      Array("""{"end": {"year": 2,"month": 1,"day": 1,"hour": 0,"minute": 0},"format": "dd-MM-yyyy hh:mm"}""", "Step section is not specified"),
-      Array("""{"start": {"year": 2,"month": 1,"day": 1,"hour": 0,"minute": 0},"end": {"year": 2,"month": 1,"day": 1,"hour": 0,"minute": 0},"step": {"year": 0,"month": 0,"day": 0,"hour": 0,"minute": 0},"format": "dd-MM-yyyy hh:mm"}""", "At least one step parameter should be > 0 ")
-    )
-  }
-  
-  @Test(dataProvider = "datesRangeExceptionDP")
-  def testDatesRangeException(config: String, expectedExceptionMessage: String) = {
-    val json = Json.parse(config)
-    try {
-      val datesRange = calendar.datesRange(json)
-    }catch {
-      case e: IllegalArgumentException => assertResult(expectedExceptionMessage)(e.getMessage)
-    }
-  }
-
   @Test
   def testDateWithFormat() = {
     val format = "dd_MM_yyyy"

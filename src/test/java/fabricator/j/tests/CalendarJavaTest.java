@@ -1,12 +1,10 @@
 package fabricator.j.tests;
 
+import fabricator.DateRange;
+import fabricator.enums.DateRangeType;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
 import static org.testng.Assert.assertEquals;
@@ -16,11 +14,18 @@ public class CalendarJavaTest extends JavaBaseTest {
 
 	@Test
 	public void testDatesRange() {
-		final List<String> yearRange = calendar.datesRangeJavaList(2001, 1, 1, 2010, 1, 1, "year", 1);
-		for (String year: yearRange) {
-		}
+		final List<String> yearRange = calendar.datesRange()
+				.startYear(2001)
+				.startMonth(1)
+				.startMonth(1)
+				.stepEvery(1, DateRangeType.YEARS)
+				.endYear(2010)
+				.endMonth(1)
+				.endDay(1)
+				.asJavaList();
+		assertEquals(9, yearRange.size());
 	}
-	
+
 	@Test
 	public void testJavaDaysRange() {
 		final List<String> daysRangeList = calendar.daysRangeAsJavaList(2010, 1, 1, 16, 1);
@@ -31,40 +36,32 @@ public class CalendarJavaTest extends JavaBaseTest {
 			assertTrue(nextDay - day == 1);
 		}
 	}
-	
-	@Test
-	public void testJavaDatesRangeWithJson() throws IOException {
-		String config = readFileContent();
-		final List<String> datesRangeList = calendar.datesRangeJavaList(config);
-		assertEquals(10, datesRangeList.size());
-	}
 
 	@DataProvider
 	public Object[][] datesRangeDP() {
 		return new Object[][]{
-				{ 2001, 1, 1, 2010, 1, 1, "year", 1, 9 },
-				{ 2001, 1, 1, 2010, 1, 1,"year", 2, 5 },
-				{ 2001, 1, 1, 2010, 1, 1,"month", 1, 108},
-				{ 2001, 1, 1, 2010, 1, 1,"month", 2, 54},
-				{ 2001, 1, 1, 2001, 10, 1,"day", 10, 28},
+				{ 2001, 1, 1, 2010, 1, 1, DateRangeType.YEARS, 1, 9 },
+				{ 2001, 1, 1, 2010, 1, 1,DateRangeType.YEARS, 2, 5 },
+				{ 2001, 1, 1, 2010, 1, 1, DateRangeType.MONTHS, 1, 108},
+				{ 2001, 1, 1, 2010, 1, 1,DateRangeType.MONTHS, 2, 54},
+				{ 2001, 1, 1, 2010, 1, 1,DateRangeType.WEEKS, 2, 235},
+				{ 2001, 1, 1, 2001, 10, 1,DateRangeType.DAYS, 10, 28},
+				{ 2001, 1, 1, 2001, 10, 1,DateRangeType.HOURS, 10, 651},
+				{ 2001, 1, 1, 2001, 10, 1,DateRangeType.MINUTES, 10, 39018},
 		};
 	}
 
-	
 	@Test(dataProvider = "datesRangeDP")
-	public void testDatesRange(int startYear, int startMonth, int startDay, int endYear, int endMonth, int endDay, String type, int step, int expectedSize) {
-		final List<String> datesRange = calendar.datesRangeJavaList(startYear, startMonth, startDay, endYear, endMonth, endDay, type, step);
+	public void testDatesRange(int startYear, int startMonth, int startDay, int endYear, int endMonth, int endDay, DateRangeType type, int step, int expectedSize) {
+		final List<String> datesRange = calendar.datesRange()
+												.startYear(startYear)
+												.startMonth(startMonth)
+												.startMonth(startDay)
+												.stepEvery(step, type)
+												.endYear(endYear)
+												.endMonth(endMonth)
+												.endDay(endDay)
+												.asJavaList();
 		assertEquals(expectedSize, datesRange.size());
 	}
-	
-	private String readFileContent() throws IOException {
-		String path = CalendarJavaTest.class.getResource("/"+ "javaDatesRangeJson.json").toString();
-		final List<String> strings = Files.readAllLines(Paths.get(path.substring(5, path.length())), Charset.defaultCharset());
-		StringBuilder builder = new StringBuilder();
-		for (String el: strings){
-			builder.append(el);
-		}
-		return builder.toString();
-	}
-	
 }
