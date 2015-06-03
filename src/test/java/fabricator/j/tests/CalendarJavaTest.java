@@ -1,6 +1,5 @@
 package fabricator.j.tests;
 
-import fabricator.DateRange;
 import fabricator.enums.DateRangeType;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -8,7 +7,6 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 public class CalendarJavaTest extends JavaBaseTest {
 
@@ -24,17 +22,6 @@ public class CalendarJavaTest extends JavaBaseTest {
 				.endDay(1)
 				.asJavaList();
 		assertEquals(9, yearRange.size());
-	}
-
-	@Test
-	public void testJavaDaysRange() {
-		final List<String> daysRangeList = calendar.daysRangeAsJavaList(2010, 1, 1, 16, 1);
-		for (int i = 0; i < daysRangeList.size()-1; i++) {
-			int day = Integer.valueOf(daysRangeList.get(i));
-			int nextDay = Integer.valueOf(daysRangeList.get(i+1));
-			assertTrue(day >= 1 && day <= 16);
-			assertTrue(nextDay - day == 1);
-		}
 	}
 
 	@DataProvider

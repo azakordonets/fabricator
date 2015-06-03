@@ -125,16 +125,6 @@ class CalendarTestSuite extends BaseTestSuite {
     }
   }
 
-  @Test(dataProvider = "dayExceptionDP")
-  def testDayRangeException(min: Int, max: Int) = {
-    try {
-      val dateRange = calendar.daysRange(2000, 2, 0, min, max)
-    } catch  {
-      case e: IllegalArgumentException => assertResult("min and max values should be in [1,31] range")(e.getMessage)
-
-    }
-  }
-
   @Test
   def testCustomDay() = {
     val year = calendar.year.toInt
@@ -144,14 +134,6 @@ class CalendarTestSuite extends BaseTestSuite {
     assert(day >= 10 && day <= 20)
   }
 
-  @Test
-  def testDayRange() = {
-    val daysRange = calendar.daysRange(calendar.year.toInt, calendar.month.toInt, 10, 20, 2)
-    for (i <- 0 to daysRange.length-2) assert(daysRange(i+1).toInt - daysRange(i).toInt == 2)
-    assertResult(10)(daysRange.head.toInt)
-    assertResult(20)(daysRange(daysRange.length-1).toInt)
-  }
-  
   @Test
   def testMonth() = {
     val monthNumber = calendar.month(asNumber = true)
