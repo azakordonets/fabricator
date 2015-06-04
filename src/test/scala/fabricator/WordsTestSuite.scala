@@ -36,14 +36,14 @@ class WordsTestSuite extends BaseTestSuite {
 
   @Test
   def testSentenceDefault() = {
-    var sentence = words.sentence
+    val sentence = words.sentence
     if (debugEnabled) logger.debug("Testing sentence generation. Creating sentence with 10 words lenght: \n" + sentence)
     assertResult(sentence.split(" ").length)(10)
   }
 
   @Test
   def testSentenceCustomLength() = {
-    var sentence = words.sentence(20)
+    val sentence = words.sentence(20)
     if (debugEnabled) logger.debug("Testing sentence generation. Creating sentence with 10 words lenght: \n" + sentence)
     assertResult(sentence.split(" ").length)(20)
   }
