@@ -1,6 +1,7 @@
 package fabricator
 
 import com.github.nscala_time.time.Imports._
+import fabricator.enums.DateFormat
 import org.joda.time.format.DateTimeFormatter
 
 import scala.util.Random
@@ -29,9 +30,9 @@ class Contact(private val utility: UtilityService,
     else firstName + " " + lastName
   }
 
-  def birthday(age: Int): String = DateTimeFormat.forPattern("dd-MM-yyyy").print(DateTime.now - age.years)
+  def birthday(age: Int): String = DateTimeFormat.forPattern(DateFormat.dd_MM_yyyy.getFormat).print(DateTime.now - age.years)
 
-  def birthday(age: Int, format: String): String = DateTimeFormat.forPattern(format).print(DateTime.now - age.years)
+  def birthday(age: Int, format: DateFormat): String = DateTimeFormat.forPattern(format.getFormat).print(DateTime.now - age.years)
 
   def eMail: String = {
     firstName.toLowerCase + "_" + lastName.toLowerCase + alpha.numerify("###") + "@" + utility

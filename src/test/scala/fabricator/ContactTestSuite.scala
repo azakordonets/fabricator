@@ -1,6 +1,7 @@
 package fabricator
 
 import com.github.nscala_time.time.Imports._
+import fabricator.enums.DateFormat
 import org.testng.annotations.{DataProvider, Test}
 
 class ContactTestSuite extends BaseTestSuite {
@@ -29,6 +30,18 @@ class ContactTestSuite extends BaseTestSuite {
   def testCustomConstructor()  {
     val customContact = fabricator.Contact("us")
     assert(customContact != null)
+  }
+
+  @Test
+  def testPrefix() = {
+    val prefix = contact.prefix
+    assert(prefixList.contains(prefix))
+  }
+
+  @Test
+  def testSuffix() = {
+    val suffix = contact.suffix
+    assert(suffixList.contains(suffix))
   }
   
   @Test
@@ -202,31 +215,31 @@ class ContactTestSuite extends BaseTestSuite {
 
   @DataProvider(name = "birthdayWithFormatsDP")
   def birthdayWithFormatsDP(): Array[Array[Any]] = {
-    Array(Array(21, "dd:mm:yyyy"),
-      Array(25, "mm:dd:yyyy"),
-      Array(40, "dd:mm:yyyy"),
-      Array(50, "dd:MM:yyyy"),
-      Array(30, "dd:MM:YYYY"),
-      Array(100, "dd/MM/YYYY"),
-      Array(0, "dd/MM/YY"),
-      Array(80, "dd-MM-yyyy"),
-      Array(23, "dd.MM.yyyy"),
-      Array(33, "dd.M.yyyy"),
-      Array(59, "dd-MM-yyyy HH"),
-      Array(30, "dd-MM-yyyy HH:mm"),
-      Array(20, "dd-MM-yyyy HH:mm:ss"),
-      Array(18, "dd-MM-yyyy H:m:s"),
-      Array(5, "dd-MM-yyyy H:m:s a")
+    Array(Array(21, DateFormat.dd_mm_yyyy_SEMICOLON),
+      Array(25, DateFormat.dd_mm_yyyy_SEMICOLON),
+      Array(40, DateFormat.dd_mm_yyyy_SEMICOLON),
+      Array(50, DateFormat.dd_MM_yyyy_SEMICOLON),
+      Array(30, DateFormat.dd_MM_YYYY_SEMICOLON),
+      Array(100, DateFormat.dd_MM_YYYY_BACKSLASH),
+      Array(0, DateFormat.dd_MM_YY_BACKSLASH),
+      Array(80, DateFormat.dd_MM_yyyy),
+      Array(23, DateFormat.dd_MM_yyyy_DOT),
+      Array(33, DateFormat.dd_M_yyyy_DOT),
+      Array(59, DateFormat.dd_MM_yyyy_HH),
+      Array(30, DateFormat.dd_MM_yyyy_HH_mm),
+      Array(20, DateFormat.dd_MM_yyyy_HH_mm_ss),
+      Array(18, DateFormat.dd_MM_yyyy_H_m_s),
+      Array(5, DateFormat.dd_MM_yyyy_H_m_s_a)
     )
   }
 
   @Test(dataProvider = "birthdayWithFormatsDP")
-  def testBirthDayWithFormat(age: Int, format: String) = {
+  def testBirthDayWithFormat(age: Int, format: DateFormat) = {
     if (debugEnabled) logger
       .debug("Checking when is the birthday of an " + age + " years old and format " + format + " . It's " + contact
       .birthday(age, format))
     val birthDate = contact.birthday(age, format)
-    val currentDay = DateTimeFormat.forPattern(format).print(DateTime.now - age.years)
+    val currentDay = DateTimeFormat.forPattern(format.getFormat).print(DateTime.now - age.years)
     assert(birthDate == currentDay)
   }
 

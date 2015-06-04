@@ -26,7 +26,7 @@ class CalendarTestSuite extends BaseTestSuite {
     Array(Array(dd_mm_yyyy_SEMICOLON, "\\d{2}:\\d{2}:\\d{4}"),
       Array(mm_dd_yyyy_SEMICOLON, "\\d{2}:\\d{2}:\\d{4}"),
       Array(dd_MM_yyyy_SEMICOLON, "\\d{2}:\\d{2}:\\d{4}"),
-      Array(dd_MM_YYYYY_SEMICOLON, "\\d{2}:\\d{2}:\\d{4}"),
+      Array(dd_MM_YYYY_SEMICOLON, "\\d{2}:\\d{2}:\\d{4}"),
       Array(dd_MM_YYYY_BACKSLASH, "\\d{2}/\\d{2}/\\d{4}"),
       Array(dd_MM_YY_BACKSLASH, "\\d{2}/\\d{2}/\\d{2}"),
       Array(dd_MM_yyyy, "\\d{2}-\\d{2}-\\d{4}"),
