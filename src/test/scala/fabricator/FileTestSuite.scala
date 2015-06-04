@@ -30,7 +30,7 @@ class FileTestSuite extends BaseTestSuite {
 
   @Test
   def testCsv() = {
-    val result = file.csv
+    val result = file.csv()
     val fileOnADrive: File = new File(csvFilePath)
     fileObject = fileOnADrive
     assert(fileObject.exists())

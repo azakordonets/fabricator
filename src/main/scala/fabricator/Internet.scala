@@ -53,7 +53,7 @@ class Internet(private val utility: UtilityService,
 
   def UUID: String = java.util.UUID.randomUUID.toString
 
-  def color: String = color("hex", false)
+  def color: String = color("hex", grayscale = false)
 
   def color(format: String, grayscale: Boolean) = {
     val color = if (grayscale) {

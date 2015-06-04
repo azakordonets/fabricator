@@ -28,7 +28,7 @@ class Words(private val utility: UtilityService, private val random: Random) {
       builder.append(wordsSequence(counter))
       counter += 1
     }
-    builder.toString
+    builder.toString()
   }
 
   def sentence(wordQuantity: Int): String = words(wordQuantity).mkString(" ") + ". "

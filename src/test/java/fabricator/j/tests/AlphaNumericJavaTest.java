@@ -10,6 +10,7 @@ import java.util.List;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+@SuppressWarnings("ALL")
 public class AlphaNumericJavaTest extends JavaBaseTest {
 
 	@DataProvider(name = "numerifyJavaDP")
