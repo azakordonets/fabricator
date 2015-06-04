@@ -1,6 +1,6 @@
 package fabricator.entities
 
-import fabricator.enums.DateRangeType
+import fabricator.enums.{DateFormat, DateRangeType}
 import org.joda.time.DateTime
 
 import scala.collection.JavaConverters._
@@ -32,7 +32,7 @@ class DateRange {
 
   private var stepValue: Int = 1
 
-  private var format: String = "dd-MM-yyyy"
+  private var format: DateFormat = DateFormat.dd_MM_yyyy
 
   def startYear(year: Int) : this.type = {
     this.startYear = year
@@ -83,7 +83,7 @@ class DateRange {
     this
   }
 
-  def format(format: String): this.type = {
+  def format(format: DateFormat): this.type = {
     this.format = format
     this
   }
@@ -95,15 +95,15 @@ class DateRange {
     var startDate = if (useStartDate) this.startDate else new DateTime(startYear, startMonth, startDay, 0, 0)
     val endDate = if(useEndDate) this.endDate else new DateTime(endYear, endMonth, endDay, 0, 0)
     var rangeList = ListBuffer[String]()
-    rangeList += startDate.toString(format)
+    rangeList += startDate.toString(format.getFormat)
     while(startDate.compareTo(endDate) == -1) {
       stepType match {
-        case DateRangeType.YEARS => startDate = startDate.plusYears(stepValue); if (startDate.compareTo(endDate) == -1) rangeList += startDate.toString(format)
-        case DateRangeType.MONTHS => startDate = startDate.plusMonths(stepValue);  if (startDate.compareTo(endDate) == -1) rangeList += startDate.toString(format)
-        case DateRangeType.DAYS => startDate = startDate.plusDays(stepValue);   if (startDate.compareTo(endDate) == -1) rangeList += startDate.toString(format)
-        case DateRangeType.WEEKS => startDate = startDate.plusWeeks(stepValue);   if (startDate.compareTo(endDate) == -1) rangeList += startDate.toString(format)
-        case DateRangeType.HOURS => startDate = startDate.plusHours(stepValue);   if (startDate.compareTo(endDate) == -1) rangeList += startDate.toString(format)
-        case DateRangeType.MINUTES => startDate = startDate.plusMinutes(stepValue);   if (startDate.compareTo(endDate) == -1) rangeList += startDate.toString(format)
+        case DateRangeType.YEARS => startDate = startDate.plusYears(stepValue); if (startDate.compareTo(endDate) == -1) rangeList += startDate.toString(format.getFormat)
+        case DateRangeType.MONTHS => startDate = startDate.plusMonths(stepValue);  if (startDate.compareTo(endDate) == -1) rangeList += startDate.toString(format.getFormat)
+        case DateRangeType.DAYS => startDate = startDate.plusDays(stepValue);   if (startDate.compareTo(endDate) == -1) rangeList += startDate.toString(format.getFormat)
+        case DateRangeType.WEEKS => startDate = startDate.plusWeeks(stepValue);   if (startDate.compareTo(endDate) == -1) rangeList += startDate.toString(format.getFormat)
+        case DateRangeType.HOURS => startDate = startDate.plusHours(stepValue);   if (startDate.compareTo(endDate) == -1) rangeList += startDate.toString(format.getFormat)
+        case DateRangeType.MINUTES => startDate = startDate.plusMinutes(stepValue);   if (startDate.compareTo(endDate) == -1) rangeList += startDate.toString(format.getFormat)
       }
     }
     rangeList
