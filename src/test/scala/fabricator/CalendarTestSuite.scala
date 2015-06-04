@@ -264,6 +264,32 @@ class CalendarTestSuite extends BaseTestSuite {
       case e: IllegalArgumentException => assertResult("Step should be > 0")(e.getMessage)
     }
   }
+
+  @Test
+  def testDateRangeWithCustomFormat() = {
+    val dateRange = calendar.datesRange
+      .startYear(2001)
+      .stepEvery(1, YEARS)
+      .endYear(2010)
+      .format(dd_MM_yy).asList
+    assertResult(9)(dateRange.length)
+    for (date <- dateRange) {
+      assert(date.matches("\\d{1,2}-\\d{1,2}-\\d{2}"))
+    }
+  }
+
+  @Test
+  def testDateRangeAsArray() = {
+    val dateRange = calendar.datesRange
+      .startYear(2001)
+      .stepEvery(1, YEARS)
+      .endYear(2010)
+      .format(dd_MM_yy).asArray()
+    assertResult(9)(dateRange.length)
+    for (date <- dateRange) {
+      assert(date.matches("\\d{1,2}-\\d{1,2}-\\d{2}"))
+    }
+  }
   
   @Test
   def testDateWithFormat() = {

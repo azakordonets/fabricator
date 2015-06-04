@@ -2,18 +2,6 @@ package fabricator
 
 import scala.util.Random
 
-//object Mobile {
-//
-//  def apply(): Mobile = {
-//    new Mobile(UtilityService(), new Random(), Alphanumeric())
-//  }
-//
-//  def apply(locale: String): Mobile = {
-//    new Mobile(UtilityService(locale), new Random(), Alphanumeric())
-//  }
-//
-//}
-
 case class Mobile(private val random: Random = new Random(),
              private val alpha: Alphanumeric = Alphanumeric()) {
 
