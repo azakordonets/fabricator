@@ -1,4 +1,4 @@
-package fabricator
+package fabricator.entities
 
 import fabricator.enums.DateRangeType
 import org.joda.time.DateTime

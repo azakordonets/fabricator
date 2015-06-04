@@ -59,7 +59,7 @@ class FileGenerator(private val alpha: Alphanumeric,
   }
 
 
-  def csv: Unit = {
+  def csv(): Unit = {
     val values = Array("first_name", "last_name", "birthday", "email", "phone", "address", "bsn", "weight", "height")
     // create temporary generatedFiles dir
     val dir: File = new File("generatedFiles")
@@ -81,7 +81,7 @@ class FileGenerator(private val alpha: Alphanumeric,
     for (i <- 0 to rows - 1) {
       writer.writeRow(seq)
     }
-    writer.close
+    writer.close()
   }
 
   def csvFromCodes(codes: Array[String], rows: Int, path: String): Unit = csvFromCodes(codes, rows, path, ',')
@@ -96,7 +96,7 @@ class FileGenerator(private val alpha: Alphanumeric,
       val generatedMap = codes.map(x => generateValue(x))
       writer.writeRow(generatedMap)
     }
-    writer.close
+    writer.close()
   }
 
 
@@ -107,7 +107,7 @@ class FileGenerator(private val alpha: Alphanumeric,
       case "hash" => alpha.hash
       case "guid" => alpha.guid
       case "time" => calendar.time24h
-      case "date" => calendar.date
+      case "date" => calendar.date.asString()
       case "name" => contact.fullName(setPrefix = false, setSuffix = false)
       case "first_name" => contact.firstName
       case "last_name" => contact.lastName

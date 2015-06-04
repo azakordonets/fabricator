@@ -14,7 +14,7 @@ class CalendarTestSuite extends BaseTestSuite {
 
   @Test
   def testDefaultDateGetter() = {
-    val date = calendar.date
+    val date = calendar.date.asString()
     if (debugEnabled) logger.debug("Checking default date value " + date)
     assert(date.matches("\\d{2}-\\d{2}-\\d{4}"))
   }
@@ -53,9 +53,27 @@ class CalendarTestSuite extends BaseTestSuite {
 
   @Test(dataProvider = "dateFormats")
   def testDateGetterWithDifferentFormats(format: DateFormat, regex: String) = {
-    val date = calendar.date(format)
+    val date = calendar.date.asString(format)
     if (debugEnabled) logger.debug("Checking date value with " + format + " format :" + date)
     assert(date.matches(regex))
+  }
+
+  @Test
+  def testDateGetterAsDate() = {
+    val year = calendar.year.toInt
+    val month = calendar.month.toInt
+    val day = calendar.day(year, month).toInt
+    val hour = calendar.hour12h.toInt
+    val minute = calendar.minute.toInt
+    val expectedDate = new DateTime(year, month, day, hour, minute)
+    val date = calendar.date
+      .inYear(year)
+      .inMonth(month)
+      .inDay(day)
+      .inHour(hour)
+      .inMinute(minute)
+      .asDate()
+    assertResult(expectedDate)(date)
   }
 
 
@@ -173,7 +191,13 @@ class CalendarTestSuite extends BaseTestSuite {
 
   @Test(dataProvider = "dateDP")
   def testDate(year: Int, month: Int, day: Int, hour: Int, minute: Int, expectedResult: String) = {
-    val date = calendar.date(year, month, day, hour, minute)
+    val date = calendar.date
+                        .inYear(year)
+                        .inMonth(month)
+                        .inDay(day)
+                        .inHour(hour)
+                        .inMinute(minute)
+                        .asString(DateFormat.dd_MM_yyyy_HH_mm)
     if (debugEnabled) logger.debug("Testing random date: " + date)
     assert(date.equals(expectedResult))
   }
@@ -230,27 +254,14 @@ class CalendarTestSuite extends BaseTestSuite {
     val day = calendar.day(year, month).toInt
     val hour = calendar.hour12h.toInt
     val minute = calendar.minute.toInt
-    val date = calendar.date(year, month, day, hour, minute, format)
+    val date = calendar.date
+                        .inYear(year)
+                        .inMonth(month)
+                        .inDay(day)
+                        .inHour(hour)
+                        .inMinute(minute)
+                        .asString(format)
     assertResult(new DateTime(year, month, day, hour, minute).toString(format.getFormat))(date)
-  }
-
-
-  @Test
-  def testDateObject() = {
-    val dateObject = calendar.dateObject
-    assert(dateObject.isInstanceOf[DateTime])
-    val year = dateObject.year().get()
-    val month = dateObject.monthOfYear().get()
-    val day = dateObject.dayOfMonth().get()
-    val hour = dateObject.hourOfDay().get()
-    val minute = dateObject.minuteOfHour().get()
-    val second = dateObject.secondOfMinute().get()
-    assert(year >= 1970 && year <= 2015)
-    assert(month >= 0 && month <= 12)
-    assert(day >= 0 && day <= 31)
-    assert(hour >= 0 && hour <= 24)
-    assert(minute >= 0 && minute <= 60)
-    assert(second >= 0 && second <= 60)
   }
 
   @DataProvider

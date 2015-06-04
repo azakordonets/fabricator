@@ -1,5 +1,6 @@
 package fabricator
 
+import fabricator.entities.{RandomDate, DateRange}
 import fabricator.enums.DateFormat
 import org.joda.time.{DateTime, IllegalFieldValueException}
 
@@ -40,28 +41,11 @@ class Calendar(private val utility: UtilityService,
     result
   }
 
-  private def isValidDay(year: Int, month: Int, day: Int) : Boolean = {
-    try {
-      new DateTime(year, month, day, 0, 0)
-      true
-    }catch {
-      case e: IllegalFieldValueException => false
-    }
-  }
-
   def time24h: String = hour24h + ":" + minute
 
   def time12h: String = hour12h + ":" + minute
 
-  def date: String = date(DateFormat.dd_MM_yyyy)
-
-  def date(format: DateFormat): String = {
-    val randomYear = year.toInt
-    val randomMonth = month.toInt
-    new DateTime(randomYear, randomMonth, day(randomYear, randomMonth).toInt, hour24h.toInt, minute.toInt, second.toInt).toString(format.getFormat)
-  }
-
-  def dateObject: DateTime = new DateTime(year.toInt, month.toInt, 1, hour24h.toInt, minute.toInt, second.toInt).plusDays(alpha.getInteger(1, 31))
+  def date: RandomDate = new RandomDate
 
   def second: String = alpha.getInteger(0, 59).toString
 
@@ -80,23 +64,7 @@ class Calendar(private val utility: UtilityService,
 
   def year: String = alpha.getInteger(1970, 2015).toString
 
-  def date(year: Int, month: Int, day: Int, hour: Int, minute: Int): String = {
-    var date = ""
-    try {
-      while (date.equals("")) {
-        date = new DateTime(year, month, day, hour, minute).toString(DateFormat.dd_MM_yyyy_HH_mm.getFormat)
-      }
-    } catch {
-      case e: IllegalFieldValueException => return this.date(year, month, day - 1, hour, minute)
-    }
-    date
-  }
-
   def datesRange: DateRange = new DateRange
-
-  def date(year: Int, month: Int, day: Int, hour: Int, minute: Int, defFormat: DateFormat): String = {
-    new DateTime(year, month, day, hour, minute).toString(defFormat.getFormat)
-  }
 
   def dateRelative(years: Int, months: Int, weeks: Int, days: Int, hours: Int, minutes: Int): String = {
     dateRelative(years, months, weeks, days, hours, minutes, DateFormat.dd_MM_yyyy_HH_mm)
