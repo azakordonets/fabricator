@@ -1,7 +1,6 @@
 package fabricator
 
-import fabricator.entities.{RandomDate, DateRange}
-import fabricator.enums.DateFormat
+import fabricator.entities.{DateRange, RandomDate, RelativeDate}
 import org.joda.time.{DateTime, IllegalFieldValueException}
 
 import scala.util.Random
@@ -66,54 +65,6 @@ class Calendar(private val utility: UtilityService,
 
   def datesRange: DateRange = new DateRange
 
-  def dateRelative(years: Int, months: Int, weeks: Int, days: Int, hours: Int, minutes: Int): String = {
-    dateRelative(years, months, weeks, days, hours, minutes, DateFormat.dd_MM_yyyy_HH_mm)
-  }
-
-  def dateRelative(years: Int, months: Int, weeks: Int, days: Int, hours: Int, minutes: Int, format: DateFormat): String = {
-    dateRelative(DateTime.now, years, months, weeks, days, hours, minutes, format)
-  }
-
-  def dateRelative(date: DateTime, years: Int, months: Int, weeks: Int, days: Int, hours: Int, minutes: Int, format: DateFormat): String = {
-    var finalDate = date
-    if (years > 0) {
-      finalDate = finalDate.plusYears(years)
-    }
-    if (years < 0) {
-      finalDate = finalDate.minusYears(Math.abs(years))
-    }
-    if (months > 0) {
-      finalDate = finalDate.plusMonths(months)
-    }
-    if (months < 0) {
-      finalDate = finalDate.minusMonths(Math.abs(months))
-    }
-    if (weeks > 0) {
-      finalDate = finalDate.plusWeeks(weeks)
-    }
-    if (weeks < 0) {
-      finalDate = finalDate.minusWeeks(Math.abs(weeks))
-    }
-    if (days > 0) {
-      finalDate = finalDate.plusDays(days)
-    }
-    if (days < 0) {
-      finalDate = finalDate.minusDays(Math.abs(days))
-    }
-    if (hours > 0) {
-      finalDate = finalDate.plusHours(hours)
-    }
-    if (hours < 0) {
-      finalDate = finalDate.minusHours(Math.abs(hours))
-    }
-    if (minutes > 0) {
-      finalDate = finalDate.plusMinutes(minutes)
-    }
-    if (minutes < 0) {
-      finalDate = finalDate.minusMinutes(Math.abs(minutes))
-    }
-    finalDate.toString(format.getFormat)
-  }
-
+  def relativeDate: RelativeDate = new RelativeDate
 
 }

@@ -339,15 +339,15 @@ class CalendarTestSuite extends BaseTestSuite {
 
   @Test(dataProvider = "dateWithPeriodDP")
   def testDateWithPeriod(year: Int, month: Int, week: Int, day: Int, hour: Int, minute: Int, format: DateFormat, expectedDate: String) = {
-    val date = calendar.dateRelative(year, month, week, day, hour, minute, format)
+    val date = calendar.relativeDate.years(year).months(month).weeks(week).days(day).hours(hour).minutes(minute).asString(format)
     if (debugEnabled) logger.debug("Testing random date with dateWithPeriod method: " + date)
     assertResult(expectedDate)(date)
   }
 
   @Test
   def testDateWithPeriodWithDefaultFormat() = {
-    val date = calendar.dateRelative(0, 0, 0, 0, 0, 0)
-    assertResult(DateTime.now.toString("dd-MM-yyyy HH:mm"))(date)
+    val date = calendar.relativeDate.asString()
+    assertResult(DateTime.now.toString(DateFormat.dd_MM_yyyy.getFormat))(date)
   }
 
 }

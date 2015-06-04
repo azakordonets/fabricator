@@ -3,31 +3,14 @@ package fabricator.entities
 import fabricator.enums.DateFormat
 import org.joda.time.{DateTime, DateTimeZone}
 
-class RelativeDate {
-  
-  private var timeZone: DateTimeZone = null
+class RelativeDate(private val initialDate: DateTime = DateTime.now()) {
 
-  private var date: DateTime = null
-  
-  def apply() = {
-    this.timeZone = DateTimeZone.getDefault
-    this.date = DateTime.now(timeZone)
-  }
-  
-  def apply(initialDate: DateTime) = {
-    this.date = date
-    this.timeZone = DateTimeZone.getDefault
+  def this(timeZone: DateTimeZone) {
+    this(DateTime.now(timeZone))
   }
 
-  def apply(timeZone: DateTimeZone) = {
-    this.timeZone = timeZone
-    this.date = DateTime.now(timeZone)
-  }
+  private var date = initialDate
 
-  def apply(initialDate: DateTime, timeZone: DateTimeZone) = {
-    this.date = initialDate
-    this.timeZone = timeZone
-  }
 
   def tomorrow() : this.type = {
     date = date.plusDays(1)
@@ -40,64 +23,64 @@ class RelativeDate {
   }
 
   def years(years: Int): this.type = {
-    if (years > 0 ) {
-      date = date.plusYears(years)
-    } else {
-      date = date.minusYears(years)
+    years match {
+      case `years` if years > 0 => date = date.plusYears(years)
+      case `years` if years < 0 => date = date.minusYears(Math.abs(years))
+      case _ => // skip
     }
     this
   }
 
   def months(months: Int): this.type = {
-    if (months > 0 ) {
-      date = date.plusMonths(months)
-    } else {
-      date = date.minusMonths(months)
+    months match {
+      case `months` if months > 0 => date = date.plusMonths(months)
+      case `months` if months < 0 => date = date.minusMonths(Math.abs(months))
+      case _ => // skip
     }
     this
   }
 
   def weeks(weeks: Int): this.type = {
-    if (weeks > 0 ) {
-      date = date.plusWeeks(weeks)
-    } else {
-      date = date.minusWeeks(weeks)
+    weeks match {
+      case `weeks` if weeks > 0 => date = date.plusWeeks(weeks)
+      case `weeks` if weeks < 0 => date = date.minusWeeks(Math.abs(weeks))
+      case _ => // skip
     }
     this
   }
 
   def days(days: Int): this.type = {
-    if (days > 0 ) {
-      date = date.plusDays(days)
-    } else {
-      date = date.minusDays(days)
+    days match {
+      case `days` if days > 0 => date = date.plusDays(days)
+      case `days` if days < 0 => date = date.minusDays(Math.abs(days))
+      case _ => // skip
     }
     this
   }
 
   def hours(hours: Int): this.type = {
-    if (hours > 0 ) {
-      date = date.plusHours(hours)
-    } else {
-      date = date.minusHours(hours)
+    hours match {
+      case `hours` if hours > 0 => date = date.plusHours(hours)
+      case `hours` if hours < 0 => date = date.minusHours(Math.abs(hours))
+      case _ => // skip
     }
     this
   }
 
   def minutes(minutes: Int): this.type = {
-    if (minutes > 0 ) {
-      date = date.plusMinutes(minutes)
-    } else {
-      date = date.minusMinutes(minutes)
+    minutes match {
+      case `minutes` if minutes > 0 => date = date.plusMinutes(minutes)
+      case `minutes` if minutes < 0 => date = date.minusMinutes(Math.abs(minutes))
+      case _ => // skip
     }
     this
   }
 
   def seconds(seconds: Int): this.type = {
-    if (seconds > 0 ) {
-      date = date.plusSeconds(seconds)
-    } else {
-      date = date.minusMinutes(seconds)
+    seconds match {
+      case `seconds` if seconds > 0 => date = date.plusSeconds(seconds)
+      case `seconds` if seconds < 0 => date = date.minusSeconds(Math.abs(seconds))
+      case _ => // skip
     }
     this
   }
