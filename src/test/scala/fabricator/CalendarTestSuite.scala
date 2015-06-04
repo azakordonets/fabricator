@@ -1,7 +1,7 @@
 package fabricator
 
 import com.github.nscala_time.time.Imports._
-import fabricator.enums.DateRangeType
+import fabricator.enums.{DateFormat, DateRangeType}
 import org.testng.annotations.{DataProvider, Test}
 
 class CalendarTestSuite extends BaseTestSuite {
@@ -21,26 +21,38 @@ class CalendarTestSuite extends BaseTestSuite {
 
   @DataProvider(name = "dateFormats")
   def dateFormats() = {
-    Array(Array("dd:mm:yyyy", "\\d{2}:\\d{2}:\\d{4}"),
-      Array("mm:dd:yyyy", "\\d{2}:\\d{2}:\\d{4}"),
-      Array("dd:mm:yyyy", "\\d{2}:\\d{2}:\\d{4}"),
-      Array("dd:MM:yyyy", "\\d{2}:\\d{2}:\\d{4}"),
-      Array("dd:MM:YYYY", "\\d{2}:\\d{2}:\\d{4}"),
-      Array("dd/MM/YYYY", "\\d{2}/\\d{2}/\\d{4}"),
-      Array("dd/MM/YY", "\\d{2}/\\d{2}/\\d{2}"),
-      Array("dd-MM-yyyy", "\\d{2}-\\d{2}-\\d{4}"),
-      Array("dd.MM.yyyy", "\\d{2}\\.\\d{2}\\.\\d{4}"),
-      Array("dd.M.yyyy", "\\d{2}\\.\\d{1,2}\\.\\d{4}"),
-      Array("dd-MM-yyyy HH", "\\d{2}-\\d{2}-\\d{4} \\d{2}"),
-      Array("dd-MM-yyyy HH:mm", "\\d{2}-\\d{2}-\\d{4} \\d{2}:\\d{2}"),
-      Array("dd-MM-yyyy HH:mm:ss", "\\d{2}-\\d{2}-\\d{4} \\d{2}:\\d{2}:\\d{2}"),
-      Array("dd-MM-yyyy H:m:s", "\\d{1,2}-\\d{1,2}-\\d{4} \\d{1,2}:\\d{1,2}:\\d{1,2}"),
-      Array("dd-MM-yyyy H:m:s a", "\\d{1,2}-\\d{1,2}-\\d{4} \\d{1,2}:\\d{1,2}:\\d{1,2} \\w{2}")
+    Array(Array(DateFormat.dd_mm_yyyy_SEMICOLON, "\\d{2}:\\d{2}:\\d{4}"),
+      Array(DateFormat.mm_dd_yyyy_SEMICOLON, "\\d{2}:\\d{2}:\\d{4}"),
+      Array(DateFormat.dd_MM_yyyy_SEMICOLON, "\\d{2}:\\d{2}:\\d{4}"),
+      Array(DateFormat.dd_MM_YYYYY_SEMICOLON, "\\d{2}:\\d{2}:\\d{4}"),
+      Array(DateFormat.dd_MM_YYYY_BACKSLASH, "\\d{2}/\\d{2}/\\d{4}"),
+      Array(DateFormat.dd_MM_YY_BACKSLASH, "\\d{2}/\\d{2}/\\d{2}"),
+      Array(DateFormat.dd_MM_yyyy, "\\d{2}-\\d{2}-\\d{4}"),
+      Array(DateFormat.dd_MM_yyyy_DOT, "\\d{2}\\.\\d{2}\\.\\d{4}"),
+      Array(DateFormat.dd_M_yyyy_DOT, "\\d{2}\\.\\d{1,2}\\.\\d{4}"),
+      Array(DateFormat.dd_MM_yyyy_HH, "\\d{2}-\\d{2}-\\d{4} \\d{2}"),
+      Array(DateFormat.dd_MM_yyyy_HH_mm, "\\d{2}-\\d{2}-\\d{4} \\d{2}:\\d{2}"),
+      Array(DateFormat.dd_MM_yyyy_HH_mm_ss, "\\d{2}-\\d{2}-\\d{4} \\d{2}:\\d{2}:\\d{2}"),
+      Array(DateFormat.dd_MM_yyyy_H_m_s, "\\d{1,2}-\\d{1,2}-\\d{4} \\d{1,2}:\\d{1,2}:\\d{1,2}"),
+      Array(DateFormat.dd_MM_yyyy_H_m_s_a, "\\d{1,2}-\\d{1,2}-\\d{4} \\d{1,2}:\\d{1,2}:\\d{1,2} \\w{2}"),
+      Array(DateFormat.dd_MM_yy_HH_mm, "\\d{1,2}-\\d{1,2}-\\d{2} \\d{1,2}:\\d{1,2}"),
+      Array(DateFormat.yyMMdd, "\\d{1,6}"),
+      Array(DateFormat.yyyyMMdd, "\\d{1,8}"),
+      Array(DateFormat.yyyyMMddHHmm, "\\d{1,12}"),
+      Array(DateFormat.yyyy_MM_dd, "\\d{4}-\\d{1,2}-\\d{1,2}"),
+      Array(DateFormat.MM_yyyy, "\\d{1,2}-\\d{4}"),
+      Array(DateFormat.MM_yy, "\\d{1,2}-\\d{1,2}"),
+      Array(DateFormat.HH_mm, "\\d{1,2}:\\d{1,2}"),
+      Array(DateFormat.dd_MMMM_yyyy_SPACE, "\\d{1,2} \\w{1,10} \\d{4}"),
+      Array(DateFormat.d_MMM_SPACE, "\\d{1,2} \\w{1,12}"),
+      Array(DateFormat.dd_MM_yy, "\\d{1,2}-\\d{1,2}-\\d{2}"),
+      Array(DateFormat.dd_MM, "\\d{1,2}-\\w{1,2}"),
+      Array(DateFormat.dd, "\\d{1,2}")
     )
   }
 
   @Test(dataProvider = "dateFormats")
-  def testDateGetterWithDifferentFormats(format: String, regex: String) = {
+  def testDateGetterWithDifferentFormats(format: DateFormat, regex: String) = {
     val date = calendar.date(format)
     if (debugEnabled) logger.debug("Checking date value with " + format + " format :" + date)
     assert(date.matches(regex))
@@ -153,10 +165,10 @@ class CalendarTestSuite extends BaseTestSuite {
 
   @DataProvider
   def dateDP():Array[Array[Any]] = {
-    Array(Array(2014, 2, 30, 0, 0, "28-02-2014 12:00"),
-      Array(1000, 2, 30, 0, 0, "28-02-1000 12:00"),
+    Array(Array(2014, 2, 30, 0, 0, "28-02-2014 00:00"),
+      Array(1000, 2, 30, 0, 0, "28-02-1000 00:00"),
       Array(1980, 1, 50, 12, 30, "31-01-1980 12:30"),
-      Array(2250, 2, 30, 0, 0, "28-02-2250 12:00"))
+      Array(2250, 2, 30, 0, 0, "28-02-2250 00:00"))
   }
 
   @Test(dataProvider = "dateDP")
@@ -212,14 +224,14 @@ class CalendarTestSuite extends BaseTestSuite {
   
   @Test
   def testDateWithFormat() = {
-    val format = "dd_MM_yyyy"
+    val format = DateFormat.dd_MM_yyyy
     val year = calendar.year.toInt
     val month = calendar.month.toInt
     val day = calendar.day(year, month).toInt
     val hour = calendar.hour12h.toInt
     val minute = calendar.minute.toInt
     val date = calendar.date(year, month, day, hour, minute, format)
-    assertResult(new DateTime(year, month, day, hour, minute).toString(format))(date)
+    assertResult(new DateTime(year, month, day, hour, minute).toString(format.getFormat))(date)
   }
 
 
@@ -243,34 +255,34 @@ class CalendarTestSuite extends BaseTestSuite {
 
   @DataProvider
   def dateWithPeriodDP():Array[Array[Any]] = {
-    Array(Array(0, 0, 0, 0, 0, 0, "dd:MM:yyyy", DateTime.now.toString("dd:MM:yyyy")),
-      Array(1, 0, 0, 0, 0, 0, "dd:MM:yyyy", DateTime.now.plusYears(1).toString("dd:MM:yyyy")),
-      Array(-1, 0, 0, 0, 0, 0, "dd:MM:yyyy", DateTime.now.minusYears(1).toString("dd:MM:yyyy")),
-      Array(0, 1, 0, 0, 0, 0, "dd:MM:yyyy", DateTime.now.plusMonths(1).toString("dd:MM:yyyy")),
-      Array(0, -1, 0, 0, 0, 0, "dd:MM:yyyy", DateTime.now.minusMonths(1).toString("dd:MM:yyyy")),
-      Array(0, 0, 1, 0, 0, 0, "dd-MM-yyyy", DateTime.now.plusWeeks(1).toString("dd-MM-yyyy")),
-      Array(0, 0, -1, 0, 0, 0, "dd:MM:yyyy", DateTime.now.minusWeeks(1).toString("dd:MM:yyyy")),
-      Array(0, 0, 0, 1, 0, 0, "dd:MM:yyyy", DateTime.now.plusDays(1).toString("dd:MM:yyyy")),
-      Array(0, 0, 0, -1, 0, 0, "dd:MM:yyyy", DateTime.now.minusDays(1).toString("dd:MM:yyyy")),
-      Array(0, 0, 0, 0, 1, 0, "dd:MM:yyyy", DateTime.now.plusHours(1).toString("dd:MM:yyyy")),
-      Array(0, 0, 0, 0, -1, 0, "dd:MM:yyyy", DateTime.now.minusHours(1).toString("dd:MM:yyyy")),
-      Array(0, 0, 0, 0, 0, 1, "dd:MM:yyyy", DateTime.now.plusMinutes(1).toString("dd:MM:yyyy")),
-      Array(0, 0, 0, 0, 0, -1, "dd:MM:yyyy", DateTime.now.minusMinutes(1).toString("dd:MM:yyyy")),
-      Array(1, 1, 0, 0, 0, 0, "dd:MM:yyyy", DateTime.now.plusYears(1).plusMonths(1).toString("dd:MM:yyyy")),
-      Array(-1, -1, 0, 0, 0, 0, "dd:MM:yyyy", DateTime.now.minusYears(1).minusMonths(1).toString("dd:MM:yyyy")),
-      Array(3, 3, 3, 0, 0, 0, "dd:MM:yyyy", DateTime.now.plusYears(3).plusMonths(3).plusWeeks(3).toString("dd:MM:yyyy")),
-      Array(-1, -1, -1, 0, 0, 0, "dd:MM:yyyy", DateTime.now.minusYears(1).minusMonths(1).minusWeeks(1).toString("dd:MM:yyyy")),
-      Array(1, 1, 1, 1, 0, 0, "dd:MM:yyyy", DateTime.now.plusYears(1).plusMonths(1).plusWeeks(1).plusDays(1).toString("dd:MM:yyyy")),
-      Array(-5, -5, -5, -5, 0, 0, "dd:MM:yyyy", DateTime.now.minusYears(5).minusMonths(5).minusWeeks(5).minusDays(5).toString("dd:MM:yyyy")),
-      Array(1, 1, 1, 1, 1, 0, "dd:MM:yyyy HH", DateTime.now.plusYears(1).plusMonths(1).plusWeeks(1).plusDays(1).plusHours(1).toString("dd:MM:yyyy HH")),
-      Array(-1, -1, -1, -1, -1, 0, "dd:MM:yyyy HH", DateTime.now.minusYears(1).minusMonths(1).minusWeeks(1).minusDays(1).minusHours(1).toString("dd:MM:yyyy HH")),
-      Array(10, 10, 10, 10, 10, 10, "dd:MM:yyyy HH", DateTime.now.plusYears(10).plusMonths(10).plusWeeks(10).plusDays(10).plusHours(10).plusMinutes(10).toString("dd:MM:yyyy HH")),
-      Array(-100, -100, -100, -100, -100, -100, "dd:MM:yyyy HH", DateTime.now.minusYears(100).minusMonths(100).minusWeeks(100).minusDays(100).minusHours(100).minusMinutes(100).toString("dd:MM:yyyy HH"))
+    Array(Array(0, 0, 0, 0, 0, 0, DateFormat.dd_MM_yyyy_SEMICOLON, DateTime.now.toString(DateFormat.dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(1, 0, 0, 0, 0, 0, DateFormat.dd_MM_yyyy_SEMICOLON, DateTime.now.plusYears(1).toString(DateFormat.dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(-1, 0, 0, 0, 0, 0, DateFormat.dd_MM_yyyy_SEMICOLON, DateTime.now.minusYears(1).toString(DateFormat.dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(0, 1, 0, 0, 0, 0, DateFormat.dd_MM_yyyy_SEMICOLON, DateTime.now.plusMonths(1).toString(DateFormat.dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(0, -1, 0, 0, 0, 0, DateFormat.dd_MM_yyyy_SEMICOLON, DateTime.now.minusMonths(1).toString(DateFormat.dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(0, 0, 1, 0, 0, 0, DateFormat.dd_MM_yyyy, DateTime.now.plusWeeks(1).toString(DateFormat.dd_MM_yyyy.getFormat)),
+      Array(0, 0, -1, 0, 0, 0, DateFormat.dd_MM_yyyy_SEMICOLON, DateTime.now.minusWeeks(1).toString(DateFormat.dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(0, 0, 0, 1, 0, 0, DateFormat.dd_MM_yyyy_SEMICOLON, DateTime.now.plusDays(1).toString(DateFormat.dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(0, 0, 0, -1, 0, 0, DateFormat.dd_MM_yyyy_SEMICOLON, DateTime.now.minusDays(1).toString(DateFormat.dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(0, 0, 0, 0, 1, 0, DateFormat.dd_MM_yyyy_SEMICOLON, DateTime.now.plusHours(1).toString(DateFormat.dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(0, 0, 0, 0, -1, 0, DateFormat.dd_MM_yyyy_SEMICOLON, DateTime.now.minusHours(1).toString(DateFormat.dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(0, 0, 0, 0, 0, 1, DateFormat.dd_MM_yyyy_SEMICOLON, DateTime.now.plusMinutes(1).toString(DateFormat.dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(0, 0, 0, 0, 0, -1, DateFormat.dd_MM_yyyy_SEMICOLON, DateTime.now.minusMinutes(1).toString(DateFormat.dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(1, 1, 0, 0, 0, 0, DateFormat.dd_MM_yyyy_SEMICOLON, DateTime.now.plusYears(1).plusMonths(1).toString(DateFormat.dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(-1, -1, 0, 0, 0, 0, DateFormat.dd_MM_yyyy_SEMICOLON, DateTime.now.minusYears(1).minusMonths(1).toString(DateFormat.dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(3, 3, 3, 0, 0, 0, DateFormat.dd_MM_yyyy_SEMICOLON, DateTime.now.plusYears(3).plusMonths(3).plusWeeks(3).toString(DateFormat.dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(-1, -1, -1, 0, 0, 0, DateFormat.dd_MM_yyyy_SEMICOLON, DateTime.now.minusYears(1).minusMonths(1).minusWeeks(1).toString(DateFormat.dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(1, 1, 1, 1, 0, 0, DateFormat.dd_MM_yyyy_SEMICOLON, DateTime.now.plusYears(1).plusMonths(1).plusWeeks(1).plusDays(1).toString(DateFormat.dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(-5, -5, -5, -5, 0, 0, DateFormat.dd_MM_yyyy_SEMICOLON, DateTime.now.minusYears(5).minusMonths(5).minusWeeks(5).minusDays(5).toString(DateFormat.dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(1, 1, 1, 1, 1, 0, DateFormat.dd_MM_yyyy_HH_SEMICOLON, DateTime.now.plusYears(1).plusMonths(1).plusWeeks(1).plusDays(1).plusHours(1).toString(DateFormat.dd_MM_yyyy_HH_SEMICOLON.getFormat)),
+      Array(-1, -1, -1, -1, -1, 0, DateFormat.dd_MM_yyyy_HH_SEMICOLON, DateTime.now.minusYears(1).minusMonths(1).minusWeeks(1).minusDays(1).minusHours(1).toString(DateFormat.dd_MM_yyyy_HH_SEMICOLON.getFormat)),
+      Array(10, 10, 10, 10, 10, 10, DateFormat.dd_MM_yyyy_HH_SEMICOLON, DateTime.now.plusYears(10).plusMonths(10).plusWeeks(10).plusDays(10).plusHours(10).plusMinutes(10).toString(DateFormat.dd_MM_yyyy_HH_SEMICOLON.getFormat)),
+      Array(-100, -100, -100, -100, -100, -100, DateFormat.dd_MM_yyyy_HH_SEMICOLON, DateTime.now.minusYears(100).minusMonths(100).minusWeeks(100).minusDays(100).minusHours(100).minusMinutes(100).toString(DateFormat.dd_MM_yyyy_HH_SEMICOLON.getFormat))
     )
   }
 
   @Test(dataProvider = "dateWithPeriodDP")
-  def testDateWithPeriod(year: Int, month: Int, week: Int, day: Int, hour: Int, minute: Int, format: String, expectedDate: String) = {
+  def testDateWithPeriod(year: Int, month: Int, week: Int, day: Int, hour: Int, minute: Int, format: DateFormat, expectedDate: String) = {
     val date = calendar.dateRelative(year, month, week, day, hour, minute, format)
     if (debugEnabled) logger.debug("Testing random date with dateWithPeriod method: " + date)
     assertResult(expectedDate)(date)
@@ -279,7 +291,7 @@ class CalendarTestSuite extends BaseTestSuite {
   @Test
   def testDateWithPeriodWithDefaultFormat() = {
     val date = calendar.dateRelative(0, 0, 0, 0, 0, 0)
-    assertResult(DateTime.now.toString("dd-MM-yyyy hh:mm"))(date)
+    assertResult(DateTime.now.toString("dd-MM-yyyy HH:mm"))(date)
   }
 
 }

@@ -1,5 +1,6 @@
 package fabricator
 
+import fabricator.enums.DateFormat
 import org.joda.time.{DateTime, IllegalFieldValueException}
 
 import scala.util.Random
@@ -52,12 +53,12 @@ class Calendar(private val utility: UtilityService,
 
   def time12h: String = hour12h + ":" + minute
 
-  def date: String = date("dd-MM-yyyy")
+  def date: String = date(DateFormat.dd_MM_yyyy)
 
-  def date(format: String): String = {
+  def date(format: DateFormat): String = {
     val randomYear = year.toInt
     val randomMonth = month.toInt
-    new DateTime(randomYear, randomMonth, day(randomYear, randomMonth).toInt, hour24h.toInt, minute.toInt, second.toInt).toString(format)
+    new DateTime(randomYear, randomMonth, day(randomYear, randomMonth).toInt, hour24h.toInt, minute.toInt, second.toInt).toString(format.getFormat)
   }
 
   def dateObject: DateTime = new DateTime(year.toInt, month.toInt, 1, hour24h.toInt, minute.toInt, second.toInt).plusDays(alpha.getInteger(1, 31))
@@ -83,7 +84,7 @@ class Calendar(private val utility: UtilityService,
     var date = ""
     try {
       while (date.equals("")) {
-        date = new DateTime(year, month, day, hour, minute).toString("dd-MM-yyyy hh:mm")
+        date = new DateTime(year, month, day, hour, minute).toString(DateFormat.dd_MM_yyyy_HH_mm.getFormat)
       }
     } catch {
       case e: IllegalFieldValueException => return this.date(year, month, day - 1, hour, minute)
@@ -93,19 +94,19 @@ class Calendar(private val utility: UtilityService,
 
   def datesRange: DateRange = new DateRange
 
-  def date(year: Int, month: Int, day: Int, hour: Int, minute: Int, defFormat: String): String = {
-    new DateTime(year, month, day, hour, minute).toString(defFormat)
+  def date(year: Int, month: Int, day: Int, hour: Int, minute: Int, defFormat: DateFormat): String = {
+    new DateTime(year, month, day, hour, minute).toString(defFormat.getFormat)
   }
 
   def dateRelative(years: Int, months: Int, weeks: Int, days: Int, hours: Int, minutes: Int): String = {
-    dateRelative(years, months, weeks, days, hours, minutes, "dd-MM-yyyy hh:mm")
+    dateRelative(years, months, weeks, days, hours, minutes, DateFormat.dd_MM_yyyy_HH_mm)
   }
 
-  def dateRelative(years: Int, months: Int, weeks: Int, days: Int, hours: Int, minutes: Int, format: String): String = {
+  def dateRelative(years: Int, months: Int, weeks: Int, days: Int, hours: Int, minutes: Int, format: DateFormat): String = {
     dateRelative(DateTime.now, years, months, weeks, days, hours, minutes, format)
   }
 
-  def dateRelative(date: DateTime, years: Int, months: Int, weeks: Int, days: Int, hours: Int, minutes: Int, format: String): String = {
+  def dateRelative(date: DateTime, years: Int, months: Int, weeks: Int, days: Int, hours: Int, minutes: Int, format: DateFormat): String = {
     var finalDate = date
     if (years > 0) {
       finalDate = finalDate.plusYears(years)
@@ -143,7 +144,7 @@ class Calendar(private val utility: UtilityService,
     if (minutes < 0) {
       finalDate = finalDate.minusMinutes(Math.abs(minutes))
     }
-    finalDate.toString(format)
+    finalDate.toString(format.getFormat)
   }
 
 

@@ -32,9 +32,9 @@ public class CalendarJavaTest extends JavaBaseTest {
 				{ 2001, 1, 1, 2010, 1, 1, DateRangeType.MONTHS, 1, 108},
 				{ 2001, 1, 1, 2010, 1, 1,DateRangeType.MONTHS, 2, 54},
 				{ 2001, 1, 1, 2010, 1, 1,DateRangeType.WEEKS, 2, 235},
-				{ 2001, 1, 1, 2001, 10, 1,DateRangeType.DAYS, 10, 28},
-				{ 2001, 1, 1, 2001, 10, 1,DateRangeType.HOURS, 10, 651},
-				{ 2001, 1, 1, 2001, 10, 1,DateRangeType.MINUTES, 10, 39018},
+				{ 2001, 1, 1, 2001, 10, 1,DateRangeType.DAYS, 10, 27},
+				{ 2001, 1, 1, 2001, 10, 1,DateRangeType.HOURS, 10, 648},
+				{ 2001, 1, 1, 2001, 10, 1,DateRangeType.MINUTES, 10, 38874},
 		};
 	}
 

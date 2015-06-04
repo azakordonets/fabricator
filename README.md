@@ -90,15 +90,15 @@ calendar.time12h // 03:15
 
 calendar.time24h // 15:15
 
-calendar.month(false) // December
+calendar.month(asNumber = false) // December
 
-calendar.month(true) // 12
+calendar.month(asNumber = true) // 12
 
 calendar.date // 10-02-2014
 
-calendar.date("dd.MM.yyyy") // 10.02.2014
+calendar.date(DateFormat.dd_MM_yyyy_DOT) // 10.02.2014
 
-calendar.date("dd/MM/yy HH:ss") // 10.02.14 12:15
+calendar.date(DateFormat.dd_MM_yy_HH_ss_BACKSLASH") // 10/02/14 12:15
 
 calendar.date(calendar.year, 2, 13, calendar.hour, calendar.minute) // 13 February of random year with random time
 
