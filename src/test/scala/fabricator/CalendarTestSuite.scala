@@ -1,9 +1,9 @@
 package fabricator
 
-import com.github.nscala_time.time.Imports._
 import fabricator.enums.DateFormat._
 import fabricator.enums.DateRangeType._
 import fabricator.enums.{DateFormat, DateRangeType}
+import org.joda.time.{DateTime, DateTimeZone}
 import org.testng.annotations.{DataProvider, Test}
 
 class CalendarTestSuite extends BaseTestSuite {
@@ -311,36 +311,50 @@ class CalendarTestSuite extends BaseTestSuite {
 
   @DataProvider
   def dateWithPeriodDP():Array[Array[Any]] = {
-    Array(Array(0, 0, 0, 0, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.toString(dd_MM_yyyy_SEMICOLON.getFormat)),
-      Array(1, 0, 0, 0, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.plusYears(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
-      Array(-1, 0, 0, 0, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.minusYears(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
-      Array(0, 1, 0, 0, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.plusMonths(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
-      Array(0, -1, 0, 0, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.minusMonths(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
-      Array(0, 0, 1, 0, 0, 0, dd_MM_yyyy, DateTime.now.plusWeeks(1).toString(dd_MM_yyyy.getFormat)),
-      Array(0, 0, -1, 0, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.minusWeeks(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
-      Array(0, 0, 0, 1, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.plusDays(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
-      Array(0, 0, 0, -1, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.minusDays(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
-      Array(0, 0, 0, 0, 1, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.plusHours(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
-      Array(0, 0, 0, 0, -1, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.minusHours(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
-      Array(0, 0, 0, 0, 0, 1, dd_MM_yyyy_SEMICOLON, DateTime.now.plusMinutes(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
-      Array(0, 0, 0, 0, 0, -1, dd_MM_yyyy_SEMICOLON, DateTime.now.minusMinutes(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
-      Array(1, 1, 0, 0, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.plusYears(1).plusMonths(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
-      Array(-1, -1, 0, 0, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.minusYears(1).minusMonths(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
-      Array(3, 3, 3, 0, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.plusYears(3).plusMonths(3).plusWeeks(3).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
-      Array(-1, -1, -1, 0, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.minusYears(1).minusMonths(1).minusWeeks(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
-      Array(1, 1, 1, 1, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.plusYears(1).plusMonths(1).plusWeeks(1).plusDays(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
-      Array(-5, -5, -5, -5, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.minusYears(5).minusMonths(5).minusWeeks(5).minusDays(5).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
-      Array(1, 1, 1, 1, 1, 0, dd_MM_yyyy_HH_SEMICOLON, DateTime.now.plusYears(1).plusMonths(1).plusWeeks(1).plusDays(1).plusHours(1).toString(dd_MM_yyyy_HH_SEMICOLON.getFormat)),
-      Array(-1, -1, -1, -1, -1, 0, dd_MM_yyyy_HH_SEMICOLON, DateTime.now.minusYears(1).minusMonths(1).minusWeeks(1).minusDays(1).minusHours(1).toString(dd_MM_yyyy_HH_SEMICOLON.getFormat)),
-      Array(10, 10, 10, 10, 10, 10, dd_MM_yyyy_HH_SEMICOLON, DateTime.now.plusYears(10).plusMonths(10).plusWeeks(10).plusDays(10).plusHours(10).plusMinutes(10).toString(dd_MM_yyyy_HH_SEMICOLON.getFormat)),
-      Array(-100, -100, -100, -100, -100, -100, dd_MM_yyyy_HH_SEMICOLON, DateTime.now.minusYears(100).minusMonths(100).minusWeeks(100).minusDays(100).minusHours(100).minusMinutes(100).toString(dd_MM_yyyy_HH_SEMICOLON.getFormat))
+    Array(Array(0, 0, 0, 0, 0, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.toString(dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(1, 0, 0, 0, 0, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.plusYears(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(-1, 0, 0, 0, 0, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.minusYears(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(0, 1, 0, 0, 0, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.plusMonths(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(0, -1, 0, 0, 0, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.minusMonths(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(0, 0, 1, 0, 0, 0, 0, dd_MM_yyyy, DateTime.now.plusWeeks(1).toString(dd_MM_yyyy.getFormat)),
+      Array(0, 0, -1, 0, 0, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.minusWeeks(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(0, 0, 0, 1, 0, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.plusDays(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(0, 0, 0, -1, 0, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.minusDays(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(0, 0, 0, 0, 1, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.plusHours(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(0, 0, 0, 0, -1, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.minusHours(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(0, 0, 0, 0, 0, 1, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.plusMinutes(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(0, 0, 0, 0, 0, -1, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.minusMinutes(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(1, 1, 0, 0, 0, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.plusYears(1).plusMonths(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(-1, -1, 0, 0, 0, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.minusYears(1).minusMonths(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(3, 3, 3, 0, 0, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.plusYears(3).plusMonths(3).plusWeeks(3).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(-1, -1, -1, 0, 0, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.minusYears(1).minusMonths(1).minusWeeks(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(1, 1, 1, 1, 0, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.plusYears(1).plusMonths(1).plusWeeks(1).plusDays(1).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(-5, -5, -5, -5, 0, 0, 0, dd_MM_yyyy_SEMICOLON, DateTime.now.minusYears(5).minusMonths(5).minusWeeks(5).minusDays(5).toString(dd_MM_yyyy_SEMICOLON.getFormat)),
+      Array(1, 1, 1, 1, 1, 0, 0, dd_MM_yyyy_HH_SEMICOLON, DateTime.now.plusYears(1).plusMonths(1).plusWeeks(1).plusDays(1).plusHours(1).toString(dd_MM_yyyy_HH_SEMICOLON.getFormat)),
+      Array(-1, -1, -1, -1, -1, 0, 0, dd_MM_yyyy_HH_SEMICOLON, DateTime.now.minusYears(1).minusMonths(1).minusWeeks(1).minusDays(1).minusHours(1).toString(dd_MM_yyyy_HH_SEMICOLON.getFormat)),
+      Array(10, 10, 10, 10, 10, 10, 10, dd_MM_yyyy_HH_SEMICOLON, DateTime.now.plusYears(10).plusMonths(10).plusWeeks(10).plusDays(10).plusHours(10).plusMinutes(10).plusSeconds(10).toString(dd_MM_yyyy_HH_SEMICOLON.getFormat)),
+      Array(-100, -100, -100, -100, -100, -100, -10, dd_MM_yyyy_HH_SEMICOLON, DateTime.now.minusYears(100).minusMonths(100).minusWeeks(100).minusDays(100).minusHours(100).minusMinutes(100).minusSeconds(10).toString(dd_MM_yyyy_HH_SEMICOLON.getFormat))
     )
   }
 
   @Test(dataProvider = "dateWithPeriodDP")
-  def testDateWithPeriod(year: Int, month: Int, week: Int, day: Int, hour: Int, minute: Int, format: DateFormat, expectedDate: String) = {
-    val date = calendar.relativeDate.years(year).months(month).weeks(week).days(day).hours(hour).minutes(minute).asString(format)
+  def testRelativeDate(year: Int, month: Int, week: Int, day: Int, hour: Int, minute: Int, second: Int, format: DateFormat, expectedDate: String) = {
+    val date = calendar.relativeDate.years(year).months(month).weeks(week).days(day).hours(hour).minutes(minute).seconds(second).asString(format)
     if (debugEnabled) logger.debug("Testing random date with dateWithPeriod method: " + date)
+    assertResult(expectedDate)(date)
+  }
+
+  @Test
+  def testRelativeDateTomorrow() = {
+    val expectedDate = DateTime.now.plusDays(1)
+    val date = calendar.relativeDate.tomorrow().asDate()
+    assertResult(expectedDate)(date)
+  }
+
+  @Test
+  def testRelativeDateYesterday() = {
+    val expectedDate = DateTime.now.minusDays(1)
+    val date = calendar.relativeDate.yesterday().asDate()
     assertResult(expectedDate)(date)
   }
 
@@ -348,6 +362,13 @@ class CalendarTestSuite extends BaseTestSuite {
   def testDateWithPeriodWithDefaultFormat() = {
     val date = calendar.relativeDate.asString()
     assertResult(DateTime.now.toString(DateFormat.dd_MM_yyyy.getFormat))(date)
+  }
+
+  @Test
+  def testRelativeDateCustomTimeZone() = {
+    val expectedDate = DateTime.now(DateTimeZone.UTC)
+    val date = calendar.relativeDate(DateTimeZone.UTC).asDate()
+    assertResult(expectedDate)(date)
   }
 
 }

@@ -1,7 +1,7 @@
 package fabricator
 
 import fabricator.entities.{DateRange, RandomDate, RelativeDate}
-import org.joda.time.{DateTime, IllegalFieldValueException}
+import org.joda.time.{DateTime, DateTimeZone, IllegalFieldValueException}
 
 import scala.util.Random
 
@@ -66,5 +66,7 @@ class Calendar(private val utility: UtilityService,
   def datesRange: DateRange = new DateRange
 
   def relativeDate: RelativeDate = new RelativeDate
+
+  def relativeDate(timeZone: DateTimeZone): RelativeDate = new RelativeDate(timeZone)
 
 }
