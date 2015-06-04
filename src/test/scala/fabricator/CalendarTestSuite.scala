@@ -371,4 +371,12 @@ class CalendarTestSuite extends BaseTestSuite {
     assertResult(expectedDate)(date)
   }
 
+  @Test
+  def testRelativeDateWithCustomInitialDate() = {
+    val expectedDate: DateTime = DateTime.now().plusDays(2)
+    val initialDate: DateTime = DateTime.now().plusDays(1)
+    val date = calendar.relativeDate(initialDate).tomorrow().asDate()
+    assertResult(expectedDate)(date)
+  }
+
 }

@@ -102,7 +102,11 @@ calendar.date.asDate // random Date object
 
 calendar.date.inYear(2014).inDay(10).inMinute(10).asString // random date in 2014 year, that happened in 10th day of random month in 10th minute of random hour
 
-calendar.dateWithPeriod(-10, 0, -2, +3, 0, 0) // date that is - 10 years + 0 months -2 weeks + 3 days + 0 hours + 0 minutes
+calendar.relativeDate.years(2).weeks(1).seconds(-20).asDate // get relative date that is 2 years and 1 weeks in the future and 20 seconds behind (since current time)
+
+calendar.relativeDate(DateTime.now().plusDays(1)).tomorrow().asString // 2 days since now as a string with default formatting
+
+calendar.relativeDate(DateTimeZone.UTC).tomorrow().asString(DateFormat.dd_MM_yy) // tomorrows date in UTC time zone with custom formatting
 
 calendar.datesRange
         .startYear(2010)

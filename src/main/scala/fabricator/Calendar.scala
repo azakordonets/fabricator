@@ -67,6 +67,8 @@ class Calendar(private val utility: UtilityService,
 
   def relativeDate: RelativeDate = new RelativeDate
 
+  def relativeDate(initialDate: DateTime): RelativeDate = new RelativeDate(initialDate)
+
   def relativeDate(timeZone: DateTimeZone): RelativeDate = new RelativeDate(timeZone)
 
 }
