@@ -1,6 +1,6 @@
 package fabricator
 
-import scala.collection.mutable.Set
+import scala.collection.mutable
 import scala.util.Random
 object Words {
 
@@ -12,7 +12,7 @@ object Words {
 
 class Words(private val utility: UtilityService) {
 
-  protected val wordsList:Array[String] = utility.getWordsArray()
+  protected val wordsList:Array[String] = utility.getWordsArray
 
   def word: String = {
     utility.getValueFromArray("word")
@@ -37,7 +37,8 @@ class Words(private val utility: UtilityService) {
   def words(): Array[String] = words(10)
 
   def words(quantity: Int): Array[String] = {
-    val resultSet: Set[String] = Set()
+    if (quantity > 100000) throw new Exception("Maximum allowed quantity is limited to 100,000 words ")
+    val resultSet: mutable.Set[String] = mutable.Set()
     while(resultSet.size != quantity) {
       resultSet.add(wordsList(Random.nextInt(wordsList.length - 1)))
     }

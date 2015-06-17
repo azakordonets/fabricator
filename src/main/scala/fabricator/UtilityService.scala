@@ -32,7 +32,7 @@ case class UtilityService(lang: String = "us", private val random: Random = new 
     (valuesJson \\ key).head.asOpt[Array[String]].get
   }
 
-  def getWordsArray(): Array[String] = {
+  def getWordsArray: Array[String] = {
     (wordsJson \\ "words").head.asOpt[Array[String]].get
   }
 
