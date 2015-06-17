@@ -39,18 +39,17 @@ unmanagedResourceDirectories in Compile += {
   baseDirectory.value / "src/main/resources"
 }
 
-pomExtra := (
-<scm>
+pomExtra := <scm>
   <url>git@github.com:azakordonets/fabricator.git</url>
   <connection>scm:git:git@github.com:azakordonets/fabricator.git</connection>
 </scm>
-<developers>
-  <developer>
-    <id>azakordonets</id>
-    <name>Andrew Zakordonets</name>
-    <url>http://biercoff.com</url>
-  </developer>
-</developers>)
+  <developers>
+    <developer>
+      <id>azakordonets</id>
+      <name>Andrew Zakordonets</name>
+      <url>http://biercoff.com</url>
+    </developer>
+  </developers>
 
 ScoverageKeys.coverageMinimum := 90
 
