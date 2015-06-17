@@ -2,6 +2,8 @@ package fabricator
 
 import org.testng.annotations.{DataProvider, Test}
 
+import scala.collection.mutable.Set
+
 class WordsTestSuite extends BaseTestSuite {
 
   @Test
@@ -23,9 +25,14 @@ class WordsTestSuite extends BaseTestSuite {
 
   @Test
   def testDefaultWords() {
-    val wordsDefaultSet = words.words()
+    val wordsDefaultArray: Array[String] = words.words()
     if (debugEnabled) logger.debug("Getting words array generated with default length ")
-    assert(wordsDefaultSet.length == 10)
+    assert(wordsDefaultArray.length == 10)
+    val inputSet: Set[String] = scala.collection.mutable.Set()
+    for( i <- wordsDefaultArray.indices by 1) {
+      inputSet.add(wordsDefaultArray(i))
+    }
+    assertResult(10)(inputSet.size)
   }
   
   @Test(dataProvider = "wordsCountDP")

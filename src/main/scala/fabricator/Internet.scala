@@ -71,7 +71,7 @@ class Internet(private val utility: UtilityService,
     }
   }
 
-  def twitter: String = "@" + contact.firstName + contact.lastName
+  def twitter: String = "@" + contact.firstName.toLowerCase + contact.lastName + alpha.getInteger(9999)
 
   def hashtag: String = "#" + word.words(3).mkString
 

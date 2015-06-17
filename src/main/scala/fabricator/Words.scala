@@ -1,18 +1,18 @@
 package fabricator
 
+import scala.collection.mutable.Set
 import scala.util.Random
-
 object Words {
 
-  def apply(): Words = new Words(UtilityService(), new Random())
+  def apply(): Words = new Words(UtilityService())
 
-  def apply(locale: String): Words = new Words(UtilityService(locale), new Random())
+  def apply(locale: String): Words = new Words(UtilityService(locale))
 
 }
 
-class Words(private val utility: UtilityService, private val random: Random) {
+class Words(private val utility: UtilityService) {
 
-  protected val wordsList = utility.getListFromJson("words")
+  protected val wordsList:Array[String] = utility.getWordsArray()
 
   def word: String = {
     utility.getValueFromArray("word")
@@ -37,13 +37,11 @@ class Words(private val utility: UtilityService, private val random: Random) {
   def words(): Array[String] = words(10)
 
   def words(quantity: Int): Array[String] = {
-    val resultArray = new Array[String](quantity)
-    for (count <- quantity - 1 to 0 by -1) {
-      for (wordsUnit <- wordsList) {
-        resultArray(count) = wordsUnit(random.nextInt(wordsUnit.length - 1))
-      }
+    val resultSet: Set[String] = Set()
+    while(resultSet.size != quantity) {
+      resultSet.add(wordsList(Random.nextInt(wordsList.length - 1)))
     }
-    resultArray
+    resultSet.toArray
   }
 
   def sentence: String = sentence(10)

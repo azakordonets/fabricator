@@ -3,16 +3,24 @@ package fabricator
 import java.io.FileInputStream
 import java.util.Properties
 
-import play.api.libs.json.Json
+import play.api.libs.json.{JsValue, Json}
 
 import scala.io.Source
 import scala.util.Random
 
 case class UtilityService(lang: String = "us", private val random: Random = new Random()) {
 
-  private val valuesJson = Json.parse(Source.fromInputStream(getClass.getClassLoader.getResourceAsStream(lang + ".json"))("UTF-8").mkString)
+  private val valuesJson = parseFile(lang + ".json")
+
+  private val wordsJson = parseFile("words_" + lang + ".json")
+
+  private def parseFile(fileName: String): JsValue  = {
+    Json.parse(Source.fromInputStream(getClass.getClassLoader.getResourceAsStream(fileName))("UTF-8").mkString)
+  }
 
   if (valuesJson == null) throw new Exception(lang + ".json doesn't exist. ")
+
+  if (wordsJson == null) throw new Exception("words_" + lang + ".json file doesn't exist")
 
   def getValueFromArray(key: String): String = {
     val array = (valuesJson \\ key).head.asOpt[Array[String]].get
@@ -22,6 +30,10 @@ case class UtilityService(lang: String = "us", private val random: Random = new 
 
   def getArrayFromJson(key: String): Array[String] = {
     (valuesJson \\ key).head.asOpt[Array[String]].get
+  }
+
+  def getWordsArray(): Array[String] = {
+    (wordsJson \\ "words").head.asOpt[Array[String]].get
   }
 
   def getListFromJson(key: String): List[Array[String]] = {

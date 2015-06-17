@@ -87,14 +87,14 @@ class InternetTestSuite extends BaseTestSuite {
   def testTwitter() = {
     val twitter = internet.twitter
     if (debugEnabled) logger.debug("Testing random twitter account name : " + twitter)
-    assert(twitter.matches("@[a-zA-Z]+"))
+    assert(twitter.matches("@[a-zA-Z-0-9]+"))
   }
 
   @Test
   def testHashtag() = {
     val hashtag = internet.hashtag
     if (debugEnabled) logger.debug("Testing random hashtag account name : " + hashtag)
-    assert(hashtag.matches("#[a-zA-Z]+"))
+    assert(hashtag.matches("#([A-Za-z0-9\\-\\_]+)"))
   }
 
   @Test
