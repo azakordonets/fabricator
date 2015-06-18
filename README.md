@@ -274,7 +274,17 @@ val internet = fabricator.internet() // initialize internet module
 
 internet.appleToken // randon apple push token - ze7w6fn0omtkxjuxgw2dx50iux1ijcmkf9rmcvoshj2vnpflajdlli63g5nxwaqy
 
-internet.url // http://ab82asdK.com
+internet.urlBuilder.toString() // http://somenewword.com/getEntity?q=test
+
+internet.urlBuilder
+        .scheme("https")
+        .host("google.com")
+        .port("8080")
+        .path("getNewId")
+        .params(mutable.Map[String, Any]("id"->100, "name" -> "John Lennon", "coordinates" -> 30.03)).toString() // https://google.com/getNewId?id=100&name=John+Lennon&coordinates=30.03
+    
+internet.urlBuilder.host("test.com").params(mutable.Map("q"->"test 123")).encodeAs(Charset.forName("UTF-8")).toString() // "http://test.com/getEntity%3Fq%3Dtest%2B123" 
+
 
 internet.url("http", "test.ru", "getUser", Map("id" -> "123", "ts" -> "09-12-10"))
 
@@ -292,7 +302,7 @@ internet.color(rgb, false) // rgb(224,0,0)
 
 internet.color(shorthex, true) // #000 greyscale
 
-internet.twitter // @AdaSchumm
+internet.twitter // @adaSchumm
 
 internet.hashtag // #lowofof
 
