@@ -15,7 +15,8 @@ class Words(private val utility: UtilityService) {
   protected val wordsList:Array[String] = utility.getWordsArray
 
   def word: String = {
-    utility.getValueFromArray("word")
+    val wordsArray: Array[String] = utility.getWordsArray
+    wordsArray(Random.nextInt(wordsArray.length - 1))
   }
 
   def paragraph: String = paragraph(100)
