@@ -2,6 +2,8 @@ package fabricator
 
 import java.awt.Color
 
+import fabricator.entities.UrlBuilder
+
 import scala.util.Random
 
 object Internet {
@@ -26,15 +28,7 @@ class Internet(private val utility: UtilityService,
 
   def appleToken: String = random.alphanumeric.take(64).mkString.toLowerCase
 
-  def url: String = "http://" + alpha.botify("????#####??????.") + utility.getValueFromArray("domain_suffix")
-
-  def url(protocol: String, host: String, callName: String, params: Map[String, String]): String = {
-    var paramsString: String = ""
-    for ((key, value) <- params) {
-      paramsString += key + "=" + value + "&"
-    }
-    protocol + "://" + host + "/" + callName + "?" + paramsString.substring(0, paramsString.length - 1)
-  }
+  def urlBuilder: UrlBuilder = new UrlBuilder
 
   def ip: String = {
     val ip = random.nextInt(256) + "." + random.nextInt(256) + "." + random.nextInt(256) + "." + random.nextInt(256)

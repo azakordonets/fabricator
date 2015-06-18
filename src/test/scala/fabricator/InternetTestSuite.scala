@@ -1,6 +1,12 @@
 package fabricator
 
+import java.net.URL
+import java.nio.charset.Charset
+
+import com.sun.jndi.toolkit.url.Uri
 import org.testng.annotations.{DataProvider, Test}
+
+import scala.collection.mutable
 
 class InternetTestSuite extends BaseTestSuite {
 
@@ -9,12 +15,106 @@ class InternetTestSuite extends BaseTestSuite {
     val customInternet = fabricator.Internet("us")
     assert(customInternet != null)
   }
-  
+
   @Test
-  def testCustomUrl() = {
-    val url = internet.url("http", "test.ru", "getUser", Map("id" -> "123", "ts" -> "09-12-10"))
-    if (debugEnabled) logger.debug("Testing custom url. Url is " + url)
-    assertResult("http://test.ru/getUser?id=123&ts=09-12-10")(url)
+  def testDefaultUrl() = {
+    val url = internet.urlBuilder.toString()
+    val splitArray: Array[String] = url.split("/")
+    assert(url.matches("^(.*:)//([A-Za-z0-9\\-\\.]+)(:[0-9]+)?(.*)$"))
+    assertResult("http:")(splitArray(0))
+    assertResult("getEntity?q=test")(splitArray(3))
+  }
+
+  @Test
+  def testUrlAsUri() = {
+    val url = internet.urlBuilder.host("test.ru").toUri
+    val expectedUrl = new Uri("http://test.ru/getEntity?q=test")
+    assertResult(expectedUrl.getScheme)(url.getScheme)
+    assertResult(expectedUrl.getHost)(url.getHost)
+    assertResult(expectedUrl.getPort)(url.getPort)
+    assertResult(expectedUrl.getPath)(url.getPath)
+    assertResult(expectedUrl.getQuery)(url.getQuery)
+  }
+
+  @Test
+  def testUrlAsURL() = {
+    val url = internet.urlBuilder.host("test.ru").toUrl
+    val expectedUrl = new URL("http://test.ru/getEntity?q=test")
+    assertResult(expectedUrl)(url)
+  }
+
+  @Test
+  def testUrlWithCustomProtocol() = {
+    val url = internet.urlBuilder.scheme("https").toString()
+    val splitArray: Array[String] = url.split("/")
+    assert(url.matches("^(.*:)//([A-Za-z0-9\\-\\.]+)(:[0-9]+)?(.*)$"))
+    assertResult("https:")(splitArray(0))
+    assertResult("getEntity?q=test")(splitArray(3))
+  }
+
+  @Test
+  def testUlrWithCustomHost() = {
+    val url = internet.urlBuilder.host("test.net").toString()
+    val splitArray: Array[String] = url.split("/")
+    assert(url.matches("^(.*:)//([A-Za-z0-9\\-\\.]+)(:[0-9]+)?(.*)$"))
+    assertResult("http:")(splitArray(0))
+    assertResult("test.net")(splitArray(2))
+    assertResult("getEntity?q=test")(splitArray(3))
+  }
+
+  @Test
+  def testUrlWithCustomPort() = {
+    val url = internet.urlBuilder.host("test.net").port(8080).toString()
+    val splitArray: Array[String] = url.split("/")
+    assert(url.matches("^(.*:)//([A-Za-z0-9\\-\\.]+)(:[0-9]+)?(.*)$"))
+    assertResult("http:")(splitArray(0))
+    assertResult("test.net:8080")(splitArray(2))
+    assertResult("getEntity?q=test")(splitArray(3))
+  }
+
+  @Test
+  def testUlrWithCustomPath() = {
+    val url = internet.urlBuilder.host("test.net").path("/customPath").toString()
+    val splitArray: Array[String] = url.split("/")
+    assert(url.matches("^(.*:)//([A-Za-z0-9\\-\\.]+)(:[0-9]+)?(.*)$"))
+    assertResult("http:")(splitArray(0))
+    assertResult("test.net")(splitArray(2))
+    assertResult("customPath?q=test")(splitArray(3))
+  }
+
+  @DataProvider(name = "urlCustomParams")
+  def urlCustomParams() = {
+    Array(Array(mutable.Map[String, Any]("q" -> "test"), "?q=test"),
+      Array(mutable.Map[String, Any]("q" -> "test", "test" -> "hello"), "?q=test&test=hello"),
+      Array(mutable.Map[String, Any]("q" -> "test", "name" -> "Josh Lennon"), "?q=test&name=Josh+Lennon"),
+      Array(mutable.Map[String, Any]("q" -> true), "?q=true"),
+      Array(mutable.Map[String, Any]("q" -> 120), "?q=120"),
+      Array(mutable.Map[String, Any]("q" -> 23.5), "?q=23.5")
+    )
+  }
+
+  @Test(dataProvider = "urlCustomParams")
+  def testUlrWithCustomParams(params: mutable.Map[String, Any], expectedParamsString: String) = {
+    val url = internet.urlBuilder.host("test.net").path("/customPath").params(params).toString()
+    assert(url.matches("^(.*:)//([A-Za-z0-9\\-\\.]+)(:[0-9]+)?(.*)$"))
+    assertResult("http://test.net/customPath" + expectedParamsString)(url)
+  }
+
+  @Test(expectedExceptions = Array(classOf[IllegalArgumentException]))
+  def testUrlParamsException() = {
+    internet.urlBuilder.params(mutable.Map[String, Any]("x" -> BigInt.apply(10))).toString()
+  }
+
+  @Test
+  def testUrlEncodeAsCharset() = {
+    val url = internet.urlBuilder.host("test.com").params(mutable.Map("q"->"test 123")).encodeAs(Charset.forName("UTF-8")).toString()
+    assertResult("http://test.com/getEntity%3Fq%3Dtest%2B123")(url)
+  }
+
+  @Test
+  def testUrlEncodeAsString() = {
+    val url = internet.urlBuilder.host("test.com").encodeAs("ISO-8859-1").toString()
+    assertResult("http://test.com/getEntity%3Fq%3Dtest")(url)
   }
 
   @Test

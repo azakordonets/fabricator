@@ -124,7 +124,7 @@ class FileGenerator(private val alpha: Alphanumeric,
       case "master" => finance.mastercreditCard
       case "iban" => finance.iban
       case "bic" => finance.bic
-      case "url" => internet.url
+      case "url" => internet.urlBuilder.toString()
       case "ip" => internet.ip
       case "macaddress" => internet.macAddress
       case "uuid" => internet.UUID
