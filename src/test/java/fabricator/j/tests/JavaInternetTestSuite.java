@@ -20,9 +20,9 @@ public class JavaInternetTestSuite extends JavaBaseTest {
         final String url = internet.urlBuilder().host("test.ru").paramsinJava(stringStringHashMap).toString();
         assertTrue(url.matches("^(.*:)//([A-Za-z0-9\\-\\.]+)(:[0-9]+)?(.*)$"));
         String params = url.split("/")[3];
-        List<String> stringList = Arrays.asList(params.split("&"));
-        assertTrue(stringList.contains("getEntity?hello=test"));
-        assertTrue(stringList.contains("hello2=test2"));
-        assertTrue(stringList.contains("hello3=test+3"));
+        List<String> paramsList = Arrays.asList(params.replaceAll("getEntity\\?","").split("&"));
+        assertTrue(paramsList.contains("hello=test"));
+        assertTrue(paramsList.contains("hello2=test2"));
+        assertTrue(paramsList.contains("hello3=test+3"));
     }
 }
