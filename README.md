@@ -286,8 +286,6 @@ internet.urlBuilder
 internet.urlBuilder.host("test.com").params(mutable.Map("q"->"test 123")).encodeAs(Charset.forName("UTF-8")).toString() // "http://test.com/getEntity%3Fq%3Dtest%2B123" 
 
 
-internet.url("http", "test.ru", "getUser", Map("id" -> "123", "ts" -> "09-12-10"))
-
 internet.ip // 234.166.254.103
 
 internet.ipv6 // c7a5:a6C4:F3C0:d4be:c2Fd:A4Dc:daA8:7fd8
