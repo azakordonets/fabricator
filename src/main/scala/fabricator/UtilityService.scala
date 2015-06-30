@@ -40,6 +40,11 @@ case class UtilityService(lang: String = "us", private val random: Random = new 
     (valuesJson \\ key).head.asOpt[List[Array[String]]].get
   }
 
+  def getRandomArrayElement(array: Array[String]): String = {
+    val random_index = random.nextInt(array.length)
+    array(random_index)
+  }
+
   def getProperty(name: String): String = {
     try {
       val properties = new Properties() //Source.fromInputStream(getClass().getClassLoader().getResourceAsStream(lang + ".json")
