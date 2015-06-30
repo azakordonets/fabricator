@@ -4159,6 +4159,7 @@
   "finance": {
     "countryCode": ["GB"],
     "branchCode": ["######"],
+    "ssn": ["###-##-####"],
     "bic": [
       "MIDLGB####?",
       "LOYDGB##?##",

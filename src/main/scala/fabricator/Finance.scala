@@ -55,6 +55,8 @@ class Finance private(private val utility: UtilityService,
 
   def bic: String = alpha.botify(utility.getValueFromArray("bic").toUpperCase)
 
+  def ssn: String = alpha.botify(utility.getValueFromArray("ssn"))
+
   def mastercreditCard: String = CreditCard.createCreditCardNumber(CreditCard.masterCardPrefixList, 16, 1)(0)
 
   def mastercreditCards(howMany: Int): Array[String] = CreditCard.createCreditCardNumber(CreditCard.masterCardPrefixList, 16, howMany)

@@ -117,4 +117,12 @@ class FinanceTestSuite extends BaseTestSuite {
     assert(pin.toInt >= 0 && pin.toInt <= 9999)
   }
 
+  @Test
+  def testSsn() = {
+    for (i <- 1 to 10) {
+      val ssn = finance.ssn
+      assert(ssn.matches("\\d{3}-\\d{2}-\\d{4}"))
+    }
+  }
+
 }
