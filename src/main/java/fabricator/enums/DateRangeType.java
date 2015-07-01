@@ -6,6 +6,7 @@ public enum DateRangeType {
     DAYS,
     WEEKS,
     HOURS,
-    MINUTES
+    MINUTES,
+    SECONDS
 }
 

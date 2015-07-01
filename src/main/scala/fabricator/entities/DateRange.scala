@@ -104,6 +104,7 @@ class DateRange {
         case DateRangeType.WEEKS => startDate = startDate.plusWeeks(stepValue);   if (startDate.compareTo(endDate) == -1) rangeList += startDate.toString(format.getFormat)
         case DateRangeType.HOURS => startDate = startDate.plusHours(stepValue);   if (startDate.compareTo(endDate) == -1) rangeList += startDate.toString(format.getFormat)
         case DateRangeType.MINUTES => startDate = startDate.plusMinutes(stepValue);   if (startDate.compareTo(endDate) == -1) rangeList += startDate.toString(format.getFormat)
+        case DateRangeType.SECONDS => startDate = startDate.plusSeconds(stepValue);   if (startDate.compareTo(endDate) == -1) rangeList += startDate.toString(format.getFormat)
       }
     }
     rangeList

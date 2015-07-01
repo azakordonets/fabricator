@@ -236,7 +236,8 @@ class CalendarTestSuite extends BaseTestSuite {
       Array(2001, 1, 1, 2010, 1, 1,WEEKS, 2, 235),
       Array(2001, 1, 1, 2001, 10, 1,DAYS, 10, 28),
       Array(2001, 1, 1, 2001, 10, 1,HOURS, 10, 656),
-      Array(2001, 1, 1, 2001, 10, 1,MINUTES, 10, 39306)
+      Array(2001, 1, 1, 2001, 10, 1,MINUTES, 10, 39306),
+      Array(2001, 1, 1, 2001, 1, 3,SECONDS, 1000, 173)
     )
   }
   
@@ -250,6 +251,7 @@ class CalendarTestSuite extends BaseTestSuite {
                              .endYear(endYear)
                              .endMonth(endMonth)
                              .endDay(endDay)
+                             .format(DateFormat.dd_MM_yyyy_H_m_s)
                              .asList
     assert(Math.abs(expectedSize - datesRange.length) <= 15)
   }
