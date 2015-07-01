@@ -40,6 +40,8 @@ class Calendar(private val utility: UtilityService,
     result
   }
 
+  def dayOfWeek: String = utility.getValueFromArray("day_of_week")
+
   def time24h: String = hour24h + ":" + minute
 
   def time12h: String = hour12h + ":" + minute

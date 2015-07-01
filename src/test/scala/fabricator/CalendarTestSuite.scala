@@ -8,6 +8,8 @@ import org.testng.annotations.{DataProvider, Test}
 
 class CalendarTestSuite extends BaseTestSuite {
 
+  val days_of_week_list = util.getArrayFromJson("day_of_week")
+
   @Test
   def testCustomConstructor()  {
     val customCalendar = fabricator.Calendar("us")
@@ -138,6 +140,12 @@ class CalendarTestSuite extends BaseTestSuite {
     val day = calendar.day(year.toInt, month.toInt)
     if (debugEnabled) logger.debug("Testing random day value: " + day)
     assert(day.toInt >= 0 && day.toInt < 31)
+  }
+
+  @Test
+  def testDayOfWeek() = {
+    val dayOfWeek = calendar.dayOfWeek
+    assert(days_of_week_list.contains(dayOfWeek))
   }
   
   @DataProvider(name = "dayExceptionDP")
