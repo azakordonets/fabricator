@@ -313,7 +313,32 @@ internet.facebookId // 7848157865252882
 
 User Agent
 ----------
+This module allows you to generate random user agent 
 
+```scala
+val userAgent = Fabricator.UserAgent()
+
+val macProcessor = userAgent.mac_processor // Intel
+
+val linuxProcessor = userAgent.linux_processor // x86_64
+
+val browser = userAgent.browser // chrome, internet_explorer
+
+val windowsPlatform = userAgent.windows_platform_token // Windows NT 6.2
+
+val linuxPlatform = userAgent.linux_platform_token // X11; Linux x86_64
+
+val macPlatform = userAgent.mac_platform_token // Macintosh; Intel Mac OS X 10_6_4
+
+val chrome = userAgent.chrome // Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/5330 (KHTML, like Gecko) Chrome/14.0.859.0 Safari/5330
+
+val firefox = userAgent.firefox // Mozilla/5.0 (Macintosh; PPC Mac OS X 10_5_3; rv:1.9.3.20) Gecko/13-08-2011 Firefox/3.6.12
+
+val ie = userAgent.internet_explorer // Mozilla/5.0 (compatible; MSIE 5.0; Windows NT 5.2; Trident/3.0)
+
+val opera = userAgent.opera // Opera/8.22.(X11; Linux i686; en-US) Presto/2.9.166 Version/11.00
+
+```
 
 Location
 --------
