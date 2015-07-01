@@ -37,6 +37,7 @@ Fabricator consist of 9 specific modules :
 * File - generates random csv files
 * Finance - generates random credit cards, bsn numbers
 * Internet - generates random url's, domains, e-mails, ip's, mac addresses, color codes, social networks id's
+* User Agent - generate any random user agent for mobile and desktop client
 * Location - generates random coordinates, geohash
 * Mobile - generates random mobile platforms push tokens or id's
 * Words - generates random words, sentences and even blocks of text
@@ -309,6 +310,10 @@ internet.googleAnalyticsTrackCode // UA-15137-66
 internet.facebookId // 7848157865252882
 
 ```
+
+User Agent
+----------
+
 
 Location
 --------

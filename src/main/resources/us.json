@@ -5307,6 +5307,37 @@
       "October",
       "November",
       "December"
+    ],
+    "day_of_week": ["Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+      "Sunday"
+    ],
+    "centuries": [
+      "I",
+      "II",
+      "III",
+      "IV",
+      "V",
+      "VI",
+      "VII",
+      "VIII",
+      "IX",
+      "X",
+      "XI",
+      "XII",
+      "XIII",
+      "XIV",
+      "XV",
+      "XVI",
+      "XVII",
+      "XVIII",
+      "XIX",
+      "XX",
+      "XXI"
     ]
   }
 }
