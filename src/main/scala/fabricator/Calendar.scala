@@ -65,6 +65,8 @@ class Calendar(private val utility: UtilityService,
 
   def year: String = alpha.getInteger(1970, 2015).toString
 
+  def century: String = utility.getValueFromArray("centuries")
+
   def datesRange: DateRange = new DateRange
 
   def relativeDate: RelativeDate = new RelativeDate

@@ -191,6 +191,13 @@ class CalendarTestSuite extends BaseTestSuite {
     assert(year >= 1970 && year < 2015)
   }
 
+  @Test
+  def testCentury() = {
+    val centuryList = util.getArrayFromJson("centuries")
+    val century = calendar.century
+    assert(centuryList.contains(century))
+  }
+
   @DataProvider
   def dateDP():Array[Array[Any]] = {
     Array(Array(2014, 2, 30, 0, 0, "28-02-2014 00:00"),
