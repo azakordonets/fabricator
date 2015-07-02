@@ -34,6 +34,8 @@ class DateRange {
 
   private var format: DateFormat = DateFormat.dd_MM_yyyy
 
+  private var asString: Boolean = false
+
   def startYear(year: Int) : this.type = {
     this.startYear = year
     this
@@ -90,38 +92,38 @@ class DateRange {
 
 
 
-  private def getRangeList: ListBuffer[String] = {
+  private def getRangeList: ListBuffer[DateTime] = {
     if (this.stepValue <= 0) throw new IllegalArgumentException("Step should be > 0")
     var startDate = if (useStartDate) this.startDate else new DateTime(startYear, startMonth, startDay, 0, 0)
     val endDate = if(useEndDate) this.endDate else new DateTime(endYear, endMonth, endDay, 0, 0)
-    var rangeList = ListBuffer[String]()
-    rangeList += startDate.toString(format.getFormat)
+    var rangeList = ListBuffer[DateTime]()
+    rangeList += startDate
     while(startDate.compareTo(endDate) == -1) {
       stepType match {
-        case DateRangeType.YEARS => startDate = startDate.plusYears(stepValue); if (startDate.compareTo(endDate) == -1) rangeList += startDate.toString(format.getFormat)
-        case DateRangeType.MONTHS => startDate = startDate.plusMonths(stepValue);  if (startDate.compareTo(endDate) == -1) rangeList += startDate.toString(format.getFormat)
-        case DateRangeType.DAYS => startDate = startDate.plusDays(stepValue);   if (startDate.compareTo(endDate) == -1) rangeList += startDate.toString(format.getFormat)
-        case DateRangeType.WEEKS => startDate = startDate.plusWeeks(stepValue);   if (startDate.compareTo(endDate) == -1) rangeList += startDate.toString(format.getFormat)
-        case DateRangeType.HOURS => startDate = startDate.plusHours(stepValue);   if (startDate.compareTo(endDate) == -1) rangeList += startDate.toString(format.getFormat)
-        case DateRangeType.MINUTES => startDate = startDate.plusMinutes(stepValue);   if (startDate.compareTo(endDate) == -1) rangeList += startDate.toString(format.getFormat)
-        case DateRangeType.SECONDS => startDate = startDate.plusSeconds(stepValue);   if (startDate.compareTo(endDate) == -1) rangeList += startDate.toString(format.getFormat)
+        case DateRangeType.YEARS => startDate = startDate.plusYears(stepValue); if (startDate.compareTo(endDate) == -1) rangeList += startDate
+        case DateRangeType.MONTHS => startDate = startDate.plusMonths(stepValue);  if (startDate.compareTo(endDate) == -1) rangeList += startDate
+        case DateRangeType.DAYS => startDate = startDate.plusDays(stepValue);   if (startDate.compareTo(endDate) == -1) rangeList += startDate
+        case DateRangeType.WEEKS => startDate = startDate.plusWeeks(stepValue);   if (startDate.compareTo(endDate) == -1) rangeList += startDate
+        case DateRangeType.HOURS => startDate = startDate.plusHours(stepValue);   if (startDate.compareTo(endDate) == -1) rangeList += startDate
+        case DateRangeType.MINUTES => startDate = startDate.plusMinutes(stepValue);   if (startDate.compareTo(endDate) == -1) rangeList += startDate
+        case DateRangeType.SECONDS => startDate = startDate.plusSeconds(stepValue);   if (startDate.compareTo(endDate) == -1) rangeList += startDate
       }
     }
     rangeList
   }
 
-  def asList = {
-    getRangeList.toList
-  }
+  private def stringifyRangeList: ListBuffer[String] = getRangeList.map(_.toString(format.getFormat))
 
-  def asJavaList() = {
-    getRangeList.asJava
-  }
+  def asStringsList: List[String] = stringifyRangeList.toList
 
-  def asArray(): Array[String] = {
-    getRangeList.toArray
-  }
+  def asList: List[DateTime] = getRangeList.toList
 
+  def asStringsJavaList() = stringifyRangeList.asJava
 
+  def asJavaList() = getRangeList.asJava
+
+  def asStringsArray: Array[String] = stringifyRangeList.toArray
+
+  def asArray: Array[DateTime] =  getRangeList.toArray
 
 }

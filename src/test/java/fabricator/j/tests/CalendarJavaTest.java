@@ -2,6 +2,7 @@ package fabricator.j.tests;
 
 import fabricator.enums.DateFormat;
 import fabricator.enums.DateRangeType;
+import org.joda.time.DateTime;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -22,7 +23,7 @@ public class CalendarJavaTest extends JavaBaseTest {
 				.endYear(2010)
 				.endMonth(1)
 				.endDay(1)
-				.asJavaList();
+				.asStringsJavaList();
 		assertEquals(9, yearRange.size());
 	}
 
@@ -51,7 +52,24 @@ public class CalendarJavaTest extends JavaBaseTest {
 												.endYear(endYear)
 												.endMonth(endMonth)
 												.endDay(endDay)
-												.asJavaList();
+												.asStringsJavaList();
 		assertTrue(Math.abs(expectedSize - datesRange.size()) <= 10);
+	}
+
+	@Test
+	public void testDateRangeAsDates() {
+		final List<DateTime> datesRange = calendar.datesRange()
+				.startYear(2001)
+				.startMonth(1)
+				.startDay(1)
+				.endDay(1)
+				.endMonth(1)
+				.endYear(2009)
+				.stepEvery(1, DateRangeType.YEARS)
+				.asJavaList();
+		for (int i = 1; i < datesRange.size()-1; i++) {
+			final DateTime expectedDate = new DateTime(new Integer("200" + (i + 1)), 1, 1, 0, 0);
+			assertEquals(expectedDate, datesRange.get(i));
+		}
 	}
 }

@@ -262,6 +262,7 @@ class CalendarTestSuite extends BaseTestSuite {
     val endDate = new DateTime(2010, 1, 1, 0, 0)
     val datesRange = calendar.datesRange.startDate(startDate).stepEvery(1, YEARS).endDate(endDate).asList
     assertResult(9)(datesRange.length)
+    assertDateRangeEqual(datesRange, 1, 1)
   }
 
   
@@ -288,11 +289,9 @@ class CalendarTestSuite extends BaseTestSuite {
       .startYear(2001)
       .stepEvery(1, YEARS)
       .endYear(2010)
-      .format(dd_MM_yy).asList
+      .format(dd_MM_yy).asStringsList
     assertResult(9)(dateRange.length)
-    for (date <- dateRange) {
-      assert(date.matches("\\d{1,2}-\\d{1,2}-\\d{2}"))
-    }
+    for (date <- dateRange) assert(date.matches("\\d{2}-\\w{2}-\\d{2}"))
   }
 
   @Test
@@ -301,13 +300,35 @@ class CalendarTestSuite extends BaseTestSuite {
       .startYear(2001)
       .stepEvery(1, YEARS)
       .endYear(2010)
-      .format(dd_MM_yy).asArray()
+      .format(dd_MM_yy).asArray
+    val currentMonth = DateTime.now.getMonthOfYear
+    val currentDay = DateTime.now.getDayOfMonth
     assertResult(9)(dateRange.length)
-    for (date <- dateRange) {
-      assert(date.matches("\\d{1,2}-\\d{1,2}-\\d{2}"))
+    assertDateRangeEqual(dateRange.toList, currentMonth, currentDay, format = "dd-MM-yy")
+  }
+
+  @Test
+  def testDateRangeAsStringArray() = {
+    val dateRange = calendar.datesRange
+      .startYear(2001)
+      .stepEvery(1, YEARS)
+      .endYear(2010)
+      .format(dd_MM_yy).asStringsArray
+    val currentMonth = DateTime.now.getMonthOfYear
+    val currentDay = DateTime.now.getDayOfMonth
+    assertResult(9)(dateRange.length)
+    for (date <- dateRange) assert(date.matches("\\d{2}-\\w{2}-\\d{2}"))
+  }
+
+  def assertDateRangeEqual(dateRange: List[DateTime], currentMonth: Int, currentDay: Int, format: String = "dd-MM-yyyy"): Unit = {
+    for (i <- 1 to 8 by 1) {
+      val year: Int = ("200" + (i + 1)).toInt
+      val date: DateTime = dateRange(i)
+      val expectedDate: DateTime = new DateTime(year, currentMonth, currentDay, 0, 0)
+      assertResult(expectedDate.toString(format))(date.toString(format))
     }
   }
-  
+
   @Test
   def testDateWithFormat() = {
     val format = dd_MM_yyyy
@@ -370,9 +391,10 @@ class CalendarTestSuite extends BaseTestSuite {
 
   @Test
   def testRelativeDateYesterday() = {
-    val expectedDate = DateTime.now.minusDays(1)
+    val format: String = "dd-MM-yyyy"
+    val expectedDate = DateTime.now.minusDays(1).toString(format)
     val date = calendar.relativeDate.yesterday().asDate()
-    assertResult(expectedDate)(date)
+    assertResult(expectedDate)(date.toString(format))
   }
 
   @Test
@@ -393,7 +415,8 @@ class CalendarTestSuite extends BaseTestSuite {
     val expectedDate: DateTime = DateTime.now().plusDays(2)
     val initialDate: DateTime = DateTime.now().plusDays(1)
     val date = calendar.relativeDate(initialDate).tomorrow().asDate()
-    assertResult(expectedDate)(date)
+    val format = "dd-MM-yyyy"
+    assertResult(expectedDate.toString(format))(date.toString(format))
   }
 
 }
