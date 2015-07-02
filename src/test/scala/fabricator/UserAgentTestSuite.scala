@@ -44,16 +44,13 @@ class UserAgentTestSuite extends BaseTestSuite {
 
   @Test
   def testMacPlatformToken() = {
-    for (i <- 1 to 10 by 1) {
-      print(i)
-      val macPlatformToken = userAgent.mac_platform_token
-      val splitMacPlatform = macPlatformToken.split(" Mac OS X ")
-      assert(splitMacPlatform(0).matches("Macintosh; " + getListElementsOptionalRegex(macProcessorList)))
-      assert(splitMacPlatform(1).matches("10_[5-8]_[0-9]"))
-    }
+    val macPlatformToken = userAgent.mac_platform_token
+    val splitMacPlatform = macPlatformToken.split(" Mac OS X ")
+    assert(splitMacPlatform(0).matches("Macintosh; " + getListElementsOptionalRegex(macProcessorList)))
+    assert(splitMacPlatform(1).matches("10_[5-8]_[0-9]"))
   }
 
-  private def getListElementsOptionalRegex(array: Array[String]*): String = {
+  private def getListElementsOptionalRegex(array: Array[String]): String = {
     "(" + array.mkString("|") + ")"
   }
 
