@@ -170,6 +170,20 @@ that has text of it's dimensions on it. It's easy as :
 val file = fabricator.file() // initialize file module
 
 file.image(200,300, "drawing.png") // will create a 200x300 image in the root of the project
+
+file.fileExtension(FileType.AUDIO) // mp3
+
+file.fileExtension // randomly selects out of all available Filetypes
+
+file.fileName(FileType.audio) // swoon.mp3
+
+file.fileName // random name + random file type
+
+file.mimeType(MimeType.APPLICATION) // application/ecmascript
+
+file.mimeType // random mime type 
+
+
 ```
 
 For csv there are 2 ways of generating files.
@@ -308,6 +322,8 @@ internet.hashtag // #lowofof
 internet.googleAnalyticsTrackCode // UA-15137-66
 
 internet.facebookId // 7848157865252882
+
+internet.avatar // https://s3.amazonaws.com/uifaces/faces/twitter/mgonto/128.jpg
 
 ```
 
