@@ -211,5 +211,11 @@ class InternetTestSuite extends BaseTestSuite {
     assert(facebookId.length == 16)
   }
 
+  @Test
+  def testAvatar() = {
+    val avatar = internet.avatar
+    assert(avatar.matches("http.*/[^/]+/128.jpg$"))
+  }
+
 
 }

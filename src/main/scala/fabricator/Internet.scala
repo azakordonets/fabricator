@@ -73,5 +73,12 @@ class Internet(private val utility: UtilityService,
 
   def facebookId: String = (1 to 16).map(i => Random.nextInt(10)).mkString
 
+  /**
+   * Generates URL to avatar that is taken from <a href = "http://uifaces.com/authorized"> service
+   * All this avatars have been authorized by it's users
+   * @return
+   */
+  def avatar: String = "https://s3.amazonaws.com/uifaces/faces/twitter/" + utility.getValueFromArray("avatar")
+
 }
 
