@@ -5,18 +5,30 @@ package fabricator
 import java.io.File
 
 import com.github.tototoshi.csv.CSVReader
-import fabricator.enums.FileType
+import fabricator.enums.{FileType, MimeType}
 import org.testng.annotations.{AfterTest, DataProvider, Test}
 
 class FileTestSuite extends BaseTestSuite {
 
   protected val csvFilePath: String = "generatedFiles/result.csv"
   protected var fileObject: File = null
+  // File extensions
   private val audioExtensionList = util.getArrayFromJson("audio_file_extensions")
   private val imageExtensionList = util.getArrayFromJson("image_file_extensions")
   private val textExtensionList = util.getArrayFromJson("text_file_extensions")
   private val docExtensionList = util.getArrayFromJson("document_file_extensions")
   private val videoExtensionList = util.getArrayFromJson("video_file_extensions")
+  //Mime types
+  val applicationMimeTypes = util.getArrayFromJson("application_mime_types")
+  val audioMimeTypes =  util.getArrayFromJson("audio_mime_types")
+  val imageMimeTypes =  util.getArrayFromJson("image_mime_types")
+  val messageMimeTypes =  util.getArrayFromJson("message_mime_types")
+  val modelMimeTypes =  util.getArrayFromJson("model_mime_types")
+  val multipartMimeTypes =  util.getArrayFromJson("multipart_mime_types")
+  val textMimeTypes =  util.getArrayFromJson("text_mime_types")
+  val videoMimeTypes =  util.getArrayFromJson("video_mime_types")
+
+
 
 
   @Test
@@ -123,11 +135,11 @@ class FileTestSuite extends BaseTestSuite {
 
   @DataProvider
   def fileTypeDP(): Array[Array[Any]] = {
-    Array(Array(FileType.AUDIO, util.getArrayFromJson("audio_file_extensions")),
-      Array(FileType.IMAGE, util.getArrayFromJson("image_file_extensions")),
-      Array(FileType.TEXT, util.getArrayFromJson("text_file_extensions")),
-      Array(FileType.DOCUMENT, util.getArrayFromJson("document_file_extensions")),
-      Array(FileType.VIDEO, util.getArrayFromJson("video_file_extensions"))
+    Array(Array(FileType.AUDIO, audioExtensionList),
+      Array(FileType.IMAGE, imageExtensionList),
+      Array(FileType.TEXT, textExtensionList),
+      Array(FileType.DOCUMENT, docExtensionList),
+      Array(FileType.VIDEO, videoExtensionList)
     )
   }
 
@@ -170,6 +182,39 @@ class FileTestSuite extends BaseTestSuite {
       videoExtensionList.contains(fileExtension)
     )
 
+  }
+
+  @DataProvider
+  def mimeTypeDP(): Array[Array[Any]] = {
+    Array(Array(MimeType.APPLICATION, applicationMimeTypes),
+      Array(MimeType.AUDIO, audioMimeTypes),
+      Array(MimeType.IMAGE, imageMimeTypes),
+      Array(MimeType.MESSAGE, messageMimeTypes),
+      Array(MimeType.MODEL, modelMimeTypes),
+      Array(MimeType.MULTIPART, multipartMimeTypes),
+      Array(MimeType.TEXT, textMimeTypes),
+      Array(MimeType.VIDEO, videoMimeTypes)
+    )
+  }
+
+  @Test(dataProvider = "mimeTypeDP")
+  def testMimeExtension(mimeType: MimeType, expectedList:Array[String]) = {
+    val extension = file.mime_type(mimeType)
+    assert(expectedList.contains(extension))
+  }
+
+  @Test
+  def testRandomMimeExtension() = {
+    val mimeType = file.mime_type
+    assert(applicationMimeTypes.contains(mimeType) ||
+      audioMimeTypes.contains(mimeType) ||
+      imageMimeTypes.contains(mimeType) ||
+      messageMimeTypes.contains(mimeType) ||
+      modelMimeTypes.contains(mimeType) ||
+      multipartMimeTypes.contains(mimeType) ||
+      textMimeTypes.contains(mimeType) ||
+      videoMimeTypes.contains(mimeType)
+    )
   }
 
   @AfterTest

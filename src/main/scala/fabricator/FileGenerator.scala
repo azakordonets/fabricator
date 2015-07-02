@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage
 import java.io.File
 
 import com.github.tototoshi.csv._
-import fabricator.enums.FileType
+import fabricator.enums.{FileType, MimeType}
 
 import scala.util.Random
 
@@ -103,7 +103,6 @@ class FileGenerator(private val alpha: Alphanumeric,
 
   def fileName: String = fileName(FileType.getRandom)
 
-
   def fileName(fileType: FileType): String = {
     val fileExt = fileExtension(fileType)
     val fileName = words.word
@@ -119,6 +118,23 @@ class FileGenerator(private val alpha: Alphanumeric,
       case FileType.TEXT => utility.getValueFromArray("text_file_extensions")
       case FileType.DOCUMENT => utility.getValueFromArray("document_file_extensions")
       case FileType.VIDEO => utility.getValueFromArray("video_file_extensions")
+    }
+  }
+
+  def mime_type: String = {
+    mime_type(MimeType.getRandom)
+  }
+
+  def mime_type(mimeType: MimeType): String = {
+    mimeType match {
+      case MimeType.APPLICATION => utility.getValueFromArray("application_mime_types")
+      case MimeType.AUDIO => utility.getValueFromArray("audio_mime_types")
+      case MimeType.IMAGE => utility.getValueFromArray("image_mime_types")
+      case MimeType.MESSAGE => utility.getValueFromArray("message_mime_types")
+      case MimeType.MODEL => utility.getValueFromArray("model_mime_types")
+      case MimeType.MULTIPART => utility.getValueFromArray("multipart_mime_types")
+      case MimeType.TEXT => utility.getValueFromArray("text_mime_types")
+      case MimeType.VIDEO => utility.getValueFromArray("video_mime_types")
     }
   }
 
