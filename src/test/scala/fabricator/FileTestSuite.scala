@@ -5,12 +5,19 @@ package fabricator
 import java.io.File
 
 import com.github.tototoshi.csv.CSVReader
+import fabricator.enums.FileType
 import org.testng.annotations.{AfterTest, DataProvider, Test}
 
 class FileTestSuite extends BaseTestSuite {
 
   protected val csvFilePath: String = "generatedFiles/result.csv"
   protected var fileObject: File = null
+  private val audioExtensionList = util.getArrayFromJson("audio_file_extensions")
+  private val imageExtensionList = util.getArrayFromJson("image_file_extensions")
+  private val textExtensionList = util.getArrayFromJson("text_file_extensions")
+  private val docExtensionList = util.getArrayFromJson("document_file_extensions")
+  private val videoExtensionList = util.getArrayFromJson("video_file_extensions")
+
 
   @Test
   def testCustomConstructor()  {
@@ -114,6 +121,56 @@ class FileTestSuite extends BaseTestSuite {
     val result = file.image(width, height, path)
   }
 
+  @DataProvider
+  def fileTypeDP(): Array[Array[Any]] = {
+    Array(Array(FileType.AUDIO, util.getArrayFromJson("audio_file_extensions")),
+      Array(FileType.IMAGE, util.getArrayFromJson("image_file_extensions")),
+      Array(FileType.TEXT, util.getArrayFromJson("text_file_extensions")),
+      Array(FileType.DOCUMENT, util.getArrayFromJson("document_file_extensions")),
+      Array(FileType.VIDEO, util.getArrayFromJson("video_file_extensions"))
+    )
+  }
+
+  @Test(dataProvider = "fileTypeDP")
+  def testFileExtension(fileType: FileType, expectedList:Array[String]) = {
+    val extension = file.fileExtension(fileType)
+    assert(expectedList.contains(extension))
+  }
+
+  @Test(dataProvider = "fileTypeDP")
+  def testFileName(fileType: FileType, expectedTypeArray: Array[String]) = {
+    val fileName = file.fileName(fileType)
+    val name = fileName.split("\\.")(0)
+    val fileExtension = fileName.split("\\.")(1)
+    assert(expectedTypeArray.contains(fileExtension))
+    assert(fileName.length > 0)
+  }
+
+  @Test
+  def testRandomFileExtension() = {
+    val fileExtension = file.fileExtension
+    assert(audioExtensionList.contains(fileExtension) ||
+      imageExtensionList.contains(fileExtension) ||
+      textExtensionList.contains(fileExtension) ||
+      docExtensionList.contains(fileExtension) ||
+      videoExtensionList.contains(fileExtension)
+    )
+  }
+
+  @Test
+  def testFileNameWithRandomExtension() = {
+    val fileName = file.fileName
+    val name = fileName.split("\\.")(0)
+    val fileExtension = fileName.split("\\.")(1)
+    assert(name.length > 0)
+    assert(audioExtensionList.contains(fileExtension) ||
+      imageExtensionList.contains(fileExtension) ||
+      textExtensionList.contains(fileExtension) ||
+      docExtensionList.contains(fileExtension) ||
+      videoExtensionList.contains(fileExtension)
+    )
+
+  }
 
   @AfterTest
   def tearDown() = {

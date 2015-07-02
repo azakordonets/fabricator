@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage
 import java.io.File
 
 import com.github.tototoshi.csv._
+import fabricator.enums.FileType
 
 import scala.util.Random
 
@@ -15,13 +16,13 @@ object FileGenerator {
   def apply(): FileGenerator = {
     new FileGenerator( Alphanumeric(), new Random(),
       Contact(), Words(), Calendar(), Finance(),
-      Internet(), Location(), Mobile())
+      Internet(), Location(), Mobile(), UtilityService())
   }
 
   def apply(locale: String): FileGenerator = {
     new FileGenerator(Alphanumeric(), new Random(),
       Contact(locale), Words(locale), Calendar(locale), Finance(locale),
-      Internet(locale), Location(locale), Mobile())
+      Internet(locale), Location(locale), Mobile(), UtilityService())
   }
 
 }
@@ -34,7 +35,8 @@ class FileGenerator(private val alpha: Alphanumeric,
                     private val finance: Finance,
                     private val internet: Internet,
                     private val location: Location,
-                    private val mobile: Mobile) {
+                    private val mobile: Mobile,
+                     private val utility: UtilityService) {
 
   def image(width: Int, height: Int, path: String) = {
     if (width > 2560 || height > 2560) throw new IllegalArgumentException("Image cannot be more then 2560x2560")
@@ -97,6 +99,27 @@ class FileGenerator(private val alpha: Alphanumeric,
       writer.writeRow(generatedMap)
     }
     writer.close()
+  }
+
+  def fileName: String = fileName(FileType.getRandom)
+
+
+  def fileName(fileType: FileType): String = {
+    val fileExt = fileExtension(fileType)
+    val fileName = words.word
+    fileName + "." + fileExt
+  }
+
+  def fileExtension: String = fileExtension(FileType.getRandom)
+
+  def fileExtension(fileType: FileType): String = {
+    fileType match {
+      case FileType.AUDIO => utility.getValueFromArray("audio_file_extensions")
+      case FileType.IMAGE => utility.getValueFromArray("image_file_extensions")
+      case FileType.TEXT => utility.getValueFromArray("text_file_extensions")
+      case FileType.DOCUMENT => utility.getValueFromArray("document_file_extensions")
+      case FileType.VIDEO => utility.getValueFromArray("video_file_extensions")
+    }
   }
 
 
