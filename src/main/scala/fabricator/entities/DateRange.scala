@@ -1,5 +1,6 @@
 package fabricator.entities
 
+import fabricator.Alphanumeric
 import fabricator.enums.{DateFormat, DateRangeType}
 import org.joda.time.DateTime
 
@@ -28,13 +29,13 @@ class DateRange {
 
   private var useEndDate: Boolean = false
 
-  private var stepType = DateRangeType.MONTHS
+  private var stepType = DateRangeType.DAYS
 
   private var stepValue: Int = 1
 
   private var format: DateFormat = DateFormat.dd_MM_yyyy
 
-  private var asString: Boolean = false
+  private val alpha: Alphanumeric = Alphanumeric()
 
   def startYear(year: Int) : this.type = {
     this.startYear = year
@@ -125,5 +126,15 @@ class DateRange {
   def asStringsArray: Array[String] = stringifyRangeList.toArray
 
   def asArray: Array[DateTime] =  getRangeList.toArray
+
+  def getRandomDate: DateTime = {
+    val datesRange = asList
+    datesRange(alpha.getInteger(1, datesRange.length - 2))
+  }
+
+  def getRandomDateString: String = {
+    val datesRange = asStringsList
+    datesRange(alpha.getInteger(1, datesRange.length - 2))
+  }
 
 }

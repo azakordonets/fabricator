@@ -314,18 +314,18 @@ class CalendarTestSuite extends BaseTestSuite {
       .stepEvery(1, YEARS)
       .endYear(2010)
       .format(dd_MM_yy).asStringsArray
-    val currentMonth = DateTime.now.getMonthOfYear
-    val currentDay = DateTime.now.getDayOfMonth
     assertResult(9)(dateRange.length)
     for (date <- dateRange) assert(date.matches("\\d{2}-\\w{2}-\\d{2}"))
   }
 
-  def assertDateRangeEqual(dateRange: List[DateTime], currentMonth: Int, currentDay: Int, format: String = "dd-MM-yyyy"): Unit = {
+  val defaultFormat: String = "dd-MM-yyyy"
+
+  def assertDateRangeEqual(dateRange: List[DateTime], currentMonth: Int, currentDay: Int, format: String = defaultFormat): Unit = {
     for (i <- 1 to 8 by 1) {
       val year: Int = ("200" + (i + 1)).toInt
       val date: DateTime = dateRange(i)
       val expectedDate: DateTime = new DateTime(year, currentMonth, currentDay, 0, 0)
-      assertResult(expectedDate.toString(format))(date.toString(format))
+      assertResult(expectedDate.toString(defaultFormat))(date.toString(defaultFormat))
     }
   }
 
@@ -386,15 +386,14 @@ class CalendarTestSuite extends BaseTestSuite {
   def testRelativeDateTomorrow() = {
     val expectedDate = DateTime.now.plusDays(1)
     val date = calendar.relativeDate.tomorrow().asDate()
-    assertResult(expectedDate)(date)
+    assertResult(expectedDate.toString(defaultFormat))(date.toString(defaultFormat))
   }
 
   @Test
   def testRelativeDateYesterday() = {
-    val format: String = "dd-MM-yyyy"
-    val expectedDate = DateTime.now.minusDays(1).toString(format)
+    val expectedDate = DateTime.now.minusDays(1).toString(defaultFormat)
     val date = calendar.relativeDate.yesterday().asDate()
-    assertResult(expectedDate)(date.toString(format))
+    assertResult(expectedDate)(date.toString(defaultFormat))
   }
 
   @Test
@@ -415,8 +414,26 @@ class CalendarTestSuite extends BaseTestSuite {
     val expectedDate: DateTime = DateTime.now().plusDays(2)
     val initialDate: DateTime = DateTime.now().plusDays(1)
     val date = calendar.relativeDate(initialDate).tomorrow().asDate()
-    val format = "dd-MM-yyyy"
-    assertResult(expectedDate.toString(format))(date.toString(format))
+    assertResult(expectedDate.toString(defaultFormat))(date.toString(defaultFormat))
+  }
+
+  @Test
+  def testRandomDateFromDateRange() = {
+    val randomDate = calendar.datesRange.getRandomDate
+    val startPoint = DateTime.now()
+    val endPoint = DateTime.now().plusYears(1)
+    assert(randomDate.isAfter(startPoint))
+    assert(randomDate.isBefore(endPoint))
+  }
+
+  @Test
+  def testRandomDateStringFromDateRange() = {
+    val randomDateString = calendar.datesRange.format(DateFormat.yyyy_MM_dd).getRandomDateString
+    val randomDate = DateTime.parse(randomDateString)
+    val startPoint = DateTime.now()
+    val endPoint = DateTime.now().plusYears(1)
+    assert(randomDate.isAfter(startPoint))
+    assert(randomDate.isBefore(endPoint))
   }
 
 }
