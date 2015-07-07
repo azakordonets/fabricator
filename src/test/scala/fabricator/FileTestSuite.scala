@@ -39,9 +39,8 @@ class FileTestSuite extends BaseTestSuite {
 
   @Test
   def testImage() = {
-    val path: String = "generatedFiles/drawing.png"
-    val result = file.image(200, 300, path)
-    val fileOnADrive: File = new File(path)
+    val result = file.image(200, 300, csvFilePath)
+    val fileOnADrive: File = new File(csvFilePath)
     fileObject = fileOnADrive
     assert(fileOnADrive.exists())
     logger.info("Checking image file")
