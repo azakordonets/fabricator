@@ -74,7 +74,7 @@ class FileTestSuite extends BaseTestSuite {
       "google_analytics", "altitude", "depth", "latitude", "longitude", "coordinates", "geohash", "apple_token", "android", "postcode",
       "windows7Token", "windows8Token", "word", "sentence", "integer", "integer", "double", "hash", "guid", "time", "date", "name")
     val numberOfRows = 10
-    val result = file.csvFromCodes(codes, 10, csvFilePath)
+    file.csvFromCodes(codes, 10, csvFilePath, '|')
 
     // check that file exists
     val fileOnADrive: File = new File(csvFilePath)
@@ -88,8 +88,8 @@ class FileTestSuite extends BaseTestSuite {
     // asser that inserted data is correct
     val line = reader.readNext()
     val occupationList: Array[String] = util.getArrayFromJson("occupation")
-    assert(occupationList.contains(lines.head.head))
-    assertResult(codes.length)(lines.head.size)
+    assert(occupationList.contains(lines.head.head.split("\\|").head))
+    assertResult(codes.length)(lines.head.head.split("\\|").size)
   }
 
   @Test
