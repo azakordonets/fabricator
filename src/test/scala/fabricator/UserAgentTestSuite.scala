@@ -23,9 +23,20 @@ class UserAgentTestSuite extends BaseTestSuite {
   }
 
   @Test
+  def testBrowserName() = {
+    val browserName = userAgent.browser_name
+    assert(browsersList.contains(browserName))
+  }
+
+  @Test
   def testBrowser() = {
     val browser = userAgent.browser
-    assert(browsersList.contains(browser))
+    assert(browser.contains("Chrome")
+    || browser.contains("Firefox")
+    || browser.contains("Gecko")
+    || browser.contains("MSIE")
+    || browser.contains("Presto")
+    )
   }
 
   @Test

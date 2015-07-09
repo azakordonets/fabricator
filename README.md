@@ -339,7 +339,7 @@ val macProcessor = userAgent.mac_processor // Intel
 
 val linuxProcessor = userAgent.linux_processor // x86_64
 
-val browser = userAgent.browser // chrome, internet_explorer
+val browser_name = userAgent.browser_name // chrome, internet_explorer
 
 val windowsPlatform = userAgent.windows_platform_token // Windows NT 6.2
 
@@ -354,6 +354,8 @@ val firefox = userAgent.firefox // Mozilla/5.0 (Macintosh; PPC Mac OS X 10_5_3; 
 val ie = userAgent.internet_explorer // Mozilla/5.0 (compatible; MSIE 5.0; Windows NT 5.2; Trident/3.0)
 
 val opera = userAgent.opera // Opera/8.22.(X11; Linux i686; en-US) Presto/2.9.166 Version/11.00
+
+val browser = userAgent.browser // randomly picks chrome, firefox, ie, opera generated user agents
 
 ```
 

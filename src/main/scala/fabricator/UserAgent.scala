@@ -14,7 +14,7 @@ class UserAgent(private val utility: UtilityService,
 
   def linux_processor: String = utility.getValueFromArray("linux_processor")
 
-  def browser: String = utility.getValueFromArray("browser")
+  def browser_name: String = utility.getValueFromArray("browser")
 
   def windows_platform_token: String = utility.getValueFromArray("windows")
 
@@ -76,6 +76,11 @@ class UserAgent(private val utility: UtilityService,
       windows_platform_token,
       alpha.getInteger(3, 5),
       alpha.getInteger(0, 1))
+  }
+
+  def browser: String = {
+    val browser_user_agents = Array(chrome, firefox, opera, internet_explorer)
+    browser_user_agents(alpha.getInteger(0, browser_user_agents.length - 1))
   }
 
 
