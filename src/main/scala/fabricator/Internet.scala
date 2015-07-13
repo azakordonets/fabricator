@@ -67,7 +67,7 @@ class Internet(private val utility: UtilityService,
 
   def twitter: String = "@" + contact.firstName.toLowerCase + contact.lastName + alpha.getInteger(9999)
 
-  def hashtag: String = "#" + word.words(3).mkString
+  def hashtag: String = "#" + word.words(3).mkString.replaceAll("'", "")
 
   def googleAnalyticsTrackCode: String = "UA-" + alpha.getInteger(10000, 100000) + "-" + alpha.getInteger(10, 100)
 

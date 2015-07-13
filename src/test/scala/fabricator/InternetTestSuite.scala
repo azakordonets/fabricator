@@ -4,6 +4,7 @@ import java.net.URL
 import java.nio.charset.Charset
 
 import com.sun.jndi.toolkit.url.Uri
+import org.testng.AssertJUnit.assertTrue
 import org.testng.annotations.{DataProvider, Test}
 
 import scala.collection.mutable
@@ -194,7 +195,7 @@ class InternetTestSuite extends BaseTestSuite {
   def testHashtag() = {
     val hashtag = internet.hashtag
     if (debugEnabled) logger.debug("Testing random hashtag account name : " + hashtag)
-    assert(hashtag.matches("#([A-Za-z0-9\\-\\_]+)"))
+    assertTrue("Hashtag: "+hashtag, hashtag.matches("#([A-Za-z0-9\\-\\_]+)"))
   }
 
   @Test
