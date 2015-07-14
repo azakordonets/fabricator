@@ -77,7 +77,7 @@ resolvers += Classpaths.sbtPluginReleases
 
 libraryDependencies ++= Seq(
   "com.typesafe.play" %% "play-json" % "2.4.0-M2",
-  "org.testng" % "testng" % "6.8.8" % "test",
+  "org.testng" % "testng" % "6.9.4",
   "org.scalatest" %% "scalatest" % "3.0.0-SNAP4" % "test",
   "com.github.nscala-time" %% "nscala-time" % "1.2.0",
   "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2",
@@ -87,7 +87,9 @@ libraryDependencies ++= Seq(
   "org.iban4j" % "iban4j" % "2.1.1",
   "commons-validator" % "commons-validator" % "1.4.0",
   "com.google.inject" % "guice" % "3.0",
-  "com.github.tototoshi" % "scala-csv_2.10" % "1.1.2"
+  "com.github.tototoshi" % "scala-csv_2.10" % "1.1.2",
+  "com.google.zxing" % "core" % "3.2.0"
+
 )
 
 
