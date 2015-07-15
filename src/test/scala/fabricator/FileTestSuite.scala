@@ -13,20 +13,20 @@ class FileTestSuite extends BaseTestSuite {
   protected val csvFilePath: String = "generatedFiles/result.csv"
   protected var fileObject: File = null
   // File extensions
-  private val audioExtensionList = util.getArrayFromJson("audio_file_extensions")
-  private val imageExtensionList = util.getArrayFromJson("image_file_extensions")
-  private val textExtensionList = util.getArrayFromJson("text_file_extensions")
-  private val docExtensionList = util.getArrayFromJson("document_file_extensions")
-  private val videoExtensionList = util.getArrayFromJson("video_file_extensions")
+  private lazy val audioExtensionList = util.getArrayFromJson("audio_file_extensions")
+  private lazy val imageExtensionList = util.getArrayFromJson("image_file_extensions")
+  private lazy val textExtensionList = util.getArrayFromJson("text_file_extensions")
+  private lazy val docExtensionList = util.getArrayFromJson("document_file_extensions")
+  private lazy val videoExtensionList = util.getArrayFromJson("video_file_extensions")
   //Mime types
-  val applicationMimeTypes = util.getArrayFromJson("application_mime_types")
-  val audioMimeTypes =  util.getArrayFromJson("audio_mime_types")
-  val imageMimeTypes =  util.getArrayFromJson("image_mime_types")
-  val messageMimeTypes =  util.getArrayFromJson("message_mime_types")
-  val modelMimeTypes =  util.getArrayFromJson("model_mime_types")
-  val multipartMimeTypes =  util.getArrayFromJson("multipart_mime_types")
-  val textMimeTypes =  util.getArrayFromJson("text_mime_types")
-  val videoMimeTypes =  util.getArrayFromJson("video_mime_types")
+  private lazy val applicationMimeTypes = util.getArrayFromJson("application_mime_types")
+  private lazy val audioMimeTypes =  util.getArrayFromJson("audio_mime_types")
+  private lazy val imageMimeTypes =  util.getArrayFromJson("image_mime_types")
+  private lazy val messageMimeTypes =  util.getArrayFromJson("message_mime_types")
+  private lazy val modelMimeTypes =  util.getArrayFromJson("model_mime_types")
+  private lazy val multipartMimeTypes =  util.getArrayFromJson("multipart_mime_types")
+  private lazy val textMimeTypes =  util.getArrayFromJson("text_mime_types")
+  private lazy val videoMimeTypes =  util.getArrayFromJson("video_mime_types")
 
 
 
@@ -62,9 +62,9 @@ class FileTestSuite extends BaseTestSuite {
     val fileOnADrive: File = new File(csvFilePath)
     fileObject = fileOnADrive
     assert(fileObject.exists())
-    val line = CSVReader.open(fileOnADrive).readNext()
+    val line = CSVReader.open(fileOnADrive).all()
     val firstNameList: Array[String] = util.getArrayFromJson("first_name")
-    assert(firstNameList.contains(line.get.head))
+    assert(firstNameList.contains(line(1).head))
   }
 
   @Test
@@ -84,12 +84,11 @@ class FileTestSuite extends BaseTestSuite {
     val reader = CSVReader.open(fileOnADrive)
     val lines = reader.all()
     val numberOfRowsInFile = lines.length
-    assertResult(numberOfRows)(numberOfRowsInFile)
+    assertResult(numberOfRows + 1)(numberOfRowsInFile)
     // assert that inserted data is correct
-    val line = reader.readNext()
     val occupationList: Array[String] = util.getArrayFromJson("occupation")
-    assert(occupationList.contains(lines.head.head.split("\\|").head))
-//    assertResult(codes.length)(lines.head.head.split("\\|").size)
+    assert(occupationList.contains(lines(1).head.split("\\|").head))
+    assertResult(codes.length)(lines.head.head.split("\\|").size)
   }
 
   @Test

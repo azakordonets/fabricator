@@ -4,11 +4,11 @@ import org.testng.annotations.Test
 
 class UserAgentTestSuite extends BaseTestSuite {
 
-  val macProcessorList: Array[String] = util.getArrayFromJson("mac_processor")
-  val linuxProcessorList: Array[String] = util.getArrayFromJson("linux_processor")
-  val browsersList: Array[String] = util.getArrayFromJson("browser")
-  val windowsPlatformList: Array[String] = util.getArrayFromJson("windows")
-  val userAgent = UserAgent()
+  lazy val macProcessorList: Array[String] = util.getArrayFromJson("mac_processor")
+  lazy val linuxProcessorList: Array[String] = util.getArrayFromJson("linux_processor")
+  lazy val browsersList: Array[String] = util.getArrayFromJson("browser")
+  lazy val windowsPlatformList: Array[String] = util.getArrayFromJson("windows")
+  lazy val userAgent = UserAgent()
 
   @Test
   def testMacProcessor() = {

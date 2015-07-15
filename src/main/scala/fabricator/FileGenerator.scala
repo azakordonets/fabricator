@@ -16,13 +16,13 @@ object FileGenerator {
   def apply(): FileGenerator = {
     new FileGenerator( Alphanumeric(), new Random(),
       Contact(), Words(), Calendar(), Finance(),
-      Internet(), Location(), Mobile(), UtilityService())
+      Internet(), Location(), Mobile(), UserAgent(), UtilityService())
   }
 
   def apply(locale: String): FileGenerator = {
     new FileGenerator(Alphanumeric(), new Random(),
       Contact(locale), Words(locale), Calendar(locale), Finance(locale),
-      Internet(locale), Location(locale), Mobile(), UtilityService())
+      Internet(locale), Location(locale), Mobile(), UserAgent(), UtilityService())
   }
 
 }
@@ -36,6 +36,7 @@ class FileGenerator(private val alpha: Alphanumeric,
                     private val internet: Internet,
                     private val location: Location,
                     private val mobile: Mobile,
+                   private val user_agent: UserAgent,
                      private val utility: UtilityService) {
 
   def image(width: Int, height: Int, path: String) = {
@@ -89,16 +90,30 @@ class FileGenerator(private val alpha: Alphanumeric,
   def csvFromCodes(codes: Array[String], rows: Int, path: String): Unit = csvFromCodes(codes, rows, path, ',')
 
   def csvFromCodes(codes: Array[String], rows: Int, path: String, customDelimiter: Char): Unit = {
+    writeCsvFileData(generateTitles(codes, customDelimiter), codes, rows, path, customDelimiter)
+  }
+
+  private def writeCsvFileData(titles: Array[String], values: Seq[String], rows: Int, path: String, delimeter: Char) = {
     val expectedFile = new File(path)
+    if (!expectedFile.exists) expectedFile.createNewFile
     implicit object MyFormat extends DefaultCSVFormat {
-      override val delimiter = customDelimiter
+      override val delimiter = delimeter
     }
     val writer = CSVWriter.open(expectedFile)
+    writer.writeRow(titles)
     for (i <- 0 to rows - 1) {
-      val generatedMap = codes.map(x => generateValue(x))
+      val generatedMap = values.map(x => generateValue(x))
       writer.writeRow(generatedMap)
     }
     writer.close()
+  }
+
+  def generateTitles(codes: Array[String], delimeter: Char): Array[String] = {
+    val titles = new Array[String](codes.length)
+    for (i <- codes.indices) {
+      titles(i) = matchColumnTitle(codes(i))
+    }
+    titles
   }
 
   def fileName: String = fileName(FileType.getRandom)
@@ -153,7 +168,7 @@ class FileGenerator(private val alpha: Alphanumeric,
       case "birthday" => contact.birthday(alpha.getInteger(21, 80))
       case "email" => contact.eMail
       case "phone" => contact.phoneNumber
-      case "address" => contact.streetName + " " + contact.houseNumber + ", " + contact.apartmentNumber
+      case "address" => contact.address
       case "postcode" => contact.postcode
       case "bsn" => contact.bsn
       case "height" => contact.height(cm = false)
@@ -163,6 +178,7 @@ class FileGenerator(private val alpha: Alphanumeric,
       case "master" => finance.mastercreditCard
       case "iban" => finance.iban
       case "bic" => finance.bic
+      case "ssn" => finance.ssn
       case "url" => internet.urlBuilder.toString()
       case "ip" => internet.ip
       case "macaddress" => internet.macAddress
@@ -182,9 +198,60 @@ class FileGenerator(private val alpha: Alphanumeric,
       case "android" => mobile.androidGsmId
       case "windows7Token" => mobile.wp7_anid
       case "windows8Token" => mobile.wp8_anid2
+      case "user_agent" => user_agent.chrome
       case "word" => words.word
       case "sentence" => words.sentence(10)
       case _ => throw new IllegalArgumentException(code + " is an incorrect code value")
+    }
+  }
+
+  private def matchColumnTitle(value: String): String = {
+    value match {
+      case "integer" => "Integer"
+      case "double" => "Double"
+      case "hash" => "Hash"
+      case "guid" => "Guid"
+      case "time" => "Time"
+      case "date" => "Date"
+      case "name" => "Name"
+      case "first_name" => "First Name"
+      case "last_name" => "Last Name"
+      case "birthday" => "Birthday"
+      case "email" => "Email"
+      case "phone" => "Phone"
+      case "address" => "Address"
+      case "postcode" => "Postcode"
+      case "bsn" => "Bsn"
+      case "ssn" => "Ssn"
+      case "height" => "Height"
+      case "weight" => "Weight"
+      case "occupation" => "Occupation"
+      case "visa" => "Visa"
+      case "master" => "Master"
+      case "iban" => "Iban"
+      case "bic" => "Bic"
+      case "url" => "Url"
+      case "ip" => "Ip"
+      case "macaddress" => "Mac Address"
+      case "uuid" => "Uuid"
+      case "color" => "Color"
+      case "twitter" => "Twitter"
+      case "hashtag" => "Hashtag"
+      case "facebook" => "Facebook"
+      case "google_analytics" => "Google Analytics"
+      case "altitude" => "Altitude"
+      case "depth" => "Depth"
+      case "latitude" => "Latitude"
+      case "longitude" => "Longitude"
+      case "coordinates" => "Coordinates"
+      case "geohash" => "Geohash"
+      case "apple_token" => "Apple Token"
+      case "android" => "Android Token"
+      case "windows7Token" => "Windows 7 token"
+      case "windows8Token" => "Windows 8 token"
+      case "word" => "Word"
+      case "sentence" => "Sentence"
+      case _ => value.toString
     }
   }
 

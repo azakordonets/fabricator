@@ -8,7 +8,7 @@ import org.testng.annotations.{DataProvider, Test}
 
 class CalendarTestSuite extends BaseTestSuite {
 
-  val days_of_week_list = util.getArrayFromJson("day_of_week")
+  lazy val days_of_week_list = util.getArrayFromJson("day_of_week")
 
   @Test
   def testCustomConstructor()  {
