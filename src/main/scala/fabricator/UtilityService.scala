@@ -3,20 +3,15 @@ package fabricator
 import java.io.FileInputStream
 import java.util.Properties
 
-import play.api.libs.json.{JsValue, Json}
+import fabricator.entities.RandomDataKeeper
 
-import scala.io.Source
 import scala.util.Random
 
 case class UtilityService(lang: String = "us", private val random: Random = new Random()) {
 
-  private val valuesJson = parseFile(lang + ".json")
+  private lazy val valuesJson = RandomDataKeeper.getJson(lang)
 
-  private val wordsJson = parseFile("words_" + lang + ".json")
-
-  private def parseFile(fileName: String): JsValue  = {
-    Json.parse(Source.fromInputStream(getClass.getClassLoader.getResourceAsStream(fileName))("UTF-8").mkString)
-  }
+  private lazy val wordsJson = RandomDataKeeper.getJson("words_" + lang)
 
   if (valuesJson == null) throw new Exception(lang + ".json doesn't exist. ")
 

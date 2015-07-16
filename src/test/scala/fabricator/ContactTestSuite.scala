@@ -28,7 +28,7 @@ class ContactTestSuite extends BaseTestSuite {
 
   @Test
   def testCustomConstructor()  {
-    val customContact = fabricator.Contact("us")
+    val customContact = fabricator.Contact("de")
     assert(customContact != null)
   }
 
