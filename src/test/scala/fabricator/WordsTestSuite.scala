@@ -18,8 +18,7 @@ class WordsTestSuite extends BaseTestSuite {
       Array("100"),
       Array("1000"),
       Array("4000"),
-      Array("10000"),
-      Array("100000")
+      Array("9500")
     )
   }
 

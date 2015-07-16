@@ -38,7 +38,7 @@ class Words(private val utility: UtilityService) {
   def words(): Array[String] = words(10)
 
   def words(quantity: Int): Array[String] = {
-    if (quantity > 100000) throw new Exception("Maximum allowed quantity is limited to 100,000 words ")
+    if (quantity >= 10000) throw new Exception("Maximum allowed quantity is limited to 100,000 words ")
     val resultSet: mutable.Set[String] = mutable.Set()
     while(resultSet.size != quantity) {
       resultSet.add(wordsList(Random.nextInt(wordsList.length - 1)))
