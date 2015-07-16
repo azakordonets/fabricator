@@ -13,7 +13,7 @@ class FinanceTestSuite extends BaseTestSuite {
 
   @Test
   def testIban() = {
-    var iban = finance.iban
+    val iban = finance.iban
     if (debugEnabled) logger.debug("Testing random IBAN number : " + iban)
     val check: IBANCheckDigit = new IBANCheckDigit()
     assert(check.isValid(iban))
