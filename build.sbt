@@ -9,6 +9,8 @@ lazy val commonSettings = Seq(
 
 )
 
+scalacOptions += "-target:jvm-1.7"
+
 name := "fabricator"
 
 version := "1.0.5"
@@ -82,6 +84,7 @@ libraryDependencies ++= Seq(
   "com.github.nscala-time" %% "nscala-time" % "1.2.0",
   "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2",
   "org.slf4j" % "slf4j-api" % "1.7.1",
+  "org.reflections" % "reflections" % "0.9.10",
   "ch.qos.logback" % "logback-classic" % "1.0.3",
   "com.spatial4j" % "spatial4j" % "0.4.1",
   "org.iban4j" % "iban4j" % "2.1.1",

@@ -406,7 +406,7 @@ class CalendarTestSuite extends BaseTestSuite {
   def testRelativeDateCustomTimeZone() = {
     val expectedDate = DateTime.now(DateTimeZone.UTC)
     val date = calendar.relativeDate(DateTimeZone.UTC).asDate()
-    assertResult(expectedDate)(date)
+    assertResult(expectedDate.toString(defaultFormat))(date.toString(defaultFormat))
   }
 
   @Test

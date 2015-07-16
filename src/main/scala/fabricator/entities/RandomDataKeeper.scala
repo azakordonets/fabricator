@@ -1,7 +1,10 @@
 package fabricator.entities
 
-import java.io.File
+import java.util.regex.Pattern
 
+import org.reflections.Reflections
+import org.reflections.scanners.ResourcesScanner
+import org.reflections.util.{ClasspathHelper, ConfigurationBuilder}
 import play.api.libs.json.{JsValue, Json}
 
 import scala.collection.mutable
@@ -12,13 +15,11 @@ object RandomDataKeeper {
   private val randomDataStorage: mutable.Map[String, String] = mutable.HashMap[String, String]()
 
   private def getResourcesList: Set[String] = {
-    val resourceFolderPath = new File(getClass.getClassLoader.getResource("us.json").toString).getParentFile.getPath.substring(5)
-    val resourceFilesList = new File(resourceFolderPath).listFiles()
-                                                        .filter(_.isFile)
-                                                        .map(_.getName)
-                                                        .filter(fileName => fileName.matches(".*\\.json"))
-                                                        .toSet
-    resourceFilesList
+    val reflections = new Reflections(new ConfigurationBuilder()
+      .setUrls(ClasspathHelper.forPackage("fabricator"))
+      .setScanners(new ResourcesScanner()))
+    val fileNames = reflections.getResources(Pattern.compile(".*\\.json")).toArray.map(_.toString.replaceAll("data_files/", ""))
+    fileNames.toSet[String]
   }
 
   private def parseLanguageDataFiles() = {
@@ -27,7 +28,7 @@ object RandomDataKeeper {
   }
 
   private def parseFile(fileName: String): String  = {
-    Source.fromInputStream(getClass.getClassLoader.getResourceAsStream(fileName))("UTF-8").mkString
+    Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("data_files/" + fileName))("UTF-8").mkString
   }
 
   def getJson(locale: String = "us"): JsValue = {
