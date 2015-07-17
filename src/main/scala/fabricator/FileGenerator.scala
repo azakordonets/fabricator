@@ -165,7 +165,7 @@ class FileGenerator(private val alpha: Alphanumeric,
       case "name" => contact.fullName(setPrefix = false, setSuffix = false)
       case "first_name" => contact.firstName
       case "last_name" => contact.lastName
-      case "birthday" => calendar.randomDate.inYear(alpha.getInteger(21, 80)).asString
+      case "birthday" => calendar.randomDate.inYear(alpha.getInteger(1900, 2000)).asString
       case "email" => contact.eMail
       case "phone" => contact.phoneNumber
       case "address" => contact.address

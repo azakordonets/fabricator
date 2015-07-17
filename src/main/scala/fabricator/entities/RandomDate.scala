@@ -21,11 +21,13 @@ class RandomDate {
 
   def inYear(year: Int): this.type = {
     this.year = year
+    this.day = cal.day(year, this.month).toInt
     this
   }
 
   def inMonth(month: Int): this.type = {
     this.month = month
+    this.day = cal.day(this.year, month).toInt
     this
   }
 
