@@ -161,11 +161,11 @@ class FileGenerator(private val alpha: Alphanumeric,
       case "hash" => alpha.hash
       case "guid" => alpha.guid
       case "time" => calendar.time24h
-      case "date" => calendar.date.asString()
+      case "date" => calendar.randomDate.asString
       case "name" => contact.fullName(setPrefix = false, setSuffix = false)
       case "first_name" => contact.firstName
       case "last_name" => contact.lastName
-      case "birthday" => calendar.date.inYear(alpha.getInteger(21, 80)).asString
+      case "birthday" => calendar.randomDate.inYear(alpha.getInteger(21, 80)).asString
       case "email" => contact.eMail
       case "phone" => contact.phoneNumber
       case "address" => contact.address

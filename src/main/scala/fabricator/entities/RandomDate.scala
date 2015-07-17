@@ -68,21 +68,21 @@ class RandomDate {
     this
   }
 
-  private def makeDate(): DateTime = {
+  private def makeDate: DateTime = {
     date = new DateTime(year, month, day, hour, minute)
     date
   }
 
-  def asDate(): DateTime = {
-    makeDate()
+  def asDate: DateTime = {
+    makeDate
   }
 
-  def asString(): String = {
+  def asString: String = {
     asString(DateFormat.dd_MM_yyyy)
   }
 
   def asString(format: DateFormat): String = {
-    val date = makeDate()
+    val date = makeDate
     date.toString(format.getFormat)
   }
 

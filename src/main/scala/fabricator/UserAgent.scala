@@ -35,9 +35,9 @@ class UserAgent(private val utility: UtilityService,
   }
 
   def firefox: String = {
-    val version = Array("Gecko/%s Firefox/%d.0".format(calendar.date.inYear(2011).asString(), alpha.getInteger(4, 15)),
-                        "Gecko/%s Firefox/3.6.%d".format(calendar.date.inYear(2011).asString(), alpha.getInteger(1, 20)),
-                        "Gecko/%s Firefox/3.8".format(calendar.date.inYear(2011).asString())
+    val version = Array("Gecko/%s Firefox/%d.0".format(calendar.randomDate.inYear(2011).asString, alpha.getInteger(4, 15)),
+                        "Gecko/%s Firefox/3.6.%d".format(calendar.randomDate.inYear(2011).asString, alpha.getInteger(1, 20)),
+                        "Gecko/%s Firefox/3.8".format(calendar.randomDate.inYear(2011).asString)
                         )
     val windows_template: String = "(%s; %s; rv:1.9.%d.20) %s"
     val linux_template: String = "(%s; rv:1.9.%d.20) %s"

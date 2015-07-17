@@ -18,7 +18,7 @@ class CalendarTestSuite extends BaseTestSuite {
 
   @Test
   def testDefaultDateGetter() = {
-    val date = calendar.date.asString()
+    val date = calendar.randomDate.asString
     if (debugEnabled) logger.debug("Checking default date value " + date)
     assert(date.matches("\\d{2}-\\d{2}-\\d{4}"))
   }
@@ -57,7 +57,7 @@ class CalendarTestSuite extends BaseTestSuite {
 
   @Test(dataProvider = "dateFormats")
   def testDateGetterWithDifferentFormats(format: DateFormat, regex: String) = {
-    val date = calendar.date.asString(format)
+    val date = calendar.randomDate.asString(format)
     if (debugEnabled) logger.debug("Checking date value with " + format + " format :" + date)
     assert(date.matches(regex))
   }
@@ -70,13 +70,13 @@ class CalendarTestSuite extends BaseTestSuite {
     val hour = calendar.hour12h.toInt
     val minute = calendar.minute.toInt
     val expectedDate = new DateTime(year, month, day, hour, minute)
-    val date = calendar.date
+    val date = calendar.randomDate
       .inYear(year)
       .inMonth(month)
       .inDay(day)
       .inHour(hour)
       .inMinute(minute)
-      .asDate()
+      .asDate
     assertResult(expectedDate)(date)
   }
 
@@ -208,7 +208,7 @@ class CalendarTestSuite extends BaseTestSuite {
 
   @Test(dataProvider = "dateDP")
   def testDate(year: Int, month: Int, day: Int, hour: Int, minute: Int, expectedResult: String) = {
-    val date = calendar.date
+    val date = calendar.randomDate
                         .inYear(year)
                         .inMonth(month)
                         .inDay(day)
@@ -221,7 +221,7 @@ class CalendarTestSuite extends BaseTestSuite {
 
   @Test
   def testDateInTime() = {
-    val date = calendar.date.inTime(10, 10).asDate()
+    val date = calendar.randomDate.inTime(10, 10).asDate
     assert(date.getHourOfDay == 10)
     assert(date.getMinuteOfHour == 10)
   }
@@ -337,7 +337,7 @@ class CalendarTestSuite extends BaseTestSuite {
     val day = calendar.day(year, month).toInt
     val hour = calendar.hour12h.toInt
     val minute = calendar.minute.toInt
-    val date = calendar.date
+    val date = calendar.randomDate
                         .inYear(year)
                         .inMonth(month)
                         .inDay(day)
