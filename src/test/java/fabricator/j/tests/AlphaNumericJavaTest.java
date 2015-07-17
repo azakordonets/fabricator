@@ -96,48 +96,48 @@ public class AlphaNumericJavaTest extends JavaBaseTest {
 
 	@Test
 	public void testJavaDefaultInteger() {
-		int integer = alpha.getInteger();
+		int integer = alpha.randomInt();
 		assertTrue(integer >= 0 && integer <= 1000);
 	}
 
 	@Test
 	public void testJavaDefaultDouble() {
-		Double result = alpha.getDouble();
+		Double result = alpha.randomDouble();
 		assertTrue(result >= 0 && result <= 1000);
 		assertTrue(result instanceof Double);
 	}
 
 	@Test
 	public void testJavaDefaultFloat() {
-		Float floatValue = alpha.getFloat();
+		Float floatValue = alpha.randomFloat();
 		assertTrue(floatValue > 0 && floatValue < 1000);
 		assertTrue(floatValue instanceof Float);
 	}
 
 	@Test
 	public void testJavaDefaultBoolean() {
-		Boolean booleanValue = alpha.getBoolean();
+		Boolean booleanValue = alpha.randomBoolean();
 		assertTrue(booleanValue || !booleanValue);
 		assertTrue(booleanValue instanceof Boolean);
 	}
 
 	@Test
 	public void testJavaDefaultGausian() {
-		Double gausian = alpha.getGausian();
+		Double gausian = alpha.randomGausian();
 		assertTrue(gausian < 1000);
 		assertTrue(gausian instanceof Double);
 	}
 
 	@Test
 	public void testJavaDefaultString() {
-		String string = alpha.getString();
+		String string = alpha.randomString();
 		assertTrue(string.length() == 30);
 		assertTrue(string instanceof String);
 	}
 
 	@Test
 	public void testJavaCustomString() {
-		String extendedString = alpha.getString(50);
+		String extendedString = alpha.randomString(50);
 		assertTrue(extendedString.length() == 50);
 		assertTrue(extendedString instanceof String );
 	}
@@ -154,7 +154,7 @@ public class AlphaNumericJavaTest extends JavaBaseTest {
 
 	@Test(dataProvider = "charSets")
 	public void testJavaCustomStringWithSpecificCharSet(String charSet, int max)  {
-		String string = alpha.getString(charSet, max);
+		String string = alpha.randomString(charSet, max);
 		assert(string.length() == max);
 		for (int i = 0; i < string.length(); i++) {
 			final char c = string.charAt(i);
@@ -164,7 +164,7 @@ public class AlphaNumericJavaTest extends JavaBaseTest {
 	
 	@Test
 	public void testJavaDefaultStringList() {
-		final List<String> stringsJavaList = alpha.getStringsAsJavaList();
+		final List<String> stringsJavaList = alpha.randomStringsAsJavaList();
 		assert(stringsJavaList.size() == 100);
 		for (String string : stringsJavaList){
 			assert(string.length() >= 5 && string.length() <= 100);
@@ -173,7 +173,7 @@ public class AlphaNumericJavaTest extends JavaBaseTest {
 
 	@Test
 	public void testJavaCustomStringList() {
-		final List<String> stringsJavaList = alpha.getStringsAsJavaList(10, 10, 20);
+		final List<String> stringsJavaList = alpha.randomStringsAsJavaList(10, 10, 20);
 		assert(stringsJavaList.size() == 20);
 		for (String string : stringsJavaList){
 			assert(string.length() >= 10 && string.length() <= 10);
@@ -182,9 +182,9 @@ public class AlphaNumericJavaTest extends JavaBaseTest {
 
 	@Test
 	public void testJavaCustomNumberType() {
-		final int integer = alpha.getInteger(100);
-		final Double aDouble = alpha.getDouble(100);
-		final Float aFloat = alpha.getFloat(100);
+		final int integer = alpha.randomInt(100);
+		final Double aDouble = alpha.randomDouble(100);
+		final Float aFloat = alpha.randomFloat(100);
 		assertTrue(integer <= 100);
 		assertTrue(aDouble <= 100);
 		assertTrue(aDouble instanceof Double);
@@ -194,9 +194,9 @@ public class AlphaNumericJavaTest extends JavaBaseTest {
 	
 	@Test
 	public void testJavaNumbersRandomRange() {
-		final int integer = alpha.getInteger(100, 300);
-		final Double aDouble = alpha.getDouble(100, 300);
-		final Float aFloat = alpha.getFloat(100, 300);
+		final int integer = alpha.randomInt(100, 300);
+		final Double aDouble = alpha.randomDouble(100, 300);
+		final Float aFloat = alpha.randomFloat(100, 300);
 		assertTrue(integer >= 100 && integer <= 300);
 		assertTrue(aDouble >= 100 && aDouble <= 300);
 		assertTrue(aDouble instanceof Double);
@@ -206,50 +206,50 @@ public class AlphaNumericJavaTest extends JavaBaseTest {
 	
 	@Test
 	public void testJavaIntRangeWithStep() {
-		final List<Object> integerRangeAsJavaList = alpha.getIntegerRangeAsJavaList(1, 10, 1);
+		final List<Object> integerRangeAsJavaList = alpha.randomIntsRangeAsJavaList(1, 10, 1);
 		ArrayList<Integer> expectedList = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10));
 		assertEquals(expectedList, integerRangeAsJavaList);
 	}
 	
 	@Test(expectedExceptions = IllegalArgumentException.class)
 	public void testJavaIntRangeWithStepException() {
-		alpha.getIntegerRangeAsJavaList(100, 200, 0);
+		alpha.randomIntsRangeAsJavaList(100, 200, 0);
 	}
 
 	@Test
 	public void testJavaDoubleRangeWithStep() {
-		final List<Object> doubleRangeAsJavaList = alpha.getDoubleRangeAsJavaList(1, 10, 1);
+		final List<Object> doubleRangeAsJavaList = alpha.randomDoublesRangeAsJavaList(1, 10, 1);
 		ArrayList<Double> expectedList = new ArrayList<>(Arrays.asList(1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0, 10.0));
 		assertEquals(expectedList, doubleRangeAsJavaList);
 	}
 
 	@Test(expectedExceptions = IllegalArgumentException.class)
 	public void testJavaDoubleRangeWithStepException() {
-		alpha.getDoubleRangeAsJavaList(100, 200, 0);
+		alpha.randomDoublesRangeAsJavaList(100, 200, 0);
 	}
 
 	@Test
 	public void testJavaFloatRangeWithStep() {
-		final List<Object> floatRangeAsJavaList = alpha.getFloatRangeAsJavaList(1, 10, 1);
+		final List<Object> floatRangeAsJavaList = alpha.randomFloatsRangeAsJavaList(1, 10, 1);
 		ArrayList<Float> expectedList = new ArrayList<>(Arrays.asList(1.0f,2.0f,3.0f,4.0f,5.0f,6.0f,7.0f,8.0f,9.0f, 10.0f));
 		assertEquals(expectedList, floatRangeAsJavaList);
 	}
 
 	@Test(expectedExceptions = IllegalArgumentException.class)
 	public void testJavaFloatRangeWithStepException() {
-		alpha.getFloatRangeAsJavaList(100, 200, 0);
+		alpha.randomFloatsRangeAsJavaList(100, 200, 0);
 	}
 	
 	@Test
 	public void testStringsAsJavaList()  {
 		// check default method
-		final List<String> stringsAsJavaList = alpha.getStringsAsJavaList();
+		final List<String> stringsAsJavaList = alpha.randomStringsAsJavaList();
 		assertEquals(100, stringsAsJavaList.size());
 		for (String el: stringsAsJavaList) {
 			assertTrue(el.length() >= 5 && el.length() <=100);
 		}
 		//check custom method
-		final List<String> stringsAsJavaListCustom = alpha.getStringsAsJavaList(30, 40, 20);
+		final List<String> stringsAsJavaListCustom = alpha.randomStringsAsJavaList(30, 40, 20);
 		assertEquals(20, stringsAsJavaListCustom.size());
 		for (String el: stringsAsJavaListCustom) {
 			assertTrue(el.length() >= 5 && el.length() <=100);
@@ -259,20 +259,20 @@ public class AlphaNumericJavaTest extends JavaBaseTest {
 
 	@Test
 	public void testJavaHash()  {
-		String hash = alpha.hash();
+		String hash = alpha.randomHash();
 		assertEquals(40, hash.length());
-		String customLengthHash = alpha.hash(10);
+		String customLengthHash = alpha.randomHash(10);
 		assertEquals(10, customLengthHash.length());
 	}
 	
 	@Test
 	public void testHashAsDefaultJavaList() {
-		final List<String> hashStrings = alpha.hashAsJavaList();
+		final List<String> hashStrings = alpha.randomHashAsJavaList();
 		assertEquals(100, hashStrings.size());
 		for (String el: hashStrings) {
 			assertEquals(40, el.length());
 		}
-		final List<String> hashStringsCustom = alpha.hashAsJavaList(10, 60, 10);
+		final List<String> hashStringsCustom = alpha.randomHashAsJavaList(10, 60, 10);
 		assertEquals(10, hashStringsCustom.size());
 		for (String el: hashStringsCustom) {
 			assertTrue(el.length()  >= 10 && el.length() <=60);
@@ -281,7 +281,7 @@ public class AlphaNumericJavaTest extends JavaBaseTest {
 
 	@Test
 	public void testHashAsCustomJavaList() {
-		final List<String> hashStringsCustom = alpha.hashAsJavaList(10, 60, 10);
+		final List<String> hashStringsCustom = alpha.randomHashAsJavaList(10, 60, 10);
 		assertEquals(10, hashStringsCustom.size());
 		for (String el: hashStringsCustom) {
 			assertTrue(el.length()  >= 10 && el.length() <=60);
@@ -290,7 +290,7 @@ public class AlphaNumericJavaTest extends JavaBaseTest {
 
 	@Test
 	public void testHashAsCustomJavaListWithSameMinMax() {
-		final List<String> hashStringsCustom = alpha.hashAsJavaList(10, 10, 20);
+		final List<String> hashStringsCustom = alpha.randomHashAsJavaList(10, 10, 20);
 		assertEquals(20, hashStringsCustom.size());
 		for (String el: hashStringsCustom) {
 			assertTrue(el.length() == 10);
@@ -299,15 +299,15 @@ public class AlphaNumericJavaTest extends JavaBaseTest {
 
 	@Test
 	public void testJavaGuid()  {
-		String guid = alpha.guid();
+		String guid = alpha.randomGuid();
 		assertTrue(guid.matches("\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}"));
 	}
 
 	@Test
 	public void testGuidAsJavaList() {
-		final List<String> guidStrings = alpha.guidAsJavaList();
+		final List<String> guidStrings = alpha.randomGuidAsJavaList();
 		assertEquals(100, guidStrings.size());
-		final List<String> guidStringsCustom = alpha.guidAsJavaList(10, 20);
+		final List<String> guidStringsCustom = alpha.randomGuidAsJavaList(10, 20);
 		assertEquals(20, guidStringsCustom.size());
 	}
 	

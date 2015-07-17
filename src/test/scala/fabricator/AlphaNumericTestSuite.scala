@@ -82,7 +82,7 @@ class AlphaNumericTestSuite extends BaseTestSuite {
 
   @Test
   def testDefaultInteger() {
-    val integer = alpha.getInteger
+    val integer = alpha.randomInt
     if (debugEnabled) logger.debug("Checking default integer function. Should return random integer below 1000 : " + integer)
     assert(0 to 1000 contains integer)
     assert(integer.isInstanceOf[Int])
@@ -90,7 +90,7 @@ class AlphaNumericTestSuite extends BaseTestSuite {
 
   @Test
   def testDefaultDouble() {
-    val double = alpha.getDouble
+    val double = alpha.randomDouble
     if (debugEnabled) logger.debug("Checking default double function. Should return random double below 1000 : " + double)
     assert(double > 0 && double < 1000)
     assert(double.isInstanceOf[Double])
@@ -98,7 +98,7 @@ class AlphaNumericTestSuite extends BaseTestSuite {
 
   @Test
   def testDefaultFloat() {
-    val float = alpha.getFloat
+    val float = alpha.randomFloat
     if (debugEnabled) logger.debug("Checking default float function. Should return random float below 1000 : " + float)
     assert(float > 0 && float < 1000)
     assert(float.isInstanceOf[Float])
@@ -106,7 +106,7 @@ class AlphaNumericTestSuite extends BaseTestSuite {
 
   @Test
   def testDefaultGausian() {
-    val gausian = alpha.getGausian
+    val gausian = alpha.randomGausian
     if (debugEnabled) logger.debug("Checking default gausian function. Should return random gausian below 1000 : " + gausian)
     assert(gausian < 1000)
     assert(gausian.isInstanceOf[Double])
@@ -117,7 +117,7 @@ class AlphaNumericTestSuite extends BaseTestSuite {
     var trueCount = 0
     var falseCount = 0
     for (i <- 0 to 100) {
-      val boolean = alpha.getBoolean
+      val boolean = alpha.randomBoolean
       if (boolean) trueCount = trueCount + 1
       else falseCount = falseCount + 1
     }
@@ -126,7 +126,7 @@ class AlphaNumericTestSuite extends BaseTestSuite {
 
   @Test
   def testDefaultString() {
-    val string = alpha.getString
+    val string = alpha.randomString
     if (debugEnabled) logger.debug("Checking default string function. Should return random string below 30 : " + string)
     assert(string.length == 30)
     assert(string.isInstanceOf[String])
@@ -134,7 +134,7 @@ class AlphaNumericTestSuite extends BaseTestSuite {
 
   @Test
   def testCustomString() {
-    val extendedString = alpha.getString(50)
+    val extendedString = alpha.randomString(50)
     if (debugEnabled) logger.debug("Checking default extendedString function. Should return random extendedString below 50 : " + extendedString)
     assert(extendedString.length == 50)
     assert(extendedString.isInstanceOf[String])
@@ -142,14 +142,14 @@ class AlphaNumericTestSuite extends BaseTestSuite {
 
   @Test
   def testDefaultStringsList() {
-    val strings = alpha.getStrings
+    val strings = alpha.randomStrings
     assertResult(100)(strings.length)
     strings.foreach(string => assert(string.length >= 5 && string.length <= 100))
   }
 
   @Test
   def testCustomStringsList() {
-    val strings = alpha.getStrings(10, 10, 20)
+    val strings = alpha.randomStrings(10, 10, 20)
     assertResult(20)(strings.length)
     strings.foreach(string => assert(string.length >= 10 && string.length <= 10))
   }
@@ -165,7 +165,7 @@ class AlphaNumericTestSuite extends BaseTestSuite {
 
   @Test(dataProvider = "charSets")
   def testCustomStringWithSpecificCharSet(charSet: String, max: Int) = {
-    val string = alpha.getString(charSet, max)
+    val string = alpha.randomString(charSet, max)
     if (debugEnabled) logger.debug("Checking default extendedString function. Should return random extendedString below " + max + " : " + string)
     assert(string.length == max)
     for (symbol <- string) assert(charSet.contains(symbol))
@@ -184,9 +184,9 @@ class AlphaNumericTestSuite extends BaseTestSuite {
   def testCustomNumberType(value: Any, numberType: Any) {
 
     def calculate(numberValue: Any): Any = numberValue match {
-      case numberValue: Int => alpha.getInteger(numberValue)
-      case numberValue: Double => alpha.getDouble(numberValue)
-      case numberValue: Float => alpha.getFloat(numberValue)
+      case numberValue: Int => alpha.randomInt(numberValue)
+      case numberValue: Double => alpha.randomDouble(numberValue)
+      case numberValue: Float => alpha.randomFloat(numberValue)
     }
     val result = calculate(value)
     if (debugEnabled) logger.debug("Checking custom number with " + numberType + " type function. Should return with specific type and below specified value : ")
@@ -206,9 +206,9 @@ class AlphaNumericTestSuite extends BaseTestSuite {
   def testNumbersRandomRange(min: Any, max: Any) {
 
     def calculate(minValue: Any, maxValue: Any): Any = (minValue, maxValue) match {
-      case (min: Int, max: Int) => alpha.getInteger(min, max)
-      case (min: Double, max: Double) => alpha.getDouble(min, max)
-      case (min: Float, max: Float) => alpha.getFloat(min, max)
+      case (min: Int, max: Int) => alpha.randomInt(min, max)
+      case (min: Double, max: Double) => alpha.randomDouble(min, max)
+      case (min: Float, max: Float) => alpha.randomFloat(min, max)
     }
     val actualNumber = calculate(min, max)
     if (debugEnabled) logger.debug("Checking random number in range: " + actualNumber)
@@ -230,12 +230,12 @@ class AlphaNumericTestSuite extends BaseTestSuite {
   def testIntegerRangeWithStep(min: Int, max: Int, step: Int, expectedResult: List[Int]) {
     if (step <= 0) {
       try {
-        alpha.getIntegerRange(min, max, step)
+        alpha.randomIntsRange(min, max, step)
       } catch {
         case e: IllegalArgumentException => assertResult(e.getMessage)("Step should be more then 0")
       }
     } else {
-      val generatedStream = alpha.getIntegerRange(min, max, step)
+      val generatedStream = alpha.randomIntsRange(min, max, step)
       assertResult(expectedResult)(generatedStream)
     }
 
@@ -255,12 +255,12 @@ class AlphaNumericTestSuite extends BaseTestSuite {
   def testDoubleRangeWithStep(min: Double, max: Double, step: Double, expectedResult: List[Double]) {
     if (step <= 0) {
       try {
-        alpha.getDoubleRange(min, max, step)
+        alpha.randomDoublesRange(min, max, step)
       } catch {
         case e: IllegalArgumentException => assertResult(e.getMessage)("Step should be more then 0")
       }
     } else {
-      val generatedStream = alpha.getDoubleRange(min, max, step)
+      val generatedStream = alpha.randomDoublesRange(min, max, step)
       assertResult(expectedResult)(generatedStream)
     }
   }
@@ -279,48 +279,48 @@ class AlphaNumericTestSuite extends BaseTestSuite {
   def testFloatRangeWithStep(min: Float, max: Float, step: Float, expectedResult: List[Float]) {
     if (step <= 0) {
       try {
-        alpha.getFloatRange(min, max, step)
+        alpha.randomFloatsRange(min, max, step)
       } catch {
         case e: IllegalArgumentException => assertResult(e.getMessage)("Step should be more then 0")
       }
     } else {
-      val generatedStream = alpha.getFloatRange(min, max, step)
+      val generatedStream = alpha.randomFloatsRange(min, max, step)
       assertResult(expectedResult)(generatedStream)
     }
   }
 
   @Test
   def testHash() = {
-    val hash = alpha.hash
+    val hash = alpha.randomHash
     if (debugEnabled) logger.debug("Checking random hash number with default length:  " + hash)
     assert(hash.length() == 40)
-    val customLengthHash = alpha.hash(10)
+    val customLengthHash = alpha.randomHash(10)
     if (debugEnabled) logger.debug("Checking random hash number with length = 10:  " + customLengthHash)
     assert(customLengthHash.length == 10)
   }
 
   @Test
   def testHashList() = {
-    val defaultList = alpha.hashList
+    val defaultList = alpha.randomHashList
     assertResult(100)(defaultList.size)
     defaultList.foreach(x => assert(x.length == 40))
-    val customList = alpha.hashList(20, 40, 30)
+    val customList = alpha.randomHashList(20, 40, 30)
     assertResult(30)(customList.size)
     customList.foreach(x => assert(x.length >= 20 && x.length <= 40))
   }
 
   @Test
   def testGuid() = {
-    val guid = alpha.guid
+    val guid = alpha.randomGuid
     if (debugEnabled) logger.debug("Checking random guid number :  " + guid)
     assert(guid.matches("\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}"))
   }
 
   @Test
   def testGuidList() = {
-    val defaultList = alpha.guidList
+    val defaultList = alpha.randomGuidList
     assertResult(100)(defaultList.size)
-    val customList = alpha.guidList(8, 30)
+    val customList = alpha.randomGuidList(8, 30)
     assertResult(30)(customList.size)
   }
 

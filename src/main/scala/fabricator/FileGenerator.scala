@@ -156,16 +156,16 @@ class FileGenerator(private val alpha: Alphanumeric,
 
   private def generateValue(code: String): String = {
     code match {
-      case "integer" => alpha.getInteger.toString
-      case "double" => alpha.getDouble.toString
-      case "hash" => alpha.hash
-      case "guid" => alpha.guid
+      case "integer" => alpha.randomInt.toString
+      case "double" => alpha.randomDouble.toString
+      case "hash" => alpha.randomHash
+      case "guid" => alpha.randomGuid
       case "time" => calendar.time24h
       case "date" => calendar.randomDate.asString
       case "name" => contact.fullName(setPrefix = false, setSuffix = false)
       case "first_name" => contact.firstName
       case "last_name" => contact.lastName
-      case "birthday" => calendar.randomDate.inYear(alpha.getInteger(1900, 2000)).asString
+      case "birthday" => calendar.randomDate.inYear(alpha.randomInt(1900, 2000)).asString
       case "email" => contact.eMail
       case "phone" => contact.phoneNumber
       case "address" => contact.address

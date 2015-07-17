@@ -62,19 +62,19 @@ alpha.letterify("???123") // LsQ123
 
 alpha.botify("???###") // AbC329
 
-alpha.getInteger // random integer in 0 to 1000 range
+alpha.randomInteger // random integer in 0 to 1000 range
 
-alpha.getInteger(100) // random integer in 0 to 100 range
+alpha.randomInteger(100) // random integer in 0 to 100 range
 
-alpha.getInteger(200, 300) // random integer in 200 to 300 range
+alpha.randomInteger(200, 300) // random integer in 200 to 300 range
 
-alpha.getIntegerRangeAsScalaList(1,10,1) // will return scala List[1,2,3,4,5,6,7,8,9,10]
+alpha.randomIntegerRangeAsScalaList(1,10,1) // will return scala List[1,2,3,4,5,6,7,8,9,10]
  
-alpha.getIntegerRangeAsJavaList(1,10,1) // will return List<Object>[1,2,3,4,5,6,7,8,9,10] . Each element need to be casted to Integer
+alpha.randomIntegerRangeAsJavaList(1,10,1) // will return List<Object>[1,2,3,4,5,6,7,8,9,10] . Each element need to be casted to Integer
 
-alpha.hash // d750c843c83a3a980082361e72aa41ac48975eab
+alpha.randomHash // d750c843c83a3a980082361e72aa41ac48975eab
 
-alpha.guid // ed7592b7-11e4-5f7f-b83f-488733c8bc56
+alpha.randomGuid // ed7592b7-11e4-5f7f-b83f-488733c8bc56
 ```
 
 Besides integer numbers it can generate double, float, gausian, string

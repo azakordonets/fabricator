@@ -75,7 +75,7 @@ class Contact(private val utility: UtilityService,
    * @
    */
   def bsn: String = {
-    val firstFour: String = alpha.getInteger(1000, 9999).toString
+    val firstFour: String = alpha.randomInt(1000, 9999).toString
     val secondFour = firstFour.reverse
     firstFour + secondFour + "0"
   }
@@ -109,10 +109,10 @@ class Contact(private val utility: UtilityService,
   }
 
   def height(cm: Boolean): String = {
-    if (cm) alpha.getDouble(1.50, 2.20).toString.substring(0,4) + " cm" else alpha.getInteger(150, 220).toString + " m"
+    if (cm) alpha.randomDouble(1.50, 2.20).toString.substring(0,4) + " cm" else alpha.randomInt(150, 220).toString + " m"
   }
 
-  def weight(metric: Boolean): String = if (metric) alpha.getInteger(50, 110).toString + " kg" else alpha.getInteger(30, 90).toString + " lbs"
+  def weight(metric: Boolean): String = if (metric) alpha.randomInt(50, 110).toString + " kg" else alpha.randomInt(30, 90).toString + " lbs"
 
   def bloodType: String = utility.getValueFromArray("blood_type")
 

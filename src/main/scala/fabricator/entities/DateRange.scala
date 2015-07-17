@@ -129,12 +129,12 @@ class DateRange {
 
   def getRandomDate: DateTime = {
     val datesRange = asList
-    datesRange(alpha.getInteger(1, datesRange.length - 2))
+    datesRange(alpha.randomInt(1, datesRange.length - 2))
   }
 
   def getRandomDateString: String = {
     val datesRange = asStringsList
-    datesRange(alpha.getInteger(1, datesRange.length - 2))
+    datesRange(alpha.randomInt(1, datesRange.length - 2))
   }
 
 }

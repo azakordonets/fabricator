@@ -17,7 +17,7 @@ class Calendar(private val utility: UtilityService,
                private val alpha: Alphanumeric) {
 
   def ampm: String = {
-    val randomVal = alpha.getInteger(0, 10)
+    val randomVal = alpha.randomInt(0, 10)
     if (randomVal < 5) "am" else "pm"
   }
 
@@ -30,7 +30,7 @@ class Calendar(private val utility: UtilityService,
     var dayValue = 0
     while (result.eq("")) {
       try {
-        dayValue = alpha.getInteger(min, max)
+        dayValue = alpha.randomInt(min, max)
         new DateTime(year, month, dayValue, 0, 0)
         result = dayValue.toString
       } catch {
@@ -48,22 +48,22 @@ class Calendar(private val utility: UtilityService,
 
   def randomDate: RandomDate = new RandomDate
 
-  def second: String = alpha.getInteger(0, 59).toString
+  def second: String = alpha.randomInt(0, 59).toString
 
-  def minute: String = alpha.getInteger(0, 59).toString
+  def minute: String = alpha.randomInt(0, 59).toString
 
-  def hour24h : String = alpha.getInteger(0, 24).toString
+  def hour24h : String = alpha.randomInt(0, 24).toString
 
-  def hour12h: String = alpha.getInteger(0, 12).toString
+  def hour12h: String = alpha.randomInt(0, 12).toString
 
   def month: String = month(asNumber = true)
 
   def month(asNumber: Boolean): String = {
-    if (asNumber) alpha.getInteger(1, 12).toString
+    if (asNumber) alpha.randomInt(1, 12).toString
     else utility.getValueFromArray("month")
   }
 
-  def year: String = alpha.getInteger(1970, 2015).toString
+  def year: String = alpha.randomInt(1970, 2015).toString
 
   def century: String = utility.getValueFromArray("centuries")
 
