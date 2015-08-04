@@ -86,6 +86,7 @@ libraryDependencies ++= Seq(
   "org.slf4j" % "slf4j-api" % "1.7.1",
   "org.reflections" % "reflections" % "0.9.10",
   "ch.qos.logback" % "logback-classic" % "1.0.3",
+  "org.assertj" % "assertj-core" % "3.1.0",
   "com.spatial4j" % "spatial4j" % "0.4.1",
   "org.iban4j" % "iban4j" % "2.1.1",
   "commons-validator" % "commons-validator" % "1.4.0",
