@@ -5,7 +5,7 @@ package fabricator
 import java.io.File
 
 import com.github.tototoshi.csv.CSVReader
-import fabricator.enums.{FileType, MimeType}
+import fabricator.enums.{CsvValueCode, FileType, MimeType}
 import org.testng.annotations.{AfterTest, DataProvider, Test}
 
 class FileTestSuite extends BaseTestSuite {
@@ -57,7 +57,15 @@ class FileTestSuite extends BaseTestSuite {
 
   @Test
   def testCustomCsv() = {
-    val codes = Array("first_name", "last_name", "birthday", "email", "phone", "address", "bsn", "weight", "height")
+    val codes = Array(CsvValueCode.FIRST_NAME,
+                      CsvValueCode.LAST_NAME,
+                      CsvValueCode.BIRTHDAY,
+                      CsvValueCode.EMAIL,
+                      CsvValueCode.PHONE,
+                      CsvValueCode.ADDRESS,
+                      CsvValueCode.BSN,
+                      CsvValueCode.WEIGHT,
+                      CsvValueCode.HEIGHT)
     file.csvFromCodes(codes, 10, csvFilePath)
     val fileOnADrive: File = new File(csvFilePath)
     fileObject = fileOnADrive
@@ -70,9 +78,41 @@ class FileTestSuite extends BaseTestSuite {
   @Test
   def testCsvWithCustomDelimiter() = {
     // creating file
-    val codes = Array("occupation", "visa", "master", "iban", "bic", "url", "ip", "macaddress", "uuid", "color", "twitter", "hashtag", "facebook",
-      "google_analytics", "altitude", "depth", "latitude", "longitude", "coordinates", "geohash", "apple_token", "android", "postcode",
-      "windows7Token", "windows8Token", "word", "sentence", "integer", "integer", "double", "hash", "guid", "time", "date", "name")
+    val codes = Array(CsvValueCode.OCCUPATION,
+                      CsvValueCode.VISA,
+                      CsvValueCode.MASTER,
+                      CsvValueCode.IBAN,
+                      CsvValueCode.BIC,
+                      CsvValueCode.URL,
+                      CsvValueCode.IP,
+                      CsvValueCode.MACADDRESS,
+                      CsvValueCode.UUID,
+                      CsvValueCode.COLOR,
+                      CsvValueCode.TWITTER,
+                      CsvValueCode.HASHTAG,
+                      CsvValueCode.FACEBOOK,
+                      CsvValueCode.GOOGLE_ANALYTICS,
+                      CsvValueCode.ALTITUDE,
+                      CsvValueCode.DEPTH,
+                      CsvValueCode.LATITUDE,
+                      CsvValueCode.LONGITUDE,
+                      CsvValueCode.COORDINATES,
+                      CsvValueCode.GEOHASH,
+                      CsvValueCode.APPLE_TOKEN,
+                      CsvValueCode.ANDROID,
+                      CsvValueCode.POSTCODE,
+                      CsvValueCode.WINDOWS7TOKEN,
+                      CsvValueCode.WINDOWS8TOKEN,
+                      CsvValueCode.WORD,
+                      CsvValueCode.SENTENCE,
+                      CsvValueCode.INTEGER,
+                      CsvValueCode.INTEGER,
+                      CsvValueCode.DOUBLE,
+                      CsvValueCode.HASH,
+                      CsvValueCode.GUID,
+                      CsvValueCode.TIME,
+                      CsvValueCode.DATE,
+                      CsvValueCode.NAME)
     val numberOfRows = 10
     file.csvFromCodes(codes, 10, csvFilePath, '|')
 
@@ -108,12 +148,6 @@ class FileTestSuite extends BaseTestSuite {
     // assert that inserted data is correct
     assert(lines.head.head.toInt <= 1000)
     assertResult(values.length)(lines.head.size)
-  }
-
-  @Test(expectedExceptions = Array(classOf[IllegalArgumentException]))
-  def testCsvFileWithException() = {
-    val codes = Array("wrongInput")
-    file.csvFromCodes(codes, 1, csvFilePath)
   }
 
   @DataProvider

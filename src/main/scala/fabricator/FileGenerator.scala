@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage
 import java.io.File
 
 import com.github.tototoshi.csv._
-import fabricator.enums.{FileType, MimeType}
+import fabricator.enums.{CsvValueCode, FileType, MimeType}
 
 import scala.util.Random
 
@@ -63,7 +63,15 @@ class FileGenerator(private val alpha: Alphanumeric,
 
 
   def csv(): Unit = {
-    val values = Array("first_name", "last_name", "birthday", "email", "phone", "address", "bsn", "weight", "height")
+    val values = Array(CsvValueCode.FIRST_NAME,
+                        CsvValueCode.LAST_NAME,
+                        CsvValueCode.BIRTHDAY,
+                        CsvValueCode.EMAIL,
+                        CsvValueCode.PHONE,
+                        CsvValueCode.ADDRESS,
+                        CsvValueCode.BSN,
+                        CsvValueCode.WEIGHT,
+                        CsvValueCode.HEIGHT)
     // create temporary generatedFiles dir
     val dir: File = new File("generatedFiles")
     dir.mkdir
@@ -87,13 +95,13 @@ class FileGenerator(private val alpha: Alphanumeric,
     writer.close()
   }
 
-  def csvFromCodes(codes: Array[String], rows: Int, path: String): Unit = csvFromCodes(codes, rows, path, ',')
+  def csvFromCodes(codes: Array[CsvValueCode], rows: Int, path: String): Unit = csvFromCodes(codes, rows, path, ',')
 
-  def csvFromCodes(codes: Array[String], rows: Int, path: String, customDelimiter: Char): Unit = {
+  def csvFromCodes(codes: Array[CsvValueCode], rows: Int, path: String, customDelimiter: Char): Unit = {
     writeCsvFileData(generateTitles(codes, customDelimiter), codes, rows, path, customDelimiter)
   }
 
-  private def writeCsvFileData(titles: Array[String], values: Seq[String], rows: Int, path: String, delimeter: Char) = {
+  private def writeCsvFileData(titles: Array[String], values: Seq[CsvValueCode], rows: Int, path: String, delimeter: Char) = {
     val expectedFile = new File(path)
     if (!expectedFile.exists) expectedFile.createNewFile
     implicit object MyFormat extends DefaultCSVFormat {
@@ -108,10 +116,10 @@ class FileGenerator(private val alpha: Alphanumeric,
     writer.close()
   }
 
-  def generateTitles(codes: Array[String], delimeter: Char): Array[String] = {
+  def generateTitles(codes: Array[CsvValueCode], delimeter: Char): Array[String] = {
     val titles = new Array[String](codes.length)
     for (i <- codes.indices) {
-      titles(i) = matchColumnTitle(codes(i))
+      titles(i) = codes(i).getTitle
     }
     titles
   }
@@ -154,106 +162,54 @@ class FileGenerator(private val alpha: Alphanumeric,
   }
 
 
-  private def generateValue(code: String): String = {
+  private def generateValue(code: CsvValueCode): String = {
     code match {
-      case "integer" => alpha.randomInt.toString
-      case "double" => alpha.randomDouble.toString
-      case "hash" => alpha.randomHash
-      case "guid" => alpha.randomGuid
-      case "time" => calendar.time24h
-      case "date" => calendar.randomDate.asString
-      case "name" => contact.fullName(setPrefix = false, setSuffix = false)
-      case "first_name" => contact.firstName
-      case "last_name" => contact.lastName
-      case "birthday" => calendar.randomDate.inYear(alpha.randomInt(1900, 2000)).asString
-      case "email" => contact.eMail
-      case "phone" => contact.phoneNumber
-      case "address" => contact.address
-      case "postcode" => contact.postcode
-      case "bsn" => contact.bsn
-      case "height" => contact.height(cm = false)
-      case "weight" => contact.weight(metric = true)
-      case "occupation" => contact.occupation
-      case "visa" => finance.visacreditCard
-      case "master" => finance.mastercreditCard
-      case "iban" => finance.iban
-      case "bic" => finance.bic
-      case "ssn" => finance.ssn
-      case "url" => internet.urlBuilder.toString()
-      case "ip" => internet.ip
-      case "macaddress" => internet.macAddress
-      case "uuid" => internet.UUID
-      case "color" => internet.color
-      case "twitter" => internet.twitter
-      case "hashtag" => internet.hashtag
-      case "facebook" => internet.facebookId
-      case "google_analytics" => internet.googleAnalyticsTrackCode
-      case "altitude" => location.altitude
-      case "depth" => location.depth
-      case "latitude" => location.latitude
-      case "longitude" => location.longitude
-      case "coordinates" => location.coordinates
-      case "geohash" => location.geohash
-      case "apple_token" => mobile.applePushToken
-      case "android" => mobile.androidGsmId
-      case "windows7Token" => mobile.wp7_anid
-      case "windows8Token" => mobile.wp8_anid2
-      case "user_agent" => user_agent.chrome
-      case "word" => words.word
-      case "sentence" => words.sentence(10)
-      case _ => throw new IllegalArgumentException(code + " is an incorrect code value")
+      case CsvValueCode.INTEGER => alpha.randomInt.toString
+      case CsvValueCode.DOUBLE => alpha.randomDouble.toString
+      case CsvValueCode.HASH => alpha.randomHash
+      case CsvValueCode.GUID => alpha.randomGuid
+      case CsvValueCode.TIME => calendar.time24h
+      case CsvValueCode.DATE => calendar.randomDate.asString
+      case CsvValueCode.NAME => contact.fullName(setPrefix = false, setSuffix = false)
+      case CsvValueCode.FIRST_NAME => contact.firstName
+      case CsvValueCode.LAST_NAME => contact.lastName
+      case CsvValueCode.BIRTHDAY => calendar.randomDate.inYear(alpha.randomInt(1900, 2000)).asString
+      case CsvValueCode.EMAIL => contact.eMail
+      case CsvValueCode.PHONE => contact.phoneNumber
+      case CsvValueCode.ADDRESS => contact.address
+      case CsvValueCode.POSTCODE => contact.postcode
+      case CsvValueCode.BSN => contact.bsn
+      case CsvValueCode.HEIGHT => contact.height(cm = false)
+      case CsvValueCode.WEIGHT => contact.weight(metric = true)
+      case CsvValueCode.OCCUPATION => contact.occupation
+      case CsvValueCode.VISA => finance.visacreditCard
+      case CsvValueCode.MASTER => finance.mastercreditCard
+      case CsvValueCode.IBAN => finance.iban
+      case CsvValueCode.BIC => finance.bic
+      case CsvValueCode.SSN => finance.ssn
+      case CsvValueCode.URL => internet.urlBuilder.toString()
+      case CsvValueCode.IP => internet.ip
+      case CsvValueCode.MACADDRESS => internet.macAddress
+      case CsvValueCode.UUID => internet.UUID
+      case CsvValueCode.COLOR => internet.color
+      case CsvValueCode.TWITTER => internet.twitter
+      case CsvValueCode.HASHTAG => internet.hashtag
+      case CsvValueCode.FACEBOOK => internet.facebookId
+      case CsvValueCode.GOOGLE_ANALYTICS => internet.googleAnalyticsTrackCode
+      case CsvValueCode.ALTITUDE => location.altitude
+      case CsvValueCode.DEPTH => location.depth
+      case CsvValueCode.LATITUDE => location.latitude
+      case CsvValueCode.LONGITUDE => location.longitude
+      case CsvValueCode.COORDINATES => location.coordinates
+      case CsvValueCode.GEOHASH => location.geohash
+      case CsvValueCode.APPLE_TOKEN => mobile.applePushToken
+      case CsvValueCode.ANDROID => mobile.androidGsmId
+      case CsvValueCode.WINDOWS7TOKEN => mobile.wp7_anid
+      case CsvValueCode.WINDOWS8TOKEN => mobile.wp8_anid2
+      case CsvValueCode.USER_AGENT => user_agent.chrome
+      case CsvValueCode.WORD => words.word
+      case CsvValueCode.SENTENCE => words.sentence(10)
     }
   }
-
-  private def matchColumnTitle(value: String): String = {
-    value match {
-      case "integer" => "Integer"
-      case "double" => "Double"
-      case "hash" => "Hash"
-      case "guid" => "Guid"
-      case "time" => "Time"
-      case "date" => "Date"
-      case "name" => "Name"
-      case "first_name" => "First Name"
-      case "last_name" => "Last Name"
-      case "birthday" => "Birthday"
-      case "email" => "Email"
-      case "phone" => "Phone"
-      case "address" => "Address"
-      case "postcode" => "Postcode"
-      case "bsn" => "Bsn"
-      case "ssn" => "Ssn"
-      case "height" => "Height"
-      case "weight" => "Weight"
-      case "occupation" => "Occupation"
-      case "visa" => "Visa"
-      case "master" => "Master"
-      case "iban" => "Iban"
-      case "bic" => "Bic"
-      case "url" => "Url"
-      case "ip" => "Ip"
-      case "macaddress" => "Mac Address"
-      case "uuid" => "Uuid"
-      case "color" => "Color"
-      case "twitter" => "Twitter"
-      case "hashtag" => "Hashtag"
-      case "facebook" => "Facebook"
-      case "google_analytics" => "Google Analytics"
-      case "altitude" => "Altitude"
-      case "depth" => "Depth"
-      case "latitude" => "Latitude"
-      case "longitude" => "Longitude"
-      case "coordinates" => "Coordinates"
-      case "geohash" => "Geohash"
-      case "apple_token" => "Apple Token"
-      case "android" => "Android Token"
-      case "windows7Token" => "Windows 7 token"
-      case "windows8Token" => "Windows 8 token"
-      case "word" => "Word"
-      case "sentence" => "Sentence"
-      case _ => value.toString
-    }
-  }
-
 
 }

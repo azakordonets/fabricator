@@ -2,6 +2,7 @@ package fabricator.j.tests;
 
 import fabricator.Fabricator;
 import fabricator.FileGenerator;
+import fabricator.enums.CsvValueCode;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 
@@ -41,7 +42,7 @@ public class FileJavaTest extends JavaBaseTest {
 
     @Test
     public void testCustomCsv() throws FileNotFoundException {
-        String[] codes = new String[]{"first_name"};
+        CsvValueCode[] codes = new CsvValueCode[]{CsvValueCode.FIRST_NAME};
         file.csvFromCodes(codes, 10, csvFilePath);
         fileObject = new File(csvFilePath);
         assert (fileObject.exists());
@@ -57,7 +58,7 @@ public class FileJavaTest extends JavaBaseTest {
 
     @Test
     public void testCustomCsvWithCustomDelimeter() throws FileNotFoundException {
-        String[] codes = new String[]{"first_name", "last_name"};
+        CsvValueCode[] codes = new CsvValueCode[]{CsvValueCode.FIRST_NAME, CsvValueCode.LAST_NAME};
         HashMap<String, Object> hash = new HashMap<>();
         hash.put("First Name", "first_name");
         hash.put("Last Name", "last_name");
