@@ -29,6 +29,22 @@ case class Alphanumeric(private val random: Random = new Random()) {
     min to max by step toList
   }
 
+  def randomLong: Long = random.nextLong()
+
+  def randomLong(max: Long): Long = randomLong(2147483648L, max)
+
+  def randomLong(min: Long, max: Long): Long = min + (Math.random() * (max - min)).toLong
+
+
+  def randomLongsRange(min: Long, max: Long, step: Long): List[Long] = {
+    if (step <= 0) throw new IllegalArgumentException("Step should be more then 0")
+    min to max by step toList
+  }
+
+  def randomLongsRangeAsJavaList(min: Long, max: Long, step: Long) = {
+    randomLongsRange(min, max, step).asJava
+  }
+
   def randomDouble: Double = random.nextDouble()
   
   def randomDouble(max: Double): Double = randomDouble(0, max)

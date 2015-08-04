@@ -93,7 +93,7 @@ class FileTestSuite extends BaseTestSuite {
 
   @Test
   def testCsvWithCustomSequence() = {
-    val values = Seq(alpha.getInteger, alpha.getDouble, calendar.ampm, null)
+    val values = Seq(alpha.randomInt, alpha.randomDouble, calendar.ampm, null)
     val numberOfRows = 10
     file.csv(values, numberOfRows, csvFilePath)
     // check that file exists

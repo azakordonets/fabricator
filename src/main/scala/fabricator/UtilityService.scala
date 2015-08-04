@@ -56,6 +56,7 @@ case class UtilityService(lang: String = "us", private val random: Random = new 
     case (a: Int, b: Int) => a < b
     case (a: Double, b: Double) => a < b
     case (a: Float, b: Float) => a < b
+    case (a: Long, b: Long) => a < b
     case _ => throw new Exception("Invalid arguments were passed .They should be either int, double, float and both same type")
   }
 
@@ -63,6 +64,7 @@ case class UtilityService(lang: String = "us", private val random: Random = new 
     case (a: Int, b: Int) => a <= b
     case (a: Double, b: Double) => a <= b
     case (a: Float, b: Float) => a <= b
+    case (a: Long, b: Long) => a <= b
     case _ => throw new Exception("Invalid arguments were passed .They should be either int, double, float and both same type")
   }
 
