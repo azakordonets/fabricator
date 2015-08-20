@@ -139,49 +139,53 @@ class FileTestSuite extends BaseTestSuite {
     assertResult(codes.length)(lines.head.head.split("\\|").size)
   }
 
-//  @Test
-//  def testCsvWithCustomSequence() = {
-//    val values = Seq(alpha.randomInt, alpha.randomDouble, calendar.ampm, null)
-//    val numberOfRows = 10
-//    file.csvBuilder.with
-//    .withNumberOfRows(numberOfRows)
-//    .saveTo(csvFilePath)
-//    .build
-//    // check that file exists
-//    val fileOnADrive: File = new File(csvFilePath)
-//    fileObject = fileOnADrive
-//    assert(fileObject.exists())
-//    // read file and confirm that correct data is present
-//    val reader = CSVReader.open(fileOnADrive)
-//    val lines = reader.all()
-//    val numberOfRowsInFile = lines.length
-//    assertResult(numberOfRows)(numberOfRowsInFile)
-//    // assert that inserted data is correct
-//    assert(lines.head.head.toInt <= 1000)
-//    assertResult(values.length)(lines.head.size)
-//  }
+  @Test
+  def testCsvWithCustomSequence() = {
+    val values = Array(alpha.randomInt, alpha.randomDouble, calendar.ampm, null)
+    val numberOfRows = 10
+    file.csvBuilder
+                  .withNumberOfRows(numberOfRows)
+                  .withCustomCodes(values)
+                  .saveTo(csvFilePath)
+                  .build()
+    // check that file exists
+    val fileOnADrive: File = new File(csvFilePath)
+    fileObject = fileOnADrive
+    assert(fileObject.exists())
+    // read file and confirm that correct data is present
+    val reader = CSVReader.open(fileOnADrive)
+    val lines = reader.all()
+    val numberOfRowsInFile = lines.length
+    assertResult(numberOfRows + 1)(numberOfRowsInFile)
+    // assert that inserted data is correct
+    val expectedTitles = Array("Integer number", "Double number", "String", "")
+    val titles = lines.head
+    for (title <- expectedTitles) assert(titles.contains(title))
+  }
 
-//  @Test
-//  def testCsvWithTitle() = {
-//    val titles = Seq(("first_column"),
-//                        ("second_column"),
-//                        ("third_column"),
-//                        ("fourth_column")
-//    )
-//    val values = Seq(alpha.randomInt, CsvValueCode.ANDROID, "10", null)
-//    val numberOfRows = 10
-//    file.csvWithTitle(titles, values,  numberOfRows, csvFilePath, ',')
-//    // check that file exists
-//    val fileOnADrive: File = new File(csvFilePath)
-//    fileObject = fileOnADrive
-//    assert(fileObject.exists())
-//    // read file and confirm that correct data is present
-//    val reader = CSVReader.open(fileOnADrive)
-//    val lines = reader.all()
-//    val numberOfRowsInFile = lines.length
-//    assertResult(numberOfRows)(numberOfRowsInFile + 1)
-//
-//  }
+  @Test
+  def testCsvWithTitle() = {
+    val titles = Array("first_column", "second_column", "third_column", "fourth_column")
+    val values = Array(alpha.randomInt, CsvValueCode.ANDROID, "10", null)
+    val numberOfRows = 10
+    file.csvBuilder
+                    .withNumberOfRows(numberOfRows)
+                    .withCustomCodes(values)
+                    .withTitles(titles)
+                    .build()
+    // check that file exists
+    val fileOnADrive: File = new File(csvFilePath)
+    fileObject = fileOnADrive
+    assert(fileObject.exists())
+    // read file and confirm that correct data is present
+    val reader = CSVReader.open(fileOnADrive)
+    val lines = reader.all()
+    val actualTitles = lines.head
+    val numberOfRowsInFile = lines.length
+    for (title <- actualTitles) assert(titles.contains(title))
+    assertResult(numberOfRows + 1)(numberOfRowsInFile)
+
+  }
 
   @DataProvider
   def sizeDP(): Array[Array[Any]] = {

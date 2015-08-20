@@ -21,6 +21,8 @@ class CsvFileBuilder(alpha: Alphanumeric,
 
   private var titles: Array[String] = null
 
+  private var customTitles: Array[String] = null
+
   private var codes: Array[CsvValueCode] = Array(FIRST_NAME,
                                                LAST_NAME,
                                                BIRTHDAY,
@@ -75,14 +77,12 @@ class CsvFileBuilder(alpha: Alphanumeric,
   }
 
   def build() = {
-    val expectedFile = new File(this.filePath)
-    if (!expectedFile.exists) expectedFile.createNewFile
+    val expectedFile: File = createFile
     implicit object MyFormat extends DefaultCSVFormat {
       override val delimiter = customDelimiter
     }
     val writer = CSVWriter.open(expectedFile)
-    if (null == titles) generateTitles()
-    writer.writeRow(titles)
+    writeTitlesIntoFile(writer)
     for (i <- 0 to numberOfRows - 1) {
       if (null == customValuesArray) {
         val generatedMap = codes.map(code => generateValue(code))
@@ -95,6 +95,27 @@ class CsvFileBuilder(alpha: Alphanumeric,
     writer.close()
   }
 
+
+  def writeTitlesIntoFile(writer: CSVWriter): Unit = {
+    if (null != customValuesArray && null == titles) {
+      generateCustomTitles()
+      writer.writeRow(customTitles)
+    } else if (null == titles) {
+      titles = for (i <- codes) yield i.getTitle
+      writer.writeRow(titles)
+    } else if (titles != null){
+      writer.writeRow(titles)
+    }
+  }
+
+  def createFile: File = {
+    val expectedFile = new File(this.filePath)
+    val expectedDirectoryPath = new File(this.filePath).getParent
+    val expectedDirectory = new File(expectedDirectoryPath)
+    if (!expectedDirectory.exists) expectedDirectory.mkdirs()
+    if (!expectedFile.exists) expectedFile.createNewFile
+    expectedFile
+  }
 
   private def generateValue(code: Any): String = {
     code match {
@@ -146,11 +167,22 @@ class CsvFileBuilder(alpha: Alphanumeric,
       case CsvValueCode.USER_AGENT_OPERA => userAgent.opera
       case CsvValueCode.WORD => words.word
       case CsvValueCode.SENTENCE => words.sentence(10)
+      case null => ""
       case _ => code.toString
     }
   }
 
-  def generateTitles(): Unit = {
-    titles = for (i <- codes) yield i.getTitle
+  private def generateCustomTitles() = {
+    customTitles = for (value <- customValuesArray) yield value match {
+      case code: CsvValueCode => code.getTitle
+      case number: Integer => "Integer number"
+      case number: Double => "Double number"
+      case number: Float => "Float number"
+      case number: String => "String"
+      case number: Boolean => "Boolean"
+      case number: Long => "Long number"
+      case null => ""
+      case _ => value.toString
+    }
   }
 }
