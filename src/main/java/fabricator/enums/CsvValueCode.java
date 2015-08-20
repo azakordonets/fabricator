@@ -43,7 +43,10 @@ public enum CsvValueCode {
     ANDROID("Android Token"),
     WINDOWS7TOKEN("Windows 7 token"),
     WINDOWS8TOKEN("Windows 8 token"),
-    USER_AGENT("User Agent"),
+    USER_AGENT_CHROME("User Agent"),
+    USER_AGENT_FIREFOX("User Agent"),
+    USER_AGENT_IE("User Agent"),
+    USER_AGENT_OPERA("User Agent"),
     WORD("Word"),
     SENTENCE("Sentence");
 
