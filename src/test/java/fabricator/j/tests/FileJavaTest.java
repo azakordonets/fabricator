@@ -10,9 +10,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Scanner;
 
+import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertTrue;
 
 public class FileJavaTest extends JavaBaseTest {
@@ -35,34 +35,33 @@ public class FileJavaTest extends JavaBaseTest {
 
     @Test
     public void testCsv() {
-        file.csv();
+        file.csvBuilder().build();
         fileObject = new File(csvFilePath);
         assertTrue(fileObject.exists());
     }
 
     @Test
     public void testCustomCsv() throws FileNotFoundException {
-        CsvValueCode[] codes = new CsvValueCode[]{CsvValueCode.FIRST_NAME};
-        file.csvFromCodes(codes, 10, csvFilePath);
+        final CsvValueCode[] codes = new CsvValueCode[]{CsvValueCode.FIRST_NAME, CsvValueCode.LAST_NAME};
+        file.csvBuilder().withCodes(codes).build();
         fileObject = new File(csvFilePath);
         assert (fileObject.exists());
         final ArrayList<String> first_name = new ArrayList<>(Arrays.asList(util.getArrayFromJson("first_name")));
+        final ArrayList<String> last_name = new ArrayList<>(Arrays.asList(util.getArrayFromJson("last_name")));
         Scanner scanner = new Scanner(fileObject);
+        String title = scanner.nextLine();
+        assertEquals("Title", "First Name,Last Name", title);
         while (scanner.hasNext()) {
-            final String next = scanner.next();
-            if (!next.equals("First") && !next.equals("Name")) {
-                assertTrue(String.format("Next value = %s is not present in first_name list", next), first_name.contains(next));
-            }
+            String value = scanner.nextLine();
+            assertTrue(first_name.contains(value.split(",")[0]));
+            assertTrue(last_name.contains(value.split(",")[1]));
         }
     }
 
     @Test
-    public void testCustomCsvWithCustomDelimeter() throws FileNotFoundException {
-        CsvValueCode[] codes = new CsvValueCode[]{CsvValueCode.FIRST_NAME, CsvValueCode.LAST_NAME};
-        HashMap<String, Object> hash = new HashMap<>();
-        hash.put("First Name", "first_name");
-        hash.put("Last Name", "last_name");
-        file.csvFromCodes(codes, 10, csvFilePath);
+    public void testCustomCsvWithCustomDelimiter() throws FileNotFoundException {
+        final CsvValueCode[] codes = new CsvValueCode[]{CsvValueCode.FIRST_NAME, CsvValueCode.LAST_NAME};
+        file.csvBuilder().withCodes(codes).build();
         fileObject = new File(csvFilePath);
         assertTrue(fileObject.exists());
         final ArrayList<String> first_name = new ArrayList<>(Arrays.asList(util.getArrayFromJson("first_name")));

@@ -48,7 +48,7 @@ class FileTestSuite extends BaseTestSuite {
 
   @Test
   def testCsv() = {
-    file.csv()
+    file.csvBuilder.build()
     val fileOnADrive: File = new File(csvFilePath)
     fileObject = fileOnADrive
     assert(fileObject.exists())
@@ -66,7 +66,11 @@ class FileTestSuite extends BaseTestSuite {
                       CsvValueCode.BSN,
                       CsvValueCode.WEIGHT,
                       CsvValueCode.HEIGHT)
-    file.csvFromCodes(codes, 10, csvFilePath)
+    file.csvBuilder
+      .withCodes(codes)
+      .withNumberOfRows(10)
+      .saveTo(csvFilePath)
+      .build()
     val fileOnADrive: File = new File(csvFilePath)
     fileObject = fileOnADrive
     assert(fileObject.exists())
@@ -114,7 +118,11 @@ class FileTestSuite extends BaseTestSuite {
                       CsvValueCode.DATE,
                       CsvValueCode.NAME)
     val numberOfRows = 10
-    file.csvFromCodes(codes, 10, csvFilePath, '|')
+    file.csvBuilder.withCodes(codes)
+      .withNumberOfRows(10)
+      .withDelimiter('|')
+      .saveTo(csvFilePath)
+      .build()
 
     // check that file exists
     val fileOnADrive: File = new File(csvFilePath)
@@ -131,24 +139,49 @@ class FileTestSuite extends BaseTestSuite {
     assertResult(codes.length)(lines.head.head.split("\\|").size)
   }
 
-  @Test
-  def testCsvWithCustomSequence() = {
-    val values = Seq(alpha.randomInt, alpha.randomDouble, calendar.ampm, null)
-    val numberOfRows = 10
-    file.csv(values, numberOfRows, csvFilePath)
-    // check that file exists
-    val fileOnADrive: File = new File(csvFilePath)
-    fileObject = fileOnADrive
-    assert(fileObject.exists())
-    // read file and confirm that correct data is present
-    val reader = CSVReader.open(fileOnADrive)
-    val lines = reader.all()
-    val numberOfRowsInFile = lines.length
-    assertResult(numberOfRows)(numberOfRowsInFile)
-    // assert that inserted data is correct
-    assert(lines.head.head.toInt <= 1000)
-    assertResult(values.length)(lines.head.size)
-  }
+//  @Test
+//  def testCsvWithCustomSequence() = {
+//    val values = Seq(alpha.randomInt, alpha.randomDouble, calendar.ampm, null)
+//    val numberOfRows = 10
+//    file.csvBuilder.with
+//    .withNumberOfRows(numberOfRows)
+//    .saveTo(csvFilePath)
+//    .build
+//    // check that file exists
+//    val fileOnADrive: File = new File(csvFilePath)
+//    fileObject = fileOnADrive
+//    assert(fileObject.exists())
+//    // read file and confirm that correct data is present
+//    val reader = CSVReader.open(fileOnADrive)
+//    val lines = reader.all()
+//    val numberOfRowsInFile = lines.length
+//    assertResult(numberOfRows)(numberOfRowsInFile)
+//    // assert that inserted data is correct
+//    assert(lines.head.head.toInt <= 1000)
+//    assertResult(values.length)(lines.head.size)
+//  }
+
+//  @Test
+//  def testCsvWithTitle() = {
+//    val titles = Seq(("first_column"),
+//                        ("second_column"),
+//                        ("third_column"),
+//                        ("fourth_column")
+//    )
+//    val values = Seq(alpha.randomInt, CsvValueCode.ANDROID, "10", null)
+//    val numberOfRows = 10
+//    file.csvWithTitle(titles, values,  numberOfRows, csvFilePath, ',')
+//    // check that file exists
+//    val fileOnADrive: File = new File(csvFilePath)
+//    fileObject = fileOnADrive
+//    assert(fileObject.exists())
+//    // read file and confirm that correct data is present
+//    val reader = CSVReader.open(fileOnADrive)
+//    val lines = reader.all()
+//    val numberOfRowsInFile = lines.length
+//    assertResult(numberOfRows)(numberOfRowsInFile + 1)
+//
+//  }
 
   @DataProvider
   def sizeDP(): Array[Array[Any]] = {
