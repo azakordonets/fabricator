@@ -137,8 +137,8 @@ class CsvFileBuilder(alpha: Alphanumeric,
       case CsvValueCode.HEIGHT => contact.height(cm = false)
       case CsvValueCode.WEIGHT => contact.weight(metric = true)
       case CsvValueCode.OCCUPATION => contact.occupation
-      case CsvValueCode.VISA => finance.visacreditCard
-      case CsvValueCode.MASTER => finance.mastercreditCard
+      case CsvValueCode.VISA => finance.visaCard
+      case CsvValueCode.MASTER => finance.masterCard
       case CsvValueCode.IBAN => finance.iban
       case CsvValueCode.BIC => finance.bic
       case CsvValueCode.SSN => finance.ssn

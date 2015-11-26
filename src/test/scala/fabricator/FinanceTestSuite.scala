@@ -28,9 +28,9 @@ class FinanceTestSuite extends BaseTestSuite {
 
   @Test
   def testMasterCard() = {
-    val creditCard = finance.mastercreditCard
+    val creditCard = finance.masterCard
     assert(creditCard.length == 16)
-    val creditCards = finance.mastercreditCards(10)
+    val creditCards = finance.masterCards(10)
     assert(creditCards.length == 10)
     for (creditCard <- creditCards) assert(creditCard.length == 16)
     if (debugEnabled) logger.debug("Testing random masterCard : " + creditCard)
@@ -39,14 +39,14 @@ class FinanceTestSuite extends BaseTestSuite {
 
   @Test
   def testVisaCard() = {
-    val visa16CreditCard = finance.visacreditCard
+    val visa16CreditCard = finance.visaCard
     assert(visa16CreditCard.length == 16)
-    val visa15CreditCard = finance.visacreditCard(15)
+    val visa15CreditCard = finance.visaCard(15)
     assert(visa15CreditCard.length == 15)
-    val visa16Cards = finance.visacreditCards(10)
+    val visa16Cards = finance.visaCards(10)
     assert(visa16Cards.length == 10)
     for (visa <- visa16Cards) assert(visa.length() == 16)
-    val visa15Cards = finance.visacreditCards(10, 15)
+    val visa15Cards = finance.visaCards(10, 15)
     assert(visa15Cards.length == 10)
     for (visa <- visa15Cards) assert(visa.length() == 15)
     if (debugEnabled) logger.debug("Testing random 16 length Visa Card : " + visa16CreditCard)
@@ -57,9 +57,9 @@ class FinanceTestSuite extends BaseTestSuite {
 
   @Test
   def testAmericanExpress() = {
-    val amexCreditCard = finance.americanExpresscreditCard
+    val amexCreditCard = finance.americanExpressCard
     assert(amexCreditCard.length == 16)
-    val amexCrediCards = finance.americanExpresscreditCards(10)
+    val amexCrediCards = finance.americanExpressCards(10)
     assert(amexCrediCards.length == 10)
     for (amex <- amexCrediCards) assert(amex.length == 16)
     if (debugEnabled) logger.debug("Testing random american express card: " + amexCreditCard)
@@ -68,9 +68,9 @@ class FinanceTestSuite extends BaseTestSuite {
 
   @Test
   def testDiscover() = {
-    val discoverCreditCard = finance.discoverCreditCard
+    val discoverCreditCard = finance.discoverCard
     assert(discoverCreditCard.length == 16)
-    val discoverCrediCards = finance.discoverCreditCards(10)
+    val discoverCrediCards = finance.discoverCards(10)
     assert(discoverCrediCards.length == 10)
     for (discover <- discoverCrediCards) assert(discover.length == 16)
     if (debugEnabled) logger.debug("Testing random discover card: " + discoverCreditCard)
@@ -79,9 +79,9 @@ class FinanceTestSuite extends BaseTestSuite {
 
   @Test
   def testDiners() = {
-    val dinersCreditCard = finance.dinersCreditCard
+    val dinersCreditCard = finance.dinersCard
     assert(dinersCreditCard.length == 16)
-    val dinersCrediCards = finance.dinersCreditCards(10)
+    val dinersCrediCards = finance.dinersCards(10)
     assert(dinersCrediCards.length == 10)
     for (diners <- dinersCrediCards) assert(diners.length == 16)
     if (debugEnabled) logger.debug("Testing random diners card: " + dinersCreditCard)
@@ -90,9 +90,9 @@ class FinanceTestSuite extends BaseTestSuite {
 
   @Test
   def testJcb() = {
-    val jcbCreditCard = finance.jcbCreditCard
+    val jcbCreditCard = finance.jcbCard
     assert(jcbCreditCard.length == 16)
-    val jcbCrediCards = finance.jcbCreditCards(10)
+    val jcbCrediCards = finance.jcbCards(10)
     assert(jcbCrediCards.length == 10)
     for (jcb <- jcbCrediCards) assert(jcb.length == 16)
     if (debugEnabled) logger.debug("Testing random jcb card: " + jcbCreditCard)
@@ -101,9 +101,9 @@ class FinanceTestSuite extends BaseTestSuite {
 
   @Test
   def testVoyager() = {
-    val voyagerCreditCard = finance.voyagerCreditCard
+    val voyagerCreditCard = finance.voyagerCard
     assert(voyagerCreditCard.length == 15)
-    val voyagerCrediCards = finance.voyagerCreditCards(10)
+    val voyagerCrediCards = finance.voyagerCards(10)
     assert(voyagerCrediCards.length == 10)
     for (voyager <- voyagerCrediCards) assert(voyager.length == 15)
     if (debugEnabled) logger.debug("Testing random voyager card: " + voyagerCreditCard)

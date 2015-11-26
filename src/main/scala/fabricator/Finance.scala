@@ -57,37 +57,37 @@ class Finance private(private val utility: UtilityService,
 
   def ssn: String = alpha.botify(utility.getValueFromArray("ssn"))
 
-  def mastercreditCard: String = CreditCard.createCreditCardNumber(CreditCard.masterCardPrefixList, 16, 1)(0)
+  def masterCard: String = CreditCard.generateNumber(CreditCard.masterCardPrefixList, 16, 1)(0)
 
-  def mastercreditCards(howMany: Int): Array[String] = CreditCard.createCreditCardNumber(CreditCard.masterCardPrefixList, 16, howMany)
+  def masterCards(howMany: Int): Array[String] = CreditCard.generateNumber(CreditCard.masterCardPrefixList, 16, howMany)
 
-  def visacreditCard: String = CreditCard.createCreditCardNumber(CreditCard.visaPrefixList, 16, 1)(0)
+  def visaCard: String = CreditCard.generateNumber(CreditCard.visaPrefixList, 16, 1)(0)
 
-  def visacreditCard(cardNumberLength: Int): String = CreditCard.createCreditCardNumber(CreditCard.visaPrefixList, cardNumberLength, 1)(0)
+  def visaCard(cardNumberLength: Int): String = CreditCard.generateNumber(CreditCard.visaPrefixList, cardNumberLength, 1)(0)
   
-  def visacreditCards(howMany: Int): Array[String] = CreditCard.createCreditCardNumber(CreditCard.visaPrefixList, 16, howMany)
+  def visaCards(howMany: Int): Array[String] = CreditCard.generateNumber(CreditCard.visaPrefixList, 16, howMany)
 
-  def visacreditCards(howMany: Int, cardNumberLength: Int): Array[String] = CreditCard.createCreditCardNumber(CreditCard.visaPrefixList, cardNumberLength, howMany)
+  def visaCards(howMany: Int, cardNumberLength: Int): Array[String] = CreditCard.generateNumber(CreditCard.visaPrefixList, cardNumberLength, howMany)
 
-  def americanExpresscreditCard: String = CreditCard.createCreditCardNumber(CreditCard.amexPrefixList, 16, 1)(0)
+  def americanExpressCard: String = CreditCard.generateNumber(CreditCard.amexPrefixList, 16, 1)(0)
 
-  def americanExpresscreditCards(howMany: Int): Array[String] = CreditCard.createCreditCardNumber(CreditCard.amexPrefixList, 16, howMany)
+  def americanExpressCards(howMany: Int): Array[String] = CreditCard.generateNumber(CreditCard.amexPrefixList, 16, howMany)
 
-  def discoverCreditCard: String = CreditCard.createCreditCardNumber(CreditCard.discoverPrefixList, 16, 1)(0)
+  def discoverCard: String = CreditCard.generateNumber(CreditCard.discoverPrefixList, 16, 1)(0)
 
-  def discoverCreditCards(howMany: Int): Array[String] = CreditCard.createCreditCardNumber(CreditCard.discoverPrefixList, 16, howMany)
+  def discoverCards(howMany: Int): Array[String] = CreditCard.generateNumber(CreditCard.discoverPrefixList, 16, howMany)
   
-  def dinersCreditCard: String = CreditCard.createCreditCardNumber(CreditCard.dinersPrefixList, 16, 1)(0)
+  def dinersCard: String = CreditCard.generateNumber(CreditCard.dinersPrefixList, 16, 1)(0)
 
-  def dinersCreditCards(howMany: Int): Array[String] = CreditCard.createCreditCardNumber(CreditCard.dinersPrefixList, 16, howMany)
+  def dinersCards(howMany: Int): Array[String] = CreditCard.generateNumber(CreditCard.dinersPrefixList, 16, howMany)
 
-  def jcbCreditCard: String = CreditCard.createCreditCardNumber(CreditCard.jcbPrefixList, 16, 1)(0)
+  def jcbCard: String = CreditCard.generateNumber(CreditCard.jcbPrefixList, 16, 1)(0)
 
-  def jcbCreditCards(howMany: Int): Array[String] = CreditCard.createCreditCardNumber(CreditCard.jcbPrefixList, 16, howMany)
+  def jcbCards(howMany: Int): Array[String] = CreditCard.generateNumber(CreditCard.jcbPrefixList, 16, howMany)
 
-  def voyagerCreditCard: String = CreditCard.createCreditCardNumber(CreditCard.jcbPrefixList, 15, 1)(0)
+  def voyagerCard: String = CreditCard.generateNumber(CreditCard.jcbPrefixList, 15, 1)(0)
 
-  def voyagerCreditCards(howMany: Int): Array[String] = CreditCard.createCreditCardNumber(CreditCard.jcbPrefixList, 15, howMany)
+  def voyagerCards(howMany: Int): Array[String] = CreditCard.generateNumber(CreditCard.jcbPrefixList, 15, howMany)
 
   def pinCode: String = alpha.numerify("####")
 
@@ -102,19 +102,19 @@ class Finance private(private val utility: UtilityService,
     val jcbPrefixList = Array("35")
     val voyagerPrefixList = Array("8699")
 
-    def createCreditCardNumber(prefixList: Array[String], length: Int, howMany: Int): Array[String] = {
-      Array.fill(howMany)(createCreditCardNumber(prefixList, length))
+    def generateNumber(prefixList: Array[String], length: Int, howMany: Int): Array[String] = {
+      Array.fill(howMany)(generateNumber(prefixList, length))
     }
 
-    def createCreditCardNumber(prefixes: Array[String], length: Int): String = {
-      completed_number(Random.shuffle(prefixes.toList).head, length)
+    def generateNumber(prefixes: Array[String], length: Int): String = {
+      completedNumber(Random.shuffle(prefixes.toList).head, length)
     }
 
     /*
      * 'prefix' is the start of the CC number as a string, any number of digits.
      * 'length' is the length of the CC number to generate. Typically 13 or 16
      */
-    private def completed_number(prefix: String, length: Int): String = {
+    private def completedNumber(prefix: String, length: Int): String = {
       def luhn(str: String): Int = {
         val sum = str.sliding(1, 2).map(value => {
           val doubled = value.toInt * 2
@@ -126,15 +126,15 @@ class Finance private(private val utility: UtilityService,
       val number = prefix + List.fill(length - prefix.length - 1)(Random.nextInt(10)).mkString
       val checkdigit = luhn(number)
       val cc = number + checkdigit
-      isValidCreditCardNumber(cc)
+      isValidNumber(cc)
       cc
     }
 
-    private def isValidCreditCardNumber(creditCardNumber: String): Boolean = {
+    private def isValidNumber(cardNumber: String): Boolean = {
       var isValid = false
 
       try {
-        val reversedNumber = creditCardNumber.reverse
+        val reversedNumber = cardNumber.reverse
         var mod10Count = 0
         for (i <- 0 to reversedNumber.length - 1) {
           var augend = reversedNumber.charAt(i).toString.toInt
