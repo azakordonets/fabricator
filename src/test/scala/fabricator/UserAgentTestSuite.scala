@@ -12,19 +12,19 @@ class UserAgentTestSuite extends BaseTestSuite {
 
   @Test
   def testMacProcessor() = {
-    val macProcessor = userAgent.mac_processor
+    val macProcessor = userAgent.macProcessor
     assert(macProcessorList.contains(macProcessor))
   }
 
   @Test
   def testLinuxProcessor() = {
-    val linuxProcessor = userAgent.linux_processor
+    val linuxProcessor = userAgent.linuxProcessor
     assert(linuxProcessorList.contains(linuxProcessor))
   }
 
   @Test
   def testBrowserName() = {
-    val browserName = userAgent.browser_name
+    val browserName = userAgent.browserName
     assert(browsersList.contains(browserName))
   }
 
@@ -41,13 +41,13 @@ class UserAgentTestSuite extends BaseTestSuite {
 
   @Test
   def testWindowsPlatform() = {
-    val windowsPlatform = userAgent.windows_platform_token
+    val windowsPlatform = userAgent.windowsPlatformToken
     assert(windowsPlatformList.contains(windowsPlatform))
   }
 
   @Test
   def testLinuxPlatformToken() = {
-    val linuxPlatform = userAgent.linux_platform_token
+    val linuxPlatform = userAgent.linuxPlatformToken
     val splitLinuxPlatform = linuxPlatform.split("Linux")
     assert(splitLinuxPlatform(0).equals("X11; "))
     assert(linuxProcessorList.contains(splitLinuxPlatform(1).trim))
@@ -55,7 +55,7 @@ class UserAgentTestSuite extends BaseTestSuite {
 
   @Test
   def testMacPlatformToken() = {
-    val macPlatformToken = userAgent.mac_platform_token
+    val macPlatformToken = userAgent.macPlatformToken
     val splitMacPlatform = macPlatformToken.split(" Mac OS X ")
     assert(splitMacPlatform(0).matches("Macintosh; " + getListElementsOptionalRegex(macProcessorList)))
     assert(splitMacPlatform(1).matches("10_[5-8]_[0-9]"))

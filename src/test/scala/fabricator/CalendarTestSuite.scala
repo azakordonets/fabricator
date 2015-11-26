@@ -8,7 +8,7 @@ import org.testng.annotations.{DataProvider, Test}
 
 class CalendarTestSuite extends BaseTestSuite {
 
-  lazy val days_of_week_list = util.getArrayFromJson("day_of_week")
+  lazy val daysOfWeekList = util.getArrayFromJson("day_of_week")
 
   @Test
   def testCustomConstructor()  {
@@ -30,6 +30,7 @@ class CalendarTestSuite extends BaseTestSuite {
       Array(dd_MM_yyyy_SEMICOLON, "\\d{2}:\\d{2}:\\d{4}"),
       Array(dd_MM_YYYY_SEMICOLON, "\\d{2}:\\d{2}:\\d{4}"),
       Array(dd_MM_YYYY_BACKSLASH, "\\d{2}/\\d{2}/\\d{4}"),
+      Array(dd_MM_yyyy_BACKSLASH, "\\d{2}/\\d{2}/\\d{4}"),
       Array(dd_MM_YY_BACKSLASH, "\\d{2}/\\d{2}/\\d{2}"),
       Array(dd_MM_yyyy, "\\d{2}-\\d{2}-\\d{4}"),
       Array(dd_MM_yyyy_DOT, "\\d{2}\\.\\d{2}\\.\\d{4}"),
@@ -132,7 +133,7 @@ class CalendarTestSuite extends BaseTestSuite {
     val day = calendar.day.toInt
     assert(day >= 1 && day <= 31)
   }
-  
+
   @Test
   def testDay() = {
     val year = calendar.year
@@ -145,7 +146,7 @@ class CalendarTestSuite extends BaseTestSuite {
   @Test
   def testDayOfWeek() = {
     val dayOfWeek = calendar.dayOfWeek
-    assert(days_of_week_list.contains(dayOfWeek))
+    assert(daysOfWeekList.contains(dayOfWeek))
   }
   
   @DataProvider(name = "dayExceptionDP")
