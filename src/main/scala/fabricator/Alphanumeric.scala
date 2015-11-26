@@ -103,10 +103,8 @@ case class Alphanumeric(private val random: Random = new Random()) {
 
   private def string(charsSequence: String, max: Int): String = {
     val builder = new StringBuilder
-    var counter = 0
-    while (counter < max) {
-      builder.append(charsSequence.charAt(random.nextInt(charsSequence.length - 1)))
-      counter += 1
+    (0 to max).foreach {
+      _ => builder.append(charsSequence.charAt(random.nextInt(charsSequence.length - 1)))
     }
     builder.toString()
   }
@@ -132,17 +130,17 @@ case class Alphanumeric(private val random: Random = new Random()) {
   def randomGuid: String = randomGuid(5)
   
   def randomGuid(version: Int): String = {
-    val guid_pool = "abcdef1234567890"
-    val variant_pool = "ab89"
-    string(guid_pool, 8) + "-" +
-      string(guid_pool, 4) + "-" +
+    val guidPool = "abcdef1234567890"
+    val variantPool = "ab89"
+    string(guidPool, 8) + "-" +
+      string(guidPool, 4) + "-" +
       // The Version
       version +
-      string(guid_pool, 3) + "-" +
+      string(guidPool, 3) + "-" +
       // The Variant
-      string(variant_pool, 1) +
-      string(guid_pool, 3) + "-" +
-      string(guid_pool, 12)
+      string(variantPool, 1) +
+      string(guidPool, 3) + "-" +
+      string(guidPool, 12)
   }
 
   def randomGuidList: List[String] = List.fill(100)(randomGuid(5))
