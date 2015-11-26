@@ -5,8 +5,7 @@ import java.util.Properties
 
 import fabricator.entities.RandomDataKeeper
 
-import scala.util.Random
-import scala.util.control.NonFatal
+import scala.util.{Random, Try}
 
 case class UtilityService(lang: String = "us", private val random: Random = new Random()) {
 
@@ -41,16 +40,10 @@ case class UtilityService(lang: String = "us", private val random: Random = new 
     array(random_index)
   }
 
-  def getProperty(name: String): String = {
-    try {
-      val properties = new Properties() //Source.fromInputStream(getClass().getClassLoader().getResourceAsStream(lang + ".json")
-      properties.load(new FileInputStream(getClass.getClassLoader.getResource("config.properties").getPath))
-      properties.getProperty(name)
-    } catch {
-      case NonFatal(e) =>
-        e.printStackTrace()
-        sys.exit(1)
-    }
+  def getProperty(name: String): AnyRef = {
+    val properties = new Properties() //Source.fromInputStream(getClass().getClassLoader().getResourceAsStream(lang + ".json")
+    Try(properties.load(new FileInputStream(getClass.getClassLoader.getResource("config.properties").getPath)))
+    properties.getOrDefault(name, "")
   }
 
   def isLess(a: Any, b: Any): Boolean = (a, b) match {
