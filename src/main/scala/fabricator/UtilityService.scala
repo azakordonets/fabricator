@@ -19,8 +19,8 @@ case class UtilityService(lang: String = "us", private val random: Random = new 
 
   def getValueFromArray(key: String): String = {
     val array = (valuesJson \\ key).head.asOpt[Array[String]].get
-    val random_index = random.nextInt(array.length)
-    array(random_index)
+    val randomIndex = random.nextInt(array.length)
+    array(randomIndex)
   }
 
   def getArrayFromJson(key: String): Array[String] = {
@@ -36,8 +36,8 @@ case class UtilityService(lang: String = "us", private val random: Random = new 
   }
 
   def getRandomArrayElement(array: Array[String]): String = {
-    val random_index = random.nextInt(array.length)
-    array(random_index)
+    val randomIndex = random.nextInt(array.length)
+    array(randomIndex)
   }
 
   def getProperty(name: String): AnyRef = {
