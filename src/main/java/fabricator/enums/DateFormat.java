@@ -15,6 +15,7 @@ public enum DateFormat {
     mm_dd_yyyy_SEMICOLON("mm:dd:yyyy"),
     dd_MM_YYYY_SEMICOLON("dd:MM:YYYY"),
     dd_MM_YYYY_BACKSLASH("dd/MM/YYYY"),
+    dd_MM_yyyy_BACKSLASH("dd/MM/yyyy"),
     dd_MM_YY_BACKSLASH("dd/MM/YY"),
     dd_MM_yyyy_DOT("dd.MM.yyyy"),
     dd_M_yyyy_DOT("dd.M.yyyy"),
