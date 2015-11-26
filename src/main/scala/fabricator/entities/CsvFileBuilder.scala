@@ -84,12 +84,14 @@ class CsvFileBuilder(alpha: Alphanumeric,
     val writer = CSVWriter.open(expectedFile)
     writeTitlesIntoFile(writer)
     for (i <- 0 to numberOfRows - 1) {
-      if (null == customValuesArray) {
-        val generatedMap = codes.map(code => generateValue(code))
-        writer.writeRow(generatedMap)
-      } else {
-        val generatedMap = customValuesArray.map(value => generateValue(value))
-        writer.writeRow(generatedMap)
+      customValuesArray match {
+        case null =>
+          val generatedMap = codes.map(code => generateValue(code))
+          writer.writeRow(generatedMap)
+        case _ =>
+          val generatedMap = customValuesArray.map(value => generateValue(value))
+          writer.writeRow(generatedMap)
+
       }
     }
     writer.close()
