@@ -50,7 +50,7 @@ public enum CsvValueCode {
     WORD("Word"),
     SENTENCE("Sentence");
 
-    private String title;
+    private final String title;
 
     CsvValueCode(String title) {
         this.title = title;
