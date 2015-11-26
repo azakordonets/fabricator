@@ -103,7 +103,7 @@ case class Alphanumeric(private val random: Random = new Random()) {
 
   private def string(charsSequence: String, max: Int): String = {
     val builder = new StringBuilder
-    (0 to max).foreach {
+    (0 to max - 1).foreach {
       _ => builder.append(charsSequence.charAt(random.nextInt(charsSequence.length - 1)))
     }
     builder.toString()

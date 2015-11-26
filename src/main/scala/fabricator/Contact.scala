@@ -24,9 +24,9 @@ class Contact(private val utility: UtilityService,
 
   def fullName(setPrefix: Boolean, setSuffix: Boolean): String = {
     (setPrefix, setSuffix) match {
-      case (prefix , suffix) if prefix && !suffix =>  String.format("%s %s %s", prefix, firstName, lastName)
-      case (prefix , suffix) if prefix & suffix => String.format("%s %s %s %s", prefix, firstName, lastName, suffix)
-      case (prefix , suffix) if !prefix & suffix => String.format("%s %s %s", firstName, lastName, suffix)
+      case (`setPrefix` , `setSuffix`) if setPrefix && !setSuffix =>  String.format("%s %s %s", prefix, firstName, lastName)
+      case (`setPrefix` , `setSuffix`) if setPrefix && setSuffix => String.format("%s %s %s %s", prefix, firstName, lastName, suffix)
+      case (`setPrefix` , `setSuffix`) if setPrefix && setSuffix => String.format("%s %s %s", firstName, lastName, suffix)
       case _ => firstName + " " + lastName
     }
   }
