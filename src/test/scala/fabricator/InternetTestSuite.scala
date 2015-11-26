@@ -140,16 +140,15 @@ class InternetTestSuite extends BaseTestSuite {
   @Test
   def testMacAddress() = {
     val macAddress = internet.macAddress
-    val UUID = internet.UUID
     if (debugEnabled) logger.debug("Testing random mac address " + macAddress)
     assert(macAddress.matches("^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$"))
   }
 
   @Test
   def testUUID() = {
-    val UUID = internet.UUID
-    if (debugEnabled) logger.debug("Testing random UUID " + UUID)
-    assert(UUID.matches("[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}"))
+    val uuid = internet.UUID
+    if (debugEnabled) logger.debug("Testing random uuid " + uuid)
+    assert(uuid.matches("[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}"))
   }
 
   @Test
