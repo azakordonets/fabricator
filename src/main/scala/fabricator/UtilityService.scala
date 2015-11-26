@@ -6,6 +6,7 @@ import java.util.Properties
 import fabricator.entities.RandomDataKeeper
 
 import scala.util.Random
+import scala.util.control.NonFatal
 
 case class UtilityService(lang: String = "us", private val random: Random = new Random()) {
 
@@ -46,7 +47,7 @@ case class UtilityService(lang: String = "us", private val random: Random = new 
       properties.load(new FileInputStream(getClass.getClassLoader.getResource("config.properties").getPath))
       properties.getProperty(name)
     } catch {
-      case e: Exception =>
+      case NonFatal(e) =>
         e.printStackTrace()
         sys.exit(1)
     }
