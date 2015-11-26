@@ -30,8 +30,6 @@ class UrlBuilder() {
 
   private var path: String = "/getEntity"
 
-  private val url: String = scheme + host + path + "?" + params.mkString("=")
-
   private var encoding: Charset = Charset.forName("UTF-8")
 
   private var encodeParams: Boolean = false
@@ -108,24 +106,25 @@ class UrlBuilder() {
 
   private def urlEncode(input: String, charset: Charset): String = {
     val builder: StringBuilder = new StringBuilder()
-    val cb: CharBuffer = CharBuffer.allocate(1)
-    for (c <- input.toCharArray) {
-      if (c == ' ') {
-        builder.append('+')
-      } else if (isUrlSafe(c)) {
-        builder.append(c)
-      } else {
-        cb.put(0, c)
-        cb.rewind()
-        val byteBuffer: ByteBuffer = charset.encode(cb)
-        for (i <- 0 to byteBuffer.limit() - 1 by 1) {
-          builder.append('%')
-          val placeHolder = "%1$02X"
-          builder.append(placeHolder.format(byteBuffer.get(i)))
-        }
+    val charBuffer: CharBuffer = CharBuffer.allocate(1)
+    for (char <- input.toCharArray) {
+      char match {
+        case ' ' => builder.append('+')
+        case `char` if isUrlSafe(char) => builder.append(char)
+        case _ => appendEncodedChar(char, builder, charBuffer, charset)
       }
     }
     builder.toString()
+  }
+    private def appendEncodedChar(char: Char, stringBuilder: StringBuilder, charBuffer: CharBuffer, charset: Charset) {
+      charBuffer.put(0, char)
+      charBuffer.rewind()
+      val byteBuffer: ByteBuffer = charset.encode(charBuffer)
+      for (i <- 0 to byteBuffer.limit() - 1 by 1) {
+        stringBuilder.append('%')
+        val placeHolder = "%1$02X"
+        stringBuilder.append(placeHolder.format(byteBuffer.get(i)))
+    }
   }
 
   private def isUrlSafe(c: Char): Boolean = {
