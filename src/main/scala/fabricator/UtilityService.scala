@@ -40,10 +40,10 @@ case class UtilityService(lang: String = "us", private val random: Random = new 
     array(randomIndex)
   }
 
-  def getProperty(name: String): AnyRef = {
+  def getProperty(name: String): String = {
     val properties = new Properties() //Source.fromInputStream(getClass().getClassLoader().getResourceAsStream(lang + ".json")
     Try(properties.load(new FileInputStream(getClass.getClassLoader.getResource("config.properties").getPath)))
-    properties.getOrDefault(name, "")
+    properties.getProperty(name)
   }
 
   def isLess(a: Any, b: Any): Boolean = (a, b) match {
