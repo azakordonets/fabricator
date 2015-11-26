@@ -23,11 +23,12 @@ class Contact(private val utility: UtilityService,
               private val random: Random) {
 
   def fullName(setPrefix: Boolean, setSuffix: Boolean): String = {
-    
-    if (setPrefix && !setSuffix) String.format("%s %s %s", prefix, firstName, lastName)
-    else if (setPrefix & setSuffix) String.format("%s %s %s %s", prefix, firstName, lastName, suffix)
-    else if (!setPrefix & setSuffix) String.format("%s %s %s", firstName, lastName, suffix)
-    else firstName + " " + lastName
+    (setPrefix, setSuffix) match {
+      case (prefix , suffix) if prefix && !suffix =>  String.format("%s %s %s", prefix, firstName, lastName)
+      case (prefix , suffix) if prefix & suffix => String.format("%s %s %s %s", prefix, firstName, lastName, suffix)
+      case (prefix , suffix) if !prefix & suffix => String.format("%s %s %s", firstName, lastName, suffix)
+      case _ => firstName + " " + lastName
+    }
   }
 
   def birthday(age: Int): String = DateTimeFormat.forPattern(DateFormat.dd_MM_yyyy.getFormat).print(DateTime.now - age.years)
