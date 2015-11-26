@@ -24,10 +24,8 @@ class Words(private val utility: UtilityService) {
   def paragraph(charsLength: Int): String = {
     val wordsSequence = sentence(charsLength)
     val builder = new StringBuilder
-    var counter = 0
-    while (counter < charsLength) {
-      builder.append(wordsSequence(counter))
-      counter += 1
+    (0 to charsLength - 1).foreach {
+      counter => builder.append(wordsSequence(counter))
     }
     builder.toString()
   }
@@ -40,8 +38,8 @@ class Words(private val utility: UtilityService) {
   def words(quantity: Int): Array[String] = {
     if (quantity >= 10000) throw new Exception("Maximum allowed quantity is limited to 100,000 words ")
     val resultSet: mutable.Set[String] = mutable.Set()
-    while(resultSet.size != quantity) {
-      resultSet.add(wordsList(Random.nextInt(wordsList.length - 1)))
+    (0 to quantity - 1).foreach {
+      count => resultSet.add(wordsList(Random.nextInt(wordsList.length - 1)))
     }
     resultSet.toArray
   }

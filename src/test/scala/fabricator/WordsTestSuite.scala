@@ -13,12 +13,12 @@ class WordsTestSuite extends BaseTestSuite {
   }
   
   @DataProvider(name = "wordsCountDP")
-  def wordsCountDP():Array[Array[Any]]= {
-    Array(Array("10"),
-      Array("100"),
-      Array("1000"),
-      Array("4000"),
-      Array("9500")
+  def wordsCountDP():Array[Array[Int]]= {
+    Array(Array(10),
+      Array(100),
+      Array(1000),
+      Array(4000),
+      Array(9500)
     )
   }
 
@@ -28,8 +28,8 @@ class WordsTestSuite extends BaseTestSuite {
     if (debugEnabled) logger.debug("Getting words array generated with default length ")
     assert(wordsDefaultArray.length == 10)
     val inputSet: mutable.Set[String] = scala.collection.mutable.Set()
-    for( i <- wordsDefaultArray.indices by 1) {
-      inputSet.add(wordsDefaultArray(i))
+    wordsDefaultArray.indices.foreach{
+      index => inputSet.add(wordsDefaultArray(index))
     }
     assertResult(10)(inputSet.size)
   }
@@ -40,9 +40,9 @@ class WordsTestSuite extends BaseTestSuite {
   }
   
   @Test(dataProvider = "wordsCountDP")
-  def testWords(count: String) = {
+  def testWords(count: Int) = {
     if (debugEnabled) logger.debug("Getting words array generated with length = " + count)
-    assertResult(words.words(count.toInt).length)(count.toInt)
+    assertResult(words.words(count).length)(count)
   }
 
   @Test
@@ -67,10 +67,10 @@ class WordsTestSuite extends BaseTestSuite {
   }
 
   @Test(dataProvider = "wordsCountDP")
-  def testTextCustomValue(length: String) = {
-    val paragraph = words.paragraph(length.toInt)
-    if (debugEnabled) logger.debug("Testing sentence generation. Creating paragraph with chars length: " + length.toInt + "\n" + paragraph)
-    assertResult(paragraph.length())(length.toInt)
+  def testTextCustomValue(length: Int) = {
+    val paragraph = words.paragraph(length)
+    if (debugEnabled) logger.debug("Testing sentence generation. Creating paragraph with chars length: " + length + "\n" + paragraph)
+    assertResult(paragraph.length())(length)
   }
 
 
