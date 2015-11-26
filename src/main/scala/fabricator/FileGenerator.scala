@@ -35,7 +35,7 @@ class FileGenerator(private val alpha: Alphanumeric,
                     private val internet: Internet,
                     private val location: Location,
                     private val mobile: Mobile,
-                   private val user_agent: UserAgent,
+                   private val userAgent: UserAgent,
                      private val utility: UtilityService) {
 
   def image(width: Int, height: Int, path: String) = {
@@ -61,7 +61,7 @@ class FileGenerator(private val alpha: Alphanumeric,
   }
 
   def csvBuilder : CsvFileBuilder = new CsvFileBuilder(alpha, calendar, contact, finance, internet,
-                                                          location, mobile, user_agent, words)
+                                                          location, mobile, userAgent, words)
 
   def fileName: String = fileName(FileType.getRandom)
 
