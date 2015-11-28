@@ -41,7 +41,7 @@ case class UtilityService(lang: String = "us", private val random: Random = new 
   }
 
   def getProperty(name: String): String = {
-    val properties = new Properties() //Source.fromInputStream(getClass().getClassLoader().getResourceAsStream(lang + ".json")
+    val properties = new Properties()
     Try(properties.load(new FileInputStream(getClass.getClassLoader.getResource("config.properties").getPath)))
     properties.getProperty(name)
   }
