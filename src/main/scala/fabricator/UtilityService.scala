@@ -4,35 +4,35 @@ import java.io.FileInputStream
 import java.util.Properties
 
 import fabricator.entities.RandomDataKeeper
+import play.api.libs.json.JsValue
 
 import scala.util.{Random, Try}
 
 case class UtilityService(lang: String = "us", private val random: Random = new Random()) {
 
-  private lazy val valuesJson = RandomDataKeeper.getJson(lang)
+  private lazy val valuesJson:JsValue = RandomDataKeeper.getJson(lang)
 
-  private lazy val wordsJson = RandomDataKeeper.getJson("words_" + lang)
+  private lazy val wordsJson:JsValue = RandomDataKeeper.getJson("words_" + lang)
 
   if (valuesJson == null) throw new Exception(lang + ".json doesn't exist. ")
 
   if (wordsJson == null) throw new Exception("words_" + lang + ".json file doesn't exist")
 
-  def getValueFromArray(key: String): String = {
-    val array = (valuesJson \\ key).head.asOpt[Array[String]].get
-    val randomIndex = random.nextInt(array.length)
-    array(randomIndex)
+  def getArrayFromJson(json: JsValue, key: String): Array[String] = {
+    (json \\ key).head.asOpt[Array[String]].get
   }
 
   def getArrayFromJson(key: String): Array[String] = {
-    (valuesJson \\ key).head.asOpt[Array[String]].get
+    getArrayFromJson(valuesJson, key)
   }
 
   def getWordsArray: Array[String] = {
-    (wordsJson \\ "words").head.asOpt[Array[String]].get
+    getArrayFromJson(wordsJson, "words")
   }
 
-  def getListFromJson(key: String): List[Array[String]] = {
-    (valuesJson \\ key).head.asOpt[List[Array[String]]].get
+  def getValueFromArray(key: String): String = {
+    val array = getArrayFromJson(key)
+    getRandomArrayElement(array)
   }
 
   def getRandomArrayElement(array: Array[String]): String = {
