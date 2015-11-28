@@ -5,5 +5,3 @@ jdk:
 script:
 - sbt clean coverage test
 - sbt coveralls
-- sbt coverageAggregate
-- sbt codacyCoverage

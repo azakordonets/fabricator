@@ -9,8 +9,6 @@ lazy val commonSettings = Seq(
 
 )
 
-scalacOptions += "-target:jvm-1.7"
-
 name := "fabricator"
 
 version := "2.0"
@@ -77,8 +75,10 @@ resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repos
 
 resolvers += Classpaths.sbtPluginReleases
 
+resolvers += Resolver.typesafeRepo("releases")
+
 libraryDependencies ++= Seq(
-  "com.typesafe.play" %% "play-json" % "2.4.0-M2",
+  "com.typesafe.play" %% "play-json" % "2.4.4",
   "org.testng" % "testng" % "6.9.4",
   "org.scalatest" %% "scalatest" % "3.0.0-SNAP4" % "test",
   "com.github.nscala-time" %% "nscala-time" % "1.2.0",

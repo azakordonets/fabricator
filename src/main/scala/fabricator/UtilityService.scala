@@ -19,7 +19,11 @@ case class UtilityService(lang: String = "us", private val random: Random = new 
   if (wordsJson == null) throw new Exception("words_" + lang + ".json file doesn't exist")
 
   def getArrayFromJson(json: JsValue, key: String): Array[String] = {
-    (json \\ key).head.asOpt[Array[String]].get
+    val maybeJsValue = (json \\ key).seq.headOption
+    maybeJsValue match {
+      case None => Array.empty[String]
+      case Some(jsValue) => jsValue.asOpt[Array[String]].getOrElse(Array.empty[String])
+    }
   }
 
   def getArrayFromJson(key: String): Array[String] = {
