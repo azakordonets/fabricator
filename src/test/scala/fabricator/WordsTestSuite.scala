@@ -13,12 +13,12 @@ class WordsTestSuite extends BaseTestSuite {
   }
   
   @DataProvider(name = "wordsCountDP")
-  def wordsCountDP():Array[Array[Int]]= {
-    Array(Array(10),
-      Array(100),
-      Array(1000),
-      Array(4000),
-      Array(9500)
+  def wordsCountDP():Array[Array[String]]= {
+    Array(Array("10"),
+      Array("100"),
+      Array("1000"),
+      Array("4000"),
+      Array("9500")
     )
   }
 
@@ -40,9 +40,9 @@ class WordsTestSuite extends BaseTestSuite {
   }
   
   @Test(dataProvider = "wordsCountDP")
-  def testWords(count: Int) = {
+  def testWords(count: String) = {
     if (debugEnabled) logger.debug("Getting words array generated with length = " + count)
-    assertResult(words.words(count).length)(count)
+    assertResult(count.toInt)(words.words(count.toInt).length)
   }
 
   @Test
@@ -67,10 +67,10 @@ class WordsTestSuite extends BaseTestSuite {
   }
 
   @Test(dataProvider = "wordsCountDP")
-  def testTextCustomValue(length: Int) = {
-    val paragraph = words.paragraph(length)
-    if (debugEnabled) logger.debug("Testing sentence generation. Creating paragraph with chars length: " + length + "\n" + paragraph)
-    assertResult(paragraph.length())(length)
+  def testTextCustomValue(length: String) = {
+    val paragraph = words.paragraph(length.toInt)
+    if (debugEnabled) logger.debug("Testing sentence generation. Creating paragraph with chars length: " + length.toInt + "\n" + paragraph)
+    assertResult(paragraph.length)(length.toInt)
   }
 
 
