@@ -55,7 +55,7 @@ class UrlBuilder() {
     this
   }
 
-  def paramsinJava(params: java.util.HashMap[String, Any]): this.type = {
+  def paramsInJava(params: java.util.HashMap[String, Any]): this.type = {
     this.params = params.asScala
     this
   }

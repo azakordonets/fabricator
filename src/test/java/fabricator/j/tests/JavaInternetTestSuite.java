@@ -16,7 +16,7 @@ public class JavaInternetTestSuite extends JavaBaseTest {
         stringStringHashMap.put("hello", "test");
         stringStringHashMap.put("hello2", "test2");
         stringStringHashMap.put("hello3", "test 3");
-        final String url = internet.urlBuilder().host("test.ru").paramsinJava(stringStringHashMap).toString();
+        final String url = internet.urlBuilder().host("test.ru").paramsInJava(stringStringHashMap).toString();
         assertTrue(url.matches("^(.*:)//([A-Za-z0-9\\-\\.]+)(:[0-9]+)?(.*)$"));
         String params = url.split("/")[3];
         List<String> paramsList = Arrays.asList(params.replaceAll("getEntity\\?","").split("&"));
