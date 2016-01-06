@@ -65,6 +65,10 @@ class Internet(private val utility: UtilityService,
     }
   }
 
+  def username: String = {
+    contact.firstName.toLowerCase + contact.lastName.capitalize + alpha.randomInt(1960, 2020)
+  }
+
   def twitter: String = "@" + contact.firstName.toLowerCase + contact.lastName + alpha.randomInt(9999)
 
   def hashtag: String = "#" + word.words(3).mkString.replaceAll("'", "")
