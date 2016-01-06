@@ -59,7 +59,7 @@ class Contact(private val utility: UtilityService,
 
   def apartmentNumber = alpha.numerify(utility.getValueFromArray("app_number"))
 
-  def postcode = alpha.botify(utility.getValueFromArray("postcode"))
+  def postcode = alpha.botify(utility.getValueFromArray("postcode")).toUpperCase
   
   def country = utility.getValueFromArray("country")
   
