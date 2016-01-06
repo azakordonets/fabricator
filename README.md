@@ -16,7 +16,7 @@ For maven projects you need to add next dependency in your ```pom.xml``` file :
 <dependency>
   <groupId>com.github.azakordonets</groupId>
   <artifactId>fabricator_2.10</artifactId>
-  <version>2.0</version>
+  <version>2.0.1</version>
 </dependency>
 ```
 
@@ -25,7 +25,7 @@ In case you want to use it in your scala project, then just add this lines to yo
 ```scala
 resolvers += "Fabricator" at "http://dl.bintray.com/biercoff/Fabricator"
 
-libraryDependencies += "com.github.azakordonets" % "fabricator_2.10" % "2.0",
+libraryDependencies += "com.github.azakordonets" % "fabricator_2.10" % "2.0.1",
 ```
 
 Usage
