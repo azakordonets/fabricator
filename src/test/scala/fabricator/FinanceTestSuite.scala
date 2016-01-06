@@ -1,13 +1,20 @@
 package fabricator
 
 import org.apache.commons.validator.routines.checkdigit.IBANCheckDigit
-import org.testng.annotations.Test
+import org.testng.annotations.{DataProvider, Test}
 
 class FinanceTestSuite extends BaseTestSuite {
 
-  @Test
-  def testCustomConstructor()  {
-    val customFinance = fabricator.Finance("us")
+  @DataProvider(name = "languageDp")
+  def languageDp(): Array[Array[Any]] = {
+    Array(Array("nl"),
+      Array("de")
+    )
+  }
+
+  @Test(dataProvider = "languageDp")
+  def testCustomConstructor(lang: String)  {
+    val customFinance = fabricator.Finance(lang)
     assert(customFinance != null)
   }
 

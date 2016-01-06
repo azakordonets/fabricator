@@ -11,9 +11,16 @@ import scala.collection.mutable
 
 class InternetTestSuite extends BaseTestSuite {
 
-  @Test
-  def testCustomConstructor()  {
-    val customInternet = fabricator.Internet("us")
+  @DataProvider(name = "languageDp")
+  def languageDp(): Array[Array[Any]] = {
+    Array(Array("nl"),
+      Array("de")
+    )
+  }
+
+  @Test(dataProvider = "languageDp")
+  def testCustomConstructor(lang: String)  {
+    val customInternet = fabricator.Internet(lang)
     assert(customInternet != null)
   }
 

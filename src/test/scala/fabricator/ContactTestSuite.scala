@@ -26,9 +26,16 @@ class ContactTestSuite extends BaseTestSuite {
   lazy val bloodTypeList: Array[String] = util.getArrayFromJson("blood_type")
   lazy val occupationList: Array[String] = util.getArrayFromJson("occupation")
 
-  @Test
-  def testCustomConstructor()  {
-    val customContact = fabricator.Contact("de")
+  @DataProvider(name = "languageDp")
+  def languageDp(): Array[Array[Any]] = {
+    Array(Array("nl"),
+      Array("de")
+    )
+  }
+
+  @Test(dataProvider = "languageDp")
+  def testCustomConstructor(lang: String)  {
+    val customContact = fabricator.Contact(lang)
     assert(customContact != null)
   }
 

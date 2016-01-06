@@ -6,9 +6,16 @@ import scala.collection.mutable
 
 class WordsTestSuite extends BaseTestSuite {
 
-  @Test
-  def testCustomConstructor()  {
-    val customWords = fabricator.Words("us")
+  @DataProvider(name = "languageDp")
+  def languageDp(): Array[Array[Any]] = {
+    Array(Array("nl"),
+      Array("de")
+    )
+  }
+
+  @Test(dataProvider = "languageDp")
+  def testCustomConstructor(lang: String)  {
+    val customWords = fabricator.Words(lang)
     assert(customWords != null)
   }
   

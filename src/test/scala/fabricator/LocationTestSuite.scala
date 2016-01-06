@@ -6,9 +6,16 @@ import org.testng.annotations.{DataProvider, Test}
 
 class LocationTestSuite extends BaseTestSuite {
 
-  @Test
-  def testCustomConstructor()  {
-    val customLocation = fabricator.Location("us")
+  @DataProvider(name = "languageDp")
+  def languageDp(): Array[Array[Any]] = {
+    Array(Array("nl"),
+      Array("de")
+    )
+  }
+
+  @Test(dataProvider = "languageDp")
+  def testCustomConstructor(lang: String)  {
+    val customLocation = fabricator.Location(lang)
     assert(customLocation != null)
   }
   

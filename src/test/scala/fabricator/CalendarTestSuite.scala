@@ -10,10 +10,17 @@ class CalendarTestSuite extends BaseTestSuite {
 
   lazy val daysOfWeekList = util.getArrayFromJson("day_of_week")
 
-  @Test
-  def testCustomConstructor()  {
-    val customCalendar = fabricator.Calendar("us")
-    assert(customCalendar != null)
+  @DataProvider(name = "languageDp")
+  def languageDp(): Array[Array[Any]] = {
+    Array(Array("nl"),
+      Array("de")
+    )
+  }
+
+  @Test(dataProvider = "languageDp")
+  def testCustomConstructor(lang: String)  {
+    val customCalender = fabricator.Calendar(lang)
+    assert(customCalender != null)
   }
 
   @Test
