@@ -13,7 +13,7 @@ class FinanceTestSuite extends BaseTestSuite {
   }
 
   @Test(dataProvider = "languageDp")
-  def testCustomConstructor(lang: String)  {
+  def testCustomConstructor(lang: String) {
     val customFinance = fabricator.Finance(lang)
     assert(customFinance != null)
   }
