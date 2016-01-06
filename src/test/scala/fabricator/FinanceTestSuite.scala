@@ -34,6 +34,30 @@ class FinanceTestSuite extends BaseTestSuite {
   }
 
   @Test
+  def testBsn() = {
+    val bsn = finance.bsn
+    if (debugEnabled) logger.debug("Testing random BIC number : " + bsn)
+    assert(bsnIsValid(bsn))
+  }
+
+  def bsnIsValid(bsn: String): Boolean = {
+    val length = bsn.length
+    if (length < 8 || length > 9) {
+      return false
+    }
+    var pos = 0
+    var result = 0
+    for (i <- length to 0 by -1) {
+      if (pos < length){
+        val addition = if (i != 1) bsn.charAt(pos).asDigit * i else bsn.charAt(pos).asDigit * i * -1
+        result = result + addition
+      }
+      pos = pos + 1
+    }
+    result % 11 == 0
+  }
+
+  @Test
   def testMasterCard() = {
     val creditCard = finance.masterCard
     assert(creditCard.length == 16)

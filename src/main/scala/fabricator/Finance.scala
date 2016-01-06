@@ -57,6 +57,37 @@ class Finance private(private val utility: UtilityService,
 
   def ssn: String = alpha.botify(utility.getValueFromArray("ssn"))
 
+  def bsn: String = {
+    val bsn: Array[Int] = Array.ofDim(9)
+    bsn(0) = alpha.randomInt(9) + 1
+    for (i <- 0 to 8){
+      bsn(i) = alpha.randomInt(10)
+    }
+    bsn(8) = 0
+    if (bsn(0) + bsn(1) + bsn(2) == 0) {
+      bsn(1) = 1
+    }
+    var sum = 0;
+    for (i <- 0 to 8) {
+      sum += bsn(i) * (9 - i)
+    }
+    bsn(8) = sum % 11
+    if (bsn(8) > 9) {
+      if (bsn(7) > 0) {
+        bsn(7) -= 1
+        bsn(8) = 8
+      } else {
+        bsn(7) += 1
+        bsn(8) = 1
+      }
+    }
+    var result = "";
+    for (i <- 0 to 8) {
+      result += bsn(i)
+    }
+    result
+  }
+
   def masterCard: String = CreditCard.generateNumber(CreditCard.masterCardPrefixList, 16, 1)(0)
 
   def masterCards(howMany: Int): Array[String] = CreditCard.generateNumber(CreditCard.masterCardPrefixList, 16, howMany)
