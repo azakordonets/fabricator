@@ -224,5 +224,11 @@ class InternetTestSuite extends BaseTestSuite {
     assert(avatar.matches("http.*/[^/]+/128.jpg$"))
   }
 
+  @Test
+  def testUserName() = {
+    val userName = internet.username
+    assert(userName.matches("^[a-z-A-Z0-9_-]{3,30}$"))
+  }
+
 
 }
