@@ -15,8 +15,8 @@ class WordsTestSuite extends BaseTestSuite {
 
   @Test(dataProvider = "languageDp")
   def testCustomConstructor(lang: String)  {
-    val customWords = fabricator.Words(lang)
-    assert(customWords != null)
+    val customWords = Option(fabricator.Words(lang))
+    assert(customWords.isDefined)
   }
   
   @DataProvider(name = "wordsCountDP")
