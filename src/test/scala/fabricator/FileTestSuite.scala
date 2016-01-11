@@ -289,7 +289,7 @@ class FileTestSuite extends BaseTestSuite {
   @AfterTest
   def tearDown() = {
     logger.info("Deleting file")
-    if (fileObject != null) fileObject.delete()
+    if (Option(fileObject).isDefined) fileObject.delete()
   }
 
 
