@@ -111,7 +111,7 @@ class FileTestSuite extends BaseTestSuite {
     assert(fileObject.exists())
     val line = CSVReader.open(fileOnADrive).all()
     val firstNameList: Array[String] = util.getArrayFromJson("first_name")
-    assert(firstNameList.contains(line(1).head))
+    assert(firstNameList.contains(line(1).headOption.getOrElse("")))
   }
 
   @Test
@@ -179,7 +179,7 @@ class FileTestSuite extends BaseTestSuite {
     // read file and confirm that correct data is present
     val reader = CSVReader.open(fileOnADrive)
     val lines = reader.all()
-    val actualTitles = lines.head
+    val actualTitles = lines.headOption.getOrElse("")
     val numberOfRowsInFile = lines.length
     for (title <- actualTitles) assert(titles.contains(title))
     assertResult(numberOfRows + 1)(numberOfRowsInFile)
