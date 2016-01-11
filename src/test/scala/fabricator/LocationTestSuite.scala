@@ -16,7 +16,7 @@ class LocationTestSuite extends BaseTestSuite {
   @Test(dataProvider = "languageDp")
   def testCustomConstructor(lang: String)  {
     val customLocation = fabricator.Location(lang)
-    assert(customLocation != null)
+    assert(Option(customLocation).isDefined)
   }
   
   @DataProvider(name = "altitudeDP")
