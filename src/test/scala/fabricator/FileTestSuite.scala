@@ -34,7 +34,7 @@ class FileTestSuite extends BaseTestSuite {
   @Test
   def testCustomConstructor()  {
     val customFile = fabricator.FileGenerator("us")
-    assert(customFile != null)
+    assert(Option(customFile).isDefined)
   }
 
   @Test
