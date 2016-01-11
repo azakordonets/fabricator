@@ -179,7 +179,7 @@ class FileTestSuite extends BaseTestSuite {
     // read file and confirm that correct data is present
     val reader = CSVReader.open(fileOnADrive)
     val lines = reader.all()
-    val actualTitles = lines.headOption.getOrElse("")
+    val actualTitles = lines.headOption.getOrElse(List[String]())
     val numberOfRowsInFile = lines.length
     for (title <- actualTitles) assert(titles.contains(title))
     assertResult(numberOfRows + 1)(numberOfRowsInFile)
