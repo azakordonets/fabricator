@@ -66,7 +66,7 @@ class Internet(private val utility: UtilityService,
   }
 
   def username: String = {
-    contact.firstName.toLowerCase + contact.lastName.capitalize + alpha.randomInt(1960, 2020)
+    (contact.firstName.toLowerCase + contact.lastName.capitalize + alpha.randomInt(1960, 2020)).replaceAll("[\\s']", "")
   }
 
   def twitter: String = "@" + contact.firstName.toLowerCase + contact.lastName + alpha.randomInt(9999)
