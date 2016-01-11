@@ -23,10 +23,14 @@ class Location(private val utility: UtilityService,
   def altitude: String = altitude(8848, 5)
 
   def altitude(max: Int, accuracy: Int): String = {
-    if (accuracy > 10) {
-      throw new IllegalArgumentException("Accuracy cannot be more then 10 digits")
-    }
+    checkAccuracyLength(accuracy)
     alpha.randomInt(0, max) + "." + alpha.randomInt(100000, 1000000000).toString.substring(0, accuracy)
+  }
+
+  private def checkAccuracyLength(accuracy: Int): Unit = {
+    if (accuracy > 10) {
+      throw new scala.IllegalArgumentException("Accuracy cannot be more then 10 digits")
+    }
   }
 
   def altitude(max: Int): String = altitude(max, 5)
@@ -36,9 +40,7 @@ class Location(private val utility: UtilityService,
   def depth(min: Int): String = depth(min, 5)
     
   def depth(min: Int, accuracy: Int): String = {
-    if (accuracy > 10) {
-      throw new IllegalArgumentException("Accuracy cannot be more then 10 digits")
-    }
+    checkAccuracyLength(accuracy)
     "-" + alpha.randomInt(0, Math.abs(min)) + "." + alpha.randomInt(100000, 1000000000).toString.substring(0, accuracy)
   }
 
@@ -57,9 +59,7 @@ class Location(private val utility: UtilityService,
   def latitude(min: Int, max: Int): String = latitude(min, max, 5)
 
   def latitude(min: Int, max: Int, accuracy: Int): String = {
-    if (accuracy > 10) {
-      throw new IllegalArgumentException("Accuracy cannot be more then 10 digits")
-    }
+    checkAccuracyLength(accuracy)
     alpha.randomInt(min, max) + "." + alpha.randomInt(100000, 1000000000).toString.substring(0, accuracy)
   }
 
@@ -68,9 +68,7 @@ class Location(private val utility: UtilityService,
   def longitude(min: Int, max: Int): String = longitude(min, max, 5)
 
   def longitude(min: Int, max: Int, accuracy: Int): String = {
-    if (accuracy > 10) {
-      throw new IllegalArgumentException("Accuracy cannot be more then 10 digits")
-    }
+    checkAccuracyLength(accuracy)
     alpha.randomInt(min, max) + "." + alpha.randomInt(100000, 1000000000).toString.substring(0, accuracy)
   }
 
