@@ -27,6 +27,41 @@ class FileTestSuite extends BaseTestSuite {
   private lazy val multipartMimeTypes =  util.getArrayFromJson("multipart_mime_types")
   private lazy val textMimeTypes =  util.getArrayFromJson("text_mime_types")
   private lazy val videoMimeTypes =  util.getArrayFromJson("video_mime_types")
+  private lazy val codes = Array(CsvValueCode.OCCUPATION,
+                                  CsvValueCode.VISA,
+                                  CsvValueCode.MASTER,
+                                  CsvValueCode.IBAN,
+                                  CsvValueCode.BIC,
+                                  CsvValueCode.URL,
+                                  CsvValueCode.IP,
+                                  CsvValueCode.MACADDRESS,
+                                  CsvValueCode.UUID,
+                                  CsvValueCode.COLOR,
+                                  CsvValueCode.TWITTER,
+                                  CsvValueCode.HASHTAG,
+                                  CsvValueCode.FACEBOOK,
+                                  CsvValueCode.GOOGLE_ANALYTICS,
+                                  CsvValueCode.ALTITUDE,
+                                  CsvValueCode.DEPTH,
+                                  CsvValueCode.LATITUDE,
+                                  CsvValueCode.LONGITUDE,
+                                  CsvValueCode.COORDINATES,
+                                  CsvValueCode.GEOHASH,
+                                  CsvValueCode.APPLE_TOKEN,
+                                  CsvValueCode.ANDROID,
+                                  CsvValueCode.POSTCODE,
+                                  CsvValueCode.WINDOWS7TOKEN,
+                                  CsvValueCode.WINDOWS8TOKEN,
+                                  CsvValueCode.WORD,
+                                  CsvValueCode.SENTENCE,
+                                  CsvValueCode.INTEGER,
+                                  CsvValueCode.INTEGER,
+                                  CsvValueCode.DOUBLE,
+                                  CsvValueCode.HASH,
+                                  CsvValueCode.GUID,
+                                  CsvValueCode.TIME,
+                                  CsvValueCode.DATE,
+                                  CsvValueCode.NAME)
 
 
 
@@ -81,42 +116,6 @@ class FileTestSuite extends BaseTestSuite {
 
   @Test
   def testCsvWithCustomDelimiter() = {
-    // creating file
-    val codes = Array(CsvValueCode.OCCUPATION,
-                      CsvValueCode.VISA,
-                      CsvValueCode.MASTER,
-                      CsvValueCode.IBAN,
-                      CsvValueCode.BIC,
-                      CsvValueCode.URL,
-                      CsvValueCode.IP,
-                      CsvValueCode.MACADDRESS,
-                      CsvValueCode.UUID,
-                      CsvValueCode.COLOR,
-                      CsvValueCode.TWITTER,
-                      CsvValueCode.HASHTAG,
-                      CsvValueCode.FACEBOOK,
-                      CsvValueCode.GOOGLE_ANALYTICS,
-                      CsvValueCode.ALTITUDE,
-                      CsvValueCode.DEPTH,
-                      CsvValueCode.LATITUDE,
-                      CsvValueCode.LONGITUDE,
-                      CsvValueCode.COORDINATES,
-                      CsvValueCode.GEOHASH,
-                      CsvValueCode.APPLE_TOKEN,
-                      CsvValueCode.ANDROID,
-                      CsvValueCode.POSTCODE,
-                      CsvValueCode.WINDOWS7TOKEN,
-                      CsvValueCode.WINDOWS8TOKEN,
-                      CsvValueCode.WORD,
-                      CsvValueCode.SENTENCE,
-                      CsvValueCode.INTEGER,
-                      CsvValueCode.INTEGER,
-                      CsvValueCode.DOUBLE,
-                      CsvValueCode.HASH,
-                      CsvValueCode.GUID,
-                      CsvValueCode.TIME,
-                      CsvValueCode.DATE,
-                      CsvValueCode.NAME)
     val numberOfRows = 10
     file.csvBuilder.withCodes(codes)
       .withNumberOfRows(10)
