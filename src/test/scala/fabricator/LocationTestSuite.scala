@@ -39,16 +39,16 @@ class LocationTestSuite extends BaseTestSuite {
 
   @Test
   def testAltitudeMaxValue() = {
-    val altitude = location.altitude(10000).toDouble
+    val altitude = location.altitude(1000).toDouble
     if (debugEnabled) logger.debug("Testing random altitude with max value 1000 : " + altitude)
-    assert(altitude >= 0 && altitude <= 10000)
+    assert(altitude >= 0 && altitude <= 1000)
   }
 
   @Test
   def testAltitudeAccuracy() = {
-    val altitude = location.altitude(10000, 2)
+    val altitude = location.altitude(1000, 2)
     if (debugEnabled) logger.debug("Testing random altitude with accuracy = 2 : " + altitude)
-    assert(altitude.toDouble >= 0 && altitude.toDouble <= 10000)
+    assert(altitude.toDouble >= 0 && altitude.toDouble <= 1000)
     assert(altitude.toString.split("\\.")(1).length == 2)
   }
 

@@ -18,12 +18,18 @@ object Location {
 class Location(private val utility: UtilityService,
                private val alpha: Alphanumeric,
                private val random: Random) {
-
+  private final val MARIAN_TRENCH_DEEP: Int = -11022
+  private final val EVEREST_MOUNTAIN_HEIGHT: Int = 8849
 
   def altitude: String = altitude(8848, 5)
 
   def altitude(max: Int, accuracy: Int): String = {
     checkAccuracyLength(accuracy)
+    if (max > EVEREST_MOUNTAIN_HEIGHT) {
+      val errorMessage: String = ("The highest point on Earth is mountain Everest, which is %d meters high." +
+        " You can' go more then that").format(EVEREST_MOUNTAIN_HEIGHT)
+      throw new scala.IllegalArgumentException(errorMessage)
+    }
     getFakeCoordinateValue(0, max, accuracy)
   }
 
@@ -41,6 +47,10 @@ class Location(private val utility: UtilityService,
     
   def depth(min: Int, accuracy: Int): String = {
     checkAccuracyLength(accuracy)
+    if (min < MARIAN_TRENCH_DEEP) {
+      val errorMessage: String = "The deepest place in the world is Marian Trench and it's %d meters deep. You can't go lower then this".format(MARIAN_TRENCH_DEEP)
+      throw new scala.IllegalArgumentException(errorMessage)
+    }
     "-" + alpha.randomInt(0, Math.abs(min)) + "." + alpha.randomInt(100000, 1000000000).toString.substring(0, accuracy)
   }
 
