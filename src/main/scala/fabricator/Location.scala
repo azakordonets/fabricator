@@ -24,7 +24,7 @@ class Location(private val utility: UtilityService,
 
   def altitude(max: Int, accuracy: Int): String = {
     checkAccuracyLength(accuracy)
-    alpha.randomInt(0, max) + "." + alpha.randomInt(100000, 1000000000).toString.substring(0, accuracy)
+    getFakeCoordinateValue(0, max, accuracy)
   }
 
   private def checkAccuracyLength(accuracy: Int): Unit = {
@@ -60,6 +60,10 @@ class Location(private val utility: UtilityService,
 
   def latitude(min: Int, max: Int, accuracy: Int): String = {
     checkAccuracyLength(accuracy)
+    getFakeCoordinateValue(min, max, accuracy)
+  }
+
+  def getFakeCoordinateValue(min: Int, max: Int, accuracy: Int): String = {
     alpha.randomInt(min, max) + "." + alpha.randomInt(100000, 1000000000).toString.substring(0, accuracy)
   }
 
@@ -69,7 +73,7 @@ class Location(private val utility: UtilityService,
 
   def longitude(min: Int, max: Int, accuracy: Int): String = {
     checkAccuracyLength(accuracy)
-    alpha.randomInt(min, max) + "." + alpha.randomInt(100000, 1000000000).toString.substring(0, accuracy)
+    getFakeCoordinateValue(min, max, accuracy)
   }
 
   def geohash(latitude: Double, longitude: Double): String = GeohashUtils.encodeLatLon(latitude, longitude)
