@@ -67,10 +67,7 @@ class Finance private(private val utility: UtilityService,
     if (bsn(0) + bsn(1) + bsn(2) == 0) {
       bsn(1) = 1
     }
-    var sum = 0;
-    for (i <- 0 to 8) {
-      sum += bsn(i) * (9 - i)
-    }
+    val sum = Array.tabulate(bsn.length){index => bsn(index) * (9 - index)}.sum
     bsn(8) = sum % 11
     if (bsn(8) > 9) {
       if (bsn(7) > 0) {
@@ -81,11 +78,7 @@ class Finance private(private val utility: UtilityService,
         bsn(8) = 1
       }
     }
-    var result = "";
-    for (i <- 0 to 8) {
-      result += bsn(i)
-    }
-    result
+    bsn.mkString("")
   }
 
   def masterCard: String = CreditCard.generateNumber(CreditCard.masterCardPrefixList, 16, 1)(0)
@@ -167,12 +160,12 @@ class Finance private(private val utility: UtilityService,
       try {
         val reversedNumber = cardNumber.reverse
         var mod10Count = 0
-        for (i <- 0 to reversedNumber.length - 1) {
+        for (i <- 0 until reversedNumber.length) {
           var augend = reversedNumber.charAt(i).toString.toInt
           if (((i + 1) % 2) == 0) {
             val productString = String.valueOf(augend * 2)
             augend = 0
-            for (j <- 0 to productString.length - 1) {
+            for (j <- 0 until productString.length) {
               augend += Integer.parseInt(String.valueOf(productString.charAt(j)))
             }
           }
