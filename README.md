@@ -22,10 +22,18 @@ For maven projects you need to add next dependency in your ```pom.xml``` file :
 
 In case you want to use it in your scala project, then just add this lines to your ```build.sbt``` file :
 
+For Scala 2.10.4 you can use this :
 ```scala
 resolvers += "Fabricator" at "http://dl.bintray.com/biercoff/Fabricator"
 
 libraryDependencies += "com.github.azakordonets" % "fabricator_2.10" % "2.1.1",
+```
+
+For Scala 2.11 you can use this :
+```scala
+resolvers += "Fabricator" at "http://dl.bintray.com/biercoff/Fabricator"
+
+libraryDependencies += "com.github.azakordonets" % "fabricator_2.11" % "2.1.1",
 ```
 
 Usage
