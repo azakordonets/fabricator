@@ -1,8 +1,9 @@
 fabricator
 ==========
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.azakordonets/fabricator_2.10/badge.svg?style=flat)](http://mvnrepository.com/artifact/com.github.azakordonets/fabricator_2.10)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.azakordonets/fabricator_2.10/badge.svg?style=flat)](http://mvnrepository.com/artifact/com.github.azakordonets/fabricator_2.11)
 [![Build Status](https://travis-ci.org/azakordonets/fabricator.svg?branch=master)](https://travis-ci.org/azakordonets/fabricator) &nbsp;&nbsp;&nbsp;&nbsp;   [![Coverage Status](https://coveralls.io/repos/azakordonets/fabricator/badge.png)](https://coveralls.io/r/azakordonets/fabricator)  &nbsp;&nbsp;&nbsp;&nbsp; [![Get automatic notifications about new "fabricator" versions](https://www.bintray.com/docs/images/bintray_badge_color.png)](https://bintray.com/biercoff/Fabricator/fabricator/view?source=watch)
+[ ![Download](https://api.bintray.com/packages/biercoff/Fabricator/fabricator/images/download.svg) ](https://bintray.com/biercoff/Fabricator/fabricator/_latestVersion)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/72eb01b78a2149f7b7037c608c4e70e7)](https://www.codacy.com/app/biercoff/fabricator)
 
 Fabricator is a minimalist generator of random  strings, numbers, etc. to help reduce some monotony particularly while writing automated tests or
