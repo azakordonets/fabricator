@@ -8,7 +8,7 @@ class UserAgentTestSuite extends BaseTestSuite {
   lazy val linuxProcessorList: Array[String] = util.getArrayFromJson("linux_processor")
   lazy val browsersList: Array[String] = util.getArrayFromJson("browser")
   lazy val windowsPlatformList: Array[String] = util.getArrayFromJson("windows")
-  lazy val userAgent = UserAgent()
+  lazy val userAgent = Fabricator.userAgent()
 
   @Test
   def testMacProcessor() = {

@@ -58,6 +58,10 @@ object Fabricator {
     Mobile()
   }
 
+  def userAgent(): UserAgent = {
+    UserAgent()
+  }
+
   def words(): Words = {
     Words()
   }
