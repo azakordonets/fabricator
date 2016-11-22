@@ -7,6 +7,7 @@ import java.nio.{ByteBuffer, CharBuffer}
 import com.sun.jndi.toolkit.url.Uri
 import fabricator._
 
+import scala.util.Random
 import scala.collection.JavaConverters._
 import scala.collection.mutable
 
@@ -14,7 +15,9 @@ class UrlBuilder() {
 
   private val service: UtilityService = new UtilityService()
 
-  private val words: Words = new Words(service)
+  private val random: Random = new Random()
+
+  private val words: Words = new Words(service, random)
 
   private var scheme: String = "http"
 
