@@ -46,7 +46,7 @@ class Calendar(private val utility: UtilityService,
 
   def time12h: String = hour12h + ":" + minute
 
-  def randomDate: RandomDate = new RandomDate
+  def randomDate: RandomDate = new RandomDate(this)
 
   def second: String = alpha.randomInt(0, 59).toString
 

@@ -40,7 +40,7 @@ object Finance {
 
 }
 
-class Finance private(private val utility: UtilityService,
+class Finance (private val utility: UtilityService,
               private val random: Random,
               private val alpha: Alphanumeric) {
 
@@ -131,7 +131,7 @@ class Finance private(private val utility: UtilityService,
     }
 
     def generateNumber(prefixes: Array[String], length: Int): String = {
-      completedNumber(Random.shuffle(prefixes.toList).head, length)
+      completedNumber(random.shuffle(prefixes.toList).head, length)
     }
 
     /*
@@ -147,7 +147,7 @@ class Finance private(private val utility: UtilityService,
         }).sum
         (((Math.floor(sum / 10) + 1) * 10 - sum) % 10).intValue
       }
-      val number = prefix + List.fill(length - prefix.length - 1)(Random.nextInt(10)).mkString
+      val number = prefix + List.fill(length - prefix.length - 1)(random.nextInt(10)).mkString
       val checkdigit = luhn(number)
       val cc = number + checkdigit
       isValidNumber(cc)

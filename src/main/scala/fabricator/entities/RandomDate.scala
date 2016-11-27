@@ -1,11 +1,10 @@
 package fabricator.entities
 
+import fabricator.Calendar
 import fabricator.enums.DateFormat
 import org.joda.time.{DateTime, IllegalFieldValueException}
 
-class RandomDate {
-
-  private val cal = fabricator.Calendar()
+class RandomDate(private val cal: Calendar) {
 
   private var year: Int = cal.year.toInt
 
