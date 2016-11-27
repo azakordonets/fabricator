@@ -20,3 +20,5 @@ src/main/scala/src.main.scala.fabricator/TestCode.sc
 src/main/scala/fabricator/Main$.java
 src/main/scala/fabricator/TestCode.sc
 test-output/*
+.idea/
+project/project/
