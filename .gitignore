@@ -22,3 +22,5 @@ src/main/scala/fabricator/TestCode.sc
 test-output/*
 .idea/
 project/project/
+generatedFiles/
+test-output/
