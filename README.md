@@ -64,7 +64,7 @@ or you can generate string basing on a pattern.
 
 ```scala
 
-val alpha = fabricator.alphaNumeric() // initialize alpha numeric module
+val alpha = fabricator.Alphanumeric() // initialize alpha numeric module
 
 alpha.numerify("###ABC") // 981ABC
 
@@ -96,7 +96,7 @@ Calendar
 
 ```scala
 
-val calendar = fabricator.calendar() // initialize calendar module
+val calendar = fabricator.Calendar() // initialize calendar module
 
 calendar.time12h // 03:15
 
@@ -138,7 +138,7 @@ Contact
 
 ```scala
 
-val contact = fabricator.contact()
+val contact = fabricator.Contact()
 
 contact.fullName // Betty Corwin
 
