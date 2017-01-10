@@ -294,7 +294,7 @@ This module allows you to generate random finance data
   
 ```scala
 
-val finance = fabricator.finance() // initialize finance module
+val finance = fabricator.Finance() // initialize finance module
 
 finance.iban // GB91ROYC80901351879409
 
@@ -314,7 +314,7 @@ This module allows you to generate random internet data
 
 ```scala
 
-val internet = fabricator.internet() // initialize internet module
+val internet = fabricator.Internet() // initialize internet module
 
 internet.appleToken // randon apple push token - ze7w6fn0omtkxjuxgw2dx50iux1ijcmkf9rmcvoshj2vnpflajdlli63g5nxwaqy
 
@@ -361,7 +361,7 @@ User Agent
 This module allows you to generate random user agent 
 
 ```scala
-val userAgent = Fabricator.userAgent()
+val userAgent = Fabricator.UserAgent()
 
 val macProcessor = userAgent.mac_processor // Intel
 
@@ -394,7 +394,7 @@ This module allows you to generate random location data - coordinates, etc
 
 ```scala
 
-val location = fabricator.location() // initialize location module
+val location = fabricator.Location() // initialize location module
 
 location.altitude // 8171.48498 By default maximum altitude is 8848 and accuracy is 5
 
@@ -424,7 +424,7 @@ This module allows you to generate random mobile operating systems push tokens
 
 ```scala
 
-val mobile = fabricator.mobile() // initialize mobile module
+val mobile = fabricator.Mobile() // initialize mobile module
 
 mobile.androidGsmId // APA91fCUNiRP-xKj0qBUoJgGWYnN3zFoznbFL61BkWktXCPTYgw4Xe7phJ3zhOEVYJ4ToZvYTp2f0PPHeNSmYHajXr9fwbDarFh8zTGVz3I54ffViW4Nl8s6XLs7i9lIi3oUeRI5bOx49wIC9EF-IwBcuOT-MQ-Nrw1GUW0cJco1Dti4nAtW7Xx
 
@@ -442,7 +442,7 @@ This module allows you to generate random words, sentences and even blocks of te
 
 ```scala
 
-val words = fabricator.words() // initialize word module
+val words = fabricator.Words() // initialize word module
 
 words.word // random word
 
