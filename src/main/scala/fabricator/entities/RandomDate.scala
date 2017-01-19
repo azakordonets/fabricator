@@ -16,8 +16,6 @@ class RandomDate(private val cal: Calendar) {
 
   private var minute: Int = cal.minute.toInt
 
-  private var date: DateTime = new DateTime(year, month, day, hour, minute)
-
   def inYear(year: Int): this.type = {
     this.year = year
     this.day = cal.day(year, this.month).toInt
@@ -70,8 +68,7 @@ class RandomDate(private val cal: Calendar) {
   }
 
   private def makeDate: DateTime = {
-    date = new DateTime(year, month, day, hour, minute)
-    date
+    new DateTime(year, month, day, hour, minute)
   }
 
   def asDate: DateTime = {
