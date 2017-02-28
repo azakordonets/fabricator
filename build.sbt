@@ -7,7 +7,7 @@ scalacOptions += "-target:jvm-1.7"
 
 name := "fabricator"
 
-version := "2.1.3"
+version := "2.1.4"
 
 organization := "com.github.azakordonets"
 
@@ -88,7 +88,8 @@ libraryDependencies ++= Seq(
   "commons-validator" % "commons-validator" % "1.4.0",
   "com.google.inject" % "guice" % "3.0",
   "com.github.tototoshi" % "scala-csv_2.10" % "1.1.2",
-  "com.google.zxing" % "core" % "3.2.0"
+  "com.google.zxing" % "core" % "3.2.0",
+  "io.github.lukehutch" % "fast-classpath-scanner" % "2.0.17"
 
 )
 

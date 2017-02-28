@@ -27,14 +27,14 @@ For Scala 2.10.4 you can use this :
 ```scala
 resolvers += "Fabricator" at "http://dl.bintray.com/biercoff/Fabricator"
 
-libraryDependencies += "com.github.azakordonets" % "fabricator_2.10" % "2.1.3",
+libraryDependencies += "com.github.azakordonets" % "fabricator_2.10" % "2.1.4",
 ```
 
 For Scala 2.11 you can use this :
 ```scala
 resolvers += "Fabricator" at "http://dl.bintray.com/biercoff/Fabricator"
 
-libraryDependencies += "com.github.azakordonets" % "fabricator_2.11" % "2.1.3",
+libraryDependencies += "com.github.azakordonets" % "fabricator_2.11" % "2.1.4",
 ```
 
 Usage

@@ -1,13 +1,13 @@
 package fabricator.entities
 
-import java.util.regex.Pattern
+import java.io.{IOException, InputStream}
 
-import org.reflections.Reflections
-import org.reflections.scanners.ResourcesScanner
-import org.reflections.util.{ClasspathHelper, ConfigurationBuilder}
+import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner
+import io.github.lukehutch.fastclasspathscanner.matchprocessor.FileMatchProcessor
 import play.api.libs.json.{JsValue, Json}
 
 import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 import scala.io.Source
 
 object RandomDataKeeper {
@@ -15,11 +15,16 @@ object RandomDataKeeper {
   private val randomDataStorage: mutable.Map[String, String] = mutable.HashMap[String, String]()
 
   private def getResourcesList: Set[String] = {
-    val reflections = new Reflections(new ConfigurationBuilder()
-      .setUrls(ClasspathHelper.forPackage("fabricator"))
-      .setScanners(new ResourcesScanner()))
-    val fileNames = reflections.getResources(Pattern.compile(".*\\.json")).toArray.map(_.toString.replaceAll("data_files/", ""))
-    fileNames.toSet[String]
+    val fileNames = new ListBuffer[String]
+    new FastClasspathScanner("data_files")
+      .matchFilenamePattern(".*\\.json", new FileMatchProcessor() {
+        @throws[IOException]
+        def processMatch(relativePath: String, inputStream: InputStream, l: Long) {
+          fileNames += relativePath.replaceAll("data_files/", "")
+        }
+      })
+      .scan()
+    fileNames.toSet
   }
 
   private def parseLanguageDataFiles() = {
@@ -27,7 +32,7 @@ object RandomDataKeeper {
     filesList.foreach(fileName => randomDataStorage(fileName.split("\\.")(0)) = parseFile(fileName))
   }
 
-  private def parseFile(fileName: String): String  = {
+  private def parseFile(fileName: String): String = {
     Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("data_files/" + fileName))("UTF-8").mkString
   }
 
