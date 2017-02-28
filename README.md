@@ -17,7 +17,7 @@ For maven projects you need to add next dependency in your ```pom.xml``` file :
 <dependency>
   <groupId>com.github.azakordonets</groupId>
   <artifactId>fabricator_2.10</artifactId>
-  <version>2.1.3</version>
+  <version>2.1.4</version>
 </dependency>
 ```
 
