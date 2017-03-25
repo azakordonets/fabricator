@@ -144,7 +144,7 @@ contact.fullName // Betty Corwin
 
 contact.birthday(25) // 26.12.1989 (current year - 25 with default format dd.MM.yyyy)
 
-contact.bsn // 730550370
+contact.bsn // 730550370 (equivalent of a national ID number)
 
 contact.eMail // Rebecca_Kohler506@yahoo.com
 
