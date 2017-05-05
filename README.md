@@ -455,6 +455,11 @@ words.paragraph // 100 chars length block of text
 words.paragraph(2000) // 2000 chars length block of text
 ```
 
+## Thanks
+
+Many thanks to these incredible tools that help us creating open-source software:
+
+[![Intellij IDEA](https://cloud.google.com/tools/images/icon_IntelliJIDEA.png)](http://www.jetbrains.com/idea)
 
 
 
