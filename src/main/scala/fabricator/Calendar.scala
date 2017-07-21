@@ -34,7 +34,7 @@ class Calendar(private val utility: UtilityService,
         new DateTime(year, month, dayValue, 0, 0)
         result = dayValue.toString
       } catch {
-        case e: IllegalFieldValueException => this.day(year, month)
+        case _: IllegalFieldValueException => this.day(year, month)
       }
     }
     result

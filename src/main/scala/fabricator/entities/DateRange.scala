@@ -1,5 +1,7 @@
 package fabricator.entities
 
+import java.util
+
 import fabricator.Alphanumeric
 import fabricator.enums.{DateFormat, DateRangeType}
 import org.joda.time.DateTime
@@ -119,9 +121,9 @@ class DateRange {
 
   def asList: List[DateTime] = getRangeList.toList
 
-  def asStringsJavaList() = stringifyRangeList.asJava
+  def asStringsJavaList(): util.List[String] = stringifyRangeList.asJava
 
-  def asJavaList() = getRangeList.asJava
+  def asJavaList(): util.List[DateTime] = getRangeList.asJava
 
   def asStringsArray: Array[String] = stringifyRangeList.toArray
 

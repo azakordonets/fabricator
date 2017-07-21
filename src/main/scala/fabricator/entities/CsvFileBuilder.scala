@@ -19,9 +19,9 @@ class CsvFileBuilder(alpha: Alphanumeric,
 
   private var filePath: String = "generatedFiles/result.csv"
 
-  private var titles: Array[String] = null
+  private var titles: Array[String] = _
 
-  private var customTitles: Array[String] = null
+  private var customTitles: Array[String] = _
 
   private var codes: Array[CsvValueCode] = Array(FIRST_NAME,
                                                LAST_NAME,
@@ -33,7 +33,7 @@ class CsvFileBuilder(alpha: Alphanumeric,
                                                WEIGHT,
                                                HEIGHT)
 
-  private var customValuesArray: Array[Any] = null
+  private var customValuesArray: Array[Any] = _
 
   private var numberOfRows: Int = 10
 

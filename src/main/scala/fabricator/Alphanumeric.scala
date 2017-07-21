@@ -41,7 +41,7 @@ case class Alphanumeric(private val random: Random = new Random()) {
     min to max by step toList
   }
 
-  def randomLongsRangeAsJavaList(min: Long, max: Long, step: Long) = {
+  def randomLongsRangeAsJavaList(min: Long, max: Long, step: Long): util.List[Long] = {
     randomLongsRange(min, max, step).asJava
   }
 
@@ -111,7 +111,7 @@ case class Alphanumeric(private val random: Random = new Random()) {
 
   def randomHash: String = string("0123456789abcdef", 40)
   
-  def randomHash(length: Int) = string("0123456789abcdef", length)
+  def randomHash(length: Int): String = string("0123456789abcdef", length)
   
   def randomHashList: List[String] = randomHashList(40,40, 100)
   
@@ -120,9 +120,9 @@ case class Alphanumeric(private val random: Random = new Random()) {
       List.fill(amount)(randomHash(minLength))
   }
 
-  def randomHashAsJavaList = randomHashList(40,40, 100).asJava
+  def randomHashAsJavaList: util.List[String] = randomHashList(40,40, 100).asJava
 
-  def randomHashAsJavaList(minLength: Int, maxLength: Int, amount: Int) = {
+  def randomHashAsJavaList(minLength: Int, maxLength: Int, amount: Int): util.List[String] = {
     if (minLength != maxLength )List.fill(amount)(randomHash(randomInt(minLength, maxLength))).asJava else
       List.fill(amount)(randomHash(minLength)).asJava
   }
@@ -145,17 +145,17 @@ case class Alphanumeric(private val random: Random = new Random()) {
 
   def randomGuidList: List[String] = List.fill(100)(randomGuid(5))
 
-  def randomGuidAsJavaList = randomGuidList.asJava
+  def randomGuidAsJavaList: util.List[String] = randomGuidList.asJava
   
-  def randomGuidList(version: Int, amount: Int) = List.fill(amount)(randomGuid(version))
+  def randomGuidList(version: Int, amount: Int): List[String] = List.fill(amount)(randomGuid(version))
   
-  def randomGuidAsJavaList(version: Int, amount: Int) = randomGuidList(version, amount).asJava
+  def randomGuidAsJavaList(version: Int, amount: Int): util.List[String] = randomGuidList(version, amount).asJava
 
   def botify(pattern: String): String = letterify(numerify(pattern))
   
   def botifyList(pattern: String, amount: Int): List[String] = List.fill(amount)(botify(pattern))
   
-  def botifyAsJavaList(pattern: String, amount: Int) = botifyList(pattern, amount).asJava
+  def botifyAsJavaList(pattern: String, amount: Int): util.List[String] = botifyList(pattern, amount).asJava
   
   def numerify(pattern: String): String = {
     pattern.map { case '#' => random.nextInt(10).toString case letter => letter}.mkString
@@ -163,7 +163,7 @@ case class Alphanumeric(private val random: Random = new Random()) {
   
   def numerifyList(pattern: String, amount: Int): List[String] = List.fill(amount)(numerify(pattern))
   
-  def numerifyAsJavaList(pattern: String, amount: Int) = numerifyList(pattern, amount).asJava
+  def numerifyAsJavaList(pattern: String, amount: Int): util.List[String] = numerifyList(pattern, amount).asJava
 
   def letterify(pattern: String): String = {
     val chars = ('a' to 'z') ++ ('A' to 'Z')
@@ -172,6 +172,6 @@ case class Alphanumeric(private val random: Random = new Random()) {
   
   def letterifyList(pattern: String, amount: Int): List[String] = List.fill(amount)(letterify(pattern))
   
-  def letterifyAsJavaList(pattern: String, amount: Int) = letterifyList(pattern, amount).asJava
+  def letterifyAsJavaList(pattern: String, amount: Int): util.List[String] = letterifyList(pattern, amount).asJava
 
 }

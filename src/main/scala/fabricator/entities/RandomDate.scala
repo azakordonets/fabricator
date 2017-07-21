@@ -39,7 +39,7 @@ class RandomDate(private val cal: Calendar) {
       new DateTime(year, month, day, 0, 0)
       true
     } catch {
-      case e: IllegalFieldValueException => false
+      case _: IllegalFieldValueException => false
     }
   }
 

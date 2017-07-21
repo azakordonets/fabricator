@@ -36,9 +36,9 @@ class Internet(private val utility: UtilityService,
     else ip
   }
 
-  def ipv6 = {
+  def ipv6: String = {
     val alphabet = "abcdefABCDEF0123456789"
-    (1 to 8).map(i => "" + (1 to 4).map(y => "" + alphabet.charAt(Random.nextInt(alphabet.length))).mkString).mkString(":")
+    (1 to 8).map(_ => "" + (1 to 4).map(_ => "" + alphabet.charAt(Random.nextInt(alphabet.length))).mkString).mkString(":")
   }
 
   def macAddress: String = {
@@ -49,7 +49,7 @@ class Internet(private val utility: UtilityService,
 
   def color: String = color("hex", grayscale = false)
 
-  def color(format: String, grayscale: Boolean) = {
+  def color(format: String, grayscale: Boolean): String = {
     val color = if (grayscale) {
       val redValue = random.nextInt(255)
       new Color(redValue, redValue, redValue)
@@ -71,11 +71,11 @@ class Internet(private val utility: UtilityService,
 
   def twitter: String = "@" + contact.firstName.toLowerCase + contact.lastName + alpha.randomInt(9999)
 
-  def hashtag: String = "#" + word.words(3).mkString.replaceAll("'", "")
+  def hashtag: String = "#" + word.words(3).mkString.replaceAll("'", "").replaceAll("\\.", "")
 
   def googleAnalyticsTrackCode: String = "UA-" + alpha.randomInt(10000, 100000) + "-" + alpha.randomInt(10, 100)
 
-  def facebookId: String = (1 to 16).map(i => Random.nextInt(10)).mkString
+  def facebookId: String = (1 to 16).map(_ => Random.nextInt(10)).mkString
 
   /**
    * Generates URL to avatar that is taken from <a href = "http://uifaces.com/authorized"> service

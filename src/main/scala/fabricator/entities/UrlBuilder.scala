@@ -13,7 +13,7 @@ import scala.collection.mutable
 
 class UrlBuilder() {
 
-  private val service: UtilityService = new UtilityService()
+  private val service: UtilityService = UtilityService()
 
   private val random: Random = new Random()
 

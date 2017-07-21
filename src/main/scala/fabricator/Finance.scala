@@ -177,7 +177,7 @@ class Finance (private val utility: UtilityService,
           isValid = true
         }
       } catch {
-        case e: NumberFormatException =>
+        case _: NumberFormatException =>
       }
       isValid
     }

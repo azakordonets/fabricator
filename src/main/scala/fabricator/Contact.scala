@@ -49,27 +49,27 @@ class Contact(private val utility: UtilityService,
   
   def lastName: String = utility.getValueFromArray("last_name")
 
-  def phoneNumber = alpha.numerify(utility.getValueFromArray("phone_formats"))
+  def phoneNumber: String = alpha.numerify(utility.getValueFromArray("phone_formats"))
 
-  def address = streetName + " " + houseNumber + ", " + apartmentNumber
+  def address: String = streetName + " " + houseNumber + ", " + apartmentNumber
 
-  def streetName = utility.getValueFromArray("street_suffix")
+  def streetName: String = utility.getValueFromArray("street_suffix")
 
-  def houseNumber = alpha.numerify(utility.getValueFromArray("house_number"))
+  def houseNumber: String = alpha.numerify(utility.getValueFromArray("house_number"))
 
-  def apartmentNumber = alpha.numerify(utility.getValueFromArray("app_number"))
+  def apartmentNumber: String = alpha.numerify(utility.getValueFromArray("app_number"))
 
-  def postcode = alpha.botify(utility.getValueFromArray("postcode")).toUpperCase
+  def postcode: String = alpha.botify(utility.getValueFromArray("postcode")).toUpperCase
   
-  def country = utility.getValueFromArray("country")
+  def country: String = utility.getValueFromArray("country")
   
   def city: String = utility.getValueFromArray("city_prefix") + utility.getValueFromArray("city_suffix")
 
-  def state = utility.getValueFromArray("state")
+  def state: String = utility.getValueFromArray("state")
 
-  def stateShortCode = utility.getValueFromArray("state_abbr")
+  def stateShortCode: String = utility.getValueFromArray("state_abbr")
 
-  def company = utility.getValueFromArray("company_suffix")
+  def company: String = utility.getValueFromArray("company_suffix")
 
   /**
    * BSN number is generated in accordance with http://nl.wikipedia.org/wiki/Burgerservicenummer article
@@ -105,7 +105,7 @@ class Contact(private val utility: UtilityService,
         case it if 356 to 365 contains it => "Capricorn"
       }
     } catch {
-      case e: IllegalArgumentException => throw new IllegalArgumentException("Format of the date should be dd-MM-yyyy")
+      case _: IllegalArgumentException => throw new IllegalArgumentException("Format of the date should be dd-MM-yyyy")
     }
   }
 
