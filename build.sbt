@@ -1,13 +1,14 @@
 import sbt.Keys._
-import scoverage.ScoverageSbtPlugin.ScoverageKeys
 
-crossScalaVersions := Seq("2.10.4", "2.11.4")
+scalaVersion := "2.12.2"
+
+crossScalaVersions := Seq("2.11.4", "2.11.8", "2.12.2")
 
 scalacOptions += "-target:jvm-1.7"
 
 name := "fabricator"
 
-version := "2.1.4"
+version := "2.1.5"
 
 organization := "com.github.azakordonets"
 
@@ -35,6 +36,7 @@ unmanagedResourceDirectories in Compile += {
   baseDirectory.value / "src/main/resources"
 }
 
+fork in Test := true
 pomExtra := <scm>
   <url>git@github.com:azakordonets/fabricator.git</url>
   <connection>scm:git:git@github.com:azakordonets/fabricator.git</connection>
@@ -47,13 +49,15 @@ pomExtra := <scm>
     </developer>
   </developers>
 
-ScoverageKeys.coverageMinimum := 90
+coverageMinimum := 90
 
-ScoverageKeys.coverageFailOnMinimum := true
+coverageFailOnMinimum := true
 
-ScoverageKeys.coverageHighlighting := {
-  if (scalaBinaryVersion.value == "2.10") true else false
+coverageHighlighting := {
+  if (scalaBinaryVersion.value == "2.11") true else false
 }
+
+ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) }
 
 Seq(bintrayPublishSettings:_*)
 
@@ -74,25 +78,23 @@ resolvers += Classpaths.sbtPluginReleases
 resolvers += Resolver.typesafeRepo("releases")
 
 libraryDependencies ++= Seq(
-  "com.typesafe.play" %% "play-json" % "2.4.8",
+  "com.typesafe.play" %% "play-json" % "2.6.0-RC2",
   "org.testng" % "testng" % "6.9.4",
-  "org.scalatest" %% "scalatest" % "3.0.0-SNAP4" % "test",
-  "com.github.nscala-time" %% "nscala-time" % "1.2.0",
-  "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2",
-  "org.slf4j" % "slf4j-api" % "1.7.1",
+  "org.scalatest" %% "scalatest" % "3.2.0-SNAP5" % "test",
+  "com.github.nscala-time" %% "nscala-time" % "2.16.0",
+  "com.typesafe.scala-logging" %% "scala-logging" % "3.7.1",
   "org.reflections" % "reflections" % "0.9.10",
-  "ch.qos.logback" % "logback-classic" % "1.0.3",
+  "ch.qos.logback" % "logback-classic" % "1.1.7",
   "org.assertj" % "assertj-core" % "3.1.0",
   "com.spatial4j" % "spatial4j" % "0.4.1",
   "org.iban4j" % "iban4j" % "2.1.1",
   "commons-validator" % "commons-validator" % "1.4.0",
   "com.google.inject" % "guice" % "3.0",
-  "com.github.tototoshi" % "scala-csv_2.10" % "1.1.2",
+  "com.github.tototoshi" %% "scala-csv" % "1.3.4",
   "com.google.zxing" % "core" % "3.2.0",
   "io.github.lukehutch" % "fast-classpath-scanner" % "2.0.17"
 
 )
-
 
 
 
