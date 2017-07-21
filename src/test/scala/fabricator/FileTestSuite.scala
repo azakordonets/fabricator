@@ -6,11 +6,12 @@ import java.io.File
 
 import com.github.tototoshi.csv.CSVReader
 import fabricator.enums.{CsvValueCode, FileType, MimeType}
-import org.testng.annotations.{AfterTest, DataProvider, Test}
+import org.testng.annotations.{AfterMethod, AfterTest, DataProvider, Test}
 
 class FileTestSuite extends BaseTestSuite {
 
   protected val csvFilePath: String = "generatedFiles/result.csv"
+  protected val imageFilePath: String = "generatedFiles/result.png"
   protected var fileObject: File = null
   // File extensions
   private lazy val audioExtensionList = util.getArrayFromJson("audio_file_extensions")
@@ -73,16 +74,16 @@ class FileTestSuite extends BaseTestSuite {
   }
 
   @Test
-  def testImage() = {
-    file.image(200, 300, csvFilePath)
-    val fileOnADrive: File = new File(csvFilePath)
+  def testImage() {
+    file.image(200, 300, imageFilePath)
+    val fileOnADrive: File = new File(imageFilePath)
     fileObject = fileOnADrive
     assert(fileOnADrive.exists())
     logger.info("Checking image file")
   }
 
   @Test
-  def testCsv() = {
+  def testCsv() {
     file.csvBuilder.build()
     val fileOnADrive: File = new File(csvFilePath)
     fileObject = fileOnADrive
@@ -91,7 +92,7 @@ class FileTestSuite extends BaseTestSuite {
   }
 
   @Test
-  def testCustomCsv() = {
+  def testCustomCsv() {
     val codes = Array(CsvValueCode.FIRST_NAME,
                       CsvValueCode.LAST_NAME,
                       CsvValueCode.BIRTHDAY,
@@ -115,7 +116,7 @@ class FileTestSuite extends BaseTestSuite {
   }
 
   @Test
-  def testCsvWithCustomDelimiter() = {
+  def testCsvWithCustomDelimiter() {
     val numberOfRows = 10
     file.csvBuilder.withCodes(codes)
       .withNumberOfRows(10)
@@ -139,7 +140,7 @@ class FileTestSuite extends BaseTestSuite {
   }
 
   @Test
-  def testCsvWithCustomSequence() = {
+  def testCsvWithCustomSequence() {
     val values = Array(alpha.randomInt, alpha.randomDouble, calendar.ampm, null)
     val numberOfRows = 10
     file.csvBuilder
@@ -163,7 +164,7 @@ class FileTestSuite extends BaseTestSuite {
   }
 
   @Test
-  def testCsvWithTitle() = {
+  def testCsvWithTitle() {
     val titles = Array("first_column", "second_column", "third_column", "fourth_column")
     val values = Array(alpha.randomInt, CsvValueCode.ANDROID, "10", null)
     val numberOfRows = 10
@@ -196,7 +197,7 @@ class FileTestSuite extends BaseTestSuite {
 
 
   @Test(expectedExceptions = Array(classOf[IllegalArgumentException]), dataProvider = "sizeDP")
-  def testImageFileWithExceptionForSize(width: Int, height: Int, path: String) = {
+  def testImageFileWithExceptionForSize(width: Int, height: Int, path: String) {
     file.image(width, height, path)
   }
 
@@ -211,13 +212,13 @@ class FileTestSuite extends BaseTestSuite {
   }
 
   @Test(dataProvider = "fileTypeDP")
-  def testFileExtension(fileType: FileType, expectedList:Array[String]) = {
+  def testFileExtension(fileType: FileType, expectedList:Array[String]) {
     val extension = file.fileExtension(fileType)
     assert(expectedList.contains(extension))
   }
 
   @Test(dataProvider = "fileTypeDP")
-  def testFileName(fileType: FileType, expectedTypeArray: Array[String]) = {
+  def testFileName(fileType: FileType, expectedTypeArray: Array[String]) {
     val fileName = file.fileName(fileType)
     val name = fileName.split("\\.")(0)
     val fileExtension = fileName.split("\\.")(1)
@@ -227,7 +228,7 @@ class FileTestSuite extends BaseTestSuite {
   }
 
   @Test
-  def testRandomFileExtension() = {
+  def testRandomFileExtension() {
     val fileExtension = file.fileExtension
     assert(audioExtensionList.contains(fileExtension) ||
       imageExtensionList.contains(fileExtension) ||
@@ -238,7 +239,7 @@ class FileTestSuite extends BaseTestSuite {
   }
 
   @Test
-  def testFileNameWithRandomExtension() = {
+  def testFileNameWithRandomExtension() {
     val fileName = file.fileName
     val name = fileName.split("\\.")(0)
     val fileExtension = fileName.split("\\.")(1)
@@ -266,13 +267,13 @@ class FileTestSuite extends BaseTestSuite {
   }
 
   @Test(dataProvider = "mimeTypeDP")
-  def testMimeExtension(mimeType: MimeType, expectedList:Array[String]) = {
+  def testMimeExtension(mimeType: MimeType, expectedList:Array[String]) {
     val extension = file.mime_type(mimeType)
     assert(expectedList.contains(extension))
   }
 
   @Test
-  def testRandomMimeExtension() = {
+  def testRandomMimeExtension() {
     val mimeType = file.mime_type
     assert(applicationMimeTypes.contains(mimeType) ||
       audioMimeTypes.contains(mimeType) ||
