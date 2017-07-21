@@ -144,7 +144,7 @@ contact.fullName // Betty Corwin
 
 contact.birthday(25) // 26.12.1989 (current year - 25 with default format dd.MM.yyyy)
 
-contact.bsn // 730550370
+contact.bsn // 730550370 (equivalent of a national ID number)
 
 contact.eMail // Rebecca_Kohler506@yahoo.com
 
@@ -455,6 +455,11 @@ words.paragraph // 100 chars length block of text
 words.paragraph(2000) // 2000 chars length block of text
 ```
 
+## Thanks
+
+Many thanks to these incredible tools that help us creating open-source software:
+
+[![Intellij IDEA](https://cloud.google.com/tools/images/icon_IntelliJIDEA.png)](http://www.jetbrains.com/idea)
 
 
 
