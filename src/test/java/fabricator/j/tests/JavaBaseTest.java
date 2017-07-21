@@ -4,7 +4,7 @@ import fabricator.*;
 import org.scalatest.testng.TestNGSuite;
 import scala.util.Random;
 
-public class JavaBaseTest extends TestNGSuite {
+class JavaBaseTest extends TestNGSuite {
 
 	final Alphanumeric alpha = Fabricator.alphaNumeric();
 	final Calendar calendar = Fabricator.calendar();
