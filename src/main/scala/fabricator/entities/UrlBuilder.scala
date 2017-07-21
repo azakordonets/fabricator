@@ -123,7 +123,7 @@ class UrlBuilder() {
       charBuffer.put(0, char)
       charBuffer.rewind()
       val byteBuffer: ByteBuffer = charset.encode(charBuffer)
-      for (i <- 0 to byteBuffer.limit() - 1 by 1) {
+      for (i <- 0 until byteBuffer.limit() by 1) {
         stringBuilder.append('%')
         val placeHolder = "%1$02X"
         stringBuilder.append(placeHolder.format(byteBuffer.get(i)))

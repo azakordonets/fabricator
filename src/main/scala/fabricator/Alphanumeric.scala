@@ -99,11 +99,11 @@ case class Alphanumeric(private val random: Random = new Random()) {
 
   def randomString(length: Int): String = randomString("0123456789abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_", length)
   
-  def randomString(charSeq: String, max: Int) = string(charSeq, max)
+  def randomString(charSeq: String, max: Int): String = string(charSeq, max)
 
   private def string(charsSequence: String, max: Int): String = {
     val builder = new StringBuilder
-    (0 to max - 1).foreach {
+    (0 until max).foreach {
       _ => builder.append(charsSequence.charAt(random.nextInt(charsSequence.length - 1)))
     }
     builder.toString()

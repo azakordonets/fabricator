@@ -25,7 +25,7 @@ class Words(private val utility: UtilityService,
   def paragraph(charsLength: Int): String = {
     val wordsSequence = sentence(charsLength)
     val builder = new StringBuilder
-    (0 to charsLength - 1).foreach {
+    (0 until charsLength).foreach {
       counter => builder.append(wordsSequence(counter))
     }
     builder.toString()
