@@ -76,14 +76,14 @@ class CsvFileBuilder(alpha: Alphanumeric,
     this
   }
 
-  def build() = {
+  def build(): Unit = {
     val expectedFile: File = createFile
     implicit object MyFormat extends DefaultCSVFormat {
-      override val delimiter = customDelimiter
+      override val delimiter: Char = customDelimiter
     }
     val writer = CSVWriter.open(expectedFile)
     writeTitlesIntoFile(writer)
-    for (i <- 0 to numberOfRows - 1) {
+    for (_ <- 0 until numberOfRows) {
       customValuesArray match {
         case null =>
           val generatedMap = codes.map(code => generateValue(code))
@@ -91,7 +91,6 @@ class CsvFileBuilder(alpha: Alphanumeric,
         case _ =>
           val generatedMap = customValuesArray.map(value => generateValue(value))
           writer.writeRow(generatedMap)
-
       }
     }
     writer.close()
@@ -177,12 +176,12 @@ class CsvFileBuilder(alpha: Alphanumeric,
   private def generateCustomTitles() = {
     customTitles = for (value <- customValuesArray) yield value match {
       case code: CsvValueCode => code.getTitle
-      case number: Integer => "Integer number"
-      case number: Double => "Double number"
-      case number: Float => "Float number"
-      case number: String => "String"
-      case number: Boolean => "Boolean"
-      case number: Long => "Long number"
+      case _: Integer => "Integer number"
+      case _: Double => "Double number"
+      case _: Float => "Float number"
+      case _: String => "String"
+      case _: Boolean => "Boolean"
+      case _: Long => "Long number"
       case null => ""
       case _ => value.toString
     }

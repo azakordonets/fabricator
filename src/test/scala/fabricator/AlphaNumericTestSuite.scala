@@ -220,6 +220,7 @@ class AlphaNumericTestSuite extends BaseTestSuite {
       case (min: Double, max: Double) => alpha.randomDouble(min, max)
       case (min: Float, max: Float) => alpha.randomFloat(min, max)
       case (min: Long, max: Long) => alpha.randomLong(min, max)
+      case(_, _) =>
     }
     val actualNumber = calculate(min, max)
     if (debugEnabled) logger.debug("Checking random number in range: " + actualNumber)
