@@ -17,11 +17,14 @@ For maven projects you need to add next dependency in your ```pom.xml``` file :
 <dependency>
   <groupId>com.github.azakordonets</groupId>
   <artifactId>fabricator_2.10</artifactId>
-  <version>2.1.4</version>
+  <version>2.1.5</version>
 </dependency>
 ```
 
 In case you want to use it in your scala project, then just add this lines to your ```build.sbt``` file :
+
+*Note* : since version `2.1.5` scala 2.10 got deprecated. You can get version `2.1.4`, but future fixes and updated 
+will by only for scala versions 2.11.* and higher
 
 For Scala 2.10.4 you can use this :
 ```scala
@@ -30,11 +33,18 @@ resolvers += "Fabricator" at "http://dl.bintray.com/biercoff/Fabricator"
 libraryDependencies += "com.github.azakordonets" % "fabricator_2.10" % "2.1.4",
 ```
 
-For Scala 2.11 you can use this :
+For Scala 2.11.* you can use this :
 ```scala
 resolvers += "Fabricator" at "http://dl.bintray.com/biercoff/Fabricator"
 
-libraryDependencies += "com.github.azakordonets" % "fabricator_2.11" % "2.1.4",
+libraryDependencies += "com.github.azakordonets" % "fabricator_2.11" % "2.1.5",
+```
+
+For Scala 2.12 you can use this :
+```scala
+resolvers += "Fabricator" at "http://dl.bintray.com/biercoff/Fabricator"
+
+libraryDependencies += "com.github.azakordonets" % "fabricator_2.12" % "2.1.5",
 ```
 
 Usage
