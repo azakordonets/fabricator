@@ -2,7 +2,7 @@ package fabricator.entities
 
 import fabricator.Calendar
 import fabricator.enums.DateFormat
-import org.joda.time.{DateTime, IllegalFieldValueException}
+import org.joda.time.{DateTime, DateTimeZone, IllegalFieldValueException}
 
 class RandomDate(private val cal: Calendar) {
 
@@ -68,7 +68,7 @@ class RandomDate(private val cal: Calendar) {
   }
 
   private def makeDate: DateTime = {
-    new DateTime(year, month, day, hour, minute)
+    new DateTime(year, month, day, hour, minute, DateTimeZone.UTC)
   }
 
   def asDate: DateTime = {
