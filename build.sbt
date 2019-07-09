@@ -89,7 +89,7 @@ libraryDependencies ++= Seq(
   "com.spatial4j" % "spatial4j" % "0.4.1",
   "org.iban4j" % "iban4j" % "2.1.1",
   "commons-validator" % "commons-validator" % "1.4.0",
-  "com.google.inject" % "guice" % "3.0",
+  "com.google.inject" % "guice" % "4.1.0",
   "com.github.tototoshi" %% "scala-csv" % "1.3.4",
   "com.google.zxing" % "core" % "3.2.0",
   "io.github.lukehutch" % "fast-classpath-scanner" % "2.0.17"
