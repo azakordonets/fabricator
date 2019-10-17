@@ -4,8 +4,8 @@ jdk:
 - openjdk8
 - openjdk7
 scala:
-  - 2.11.8
-  - 2.12.2
+  - 2.11.12
+  - 2.12.10
 script:
 - sbt clean coverage test
 - sbt coverageReport coveralls
