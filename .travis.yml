@@ -5,7 +5,7 @@ jdk:
 - openjdk7
 script:
 - sbt clean coverage test
-- sbt coveralls
+- sbt coverageReport coveralls
 
 before_cache:
   - rm -fv $HOME/.ivy2/.sbt.ivy.lock
