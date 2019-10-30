@@ -9488,11 +9488,15 @@
       "Zwijtink"
     ],
     "prefix": [
-      "Mr.",
-      "Mrs.",
-      "Ms.",
-      "Miss",
-      "Dr."
+      "m.",
+      "dhr.",
+      "mw.",
+      "mevr.",
+      "dr.",
+      "ir.",
+      "ing.",
+      "drs.",
+      "mr."
     ],
     "suffix": [
       "Jr.",
@@ -14144,10 +14148,10 @@
   },
   "company": {
     "company_suffix": [
-      "Inc",
-      "and Sons",
-      "LLC",
-      "Group"
+      "BV",
+      "NV",
+      "Groep",
+      "VOF"
     ]
   },
   "internet": {
@@ -15857,13 +15861,13 @@
     "phone_formats": [
       "0###-######",
       "0##-#######",
-      "06-#########",
+      "06-########",
       "0### ######",
       "0## #######",
-      "06 #########",
+      "06 ########",
       "+31 ## #######",
       "+31 ### ######",
-      "+31 6 #########"
+      "+31 6 ########"
     ]
   },
   "personal_data": {
@@ -15953,6 +15957,7 @@
       "Schoolmeester",
       "Slager",
       "Smid",
+      "Software-ontwikkelaar",
       "Soldaat",
       "Stoelenmaker",
       "Timmerman",
