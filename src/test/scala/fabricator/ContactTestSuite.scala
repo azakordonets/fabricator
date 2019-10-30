@@ -98,6 +98,7 @@ class ContactTestSuite extends BaseTestSuite {
     if (debugEnabled) logger.debug("Checking email " + contact.eMail)
     val email = contact.eMail
     assert(email.nonEmpty)
+    assert(email.find(_ == ' ').isEmpty)
   }
 
   @Test

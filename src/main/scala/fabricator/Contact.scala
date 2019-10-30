@@ -36,7 +36,7 @@ class Contact(private val utility: UtilityService,
   def birthday(age: Int, format: DateFormat): String = DateTimeFormat.forPattern(format.getFormat).print(DateTime.now - age.years)
 
   def eMail: String = {
-    firstName.toLowerCase + "_" + lastName.toLowerCase + alpha.numerify("###") + "@" + utility
+    (firstName.toLowerCase + "_" + lastName.toLowerCase + alpha.numerify("###")).replace(" ", "") + "@" + utility
       .getValueFromArray("free_email")
       .toLowerCase
   }
