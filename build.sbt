@@ -4,7 +4,7 @@ scalaVersion := "2.12.10"
 
 crossScalaVersions := Seq("2.11.12", "2.12.10")
 
-scalacOptions += "-target:jvm-1.7"
+scalacOptions += "-target:jvm-1.8"
 
 name := "fabricator"
 
