@@ -57,14 +57,6 @@ coverageHighlighting := {
   if (scalaBinaryVersion.value == "2.11") true else false
 }
 
-ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) }
-
-Seq(bintrayPublishSettings:_*)
-
-bintray.Keys.repository in bintray.Keys.bintray := "Fabricator"
-
-bintray.Keys.bintrayOrganization in bintray.Keys.bintray := None
-
 resolvers += "Typesafe Simple Repository" at "http://repo.typesafe.com/typesafe/simple/maven-releases/"
 
 resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/"
