@@ -53,10 +53,6 @@ coverageMinimum := 70
 
 coverageFailOnMinimum := true
 
-coverageHighlighting := {
-  if (scalaBinaryVersion.value == "2.11") true else false
-}
-
 resolvers += "Typesafe Simple Repository" at "http://repo.typesafe.com/typesafe/simple/maven-releases/"
 
 resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/"
