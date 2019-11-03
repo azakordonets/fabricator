@@ -28,6 +28,11 @@ publishTo := {
   Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
 
+credentials += Credentials("Sonatype Nexus Repository Manager",
+  "oss.sonatype.org",
+  sys.props.getOrElse("SONATYPE_USERNAME", default = "biercoff"),
+  sys.props.getOrElse("SONATYPE_PASSWORD", default = "not_found"))
+
 publishArtifact in Test := false
 
 pomIncludeRepository := { _ => false}
@@ -37,10 +42,7 @@ unmanagedResourceDirectories in Compile += {
 }
 
 fork in Test := true
-pomExtra := <scm>
-  <url>git@github.com:azakordonets/fabricator.git</url>
-  <connection>scm:git:git@github.com:azakordonets/fabricator.git</connection>
-</scm>
+pomExtra :=
   <developers>
     <developer>
       <id>azakordonets</id>
