@@ -1,9 +1,6 @@
 package fabricator.entities
 
-import java.io.{IOException, InputStream}
-
-import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner
-import io.github.lukehutch.fastclasspathscanner.matchprocessor.FileMatchProcessor
+import io.github.classgraph._
 import play.api.libs.json.{JsValue, Json}
 
 import scala.collection.mutable
@@ -13,17 +10,17 @@ import scala.io.Source
 object RandomDataKeeper {
 
   private val randomDataStorage: mutable.Map[String, String] = mutable.HashMap[String, String]()
+  private val dataPath = "data_files/"
 
   private def getResourcesList: Set[String] = {
     val fileNames = new ListBuffer[String]
-    new FastClasspathScanner("data_files")
-      .matchFilenamePattern(".*\\.json", new FileMatchProcessor() {
-        @throws[IOException]
-        def processMatch(relativePath: String, inputStream: InputStream, l: Long) {
-          fileNames += relativePath.replaceAll("data_files/", "")
-        }
-      })
-      .scan()
+    val scanResult = new ClassGraph().acceptPaths("data_files").scan
+    scanResult
+      .getResourcesWithExtension("json")
+      .forEachByteArrayThrowingIOException(
+        (res: Resource, content: Array[Byte]) => fileNames += res.getPath.replaceAll(dataPath, "")
+      )
+    scanResult.close()
     fileNames.toSet
   }
 
@@ -33,7 +30,7 @@ object RandomDataKeeper {
   }
 
   private def parseFile(fileName: String): String = {
-    Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("data_files/" + fileName))("UTF-8").mkString
+    Source.fromInputStream(getClass.getClassLoader.getResourceAsStream(dataPath + fileName))("UTF-8").mkString
   }
 
   def getJson(locale: String = "us"): JsValue = {
@@ -43,5 +40,4 @@ object RandomDataKeeper {
     val jsonString = randomDataStorage.getOrElse(locale, throw new IllegalArgumentException(s"You're trying to load '$locale' language file that doesn't exist"))
     Json.parse(jsonString)
   }
-
 }

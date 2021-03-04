@@ -14,11 +14,11 @@ import scala.util.Random
 case class Alphanumeric(private val random: Random = new Random()) {
 
   def randomInt: Int = random.nextInt(1000)
-  
+
   def randomInt(max: Int): Int = random.nextInt(max)
-  
+
   def randomInt(min: Int, max: Int): Int = random.nextInt(max - min) + min
-  
+
   def randomIntsRangeAsJavaList(min: Int, max: Int, step: Int): java.util.List[Int] = {
     if (step <= 0) throw new IllegalArgumentException("Step should be more then 0")
     (min to max by step toList).asJava
@@ -46,47 +46,47 @@ case class Alphanumeric(private val random: Random = new Random()) {
   }
 
   def randomDouble: Double = random.nextDouble()
-  
+
   def randomDouble(max: Double): Double = randomDouble(0, max)
-  
+
   def randomDouble(min: Double, max: Double): Double = min + random.nextDouble() * (max - min)
-  
+
   def randomDoublesRangeAsJavaList(min: Double, max: Double, step: Double): java.util.List[Double] = {
     if (step <= 0) throw new IllegalArgumentException("Step should be more then 0")
-    (min to max by step toList).asJava
+    ((BigDecimal(min) to BigDecimal(max) by step).map(_.toDouble).toList).asJava
   }
-  
+
   def randomDoublesRange(min: Double, max: Double, step: Double): List[Double] = {
     if (step <= 0) throw new IllegalArgumentException("Step should be more then 0")
-    min to max by step toList
+    (BigDecimal(min) to BigDecimal(max) by step).map(_.toDouble).toList
   }
 
   def randomFloat: Float = random.nextFloat()
-  
+
   def randomFloat(max: Float): Float = randomFloat(0, max)
-  
+
   def randomFloat(min: Float, max: Float): Float = min + random.nextFloat() * (max - min)
-  
+
   def randomFloatsRangeAsJavaList(min: Float, max: Float, step: Float): java.util.List[Float] = {
     if (step <= 0) throw new IllegalArgumentException("Step should be more then 0")
-      (min to max by step toList).asJava
+    ((BigDecimal(min) to BigDecimal(max) by step).map(_.toFloat).toList).asJava
   }
-  
+
   def randomFloatsRange(min: Float, max: Float, step: Float): List[Float] = {
     if (step <= 0) throw new IllegalArgumentException("Step should be more then 0")
-    min to max by step toList
+    (BigDecimal(min) to BigDecimal(max) by step).map(_.toFloat).toList
   }
 
   def randomBoolean: Boolean = random.nextBoolean()
-  
+
   def randomGausian: Double = random.nextGaussian()
 
   def randomString: String = string("0123456789abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_", 30)
-  
+
   def randomStrings: List[String] = randomStrings(5, 100, 100)
 
   def randomStringsAsJavaList: util.List[String] = randomStrings(5, 100, 100).asJava
-  
+
   def randomStrings(minLength: Int, maxLength: Int, amount: Int): List[String] = {
     if (minLength != maxLength )List.fill(amount)(randomString(randomInt(minLength, maxLength))) else
       List.fill(amount)(randomString(minLength))
@@ -98,7 +98,7 @@ case class Alphanumeric(private val random: Random = new Random()) {
   }
 
   def randomString(length: Int): String = randomString("0123456789abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_", length)
-  
+
   def randomString(charSeq: String, max: Int): String = string(charSeq, max)
 
   private def string(charsSequence: String, max: Int): String = {
@@ -110,11 +110,11 @@ case class Alphanumeric(private val random: Random = new Random()) {
   }
 
   def randomHash: String = string("0123456789abcdef", 40)
-  
+
   def randomHash(length: Int): String = string("0123456789abcdef", length)
-  
+
   def randomHashList: List[String] = randomHashList(40,40, 100)
-  
+
   def randomHashList(minLength: Int, maxLength: Int, amount: Int): List[String] = {
     if (minLength != maxLength )List.fill(amount)(randomHash(randomInt(minLength, maxLength))) else
       List.fill(amount)(randomHash(minLength))
@@ -128,7 +128,7 @@ case class Alphanumeric(private val random: Random = new Random()) {
   }
 
   def randomGuid: String = randomGuid(5)
-  
+
   def randomGuid(version: Int): String = {
     val guidPool = "abcdef1234567890"
     val variantPool = "ab89"
@@ -146,32 +146,32 @@ case class Alphanumeric(private val random: Random = new Random()) {
   def randomGuidList: List[String] = List.fill(100)(randomGuid(5))
 
   def randomGuidAsJavaList: util.List[String] = randomGuidList.asJava
-  
+
   def randomGuidList(version: Int, amount: Int): List[String] = List.fill(amount)(randomGuid(version))
-  
+
   def randomGuidAsJavaList(version: Int, amount: Int): util.List[String] = randomGuidList(version, amount).asJava
 
   def botify(pattern: String): String = letterify(numerify(pattern))
-  
+
   def botifyList(pattern: String, amount: Int): List[String] = List.fill(amount)(botify(pattern))
-  
+
   def botifyAsJavaList(pattern: String, amount: Int): util.List[String] = botifyList(pattern, amount).asJava
-  
+
   def numerify(pattern: String): String = {
     pattern.map { case '#' => random.nextInt(10).toString case letter => letter}.mkString
   }
-  
+
   def numerifyList(pattern: String, amount: Int): List[String] = List.fill(amount)(numerify(pattern))
-  
+
   def numerifyAsJavaList(pattern: String, amount: Int): util.List[String] = numerifyList(pattern, amount).asJava
 
   def letterify(pattern: String): String = {
     val chars = ('a' to 'z') ++ ('A' to 'Z')
     pattern.map { case '?' => chars(random.nextInt(chars.length)) case letter => letter}.mkString
   }
-  
+
   def letterifyList(pattern: String, amount: Int): List[String] = List.fill(amount)(letterify(pattern))
-  
+
   def letterifyAsJavaList(pattern: String, amount: Int): util.List[String] = letterifyList(pattern, amount).asJava
 
 }
