@@ -1,14 +1,14 @@
 import sbt.Keys._
 
-scalaVersion := "2.12.10"
+scalaVersion := "2.13.5"
 
-crossScalaVersions := Seq("2.11.12", "2.12.10")
+crossScalaVersions := Seq("2.12.10", "2.13.5")
 
 scalacOptions += "-target:jvm-1.8"
 
 name := "fabricator"
 
-version := "2.1.6"
+version := "2.1.7"
 
 organization := "com.github.azakordonets"
 
@@ -55,11 +55,11 @@ coverageMinimum := 70
 
 coverageFailOnMinimum := true
 
-resolvers += "Typesafe Simple Repository" at "http://repo.typesafe.com/typesafe/simple/maven-releases/"
+resolvers += "Typesafe Simple Repository" at "https://repo.typesafe.com/typesafe/simple/maven-releases/"
 
-resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/"
+resolvers += "Typesafe repository" at "https://repo.typesafe.com/typesafe/releases/"
 
-resolvers += "JCenter" at "http://dl.bintray.com/"
+resolvers += "JCenter" at "https://dl.bintray.com/"
 
 resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 
@@ -68,22 +68,20 @@ resolvers += Classpaths.sbtPluginReleases
 resolvers += Resolver.typesafeRepo("releases")
 
 libraryDependencies ++= Seq(
-  "com.typesafe.play" %% "play-json" % "2.6.0-RC2",
-  "org.testng" % "testng" % "6.9.4",
-  "org.scalatest" %% "scalatest" % "3.2.0-SNAP5" % "test",
-  "com.github.nscala-time" %% "nscala-time" % "2.16.0",
-  "com.typesafe.scala-logging" %% "scala-logging" % "3.7.1",
-  "org.reflections" % "reflections" % "0.9.10",
-  "ch.qos.logback" % "logback-classic" % "1.1.7",
-  "org.assertj" % "assertj-core" % "3.1.0",
-  "com.spatial4j" % "spatial4j" % "0.4.1",
-  "org.iban4j" % "iban4j" % "2.1.1",
-  "commons-validator" % "commons-validator" % "1.4.0",
-  "com.google.inject" % "guice" % "4.1.0",
-  "com.github.tototoshi" %% "scala-csv" % "1.3.4",
-  "com.google.zxing" % "core" % "3.2.0",
-  "io.github.lukehutch" % "fast-classpath-scanner" % "2.0.17"
-
+  "com.typesafe.play" %% "play-json" % "2.10.0-RC2",
+  "org.scalatestplus" %% "testng-6-7" % "3.2.5.0" % "test",
+  "com.github.nscala-time" %% "nscala-time" % "2.26.0",
+  "com.typesafe.scala-logging" %% "scala-logging" % "3.9.2",
+  "org.reflections" % "reflections" % "0.9.12",
+  "ch.qos.logback" % "logback-classic" % "1.2.3",
+  "org.assertj" % "assertj-core" % "3.19.0",
+  "com.spatial4j" % "spatial4j" % "0.5",
+  "org.iban4j" % "iban4j" % "3.2.2-RELEASE",
+  "commons-validator" % "commons-validator" % "1.7",
+  "com.google.inject" % "guice" % "5.0.1",
+  "com.github.tototoshi" %% "scala-csv" % "1.3.7",
+  "com.google.zxing" % "core" % "3.4.1",
+  "io.github.classgraph" % "classgraph" % "4.8.102"
 )
 
 

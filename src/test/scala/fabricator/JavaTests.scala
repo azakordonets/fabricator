@@ -1,6 +1,6 @@
 package fabricator
 
 import fabricator.j.tests.JavaBaseTest
-import org.scalatest.testng.TestNGSuiteLike
+import org.scalatestplus.testng.TestNGSuiteLike
 
 class JavaTests extends JavaBaseTest with TestNGSuiteLike

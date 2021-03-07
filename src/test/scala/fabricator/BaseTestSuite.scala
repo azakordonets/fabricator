@@ -1,7 +1,7 @@
 package fabricator
 
 import com.typesafe.scalalogging.LazyLogging
-import org.scalatest.testng.TestNGSuite
+import org.scalatestplus.testng.TestNGSuite
 import org.testng.annotations.Test
 
 class BaseTestSuite extends TestNGSuite with LazyLogging {

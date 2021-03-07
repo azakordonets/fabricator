@@ -1,7 +1,7 @@
 package fabricator.j.tests;
 
 import fabricator.*;
-import org.scalatest.testng.TestNGSuite;
+import org.scalatestplus.testng.TestNGSuite;
 import scala.util.Random;
 
 public class JavaBaseTest extends TestNGSuite {

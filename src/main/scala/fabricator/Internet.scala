@@ -42,7 +42,7 @@ class Internet(private val utility: UtilityService,
   }
 
   def macAddress: String = {
-    Iterator.continually(Array.fill[String](6)(f"${random.nextInt(255)}%02x").mkString(":")).toSeq.head.toUpperCase
+    Array.fill[String](6)(f"${random.nextInt(255)}%02x").mkString(":").toUpperCase
   }
 
   def UUID: String = java.util.UUID.randomUUID.toString
