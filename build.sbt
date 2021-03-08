@@ -8,7 +8,7 @@ scalacOptions += "-target:jvm-1.8"
 
 name := "fabricator"
 
-version := "2.1.7"
+version := "2.1.9"
 
 organization := "com.github.azakordonets"
 

@@ -16,8 +16,8 @@ For maven projects you need to add next dependency in your ```pom.xml``` file :
 ```java
 <dependency>
   <groupId>com.github.azakordonets</groupId>
-  <artifactId>fabricator_2.10</artifactId>
-  <version>2.1.5</version>
+  <artifactId>fabricator_2.13</artifactId>
+  <version>2.1.9</version>
 </dependency>
 ```
 
@@ -30,21 +30,27 @@ For Scala 2.10.4 you can use this :
 ```scala
 resolvers += "Fabricator" at "http://dl.bintray.com/biercoff/Fabricator"
 
-libraryDependencies += "com.github.azakordonets" % "fabricator_2.10" % "2.1.4",
+libraryDependencies += "com.github.azakordonets" % "fabricator_2.10" % "2.1.4"
 ```
 
 For Scala 2.11 you can use this :
 ```scala
 resolvers += "Fabricator" at "http://dl.bintray.com/biercoff/Fabricator"
 
-libraryDependencies += "com.github.azakordonets" % "fabricator_2.11" % "2.1.5",
+libraryDependencies += "com.github.azakordonets" % "fabricator_2.11" % "2.1.5"
 ```
 
 For Scala 2.12 you can use this :
 ```scala
 resolvers += "Fabricator" at "http://dl.bintray.com/biercoff/Fabricator"
 
-libraryDependencies += "com.github.azakordonets" % "fabricator_2.12" % "2.1.5",
+libraryDependencies += "com.github.azakordonets" % "fabricator_2.12" % "2.1.5"
+```
+
+For Scala 2.13 you can use this :
+```scala
+// https://mvnrepository.com/artifact/com.github.azakordonets/fabricator
+libraryDependencies += "com.github.azakordonets" %% "fabricator_2.13" % "2.1.9"
 ```
 
 Usage
