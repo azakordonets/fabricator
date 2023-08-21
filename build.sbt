@@ -1,18 +1,18 @@
 import sbt.Keys._
 
-scalaVersion := "2.13.5"
+scalaVersion := "2.13.11"
 
-crossScalaVersions := Seq("2.12.10", "2.13.5")
+crossScalaVersions := Seq("2.12.18", "2.13.11", "3.3.0")
 
 scalacOptions += "-target:jvm-1.8"
 
 name := "fabricator"
 
-version := "2.1.9"
+version := "2.2.0"
 
 organization := "com.github.azakordonets"
 
-licenses +=("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html"))
+licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html"))
 
 homepage := Some(url("https://github.com/azakordonets/fabricator"))
 
@@ -23,25 +23,28 @@ publishMavenStyle := true
 publishTo := {
   val nexus = "https://oss.sonatype.org/"
   if (isSnapshot.value)
-  Some("snapshots" at nexus + "content/repositories/snapshots")
+    Some("snapshots" at nexus + "content/repositories/snapshots")
   else
-  Some("releases" at nexus + "service/local/staging/deploy/maven2")
+    Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
 
-credentials += Credentials("Sonatype Nexus Repository Manager",
+credentials += Credentials(
+  "Sonatype Nexus Repository Manager",
   "oss.sonatype.org",
   sys.props.getOrElse("SONATYPE_USERNAME", default = "biercoff"),
-  sys.props.getOrElse("SONATYPE_PASSWORD", default = "not_found"))
+  sys.props.getOrElse("SONATYPE_PASSWORD", default = "not_found")
+)
 
-publishArtifact in Test := false
+Test / publishArtifact := false
 
-pomIncludeRepository := { _ => false}
+pomIncludeRepository := { _ => false }
 
-unmanagedResourceDirectories in Compile += {
+Compile / unmanagedResourceDirectories += {
   baseDirectory.value / "src/main/resources"
 }
 
-fork in Test := true
+Test / fork := true
+
 pomExtra :=
   <developers>
     <developer>
@@ -68,21 +71,18 @@ resolvers += Classpaths.sbtPluginReleases
 resolvers += Resolver.typesafeRepo("releases")
 
 libraryDependencies ++= Seq(
-  "com.typesafe.play" %% "play-json" % "2.10.0-RC2",
-  "org.scalatestplus" %% "testng-6-7" % "3.2.5.0" % "test",
-  "com.github.nscala-time" %% "nscala-time" % "2.26.0",
-  "com.typesafe.scala-logging" %% "scala-logging" % "3.9.2",
-  "org.reflections" % "reflections" % "0.9.12",
-  "ch.qos.logback" % "logback-classic" % "1.2.3",
-  "org.assertj" % "assertj-core" % "3.19.0",
-  "com.spatial4j" % "spatial4j" % "0.5",
-  "org.iban4j" % "iban4j" % "3.2.2-RELEASE",
-  "commons-validator" % "commons-validator" % "1.7",
-  "com.google.inject" % "guice" % "5.0.1",
-  "com.github.tototoshi" %% "scala-csv" % "1.3.7",
-  "com.google.zxing" % "core" % "3.4.1",
-  "io.github.classgraph" % "classgraph" % "4.8.102"
+  "com.typesafe.play"          %% "play-json"         % "2.10.0-RC9",
+  "org.scalatestplus"          %% "testng-7-5"        % "3.2.16.0" % "test",
+  "com.github.nscala-time"     %% "nscala-time"       % "2.32.0",
+  "com.typesafe.scala-logging" %% "scala-logging"     % "3.9.4",
+  "org.reflections"             % "reflections"       % "0.9.12",
+  "ch.qos.logback"              % "logback-classic"   % "1.2.3",
+  "org.assertj"                 % "assertj-core"      % "3.19.0",
+  "com.spatial4j"               % "spatial4j"         % "0.5",
+  "org.iban4j"                  % "iban4j"            % "3.2.2-RELEASE",
+  "commons-validator"           % "commons-validator" % "1.7",
+  "com.google.inject"           % "guice"             % "5.0.1",
+  "com.github.tototoshi"       %% "scala-csv"         % "1.3.10",
+  "com.google.zxing"            % "core"              % "3.4.1",
+  "io.github.classgraph"        % "classgraph"        % "4.8.102"
 )
-
-
-

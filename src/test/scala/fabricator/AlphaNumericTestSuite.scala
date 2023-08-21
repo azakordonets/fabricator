@@ -6,7 +6,8 @@ class AlphaNumericTestSuite extends BaseTestSuite {
 
   @DataProvider(name = "numerifyDP")
   def numerifyDP = {
-    Array(Array("###ABC", "\\d{3}\\w{3}"),
+    Array(
+      Array("###ABC", "\\d{3}\\w{3}"),
       Array("###ABC###", "\\d{3}\\w{3}\\d{3}"),
       Array("ABC###", "\\w{3}\\d{3}"),
       Array("A#B#C#", "\\w{1}\\d{1}\\w{1}\\d{1}\\w{1}\\d{1}"),
@@ -31,7 +32,8 @@ class AlphaNumericTestSuite extends BaseTestSuite {
 
   @DataProvider(name = "letterifyDP")
   def letterifyDP = {
-    Array(Array("???123", "\\w{3}\\d{3}"),
+    Array(
+      Array("???123", "\\w{3}\\d{3}"),
       Array("???123???", "\\w{3}\\d{3}\\w{3}"),
       Array("123???", "\\d{3}\\w{3}"),
       Array("1?2?3?", "\\d{1}\\w{1}\\d{1}\\w{1}\\d{1}\\w{1}"),
@@ -56,7 +58,8 @@ class AlphaNumericTestSuite extends BaseTestSuite {
 
   @DataProvider(name = "botifyDP")
   def botifyDP = {
-    Array(Array("???123###", "\\w{3}\\d{6}"),
+    Array(
+      Array("???123###", "\\w{3}\\d{6}"),
       Array("???123???###", "\\w{3}\\d{3}\\w{3}\\d{3}"),
       Array("123???", "\\d{3}\\w{3}"),
       Array("1?2?3?", "\\d{1}\\w{1}\\d{1}\\w{1}\\d{1}\\w{1}"),
@@ -79,32 +82,34 @@ class AlphaNumericTestSuite extends BaseTestSuite {
     list.foreach(x => assert(x.matches("\\w{3}\\d{6}")))
   }
 
-
   @Test
-  def testDefaultInteger() {
+  def testDefaultInteger() = {
     val integer = alpha.randomInt
-    if (debugEnabled) logger.debug("Checking default integer function. Should return random integer below 1000 : " + integer)
+    if (debugEnabled)
+      logger.debug("Checking default integer function. Should return random integer below 1000 : " + integer)
     assert(0 to 1000 contains integer)
     assert(integer.isInstanceOf[Int])
   }
 
   @Test
-  def testDefaultLong() {
+  def testDefaultLong() = {
     val longNumber = alpha.randomLong
-    if (debugEnabled) logger.debug("Checking default longNumber function. Should return random longNumber below 1000 : " + longNumber)
+    if (debugEnabled)
+      logger.debug("Checking default longNumber function. Should return random longNumber below 1000 : " + longNumber)
     assert(longNumber.isInstanceOf[Long])
   }
 
   @Test
-  def testDefaultDouble() {
+  def testDefaultDouble() = {
     val double = alpha.randomDouble
-    if (debugEnabled) logger.debug("Checking default double function. Should return random double below 1000 : " + double)
+    if (debugEnabled)
+      logger.debug("Checking default double function. Should return random double below 1000 : " + double)
     assert(double > 0 && double < 1000)
     assert(double.isInstanceOf[Double])
   }
 
   @Test
-  def testDefaultFloat() {
+  def testDefaultFloat() = {
     val float = alpha.randomFloat
     if (debugEnabled) logger.debug("Checking default float function. Should return random float below 1000 : " + float)
     assert(float > 0 && float < 1000)
@@ -112,16 +117,17 @@ class AlphaNumericTestSuite extends BaseTestSuite {
   }
 
   @Test
-  def testDefaultGausian() {
+  def testDefaultGausian() = {
     val gausian = alpha.randomGausian
-    if (debugEnabled) logger.debug("Checking default gausian function. Should return random gausian below 1000 : " + gausian)
+    if (debugEnabled)
+      logger.debug("Checking default gausian function. Should return random gausian below 1000 : " + gausian)
     assert(gausian < 1000)
     assert(gausian.isInstanceOf[Double])
   }
 
   @Test
-  def testDefaultBoolean() {
-    var trueCount = 0
+  def testDefaultBoolean() = {
+    var trueCount  = 0
     var falseCount = 0
     for (i <- 0 to 100) {
       val boolean = alpha.randomBoolean
@@ -132,7 +138,7 @@ class AlphaNumericTestSuite extends BaseTestSuite {
   }
 
   @Test
-  def testDefaultString() {
+  def testDefaultString() = {
     val string = alpha.randomString
     if (debugEnabled) logger.debug("Checking default string function. Should return random string below 30 : " + string)
     assert(string.length == 30)
@@ -140,22 +146,25 @@ class AlphaNumericTestSuite extends BaseTestSuite {
   }
 
   @Test
-  def testCustomString() {
+  def testCustomString() = {
     val extendedString = alpha.randomString(50)
-    if (debugEnabled) logger.debug("Checking default extendedString function. Should return random extendedString below 50 : " + extendedString)
+    if (debugEnabled)
+      logger.debug(
+        "Checking default extendedString function. Should return random extendedString below 50 : " + extendedString
+      )
     assert(extendedString.length == 50)
     assert(extendedString.isInstanceOf[String])
   }
 
   @Test
-  def testDefaultStringsList() {
+  def testDefaultStringsList() = {
     val strings = alpha.randomStrings
     assertResult(100)(strings.length)
     strings.foreach(string => assert(string.length >= 5 && string.length <= 100))
   }
 
   @Test
-  def testCustomStringsList() {
+  def testCustomStringsList() = {
     val strings = alpha.randomStrings(10, 10, 20)
     assertResult(20)(strings.length)
     strings.foreach(string => assert(string.length >= 10 && string.length <= 10))
@@ -163,7 +172,8 @@ class AlphaNumericTestSuite extends BaseTestSuite {
 
   @DataProvider(name = "charSets")
   def charSets() = {
-    Array(Array("aaaa", 10),
+    Array(
+      Array("aaaa", 10),
       Array("1234567890", 100),
       Array("0123456789abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_", 500),
       Array("!@#$%^&*()_+{}\"|:?><", 30)
@@ -173,54 +183,56 @@ class AlphaNumericTestSuite extends BaseTestSuite {
   @Test(dataProvider = "charSets")
   def testCustomStringWithSpecificCharSet(charSet: String, max: Int) = {
     val string = alpha.randomString(charSet, max)
-    if (debugEnabled) logger.debug("Checking default extendedString function. Should return random extendedString below " + max + " : " + string)
+    if (debugEnabled)
+      logger.debug(
+        "Checking default extendedString function. Should return random extendedString below " + max + " : " + string
+      )
     assert(string.length == max)
     for (symbol <- string) assert(charSet.contains(symbol))
   }
 
-
   @DataProvider(name = "numbersCustomTypes")
-  def numbersCustomTypes() = {
-    Array(Array(100, classOf[Integer]),
-      Array(100.10, classOf[java.lang.Double]),
-      Array(100.10f, classOf[java.lang.Float]),
-      Array(100000000000L, classOf[java.lang.Long])
+  def numbersCustomTypes(): Array[Array[Any]] = {
+    Array[Array[Any]](
+      Array(100),
+      Array(100.10),
+      Array(100.10f),
+      Array(100000000000L)
     )
   }
 
   @Test(dataProvider = "numbersCustomTypes")
-  def testCustomNumberType(maxValue: Any, numberType: Any) {
+  def testCustomNumberType(maxValue: Any, numberType: Any) = {
 
     def calculate(randomNumber: Any): Any = randomNumber match {
-      case number: Int => alpha.randomInt(number)
+      case number: Int    => alpha.randomInt(number)
       case number: Double => alpha.randomDouble(number)
-      case number: Float => alpha.randomFloat(number)
-      case number: Long => alpha.randomLong(number)
+      case number: Float  => alpha.randomFloat(number)
+      case number: Long   => alpha.randomLong(number)
     }
     val result = calculate(maxValue)
-    if (debugEnabled) logger.debug("Checking custom number with " + numberType + " type function. Should return with specific type and below specified value : ")
+    if (debugEnabled)
+      logger.debug(
+        "Checking custom number with " + numberType + " type function. Should return with specific type and below specified value : "
+      )
     assertResult(result.getClass)(numberType)
     assert(util.isLess(result, maxValue))
   }
 
   @DataProvider(name = "numbersRandomRange")
   def numbersRandomRange(): Array[Array[Any]] = {
-    Array(Array(100, 150),
-      Array(100.10, 200.01),
-      Array(100.10f, 250.10f),
-      Array(1L, 100L)
-    )
+    Array[Array[Any]](Array(100, 150), Array(100.10d, 200.01d), Array(100.10f, 250.10f), Array(1L, 100L))
   }
 
   @Test(dataProvider = "numbersRandomRange")
-  def testNumbersRandomRange(min: Any, max: Any) {
+  def testNumbersRandomRange(min: Any, max: Any) = {
 
     def calculate(minValue: Any, maxValue: Any): Any = (minValue, maxValue) match {
-      case (min: Int, max: Int) => alpha.randomInt(min, max)
+      case (min: Int, max: Int)       => alpha.randomInt(min, max)
       case (min: Double, max: Double) => alpha.randomDouble(min, max)
-      case (min: Float, max: Float) => alpha.randomFloat(min, max)
-      case (min: Long, max: Long) => alpha.randomLong(min, max)
-      case(_, _) =>
+      case (min: Float, max: Float)   => alpha.randomFloat(min, max)
+      case (min: Long, max: Long)     => alpha.randomLong(min, max)
+      case (_, _)                     =>
     }
     val actualNumber = calculate(min, max)
     if (debugEnabled) logger.debug("Checking random number in range: " + actualNumber)
@@ -231,7 +243,8 @@ class AlphaNumericTestSuite extends BaseTestSuite {
 
   @DataProvider(name = "integerRangeWithStep")
   def integerRangeWithStep(): Array[Array[Any]] = {
-    Array(Array(1, 10, 1, List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)),
+    Array[Array[Any]](
+      Array(1, 10, 1, List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)),
       Array(1, 10, 2, List(1, 3, 5, 7, 9)),
       Array(1, 10, 0, List(1, 3, 5, 7, 9)),
       Array(1, 10, -1, List(1, 3, 5, 7, 9))
@@ -239,11 +252,11 @@ class AlphaNumericTestSuite extends BaseTestSuite {
   }
 
   @Test(dataProvider = "integerRangeWithStep")
-  def testIntegerRangeWithStep(min: Int, max: Int, step: Int, expectedResult: List[Int]) {
+  def testIntegerRangeWithStep(min: Int, max: Int, step: Int, expectedResult: List[Int]) = {
     if (step <= 0) {
-      try {
+      try
         alpha.randomIntsRange(min, max, step)
-      } catch {
+      catch {
         case e: IllegalArgumentException => assertResult(e.getMessage)("Step should be more then 0")
       }
     } else {
@@ -255,7 +268,8 @@ class AlphaNumericTestSuite extends BaseTestSuite {
 
   @DataProvider(name = "doubleRangeWithStep")
   def doubleRangeWithStep(): Array[Array[Any]] = {
-    Array(Array(1, 10, 1, List(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0)),
+    Array[Array[Any]](
+      Array(1, 10, 1, List(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0)),
       Array(1, 10, 2, List(1.0, 3.0, 5.0, 7.0, 9.0)),
       Array(1, 3, 0.5, List(1.0, 1.5, 2.0, 2.5, 3.0)),
       Array(1, 3, -1, List(1.0, 1.5, 2.0, 2.5, -1.0)),
@@ -264,11 +278,11 @@ class AlphaNumericTestSuite extends BaseTestSuite {
   }
 
   @Test(dataProvider = "doubleRangeWithStep")
-  def testDoubleRangeWithStep(min: Double, max: Double, step: Double, expectedResult: List[Double]) {
+  def testDoubleRangeWithStep(min: Double, max: Double, step: Double, expectedResult: List[Double]) = {
     if (step <= 0) {
-      try {
+      try
         alpha.randomDoublesRange(min, max, step)
-      } catch {
+      catch {
         case e: IllegalArgumentException => assertResult(e.getMessage)("Step should be more then 0")
       }
     } else {
@@ -279,7 +293,8 @@ class AlphaNumericTestSuite extends BaseTestSuite {
 
   @DataProvider(name = "floatRangeWithStep")
   def floatRangeWithStep(): Array[Array[Any]] = {
-    Array(Array(1.0f, 10.0f, 1.0f, List(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f)),
+    Array[Array[Any]](
+      Array(1.0f, 10.0f, 1.0f, List(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f)),
       Array(1.0f, 10.0f, 2.0f, List(1.0f, 3.0f, 5.0f, 7.0f, 9.0f)),
       Array(1.0f, 3.0f, 0.5f, List(1.0f, 1.5f, 2.0f, 2.5f, 3.0f)),
       Array(1.0f, 3.0f, 0.0f, List(1.0f, 1.5f, 2.0f, 2.5f, 3.0f)),
@@ -288,11 +303,11 @@ class AlphaNumericTestSuite extends BaseTestSuite {
   }
 
   @Test(dataProvider = "floatRangeWithStep")
-  def testFloatRangeWithStep(min: Float, max: Float, step: Float, expectedResult: List[Float]) {
+  def testFloatRangeWithStep(min: Float, max: Float, step: Float, expectedResult: List[Float]) = {
     if (step <= 0) {
-      try {
+      try
         alpha.randomFloatsRange(min, max, step)
-      } catch {
+      catch {
         case e: IllegalArgumentException => assertResult(e.getMessage)("Step should be more then 0")
       }
     } else {
@@ -303,17 +318,18 @@ class AlphaNumericTestSuite extends BaseTestSuite {
 
   @DataProvider(name = "longRangeWithStep")
   def longRangeWithStep(): Array[Array[Any]] = {
-    Array(Array(1L, 10L, 1L, List(1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L)),
+    Array[Array[Any]](
+      Array(1L, 10L, 1L, List(1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L)),
       Array(1L, 10L, 2L, List(1L, 3L, 5L, 7L, 9L))
     )
   }
 
   @Test(dataProvider = "longRangeWithStep")
-  def testLongRangeWithStep(min: Long, max: Long, step: Long, expectedResult: List[Long]) {
+  def testLongRangeWithStep(min: Long, max: Long, step: Long, expectedResult: List[Long]) = {
     if (step <= 0) {
-      try {
+      try
         alpha.randomLongsRange(min, max, step)
-      } catch {
+      catch {
         case e: IllegalArgumentException => assertResult(e.getMessage)("Step should be more then 0")
       }
     } else {
@@ -356,6 +372,5 @@ class AlphaNumericTestSuite extends BaseTestSuite {
     val customList = alpha.randomGuidList(8, 30)
     assertResult(30)(customList.size)
   }
-
 
 }

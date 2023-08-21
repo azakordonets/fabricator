@@ -1,40 +1,40 @@
 package fabricator
 
-import com.github.nscala_time.time.Imports._
-import fabricator.enums.DateFormat
 import org.testng.annotations.{DataProvider, Test}
+
+import com.github.nscala_time.time.Imports._
+
+import fabricator.enums.DateFormat
 
 class ContactTestSuite extends BaseTestSuite {
 
-  lazy val firstNameList: Array[String] = util.getArrayFromJson("first_name")
-  lazy val lastNameList: Array[String] = util.getArrayFromJson("last_name")
-  lazy val prefixList: Array[String] = util.getArrayFromJson("prefix")
-  lazy val suffixList: Array[String] = util.getArrayFromJson("suffix")
+  lazy val firstNameList: Array[String]    = util.getArrayFromJson("first_name")
+  lazy val lastNameList: Array[String]     = util.getArrayFromJson("last_name")
+  lazy val prefixList: Array[String]       = util.getArrayFromJson("prefix")
+  lazy val suffixList: Array[String]       = util.getArrayFromJson("suffix")
   lazy val phoneFormatsList: Array[String] = util.getArrayFromJson("phone_formats")
-  lazy val streetNameList: Array[String] = util.getArrayFromJson("street_suffix")
-  lazy val houseNumberList: Array[String] = util.getArrayFromJson("house_number")
-  lazy val appNumberList: Array[String] = util.getArrayFromJson("app_number")
-  lazy val postcodeList: Array[String] = util.getArrayFromJson("postcode")
-  lazy val countryList: Array[String] = util.getArrayFromJson("country")
-  lazy val stateList: Array[String] = util.getArrayFromJson("state")
-  lazy val stateAbbrList: Array[String] = util.getArrayFromJson("state_abbr")
-  lazy val cityPrefixList: Array[String] = util.getArrayFromJson("city_prefix")
-  lazy val citySuffixList: Array[String] = util.getArrayFromJson("city_suffix")
-  lazy val companyList: Array[String] = util.getArrayFromJson("company_suffix")
-  lazy val religionList: Array[String] = util.getArrayFromJson("religion")
-  lazy val zodiacList: Array[String] = util.getArrayFromJson("zodiac")
-  lazy val bloodTypeList: Array[String] = util.getArrayFromJson("blood_type")
-  lazy val occupationList: Array[String] = util.getArrayFromJson("occupation")
+  lazy val streetNameList: Array[String]   = util.getArrayFromJson("street_suffix")
+  lazy val houseNumberList: Array[String]  = util.getArrayFromJson("house_number")
+  lazy val appNumberList: Array[String]    = util.getArrayFromJson("app_number")
+  lazy val postcodeList: Array[String]     = util.getArrayFromJson("postcode")
+  lazy val countryList: Array[String]      = util.getArrayFromJson("country")
+  lazy val stateList: Array[String]        = util.getArrayFromJson("state")
+  lazy val stateAbbrList: Array[String]    = util.getArrayFromJson("state_abbr")
+  lazy val cityPrefixList: Array[String]   = util.getArrayFromJson("city_prefix")
+  lazy val citySuffixList: Array[String]   = util.getArrayFromJson("city_suffix")
+  lazy val companyList: Array[String]      = util.getArrayFromJson("company_suffix")
+  lazy val religionList: Array[String]     = util.getArrayFromJson("religion")
+  lazy val zodiacList: Array[String]       = util.getArrayFromJson("zodiac")
+  lazy val bloodTypeList: Array[String]    = util.getArrayFromJson("blood_type")
+  lazy val occupationList: Array[String]   = util.getArrayFromJson("occupation")
 
   @DataProvider(name = "languageDp")
-  def languageDp(): Array[Array[Any]] = {
-    Array(Array("nl"),
-      Array("de")
-    )
+  def languageDp(): Array[Array[String]] = {
+    Array(Array("nl"), Array("de"))
   }
 
   @Test(dataProvider = "languageDp")
-  def testCustomConstructor(lang: String)  {
+  def testCustomConstructor(lang: String) = {
     val customContact = fabricator.Contact(lang)
     assert(customContact != null)
   }
@@ -50,7 +50,7 @@ class ContactTestSuite extends BaseTestSuite {
     val suffix = contact.suffix
     assert(suffixList.contains(suffix))
   }
-  
+
   @Test
   def testFirstName() = {
     val name = contact.firstName
@@ -78,13 +78,13 @@ class ContactTestSuite extends BaseTestSuite {
     prefixList.contains(nameWithPrefix.split(" ")(0))
     firstNameList.contains(nameWithPrefix.split(" ")(1))
     lastNameList.contains(nameWithPrefix.split(" ")(2))
-    //with suffix
+    // with suffix
     val nameWithSuffix = contact.fullName(setPrefix = false, setSuffix = true)
     if (debugEnabled) logger.debug("Checking full name value " + nameWithSuffix)
     firstNameList.contains(nameWithSuffix.split(" ")(0))
     lastNameList.contains(nameWithSuffix.split(" ")(1))
     suffixList.contains(nameWithSuffix.split(" ")(2))
-    //with prefix and suffix 
+    // with prefix and suffix
     val nameWithPrefixAndSuffix = contact.fullName(setPrefix = true, setSuffix = true)
     if (debugEnabled) logger.debug("Checking full name value " + nameWithPrefixAndSuffix)
     prefixList.contains(nameWithPrefixAndSuffix.split(" ")(0))
@@ -123,7 +123,7 @@ class ContactTestSuite extends BaseTestSuite {
 
   @Test
   def testhouseNumber() = {
-    val houseNumber = contact.houseNumber
+    val houseNumber         = contact.houseNumber
     val reversedHouseNumber = houseNumber.replaceAll("[0-9]", "#")
     if (debugEnabled) logger.debug("Checking houseNumber value " + houseNumber)
     assert(houseNumberList.contains(reversedHouseNumber))
@@ -132,7 +132,7 @@ class ContactTestSuite extends BaseTestSuite {
   @Test
   def testApartmentNumber() = {
     val apartmentNumber = contact.apartmentNumber
-    val reversedApp = apartmentNumber.replaceAll("[0-9]", "#")
+    val reversedApp     = apartmentNumber.replaceAll("[0-9]", "#")
     if (debugEnabled) logger.debug("Checking apartmentNumber value " + apartmentNumber)
     assert(appNumberList.contains(reversedApp))
   }
@@ -150,12 +150,12 @@ class ContactTestSuite extends BaseTestSuite {
 
   @Test
   def testPostcode() = {
-    val postCode = contact.postcode
+    val postCode         = contact.postcode
     val reversedPostCode = postCode.replaceAll("[0-9]", "#")
     if (debugEnabled) logger.debug("Checking postCode value " + postCode)
     assert(postcodeList.contains(reversedPostCode))
   }
-  
+
   @Test
   def testCountry() = {
     val country = contact.country
@@ -176,23 +176,20 @@ class ContactTestSuite extends BaseTestSuite {
     if (debugEnabled) logger.debug("Checking stateAbbr value " + stateAbbr)
     assert(stateAbbrList.contains(stateAbbr))
   }
-  
+
   @Test
   def testCity() = {
     val city = contact.city
     if (debugEnabled) logger.debug("Checking city value " + city)
     var prefixAvailability = 0
     var suffixAvailability = 0
-    for (prefix <- cityPrefixList){
+    for (prefix <- cityPrefixList)
       if (city.contains(prefix)) prefixAvailability = prefixAvailability + 1
-    }
-    for (suffix <- citySuffixList){
+    for (suffix <- citySuffixList)
       if (city.contains(suffix)) suffixAvailability = suffixAvailability + 1
-    }
     assert(prefixAvailability >= 1)
     assert(suffixAvailability >= 1)
   }
-  
 
   @Test
   def testCompany() = {
@@ -202,28 +199,24 @@ class ContactTestSuite extends BaseTestSuite {
   }
 
   @DataProvider(name = "birthdayDP")
-  def birthdayDP(): Array[Array[Any]] = {
-    Array(Array(0),
-      Array(10),
-      Array(25),
-      Array(50),
-      Array(100),
-      Array(1000)
-    )
+  def birthdayDP(): Array[Array[Int]] = {
+    Array(Array(0), Array(10), Array(25), Array(50), Array(100), Array(1000))
   }
 
   @Test(dataProvider = "birthdayDP")
   def testBirthDay(age: Int) = {
-    if (debugEnabled) logger
-      .debug("Checking when is the birthday of an " + age + " years old. It's " + contact.birthday(age))
-    val birthDate = contact.birthday(age)
-    val currentDay = DateTimeFormat.forPattern("dd-MM-yyyy").print(DateTime.now - age.years)
+    if (debugEnabled)
+      logger
+        .debug("Checking when is the birthday of an " + age + " years old. It's " + contact.birthday(age))
+    val birthDate  = contact.birthday(age)
+    val currentDay = DateTimeFormat.forPattern("dd-MM-yyyy").print(DateTime.now() - age.years)
     assert(birthDate == currentDay)
   }
 
   @DataProvider(name = "birthdayWithFormatsDP")
   def birthdayWithFormatsDP(): Array[Array[Any]] = {
-    Array(Array(21, DateFormat.dd_mm_yyyy_SEMICOLON),
+    Array[Array[Any]](
+      Array(21, DateFormat.dd_mm_yyyy_SEMICOLON),
       Array(25, DateFormat.dd_mm_yyyy_SEMICOLON),
       Array(40, DateFormat.dd_mm_yyyy_SEMICOLON),
       Array(50, DateFormat.dd_MM_yyyy_SEMICOLON),
@@ -243,11 +236,14 @@ class ContactTestSuite extends BaseTestSuite {
 
   @Test(dataProvider = "birthdayWithFormatsDP")
   def testBirthDayWithFormat(age: Int, format: DateFormat) = {
-    if (debugEnabled) logger
-      .debug("Checking when is the birthday of an " + age + " years old and format " + format + " . It's " + contact
-      .birthday(age, format))
-    val birthDate = contact.birthday(age, format)
-    val currentDay = DateTimeFormat.forPattern(format.getFormat).print(DateTime.now - age.years)
+    if (debugEnabled)
+      logger
+        .debug(
+          "Checking when is the birthday of an " + age + " years old and format " + format + " . It's " + contact
+            .birthday(age, format)
+        )
+    val birthDate  = contact.birthday(age, format)
+    val currentDay = DateTimeFormat.forPattern(format.getFormat).print(DateTime.now() - age.years)
     assert(birthDate == currentDay)
   }
 
@@ -257,7 +253,7 @@ class ContactTestSuite extends BaseTestSuite {
     if (debugEnabled) logger.debug("Testing random bsn number : " + bsn)
     assert(bsn < 999999999 && bsn >= 9999999)
     var sum: Int = -1 * bsn % 10
-    for ( multiplier <- 2 to 100; if bsn > 0 ) {
+    for (multiplier <- 2 to 100 if bsn > 0) {
       bsn = bsn / 10
       val value = bsn % 10
       sum = sum + (multiplier * value)
@@ -280,7 +276,7 @@ class ContactTestSuite extends BaseTestSuite {
   }
 
   @DataProvider(name = "zodiacDP")
-  def zodiacDP(): Array[Array[Any]] = {
+  def zodiacDP(): Array[Array[String]] = {
     Array(
       Array("22-12-2001", "Capricorn"),
       Array("10-01-2001", "Capricorn"),
@@ -333,7 +329,7 @@ class ContactTestSuite extends BaseTestSuite {
     if (debugEnabled) logger.debug("Testing random height in cm " + contact.height(cm = true))
     if (debugEnabled) logger.debug("Testing random height in m " + contact.height(cm = false))
     val heightInCm = contact.height(cm = true).split(" ")(0).toDouble
-    val heightInM = contact.height(cm = false).split(" ")(0).toInt
+    val heightInM  = contact.height(cm = false).split(" ")(0).toInt
     assert(heightInCm >= 1.50 && heightInCm <= 2.20)
     assert(heightInM >= 150 && heightInM <= 220)
   }

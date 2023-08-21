@@ -3,30 +3,29 @@ package fabricator
 import java.net.URL
 import java.nio.charset.Charset
 
-import com.sun.jndi.toolkit.url.Uri
-import org.testng.AssertJUnit.assertTrue
 import org.testng.annotations.{DataProvider, Test}
+import org.testng.AssertJUnit.assertTrue
+
+import com.sun.jndi.toolkit.url.Uri
 
 import scala.collection.mutable
 
 class InternetTestSuite extends BaseTestSuite {
 
   @DataProvider(name = "languageDp")
-  def languageDp(): Array[Array[Any]] = {
-    Array(Array("nl"),
-      Array("de")
-    )
+  def languageDp(): Array[Array[String]] = {
+    Array(Array("nl"), Array("de"))
   }
 
   @Test(dataProvider = "languageDp")
-  def testCustomConstructor(lang: String)  {
+  def testCustomConstructor(lang: String) = {
     val customInternet = fabricator.Internet(lang)
     assert(customInternet != null)
   }
 
   @Test
   def testDefaultUrl() = {
-    val url = internet.urlBuilder.toString()
+    val url                       = internet.urlBuilder.toString()
     val splitArray: Array[String] = url.split("/")
     assert(url.matches("^(.*:)//([A-Za-z0-9\\-\\.]+)(:[0-9]+)?(.*)$"))
     assertResult("http:")(splitArray(0))
@@ -35,7 +34,7 @@ class InternetTestSuite extends BaseTestSuite {
 
   @Test
   def testUrlAsUri() = {
-    val url = internet.urlBuilder.host("test.ru").toUri
+    val url         = internet.urlBuilder.host("test.ru").toUri
     val expectedUrl = new Uri("http://test.ru/getEntity?q=test")
     assertResult(expectedUrl.getScheme)(url.getScheme)
     assertResult(expectedUrl.getHost)(url.getHost)
@@ -46,14 +45,14 @@ class InternetTestSuite extends BaseTestSuite {
 
   @Test
   def testUrlAsURL() = {
-    val url = internet.urlBuilder.host("test.ru").toUrl
+    val url         = internet.urlBuilder.host("test.ru").toUrl
     val expectedUrl = new URL("http://test.ru/getEntity?q=test")
     assertResult(expectedUrl)(url)
   }
 
   @Test
   def testUrlWithCustomProtocol() = {
-    val url = internet.urlBuilder.scheme("https").toString()
+    val url                       = internet.urlBuilder.scheme("https").toString()
     val splitArray: Array[String] = url.split("/")
     assert(url.matches("^(.*:)//([A-Za-z0-9\\-\\.]+)(:[0-9]+)?(.*)$"))
     assertResult("https:")(splitArray(0))
@@ -62,7 +61,7 @@ class InternetTestSuite extends BaseTestSuite {
 
   @Test
   def testUlrWithCustomHost() = {
-    val url = internet.urlBuilder.host("test.net").toString()
+    val url                       = internet.urlBuilder.host("test.net").toString()
     val splitArray: Array[String] = url.split("/")
     assert(url.matches("^(.*:)//([A-Za-z0-9\\-\\.]+)(:[0-9]+)?(.*)$"))
     assertResult("http:")(splitArray(0))
@@ -72,7 +71,7 @@ class InternetTestSuite extends BaseTestSuite {
 
   @Test
   def testUrlWithCustomPort() = {
-    val url = internet.urlBuilder.host("test.net").port(8080).toString()
+    val url                       = internet.urlBuilder.host("test.net").port(8080).toString()
     val splitArray: Array[String] = url.split("/")
     assert(url.matches("^(.*:)//([A-Za-z0-9\\-\\.]+)(:[0-9]+)?(.*)$"))
     assertResult("http:")(splitArray(0))
@@ -82,7 +81,7 @@ class InternetTestSuite extends BaseTestSuite {
 
   @Test
   def testUlrWithCustomPath() = {
-    val url = internet.urlBuilder.host("test.net").path("/customPath").toString()
+    val url                       = internet.urlBuilder.host("test.net").path("/customPath").toString()
     val splitArray: Array[String] = url.split("/")
     assert(url.matches("^(.*:)//([A-Za-z0-9\\-\\.]+)(:[0-9]+)?(.*)$"))
     assertResult("http:")(splitArray(0))
@@ -92,7 +91,8 @@ class InternetTestSuite extends BaseTestSuite {
 
   @DataProvider(name = "urlCustomParams")
   def urlCustomParams() = {
-    Array(Array(mutable.Map[String, Any]("q" -> "test"), "?q=test"),
+    Array(
+      Array(mutable.Map[String, Any]("q" -> "test"), "?q=test"),
       Array(mutable.Map[String, Any]("q" -> "test", "test" -> "hello"), "?q=test&test=hello"),
       Array(mutable.Map[String, Any]("q" -> "test", "name" -> "Josh Lennon"), "?q=test&name=Josh+Lennon"),
       Array(mutable.Map[String, Any]("q" -> true), "?q=true"),
@@ -115,7 +115,11 @@ class InternetTestSuite extends BaseTestSuite {
 
   @Test
   def testUrlEncodeAsCharset() = {
-    val url = internet.urlBuilder.host("test.com").params(mutable.Map("q"->"test 123")).encodeAs(Charset.forName("UTF-8")).toString()
+    val url = internet.urlBuilder
+      .host("test.com")
+      .params(mutable.Map("q" -> "test 123"))
+      .encodeAs(Charset.forName("UTF-8"))
+      .toString()
     assertResult("http://test.com/getEntity%3Fq%3Dtest%2B123")(url)
   }
 
@@ -132,9 +136,8 @@ class InternetTestSuite extends BaseTestSuite {
     assert(ip != "0.0.0.0")
     assert(ip != "255.255.255.255")
     val ipValues = ip.split("\\.")
-    for (i <- 0 to ipValues.size - 1) {
+    for (i <- 0 to ipValues.size - 1)
       assert(ipValues(i).toInt <= 256)
-    }
   }
 
   @Test
@@ -167,12 +170,21 @@ class InternetTestSuite extends BaseTestSuite {
 
   @DataProvider(name = "colorVariations")
   def colorVariations() = {
-    Array(Array("hex", false, "^#[A-Fa-f0-9]{1,6}"),
+    Array(
+      Array("hex", false, "^#[A-Fa-f0-9]{1,6}"),
       Array("hex", true, "^#[A-Fa-f0-9]{1,6}"),
       Array("shorthex", false, "^#[A-Fa-f0-9]{1,6}"),
       Array("shorthex", true, "^#[A-Fa-f0-9]{1,6}"),
-      Array("rgb", true, "rgb\\(\\s*((?:[0-2]?[0-9])?[0-9])\\s*,\\s*((?:[0-2]?[0-9])?[0-9])\\s*,\\s*((?:[0-2]?[0-9])?[0-9])\\s*\\)$"),
-      Array("rgb", false, "rgb\\(\\s*((?:[0-2]?[0-9])?[0-9])\\s*,\\s*((?:[0-2]?[0-9])?[0-9])\\s*,\\s*((?:[0-2]?[0-9])?[0-9])\\s*\\)$")
+      Array(
+        "rgb",
+        true,
+        "rgb\\(\\s*((?:[0-2]?[0-9])?[0-9])\\s*,\\s*((?:[0-2]?[0-9])?[0-9])\\s*,\\s*((?:[0-2]?[0-9])?[0-9])\\s*\\)$"
+      ),
+      Array(
+        "rgb",
+        false,
+        "rgb\\(\\s*((?:[0-2]?[0-9])?[0-9])\\s*,\\s*((?:[0-2]?[0-9])?[0-9])\\s*,\\s*((?:[0-2]?[0-9])?[0-9])\\s*\\)$"
+      )
     )
   }
 
@@ -185,7 +197,10 @@ class InternetTestSuite extends BaseTestSuite {
   def testColor(codeType: String, grayscale: Boolean, regexMatch: String) = {
     for (i <- 1 to 10) {
       val color = internet.color(codeType, grayscale)
-      if (debugEnabled) logger.debug("Testing random " + codeType + " color with greyscale = " + grayscale + ". Color code is : " + color)
+      if (debugEnabled)
+        logger.debug(
+          "Testing random " + codeType + " color with greyscale = " + grayscale + ". Color code is : " + color
+        )
       assert(color.matches(regexMatch), "Color " + color + " didn't match to regex : " + regexMatch)
     }
   }
@@ -201,7 +216,7 @@ class InternetTestSuite extends BaseTestSuite {
   def testHashtag() = {
     val hashtag = internet.hashtag
     if (debugEnabled) logger.debug("Testing random hashtag account name : " + hashtag)
-    assertTrue("Hashtag: "+hashtag, hashtag.matches("#([A-Za-z0-9\\-\\_]+)"))
+    assertTrue("Hashtag: " + hashtag, hashtag.matches("#([A-Za-z0-9\\-\\_]+)"))
   }
 
   @Test
@@ -229,6 +244,5 @@ class InternetTestSuite extends BaseTestSuite {
     val userName = internet.username
     assert(userName.matches("^[a-z-A-Z0-9_-]{3,30}$"))
   }
-
 
 }

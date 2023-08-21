@@ -1,7 +1,8 @@
 package fabricator
 
+import java.util.Base64
+
 import org.testng.annotations.Test
-import sun.misc.BASE64Decoder
 
 class MobileTestSuite extends BaseTestSuite {
 
@@ -28,7 +29,7 @@ class MobileTestSuite extends BaseTestSuite {
     val windows8Id = mobile.wp8_anid2
     if (debugEnabled) logger.debug("Testing random windows 8 ID : " + windows8Id)
     val expectedString = "0123456789abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_"
-    val decodedString = new BASE64Decoder().decodeBuffer(windows8Id)
+    val decodedString  = Base64.getDecoder.decode(windows8Id)
     for (symbol <- decodedString) assert(expectedString.contains(symbol))
   }
 

@@ -1,15 +1,16 @@
 package fabricator.entities
 
 import java.net.URL
-import java.nio.charset.Charset
 import java.nio.{ByteBuffer, CharBuffer}
+import java.nio.charset.Charset
 
 import com.sun.jndi.toolkit.url.Uri
-import fabricator._
 
-import scala.util.Random
-import scala.collection.JavaConverters._
 import scala.collection.mutable
+import scala.collection.JavaConverters._
+import scala.util.Random
+
+import fabricator._
 
 class UrlBuilder() {
 
@@ -101,7 +102,7 @@ class UrlBuilder() {
     if (!useCustomHost) builder.append(domain)
     if (port != 80) builder.append(":" + port.toString)
     builder.append(path)
-    val paramsString = convertParamsToString(params)
+    val paramsString  = convertParamsToString(params)
     val encodedParams = urlEncode(paramsString, encoding)
     builder.append(if (encodeParams) encodedParams else paramsString)
     builder.toString()
@@ -110,31 +111,31 @@ class UrlBuilder() {
   private def urlEncode(input: String, charset: Charset): String = {
     val builder: StringBuilder = new StringBuilder()
     val charBuffer: CharBuffer = CharBuffer.allocate(1)
-    for (char <- input.toCharArray) {
+    for (char <- input.toCharArray)
       char match {
-        case ' ' => builder.append('+')
+        case ' '                       => builder.append('+')
         case `char` if isUrlSafe(char) => builder.append(char)
-        case _ => appendEncodedChar(char, builder, charBuffer, charset)
+        case _                         => appendEncodedChar(char, builder, charBuffer, charset)
       }
-    }
     builder.toString()
   }
-    private def appendEncodedChar(char: Char, stringBuilder: StringBuilder, charBuffer: CharBuffer, charset: Charset) {
-      charBuffer.put(0, char)
-      charBuffer.rewind()
-      val byteBuffer: ByteBuffer = charset.encode(charBuffer)
-      for (i <- 0 until byteBuffer.limit() by 1) {
-        stringBuilder.append('%')
-        val placeHolder = "%1$02X"
-        stringBuilder.append(placeHolder.format(byteBuffer.get(i)))
+
+  private def appendEncodedChar(char: Char, stringBuilder: StringBuilder, charBuffer: CharBuffer, charset: Charset) = {
+    charBuffer.put(0, char)
+    charBuffer.rewind()
+    val byteBuffer: ByteBuffer = charset.encode(charBuffer)
+    for (i <- 0 until byteBuffer.limit() by 1) {
+      stringBuilder.append('%')
+      val placeHolder = "%1$02X"
+      stringBuilder.append(placeHolder.format(byteBuffer.get(i)))
     }
   }
 
   private def isUrlSafe(c: Char): Boolean = {
     ('a' <= c && 'z' >= c) ||
-      ('A' <= c && 'Z' >= c) ||
-      ('0' <= c && '9' >= c) ||
-      (c == '-' || c == '_' || c == '.' || c == '~' || c == ' ')
+    ('A' <= c && 'Z' >= c) ||
+    ('0' <= c && '9' >= c) ||
+    (c == '-' || c == '_' || c == '.' || c == '~' || c == ' ')
   }
 
   private def convertParamsToString(params: mutable.Map[String, Any]): String = {
@@ -144,22 +145,22 @@ class UrlBuilder() {
       validateParam(value)
       builder.append(key + "=" + value + "&")
     }
-    builder.toString().replaceAll(" ", "+")substring(0, builder.length-1)
+    builder.toString().replaceAll(" ", "+") substring (0, builder.length - 1)
   }
 
   private def validateParam(param: Any) = {
     param match {
-      case z: Boolean => // accept it
-      case c: Char => // accept it
-      case s: Short => // accept it
-      case i: Int => // accept it
-      case j: Long => // accept it
-      case f: Float => // accept it
-      case d: Double => // accept it
+      case z: Boolean  => // accept it
+      case c: Char     => // accept it
+      case s: Short    => // accept it
+      case i: Int      => // accept it
+      case j: Long     => // accept it
+      case f: Float    => // accept it
+      case d: Double   => // accept it
       case str: String => // accept it
-      case _ => throw new IllegalArgumentException("Only String ,Int, Double, Float, Boolean are acceptable for url params")
+      case _ =>
+        throw new IllegalArgumentException("Only String ,Int, Double, Float, Boolean are acceptable for url params")
     }
   }
-
 
 }

@@ -1,18 +1,18 @@
 package fabricator.entities
 
-import fabricator.enums.DateFormat
 import org.joda.time.{DateTime, DateTimeZone}
+
+import fabricator.enums.DateFormat
 
 class RelativeDate(private val initialDate: DateTime = DateTime.now()) {
 
-  def this(timeZone: DateTimeZone) {
+  def this(timeZone: DateTimeZone) = {
     this(DateTime.now(timeZone))
   }
 
   private var date = initialDate
 
-
-  def tomorrow() : this.type = {
+  def tomorrow(): this.type = {
     date = date.plusDays(1)
     this
   }
@@ -26,7 +26,7 @@ class RelativeDate(private val initialDate: DateTime = DateTime.now()) {
     years match {
       case `years` if years > 0 => date = date.plusYears(years)
       case `years` if years < 0 => date = date.minusYears(Math.abs(years))
-      case _ => // skip
+      case _                    => // skip
     }
     this
   }
@@ -35,7 +35,7 @@ class RelativeDate(private val initialDate: DateTime = DateTime.now()) {
     months match {
       case `months` if months > 0 => date = date.plusMonths(months)
       case `months` if months < 0 => date = date.minusMonths(Math.abs(months))
-      case _ => // skip
+      case _                      => // skip
     }
     this
   }
@@ -44,7 +44,7 @@ class RelativeDate(private val initialDate: DateTime = DateTime.now()) {
     weeks match {
       case `weeks` if weeks > 0 => date = date.plusWeeks(weeks)
       case `weeks` if weeks < 0 => date = date.minusWeeks(Math.abs(weeks))
-      case _ => // skip
+      case _                    => // skip
     }
     this
   }
@@ -53,7 +53,7 @@ class RelativeDate(private val initialDate: DateTime = DateTime.now()) {
     days match {
       case `days` if days > 0 => date = date.plusDays(days)
       case `days` if days < 0 => date = date.minusDays(Math.abs(days))
-      case _ => // skip
+      case _                  => // skip
     }
     this
   }
@@ -62,7 +62,7 @@ class RelativeDate(private val initialDate: DateTime = DateTime.now()) {
     hours match {
       case `hours` if hours > 0 => date = date.plusHours(hours)
       case `hours` if hours < 0 => date = date.minusHours(Math.abs(hours))
-      case _ => // skip
+      case _                    => // skip
     }
     this
   }
@@ -71,7 +71,7 @@ class RelativeDate(private val initialDate: DateTime = DateTime.now()) {
     minutes match {
       case `minutes` if minutes > 0 => date = date.plusMinutes(minutes)
       case `minutes` if minutes < 0 => date = date.minusMinutes(Math.abs(minutes))
-      case _ => // skip
+      case _                        => // skip
     }
     this
   }
@@ -80,7 +80,7 @@ class RelativeDate(private val initialDate: DateTime = DateTime.now()) {
     seconds match {
       case `seconds` if seconds > 0 => date = date.plusSeconds(seconds)
       case `seconds` if seconds < 0 => date = date.minusSeconds(Math.abs(seconds))
-      case _ => // skip
+      case _                        => // skip
     }
     this
   }
