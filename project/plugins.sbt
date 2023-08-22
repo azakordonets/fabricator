@@ -4,6 +4,8 @@ resolvers += Classpaths.sbtPluginReleases
 
 resolvers += Classpaths.typesafeReleases
 
+// these plugins trigger 'java.lang.AssertionError: NoDenotation.owner while compiling ...'
+// when compile java and scala sources
 addSbtPlugin("org.scoverage"  % "sbt-scoverage" % "2.0.8")
 addSbtPlugin("org.scoverage" %% "sbt-coveralls" % "1.3.11")
 
