@@ -24,6 +24,7 @@ case class Alphanumeric(private val random: Random = new Random()) {
     (min to max by step toList).asJava
 
   }
+
   def randomIntsRange(min: Int, max: Int, step: Int): List[Int] = {
     if (step <= 0) throw new IllegalArgumentException("Step should be more then 0")
     min to max by step toList
@@ -34,7 +35,6 @@ case class Alphanumeric(private val random: Random = new Random()) {
   def randomLong(max: Long): Long = randomLong(2147483648L, max)
 
   def randomLong(min: Long, max: Long): Long = min + (Math.random() * (max - min)).toLong
-
 
   def randomLongsRange(min: Long, max: Long, step: Long): List[Long] = {
     if (step <= 0) throw new IllegalArgumentException("Step should be more then 0")
@@ -53,7 +53,7 @@ case class Alphanumeric(private val random: Random = new Random()) {
 
   def randomDoublesRangeAsJavaList(min: Double, max: Double, step: Double): java.util.List[Double] = {
     if (step <= 0) throw new IllegalArgumentException("Step should be more then 0")
-    ((BigDecimal(min) to BigDecimal(max) by step).map(_.toDouble).toList).asJava
+    (BigDecimal(min) to BigDecimal(max) by step).map(_.toDouble).toList.asJava
   }
 
   def randomDoublesRange(min: Double, max: Double, step: Double): List[Double] = {
@@ -69,12 +69,12 @@ case class Alphanumeric(private val random: Random = new Random()) {
 
   def randomFloatsRangeAsJavaList(min: Float, max: Float, step: Float): java.util.List[Float] = {
     if (step <= 0) throw new IllegalArgumentException("Step should be more then 0")
-    ((BigDecimal(min) to BigDecimal(max) by step).map(_.toFloat).toList).asJava
+    (BigDecimal(min) to BigDecimal(max) by BigDecimal(step)).map(_.toFloat).toList.asJava
   }
 
   def randomFloatsRange(min: Float, max: Float, step: Float): List[Float] = {
     if (step <= 0) throw new IllegalArgumentException("Step should be more then 0")
-    (BigDecimal(min) to BigDecimal(max) by step).map(_.toFloat).toList
+    (BigDecimal(min) to BigDecimal(max) by BigDecimal(step)).map(_.toFloat).toList
   }
 
   def randomBoolean: Boolean = random.nextBoolean()
@@ -88,23 +88,26 @@ case class Alphanumeric(private val random: Random = new Random()) {
   def randomStringsAsJavaList: util.List[String] = randomStrings(5, 100, 100).asJava
 
   def randomStrings(minLength: Int, maxLength: Int, amount: Int): List[String] = {
-    if (minLength != maxLength )List.fill(amount)(randomString(randomInt(minLength, maxLength))) else
+    if (minLength != maxLength) List.fill(amount)(randomString(randomInt(minLength, maxLength)))
+    else
       List.fill(amount)(randomString(minLength))
   }
 
   def randomStringsAsJavaList(minLength: Int, maxLength: Int, amount: Int): java.util.List[String] = {
-    if (minLength != maxLength )List.fill(amount)(randomString(randomInt(minLength, maxLength))).asJava else
+    if (minLength != maxLength) List.fill(amount)(randomString(randomInt(minLength, maxLength))).asJava
+    else
       List.fill(amount)(randomString(minLength)).asJava
   }
 
-  def randomString(length: Int): String = randomString("0123456789abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_", length)
+  def randomString(length: Int): String =
+    randomString("0123456789abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_", length)
 
   def randomString(charSeq: String, max: Int): String = string(charSeq, max)
 
   private def string(charsSequence: String, max: Int): String = {
     val builder = new StringBuilder
-    (0 until max).foreach {
-      _ => builder.append(charsSequence.charAt(random.nextInt(charsSequence.length - 1)))
+    (0 until max).foreach { _ =>
+      builder.append(charsSequence.charAt(random.nextInt(charsSequence.length - 1)))
     }
     builder.toString()
   }
@@ -113,24 +116,26 @@ case class Alphanumeric(private val random: Random = new Random()) {
 
   def randomHash(length: Int): String = string("0123456789abcdef", length)
 
-  def randomHashList: List[String] = randomHashList(40,40, 100)
+  def randomHashList: List[String] = randomHashList(40, 40, 100)
 
   def randomHashList(minLength: Int, maxLength: Int, amount: Int): List[String] = {
-    if (minLength != maxLength )List.fill(amount)(randomHash(randomInt(minLength, maxLength))) else
+    if (minLength != maxLength) List.fill(amount)(randomHash(randomInt(minLength, maxLength)))
+    else
       List.fill(amount)(randomHash(minLength))
   }
 
-  def randomHashAsJavaList: util.List[String] = randomHashList(40,40, 100).asJava
+  def randomHashAsJavaList: util.List[String] = randomHashList(40, 40, 100).asJava
 
   def randomHashAsJavaList(minLength: Int, maxLength: Int, amount: Int): util.List[String] = {
-    if (minLength != maxLength )List.fill(amount)(randomHash(randomInt(minLength, maxLength))).asJava else
+    if (minLength != maxLength) List.fill(amount)(randomHash(randomInt(minLength, maxLength))).asJava
+    else
       List.fill(amount)(randomHash(minLength)).asJava
   }
 
   def randomGuid: String = randomGuid(5)
 
   def randomGuid(version: Int): String = {
-    val guidPool = "abcdef1234567890"
+    val guidPool    = "abcdef1234567890"
     val variantPool = "ab89"
     string(guidPool, 8) + "-" +
       string(guidPool, 4) + "-" +
@@ -158,7 +163,10 @@ case class Alphanumeric(private val random: Random = new Random()) {
   def botifyAsJavaList(pattern: String, amount: Int): util.List[String] = botifyList(pattern, amount).asJava
 
   def numerify(pattern: String): String = {
-    pattern.map { case '#' => random.nextInt(10).toString case letter => letter}.mkString
+    pattern.map {
+      case '#'    => random.nextInt(10).toString
+      case letter => letter
+    }.mkString
   }
 
   def numerifyList(pattern: String, amount: Int): List[String] = List.fill(amount)(numerify(pattern))
@@ -167,7 +175,10 @@ case class Alphanumeric(private val random: Random = new Random()) {
 
   def letterify(pattern: String): String = {
     val chars = ('a' to 'z') ++ ('A' to 'Z')
-    pattern.map { case '?' => chars(random.nextInt(chars.length)) case letter => letter}.mkString
+    pattern.map {
+      case '?'    => chars(random.nextInt(chars.length))
+      case letter => letter
+    }.mkString
   }
 
   def letterifyList(pattern: String, amount: Int): List[String] = List.fill(amount)(letterify(pattern))

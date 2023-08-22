@@ -1,33 +1,26 @@
 package fabricator
 
+import org.testng.annotations.{DataProvider, Test}
+
 import com.spatial4j.core.context.SpatialContext
 import com.spatial4j.core.io.GeohashUtils
-import org.testng.annotations.{DataProvider, Test}
 
 class LocationTestSuite extends BaseTestSuite {
 
   @DataProvider(name = "languageDp")
-  def languageDp(): Array[Array[Any]] = {
-    Array(Array("nl"),
-      Array("de")
-    )
+  def languageDp(): Array[Array[String]] = {
+    Array(Array("nl"), Array("de"))
   }
 
   @Test(dataProvider = "languageDp")
-  def testCustomConstructor(lang: String)  {
+  def testCustomConstructor(lang: String) = {
     val customLocation = fabricator.Location(lang)
     assert(Option(customLocation).isDefined)
   }
-  
+
   @DataProvider(name = "altitudeDP")
-  def wordsCountDP():Array[Array[Any]]= {
-    Array(Array("10"),
-      Array("100"),
-      Array("1000"),
-      Array("4000"),
-      Array("10000"),
-      Array("100000")
-    )
+  def wordsCountDP(): Array[Array[String]] = {
+    Array(Array("10"), Array("100"), Array("1000"), Array("4000"), Array("10000"), Array("100000"))
   }
 
   @Test
@@ -89,8 +82,8 @@ class LocationTestSuite extends BaseTestSuite {
   @Test
   def testCoordinates() = {
     val coordinates = location.coordinates
-    val latitude = coordinates.split(",")(0)
-    val longitude = coordinates.split(",")(1)
+    val latitude    = coordinates.split(",")(0)
+    val longitude   = coordinates.split(",")(1)
     assert(latitude.toDouble >= -90 && latitude.toDouble < 90)
     assert(longitude.toDouble >= -180 && longitude.toDouble < 180)
     assert(latitude.split("\\.")(1).length == 5)
@@ -100,8 +93,8 @@ class LocationTestSuite extends BaseTestSuite {
   @Test
   def testCoordinatesAccuracy() = {
     val coordinates = location.coordinates(2)
-    val latitude = coordinates.split(",")(0)
-    val longitude = coordinates.split(",")(1)
+    val latitude    = coordinates.split(",")(0)
+    val longitude   = coordinates.split(",")(1)
     assert(latitude.toDouble >= -90 && latitude.toDouble < 90)
     assert(longitude.toDouble >= -180 && longitude.toDouble < 180)
     assert(latitude.split("\\.")(1).length == 2)
@@ -170,9 +163,9 @@ class LocationTestSuite extends BaseTestSuite {
 
   @Test
   def testGeoHashWithSpecificValues() = {
-    val latitude = location.latitude(2).toDouble
-    val longitude = location.longitude(2).toDouble
-    val geohash = location.geohash(latitude, longitude)
+    val latitude     = location.latitude(2).toDouble
+    val longitude    = location.longitude(2).toDouble
+    val geohash      = location.geohash(latitude, longitude)
     val decodedValue = GeohashUtils.decode(geohash, SpatialContext.GEO)
     assert(Math.abs(decodedValue.getX - longitude) <= 0.2)
     assert(Math.abs(decodedValue.getY - latitude) <= 0.2)

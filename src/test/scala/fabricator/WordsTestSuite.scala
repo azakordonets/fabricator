@@ -7,36 +7,29 @@ import scala.collection.mutable
 class WordsTestSuite extends BaseTestSuite {
 
   @DataProvider(name = "languageDp")
-  def languageDp(): Array[Array[Any]] = {
-    Array(Array("nl"),
-      Array("de")
-    )
+  def languageDp(): Array[Array[String]] = {
+    Array(Array("nl"), Array("de"))
   }
 
   @Test(dataProvider = "languageDp")
-  def testCustomConstructor(lang: String)  {
+  def testCustomConstructor(lang: String) = {
     val customWords = Option(fabricator.Words(lang))
     assert(customWords.isDefined)
   }
-  
+
   @DataProvider(name = "wordsCountDP")
-  def wordsCountDP():Array[Array[String]]= {
-    Array(Array("10"),
-      Array("100"),
-      Array("1000"),
-      Array("4000"),
-      Array("9500")
-    )
+  def wordsCountDP(): Array[Array[String]] = {
+    Array(Array("10"), Array("100"), Array("1000"), Array("4000"), Array("9500"))
   }
 
   @Test
-  def testDefaultWords() {
+  def testDefaultWords() = {
     val wordsDefaultArray: Array[String] = words.words()
     if (debugEnabled) logger.debug("Getting words array generated with default length ")
     assert(wordsDefaultArray.length == 10)
     val inputSet: mutable.Set[String] = scala.collection.mutable.Set()
-    wordsDefaultArray.indices.foreach{
-      index => inputSet.add(wordsDefaultArray(index))
+    wordsDefaultArray.indices.foreach { index =>
+      inputSet.add(wordsDefaultArray(index))
     }
     assertResult(10)(inputSet.size)
   }
@@ -45,7 +38,7 @@ class WordsTestSuite extends BaseTestSuite {
   def testWordsMaximumAmountException(): Unit = {
     words.words(100001)
   }
-  
+
   @Test(dataProvider = "wordsCountDP")
   def testWords(count: String) = {
     if (debugEnabled) logger.debug("Getting words array generated with length = " + count)
@@ -76,9 +69,11 @@ class WordsTestSuite extends BaseTestSuite {
   @Test(dataProvider = "wordsCountDP")
   def testTextCustomValue(length: String) = {
     val paragraph = words.paragraph(length.toInt)
-    if (debugEnabled) logger.debug("Testing sentence generation. Creating paragraph with chars length: " + length.toInt + "\n" + paragraph)
+    if (debugEnabled)
+      logger.debug(
+        "Testing sentence generation. Creating paragraph with chars length: " + length.toInt + "\n" + paragraph
+      )
     assertResult(paragraph.length)(length.toInt)
   }
-
 
 }

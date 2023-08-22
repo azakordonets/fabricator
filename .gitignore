@@ -24,3 +24,9 @@ test-output/*
 project/project/
 generatedFiles/
 test-output/
+.bloop
+.vscode/
+metals.sbt
+.metals
+.bsp
+.DS_Store

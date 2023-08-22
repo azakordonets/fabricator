@@ -6,14 +6,12 @@ import org.testng.annotations.{DataProvider, Test}
 class FinanceTestSuite extends BaseTestSuite {
 
   @DataProvider(name = "languageDp")
-  def languageDp(): Array[Array[Any]] = {
-    Array(Array("nl"),
-      Array("de")
-    )
+  def languageDp(): Array[Array[String]] = {
+    Array(Array("nl"), Array("de"))
   }
 
   @Test(dataProvider = "languageDp")
-  def testCustomConstructor(lang: String) {
+  def testCustomConstructor(lang: String) = {
     val customFinance = fabricator.Finance(lang)
     assert(customFinance != null)
   }
@@ -45,10 +43,10 @@ class FinanceTestSuite extends BaseTestSuite {
     if (length < 8 || length > 9) {
       return false
     }
-    var pos = 0
+    var pos    = 0
     var result = 0
     for (i <- length to 0 by -1) {
-      if (pos < length){
+      if (pos < length) {
         val addition = if (i != 1) bsn.charAt(pos).asDigit * i else bsn.charAt(pos).asDigit * i * -1
         result = result + addition
       }
@@ -65,7 +63,8 @@ class FinanceTestSuite extends BaseTestSuite {
     assert(creditCards.length == 10)
     for (creditCard <- creditCards) assert(creditCard.length == 16)
     if (debugEnabled) logger.debug("Testing random masterCard : " + creditCard)
-    for ((card, index) <- creditCards.view.zipWithIndex) if (debugEnabled) logger.debug("Master Credit card #" + index + " is " + card)
+    for ((card, index) <- creditCards.view.zipWithIndex)
+      if (debugEnabled) logger.debug("Master Credit card #" + index + " is " + card)
   }
 
   @Test
@@ -82,8 +81,10 @@ class FinanceTestSuite extends BaseTestSuite {
     for (visa <- visa15Cards) assert(visa.length() == 15)
     if (debugEnabled) logger.debug("Testing random 16 length Visa Card : " + visa16CreditCard)
     if (debugEnabled) logger.debug("Testing random 15 length Visa Card : " + visa15CreditCard)
-    for ((card, index) <- visa16Cards.view.zipWithIndex) if (debugEnabled) logger.debug("Visa Credit card #" + index + " is " + card)
-    for ((card, index) <- visa15Cards.view.zipWithIndex) if (debugEnabled) logger.debug("Visa Credit card #" + index + " is " + card)
+    for ((card, index) <- visa16Cards.view.zipWithIndex)
+      if (debugEnabled) logger.debug("Visa Credit card #" + index + " is " + card)
+    for ((card, index) <- visa15Cards.view.zipWithIndex)
+      if (debugEnabled) logger.debug("Visa Credit card #" + index + " is " + card)
   }
 
   @Test
@@ -94,7 +95,8 @@ class FinanceTestSuite extends BaseTestSuite {
     assert(amexCrediCards.length == 10)
     for (amex <- amexCrediCards) assert(amex.length == 16)
     if (debugEnabled) logger.debug("Testing random american express card: " + amexCreditCard)
-    for ((card, index) <- amexCrediCards.view.zipWithIndex) if (debugEnabled) logger.debug("american express card #" + index + " is " + card)
+    for ((card, index) <- amexCrediCards.view.zipWithIndex)
+      if (debugEnabled) logger.debug("american express card #" + index + " is " + card)
   }
 
   @Test
@@ -105,7 +107,8 @@ class FinanceTestSuite extends BaseTestSuite {
     assert(discoverCrediCards.length == 10)
     for (discover <- discoverCrediCards) assert(discover.length == 16)
     if (debugEnabled) logger.debug("Testing random discover card: " + discoverCreditCard)
-    for ((card, index) <- discoverCrediCards.view.zipWithIndex) if (debugEnabled) logger.debug("Discover Credit card #" + index + " is " + card)
+    for ((card, index) <- discoverCrediCards.view.zipWithIndex)
+      if (debugEnabled) logger.debug("Discover Credit card #" + index + " is " + card)
   }
 
   @Test
@@ -116,7 +119,8 @@ class FinanceTestSuite extends BaseTestSuite {
     assert(dinersCrediCards.length == 10)
     for (diners <- dinersCrediCards) assert(diners.length == 16)
     if (debugEnabled) logger.debug("Testing random diners card: " + dinersCreditCard)
-    for ((card, index) <- dinersCrediCards.view.zipWithIndex) if (debugEnabled) logger.debug("Diners Credit card #" + index + " is " + card)
+    for ((card, index) <- dinersCrediCards.view.zipWithIndex)
+      if (debugEnabled) logger.debug("Diners Credit card #" + index + " is " + card)
   }
 
   @Test
@@ -127,7 +131,8 @@ class FinanceTestSuite extends BaseTestSuite {
     assert(jcbCrediCards.length == 10)
     for (jcb <- jcbCrediCards) assert(jcb.length == 16)
     if (debugEnabled) logger.debug("Testing random jcb card: " + jcbCreditCard)
-    for ((card, index) <- jcbCrediCards.view.zipWithIndex) if (debugEnabled) logger.debug("JCB Credit card #" + index + " is " + card)
+    for ((card, index) <- jcbCrediCards.view.zipWithIndex)
+      if (debugEnabled) logger.debug("JCB Credit card #" + index + " is " + card)
   }
 
   @Test
@@ -138,7 +143,8 @@ class FinanceTestSuite extends BaseTestSuite {
     assert(voyagerCrediCards.length == 10)
     for (voyager <- voyagerCrediCards) assert(voyager.length == 15)
     if (debugEnabled) logger.debug("Testing random voyager card: " + voyagerCreditCard)
-    for ((card, index) <- voyagerCrediCards.view.zipWithIndex) if (debugEnabled) logger.debug("Voyager Credit card #" + index + " is " + card)
+    for ((card, index) <- voyagerCrediCards.view.zipWithIndex)
+      if (debugEnabled) logger.debug("Voyager Credit card #" + index + " is " + card)
   }
 
   @Test
