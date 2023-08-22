@@ -54,7 +54,7 @@ pomExtra :=
     </developer>
   </developers>
 
-coverageMinimum := 70
+coverageMinimumStmtTotal := 70
 
 coverageFailOnMinimum := true
 
